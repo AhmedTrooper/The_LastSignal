@@ -1,0 +1,49 @@
+import type { Metadata, Viewport } from "next";
+import { Inter, Jost, IBM_Plex_Mono } from "next/font/google";
+import "./globals.css";
+import { defaultSEO } from "@/lib/seo";
+import { WebSiteSchema } from "@/app/components/structured-data";
+import TabBar from "@/app/components/tab-bar";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jost = Jost({
+  subsets: ["latin"],
+  variable: "--font-jost",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
+export const metadata: Metadata = defaultSEO;
+
+export const viewport: Viewport = {
+  themeColor: "#5b2eff",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className={`${inter.variable} ${jost.variable} ${plexMono.variable}`} data-scroll-behavior="smooth">
+      <head>
+        <WebSiteSchema />
+      </head>
+      <body className="pb-tabbar">
+        {children}
+        <TabBar />
+      </body>
+    </html>
+  );
+}

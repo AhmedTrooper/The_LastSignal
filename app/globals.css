@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #0d0b26;
+  --color-ink-soft: #5d5a78;
+  --color-violet: #5b2eff;
+  --color-violet-deep: #4317e6;
+  --color-violet-bright: #7a57ff;
+  --color-violet-soft: #ece7ff;
+  --color-mars: #ff5a1f;
+  --color-mist: #f7f7fb;
+  --color-line: #e8e6f2;
+  --color-night: #0c0a22;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+@media (max-width: 809.98px) {
+  html { font-size: 93.75%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Bold Jost display type used for every headline (same family as accrely-landing). */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Waveform bars breathe while a signal is "live". */
+.wave-live rect {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 1.6s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.45); }
+}
+
+.ticker {
+  animation: ticker 38s linear infinite;
+}
+
+@keyframes ticker {
+  to { transform: translateX(-50%); }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  from { transform: scale(0.4); opacity: 0.7; }
+  to { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .wave-live rect, .ticker, .pulse-ring { animation: none; }
+}
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Leaves room for the mobile tab bar so it never covers content. */
+.pb-tabbar {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 1024px) {
+  .pb-tabbar { padding-bottom: 0; }
+}
+
+input[type="range"].dual {
+  pointer-events: none;
+  appearance: none;
+  background: transparent;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+
+input[type="range"].dual::-webkit-slider-thumb {
+  pointer-events: auto;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-violet);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(91, 46, 255, 0.4);
+  cursor: grab;
+}
+
+input[type="range"].dual::-moz-range-thumb {
+  pointer-events: auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-violet);
+  border: 3px solid #fff;
+  cursor: grab;
+}
+
+/* Scroll reveal (see RevealManager). Only hides content once the observer is running. */
+.reveal-ready [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.reveal-ready [data-reveal] {
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
