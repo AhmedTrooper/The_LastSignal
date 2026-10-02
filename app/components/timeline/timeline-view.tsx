@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { type Body, type Hero, catNo, img, lifespan } from "@/lib/heroes";
+import { type Body, type Hero, catNo, img, lifespan, portrait } from "@/lib/heroes";
 import { Waveform } from "@/app/components/waveform";
 import MachinePhoto from "@/app/components/machine-photo";
 import { ArrowRight } from "@/app/components/icons";
@@ -157,7 +157,7 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
                         aria-pressed={on}
                       >
                         <span className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2 ${on ? "ring-violet ring-offset-2" : "ring-white"}`}>
-                          <Image src={img(h.image)} alt="" fill sizes="48px" className="object-cover" />
+                          <Image src={img(portrait(h))} alt="" fill sizes="48px" className="object-cover" />
                         </span>
                         <span className="pt-0.5">
                           <span className="block font-mono text-[13px] leading-tight font-medium whitespace-nowrap">{h.name}</span>

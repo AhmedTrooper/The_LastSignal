@@ -8,45 +8,17 @@ import { ArrowRight } from "@/app/components/icons";
 
 const LINKS = [
   { href: "/heroes", label: "Heroes" },
+  { href: "/story", label: "Story" },
+  { href: "/timeline", label: "Timeline" },
   { href: "/where-they-rest", label: "Where They Rest" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/games", label: "Games" },
   { href: "/about", label: "About" },
 ];
 
-/** Standard / Story / Timeline. Story and Standard keep you on the same hero when you're on one. */
-function useModes(pathname: string) {
-  const hero = pathname.match(/^\/heroes\/([^/]+)/)?.[1];
-  const mode = pathname.endsWith("/story") || pathname === "/story" ? "story" : pathname.startsWith("/timeline") ? "timeline" : "standard";
-  return {
-    mode,
-    modes: [
-      { id: "standard", label: "Standard", href: hero ? `/heroes/${hero}` : "/" },
-      { id: "story", label: "Story", href: hero ? `/heroes/${hero}/story` : "/story" },
-      { id: "timeline", label: "Timeline", href: "/timeline" },
-    ],
-  };
-}
-
-export function ModeSwitch({ className = "" }: { className?: string }) {
-  const pathname = usePathname();
-  const { mode, modes } = useModes(pathname);
-  return (
-    <nav aria-label="View mode" className={`flex items-center rounded-full border border-line bg-white p-1 text-sm ${className}`}>
-      {modes.map((m) => (
-        <Link
-          key={m.id}
-          href={m.href}
-          aria-current={mode === m.id ? "page" : undefined}
-          className={`rounded-full px-3.5 py-1.5 font-medium transition-colors ${
-            mode === m.id ? "bg-violet text-white" : "text-ink hover:text-violet"
-          }`}
-        >
-          {m.label}
-        </Link>
-      ))}
-    </nav>
-  );
-}
+/** Hero profiles live under /heroes, but their story pages belong to the Story section. */
+const isActive = (pathname: string, href: string) =>
+  href === "/story" ? pathname === "/story" || pathname.endsWith("/story") : href === "/heroes" ? pathname.startsWith("/heroes") && !pathname.endsWith("/story") : pathname.startsWith(href);
 
 export function TributeButton({ className = "" }: { className?: string }) {
   const pathname = usePathname();
@@ -89,9 +61,9 @@ export default function Header() {
             <Logo />
           </Link>
 
-          <nav className="hidden items-center gap-7 text-[15px] font-medium lg:flex">
+          <nav className="hidden items-center gap-5 text-[15px] font-medium lg:flex xl:gap-7">
             {LINKS.map((l) => {
-              const active = pathname.startsWith(l.href);
+              const active = isActive(pathname, l.href);
               return (
                 <Link
                   key={l.href}
@@ -105,8 +77,7 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-5 lg:flex">
-            <ModeSwitch className="hidden xl:flex" />
+          <div className="hidden lg:flex">
             <TributeButton />
           </div>
 
@@ -135,15 +106,14 @@ export default function Header() {
         }`}
       >
         <nav className="flex flex-col gap-1 px-6 pt-6">
-          {[...LINKS, { href: "/timeline", label: "Timeline" }, { href: "/tributes", label: "Tributes" }].map((l) => (
+          {[...LINKS, { href: "/tributes", label: "Tributes" }].map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="display border-b border-line py-4 text-3xl text-ink">
               {l.label}
             </Link>
           ))}
         </nav>
         <div className="space-y-4 p-6">
-          <div onClick={() => setOpen(false)} className="space-y-4">
-            <ModeSwitch className="w-fit" />
+          <div onClick={() => setOpen(false)}>
             <TributeButton className="w-full justify-center py-4" />
           </div>
         </div>

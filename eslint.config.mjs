@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // HyperFrames film project (separate toolchain)
+    "film/**",
+    // Vendored Draco decoder from three.js (minified)
+    "public/draco/**",
+    // Cloudflare build output
+    ".open-next/**",
+    ".wrangler/**",
   ]),
 ]);
 

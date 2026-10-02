@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { type Body, type Category, type Hero, bodyName, catNo, fmtDate, img, lifespan } from "@/lib/heroes";
+import { type Body, type Category, type Hero, bodyName, catNo, fmtDate, img, isAIImage, lifespan, portrait } from "@/lib/heroes";
 import Globe from "@/app/components/globe";
 import { Waveform } from "@/app/components/waveform";
 import { ArrowRight, Pin } from "@/app/components/icons";
@@ -114,7 +114,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
               <Pin className="h-5 w-5 text-violet" /> {sel.restingPlace.replace(/, (Mars|Moon).*$/, "")}
             </p>
             <div className="relative mt-5 aspect-[3/2] overflow-hidden rounded-xl">
-              <Image src={img(sel.image)} alt={`${sel.name} (AI-generated placeholder)`} fill sizes="400px" className="object-cover" />
+              <Image src={img(portrait(sel))} alt={isAIImage(portrait(sel)) ? `${sel.name} (AI-generated placeholder)` : sel.name} fill sizes="400px" className="object-cover" />
             </div>
             <div className="mt-5 flex items-end justify-between gap-4">
               <div>
@@ -146,7 +146,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
               <li key={h.slug} className="w-[150px] shrink-0">
                 <button onClick={() => setSelected(h.slug)} className={`w-full rounded-lg p-1 text-left transition-colors ${on ? "ring-2 ring-violet" : "hover:bg-mist"}`} aria-pressed={on}>
                   <span className="relative block aspect-[4/3] overflow-hidden rounded-md">
-                    <Image src={img(h.image)} alt="" fill sizes="150px" className="object-cover" />
+                    <Image src={img(portrait(h))} alt="" fill sizes="150px" className="object-cover" />
                   </span>
                   <span className="mt-3 block font-mono text-sm">{catNo(h.no)}</span>
                   <span className="block text-sm leading-tight font-semibold">{h.name}</span>

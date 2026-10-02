@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/lib/seo";
-import { type Hero, img } from "@/lib/heroes";
+import { type Hero, img, portrait } from "@/lib/heroes";
 
 function JsonLd({ data }: { data: object }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
@@ -27,7 +27,7 @@ export function HeroSchema({ hero }: { hero: Hero }) {
         "@type": "Article",
         headline: `${hero.name}: ${hero.designation}`,
         description: hero.summary,
-        image: `${BASE_URL}${img(hero.image)}`,
+        image: `${BASE_URL}${img(portrait(hero))}`,
         url: `${BASE_URL}/heroes/${hero.slug}`,
         about: { "@type": "Thing", name: hero.name, description: hero.designation },
         citation: hero.sources.map((s) => s.url),

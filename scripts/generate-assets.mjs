@@ -67,6 +67,7 @@ export const ASSETS = {
   grail: "Two small twin GRAIL spacecraft with solar panels flying in tandem over the grey cratered Moon, black space.",
   tracks: `Rover wheel tracks leading across the dusty ground toward the horizon, low dusty light, ${MARS}.`,
   "polar-lander": `Mars Polar Lander, three-legged lander with two solar panels, near the layered south polar ice cap, ${MARS}.`,
+  "icon-touchdown": "Square game app icon for a space game called Touchdown: a small gold-foil four-legged lander descending on a bright engine flame toward a glowing cyan landing ring on rusty Mars ground, a tall violet light beam rising from the ground in the distance, deep violet-to-black starry sky, curved planet horizon. Bold, simple, centred composition that reads well at small sizes, rich cinematic lighting, polished digital illustration, soft glow. No text, no letters, no logos, no insignia, no flags, no border.",
   pathfinder: `Mars Pathfinder lander with three open triangular petals covered in deflated airbags, small rover nearby, ${MARS}, Ares Vallis rocks.`,
 };
 

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { type Hero, fmtDots, img } from "@/lib/heroes";
+import { type Hero, fmtDots, img, portrait } from "@/lib/heroes";
 import { Waveform } from "@/app/components/waveform";
 import TributeWall from "@/app/components/profile/tribute-wall";
 
@@ -23,7 +23,7 @@ export default function TributesView({ heroes }: { heroes: Hero[] }) {
               className={`flex items-center gap-2 rounded-full py-1 pr-4 pl-1 text-sm transition-colors ${h.slug === slug ? "bg-violet" : "bg-white/10 hover:bg-white/20"}`}
             >
               <span className="relative h-7 w-7 overflow-hidden rounded-full">
-                <Image src={img(h.image)} alt="" fill sizes="28px" className="object-cover" />
+                <Image src={img(portrait(h))} alt="" fill sizes="28px" className="object-cover" />
               </span>
               {h.name}
             </button>

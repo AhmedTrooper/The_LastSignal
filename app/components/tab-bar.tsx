@@ -15,6 +15,8 @@ const TABS = [
 /** App-style bottom navigation, shown below the lg breakpoint only. */
 export default function TabBar() {
   const pathname = usePathname();
+  // Stories and games play full screen with their own controls.
+  if (/^\/heroes\/[^/]+\/story$/.test(pathname) || pathname.startsWith("/games/")) return null;
   return (
     <nav
       aria-label="Sections"

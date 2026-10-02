@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HEROES } from "@/lib/heroes";
+import { photo } from "@/lib/photos";
 import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
 import Gallery from "@/app/components/profile/gallery";
@@ -15,10 +16,10 @@ export default function GalleryPage() {
     <SitePage
       eyebrow="Gallery"
       title="Their last views."
-      lede="Every image here is an AI-made placeholder for now. They will be replaced with credited public-domain mission photos."
+      lede="Real photos from NASA's public image archive, credited one by one. Tap any picture for its title, credit and source."
     >
       <div className="space-y-12">
-        {HEROES.filter((h) => h.gallery.length > 1).map((h) => (
+        {HEROES.filter((h) => h.gallery.length > 0).map((h) => (
           <section key={h.slug} data-reveal>
             <div className="mb-4 flex items-baseline justify-between gap-4">
               <h2 className="display text-3xl">{h.name}</h2>
@@ -26,7 +27,7 @@ export default function GalleryPage() {
                 Read their story
               </Link>
             </div>
-            <Gallery images={h.gallery} name={h.name} columns="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6" />
+            <Gallery items={h.gallery.map((n) => photo(n, h.name))} name={h.name} columns="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6" />
           </section>
         ))}
       </div>

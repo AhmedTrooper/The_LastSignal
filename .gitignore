@@ -31,3 +31,13 @@ scripts/raw/
 .open-next
 .wrangler
 .dev.vars*
+
+# HyperFrames film project: local tools and renders
+film/.venv/
+film/node_modules/
+film/renders/
+film/**/*.mp4
+film/**/*.wav
+film/
+# Local agent state
+.claude/
