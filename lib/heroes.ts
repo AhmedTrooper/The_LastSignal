@@ -984,9 +984,6 @@ export const portrait = (h: Hero) => h.photo ?? h.image;
 /** True for AI-made placeholder images (anything that is not a credited `nasa/` archive photo). */
 export const isAIImage = (name: string) => !name.startsWith("nasa/");
 
-/** Heroes featured on the home page, in display order. */
-export const FEATURED = ["opportunity", "spirit", "viking-1", "ingenuity", "pathfinder-sojourner"];
-
 /** Chapters for Story mode: the hand-written story when there is one, otherwise built from the record. */
 export function storyChapters(h: Hero): Chapter[] {
   if (h.story) return h.story;

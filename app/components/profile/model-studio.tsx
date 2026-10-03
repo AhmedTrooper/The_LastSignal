@@ -26,6 +26,10 @@ type Props = {
   posterAlt: string;
   /** Extra files people can download (NASA 3D-print files and the like). */
   downloads?: { label: string; url: string }[];
+  /** Backdrop behind the model: night sky (profiles) or a pale studio (home page). */
+  stage?: "dark" | "light";
+  /** Just the model and its controls, without the parts list and downloads (home page). */
+  compact?: boolean;
 };
 
 type Live = {
@@ -45,7 +49,7 @@ type Live = {
  * the rest are built in code (lib/models/procedural.ts). Pick a part to isolate it and fly to it,
  * pull the slider to explode the parts apart, and download the model as GLB or STL.
  */
-export default function ModelStudio({ name, model, parts, poster, posterAlt, downloads = [] }: Props) {
+export default function ModelStudio({ name, model, parts, poster, posterAlt, downloads = [], stage = "dark", compact = false }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const live = useRef<Live | null>(null);
   const markerEls = useRef<Map<string, HTMLButtonElement>>(new Map());
@@ -390,11 +394,13 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
   const current = parts.find((p) => p.id === sel);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
+    <div className={compact ? "" : "grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]"}>
       <div>
         <div
           ref={host}
-          className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[radial-gradient(ellipse_at_50%_35%,#2a2457_0%,#0c0a22_70%)] sm:aspect-[16/10]"
+          className={`relative aspect-[4/3] overflow-hidden rounded-xl sm:aspect-[16/10] ${
+            stage === "light" ? "bg-[radial-gradient(ellipse_at_50%_40%,#ffffff_0%,#ebe6ff_75%)]" : "bg-[radial-gradient(ellipse_at_50%_35%,#2a2457_0%,#0c0a22_70%)]"
+          }`}
           role="img"
           aria-label={`Interactive 3D model of ${name}`}
         >
@@ -459,9 +465,15 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
             </label>
           )}
           <span className="font-mono text-xs text-ink-soft">Drag to turn · pinch or scroll to zoom</span>
+          {compact && model.kind === "glb" && (
+            <a href={model.source} target="_blank" rel="noopener noreferrer" className="ml-auto font-mono text-[11px] text-ink-soft hover:text-violet">
+              Model: {model.credit} ↗
+            </a>
+          )}
         </div>
       </div>
 
+      {!compact && (
       <div className="flex flex-col gap-4">
         <div>
           <h3 className="font-mono text-xs tracking-[0.12em] text-ink-soft uppercase">Parts</h3>
@@ -517,6 +529,7 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
           </p>
         </div>
       </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
-import { Hero, Ticker, HeroesGrid, NamesBand, Resting } from "@/app/components/home/sections";
+import { Hero, Ticker, Resting } from "@/app/components/home/sections";
+import { Famous, Worlds, LastSignals, RoverModel, GameStrip } from "@/app/components/home/highlights";
 import { RevealManager } from "@/app/components/scroll-fx";
 
 export default function Home() {
@@ -10,8 +11,11 @@ export default function Home() {
       <main className="bg-white text-ink">
         <Hero />
         <Ticker />
-        <HeroesGrid />
-        <NamesBand />
+        <Famous />
+        <Worlds />
+        <LastSignals />
+        <RoverModel />
+        <GameStrip />
         <Resting />
       </main>
       <Footer />

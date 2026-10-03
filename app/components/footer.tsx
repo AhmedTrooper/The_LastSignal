@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="space-y-2 font-mono text-sm text-ink-soft md:text-right">
           <p>thelastsignal.org</p>
           <p className="max-w-xs text-xs leading-relaxed">
-            An independent memorial, not affiliated with or endorsed by any space agency. Images marked AI are placeholders.
+            An independent memorial, not affiliated with or endorsed by any space agency. Images marked AI are placeholders, and the home page illustration is AI-generated.
           </p>
         </div>
       </div>

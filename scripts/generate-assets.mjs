@@ -68,6 +68,10 @@ export const ASSETS = {
   tracks: `Rover wheel tracks leading across the dusty ground toward the horizon, low dusty light, ${MARS}.`,
   "polar-lander": `Mars Polar Lander, three-legged lander with two solar panels, near the layered south polar ice cap, ${MARS}.`,
   "icon-touchdown": "Square game app icon for a space game called Touchdown: a small gold-foil four-legged lander descending on a bright engine flame toward a glowing cyan landing ring on rusty Mars ground, a tall violet light beam rising from the ground in the distance, deep violet-to-black starry sky, curved planet horizon. Bold, simple, centred composition that reads well at small sizes, rich cinematic lighting, polished digital illustration, soft glow. No text, no letters, no logos, no insignia, no flags, no border.",
+  "hero-mars": "Wide empty Martian plain in soft bright light, a pale hazy butterscotch sky filling the upper half, gentle low hills on the far horizon, fine orange dust and a few scattered rocks in the foreground, airy and light, soft low contrast, calm, lots of open space. No machines, no rovers, no spacecraft.",
+  "hero-moon": "Wide empty lunar surface in bright sunlight, pale grey regolith with small craters and a few rocks in the foreground, gentle rolling grey hills on the far horizon, the sky a soft pale grey-white haze instead of black, airy and light, soft low contrast, calm, lots of open space. No machines, no landers, no astronauts, no footprints.",
+  "hero-scrapbook": "Wide website hero artwork in a playful scrapbook collage style on warm off-white paper texture, bright and airy. A large photoreal six-wheeled Mars rover with a tall camera mast and flat solar panels stands in the centre-right on a small patch of orange Martian dust, slightly cut out like a sticker with a soft shadow. Around it, a scattered collage: two or three taped polaroid photographs of the orange Martian surface and the grey cratered Moon, a vintage postage stamp illustration of a gold-foil lunar module with serrated edges, a torn paper ticket stub, strips of washi tape, small hand-drawn pencil arrows, dotted orbit lines and tiny planet doodles. The whole top-left third of the image is left as clean empty paper for a headline. Absolutely no text, no letters, no numbers, no writing anywhere.",
+  "hero-selfie": "A warm, joyful group selfie of old space robots, photographed from the selfie-taker's point of view with a slight wide-angle lens, on a PURE WHITE seamless studio background with soft shadows, everything crowded into the middle of the frame with clean white space all around the edges. In front, an accurate NASA Mars Exploration Rover (Opportunity): six wheels on a rocker-bogie suspension, a flat triangular deck of solar panels, a tall white camera mast topped by a box with two small round camera lenses, stretching its short jointed robotic arm toward the viewer like a selfie stick. Crowding in behind it, each accurately modelled: its identical twin rover Spirit leaning in; the tiny six-wheeled Sojourner rover in the front, knee-high; a Viking lander on three legs with a large white dish antenna; the Phoenix lander with two round twelve-sided solar panels and a robotic arm; the InSight lander with two round solar panels, an arm and a small grey dome on the ground; the Apollo lunar module DESCENT STAGE only, a squat gold-foil octagonal base on four spindly legs with footpads and a ladder; the Apollo Lunar Roving Vehicle, an open four-wheeled buggy with wire-mesh wheels, two seats and a mesh umbrella antenna; and the Ingenuity helicopter, a small box with two stacked long rotor blades and four thin legs, hovering at the top peeking in. Rovers and landers on a few small patches of orange Mars dust and grey Moon dust. Bright, clean, wholesome and a little funny.",
   pathfinder: `Mars Pathfinder lander with three open triangular petals covered in deflated airbags, small rover nearby, ${MARS}, Ares Vallis rocks.`,
 };
 
@@ -79,7 +83,14 @@ async function generate(name, prompt) {
   const res = await fetch("https://openrouter.ai/api/v1/images", {
     method: "POST",
     headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: MODEL, prompt: name.startsWith("card-") ? prompt : `${prompt} ${STYLE}`, quality: "low", n: 1 }),
+    body: JSON.stringify({
+      model: MODEL,
+      prompt: name.startsWith("card-") ? prompt : `${prompt} ${STYLE}`,
+      quality: "low",
+      // Hero backdrops are wide; everything else uses the model's default square.
+      ...(name.startsWith("hero-") ? { size: "1536x1024" } : {}),
+      n: 1,
+    }),
   });
   const json = await res.json();
   if (!res.ok) throw new Error(`${name}: ${res.status} ${JSON.stringify(json).slice(0, 400)}`);
