@@ -46,7 +46,7 @@ jobs:
 
       - name: Export Expo Static Bundle
         env:
-          EXPO_PUBLIC_ASSET_URL: https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+          EXPO_PUBLIC_ASSET_URL: ${{ secrets.EXPO_PUBLIC_ASSET_URL || vars.EXPO_PUBLIC_ASSET_URL }}
         run: |
           cd apps/mobile
           bun x expo export --platform web
@@ -55,7 +55,7 @@ jobs:
         if: ${{ secrets.EXPO_TOKEN != '' }}
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          EXPO_PUBLIC_ASSET_URL: https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+          EXPO_PUBLIC_ASSET_URL: ${{ secrets.EXPO_PUBLIC_ASSET_URL || vars.EXPO_PUBLIC_ASSET_URL }}
         run: |
           cd apps/mobile
           eas build --platform all --non-interactive --no-wait

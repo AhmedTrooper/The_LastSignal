@@ -35,5 +35,5 @@ jobs:
 
       - name: Build Web Application
         env:
-          NEXT_PUBLIC_ASSET_URL: https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+          NEXT_PUBLIC_ASSET_URL: ${{ secrets.NEXT_PUBLIC_ASSET_URL || vars.NEXT_PUBLIC_ASSET_URL }}
         run: bun run web:build

@@ -17,7 +17,7 @@ Ensure environment variables are configured in `.env` at the root of the reposit
 
 ```bash
 # Cloudflare R2 public asset bucket
-EXPO_PUBLIC_ASSET_URL=https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+EXPO_PUBLIC_ASSET_URL=https://<your-r2-subdomain>.r2.dev
 ```
 
 ---

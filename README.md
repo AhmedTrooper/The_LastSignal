@@ -170,8 +170,8 @@ cp .env.example .env
 
 ```env
 # Cloudflare R2 Public Bucket CDN URL
-NEXT_PUBLIC_ASSET_URL=https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
-EXPO_PUBLIC_ASSET_URL=https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+NEXT_PUBLIC_ASSET_URL=https://<your-r2-subdomain>.r2.dev
+EXPO_PUBLIC_ASSET_URL=https://<your-r2-subdomain>.r2.dev
 ```
 
 ---
