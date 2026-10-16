@@ -1,25 +1,22 @@
-# Stage 1: Dependencies
-FROM node:20-alpine AS deps
+# Stage 1: Dependencies with Bun
+FROM oven/bun:1-alpine AS deps
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
-
-COPY package.json package-lock.json ./
-RUN npm ci --only=production --ignore-scripts
+COPY package.json bun.lock ./
+COPY packages/data/package.json ./packages/data/
+COPY apps/web/package.json ./apps/web/
+RUN bun install --frozen-lockfile
 
 # Stage 2: Builder
-FROM node:20-alpine AS builder
+FROM oven/bun:1-alpine AS builder
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
-
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
-
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+ENV NODE_ENV=production
+RUN cd apps/web && bun run build
 
 # Stage 3: Runner
 FROM node:20-alpine AS runner
@@ -33,11 +30,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
-
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder /app/apps/web/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 
 USER nextjs
 
@@ -49,4 +44,4 @@ ENV HOSTNAME="0.0.0.0"
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3000/api/health || exit 1
 
-CMD ["node", "server.js"]
+CMD ["node", "apps/web/server.js"]
