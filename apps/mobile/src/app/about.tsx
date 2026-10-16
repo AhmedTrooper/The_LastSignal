@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
+import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { HEROES } from "@thelastsignal/data";
 
@@ -31,6 +32,7 @@ export default function AboutScreen() {
           They had names, birthdays and last words,{"\n"}
           <ThemedText style={styles.titleViolet} type="title">just like us.</ThemedText>
         </ThemedText>
+        <Waveform seed="about" bars={36} fade={0.3} height={24} style={{ marginTop: 14 }} />
       </View>
 
       <View style={styles.leadCard}>

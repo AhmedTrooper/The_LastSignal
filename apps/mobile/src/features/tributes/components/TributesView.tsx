@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { Image } from "expo-image";
 import { ThemedText } from "@/components/themed-text";
+import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { HEROES, fmtDots, portrait, assetUrl } from "@thelastsignal/data";
 import { useTributesStore } from "@/stores/use-tributes-store";
@@ -59,6 +60,7 @@ export function TributesView() {
         </ThemedText>
         <ThemedText style={styles.signalName}>{hero.name}</ThemedText>
         <ThemedText style={styles.signalStory}>{hero.end.story}</ThemedText>
+        <Waveform seed={`${hero.slug}-last`} bars={36} fade={0.3} color="#a78bfa" height={22} style={{ marginTop: 12 }} />
       </View>
 
       {/* Compose Tribute Form */}

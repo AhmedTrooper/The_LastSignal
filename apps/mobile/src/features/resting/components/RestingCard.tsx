@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
+import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { fmtCoords, fmtLong, catNo, portrait, assetUrl, type Hero } from "@thelastsignal/data";
 
@@ -55,6 +56,7 @@ export function RestingCard({ hero, isSelected, onSelect }: Props) {
         <ThemedText style={styles.coordsText} type="small">
           Coordinates: {fmtCoords(hero.coords)}
         </ThemedText>
+        <Waveform seed={`${hero.slug}-rest`} bars={26} fade={0.2} height={16} style={{ marginTop: 6 }} />
       </View>
 
       <View style={styles.footerRow}>

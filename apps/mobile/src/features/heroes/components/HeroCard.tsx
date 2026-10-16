@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/themed-text";
+import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { catNo, lifespan, portrait, type Hero, assetUrl } from "@thelastsignal/data";
 
@@ -53,6 +54,8 @@ export function HeroCard({ hero }: Props) {
         <ThemedText style={styles.restingPlace} numberOfLines={1} type="small">
           📍 {hero.restingPlace}
         </ThemedText>
+
+        <Waveform seed={hero.slug} bars={22} height={16} style={styles.waveform} />
       </View>
     </Pressable>
   );
@@ -124,5 +127,8 @@ const styles = StyleSheet.create({
   restingPlace: {
     color: Colors.light.textSecondary,
     marginTop: 4,
+  },
+  waveform: {
+    marginTop: 8,
   },
 });

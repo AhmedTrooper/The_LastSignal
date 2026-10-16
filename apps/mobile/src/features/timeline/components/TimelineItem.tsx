@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/themed-text";
+import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { catNo, fmtLong, lifespan, portrait, assetUrl, type Hero } from "@thelastsignal/data";
 
@@ -73,6 +74,7 @@ export function TimelineItem({ hero, isLast }: Props) {
           <ThemedText style={styles.restingText} numberOfLines={1} type="small">
             📍 {hero.restingPlace}
           </ThemedText>
+          <Waveform seed={hero.slug} bars={24} height={14} style={{ marginTop: 8 }} />
         </View>
       </View>
     </Pressable>
