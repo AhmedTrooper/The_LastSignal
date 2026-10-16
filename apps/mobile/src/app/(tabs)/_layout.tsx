@@ -6,8 +6,8 @@ import { Colors } from '@/constants/theme';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
-  // Ensure generous clearance so tab items and labels sit comfortably above system navigation bars
-  const bottomInset = Math.max(insets.bottom + 16, Platform.OS === 'android' ? 36 : 28);
+  // Ensure generous clearance and protective padding so items stay safe from safe area boundaries
+  const bottomInset = Math.max(insets.bottom + 18, Platform.OS === 'android' ? 38 : 30);
 
   return (
     <Tabs
@@ -19,13 +19,17 @@ export default function TabLayout() {
           backgroundColor: '#ffffff',
           borderTopColor: Colors.light.line,
           borderTopWidth: 1,
-          height: 56 + bottomInset,
+          height: 60 + bottomInset,
           paddingBottom: bottomInset,
           paddingTop: 8,
+        },
+        tabBarItemStyle: {
+          paddingBottom: 4,
         },
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: '600',
+          marginTop: 2,
         },
       }}
     >
