@@ -103,8 +103,10 @@ export default function HeroDetailScreen() {
       case "wiki":
         return <HeroWiki key="wiki" hero={hero} />;
       case "videos":
+        return <HeroMedia key="media" hero={hero} />;
       case "news":
       case "eyes":
+      case "documentary":
         return null;
       case "gallery":
         return <HeroGallery key="gallery" hero={hero} />;
