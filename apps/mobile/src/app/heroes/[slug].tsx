@@ -1,21 +1,20 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Image } from "expo-image";
+import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { useHero } from "@/features/heroes/hooks/useHeroes";
-import {
-  assetUrl,
-  catNo,
-  fmtCoords,
-  fmtLong,
-  lifespan,
-  portrait,
-} from "@thelastsignal/data";
+import { useFavoritesStore } from "@/stores/use-favorites-store";
+import { HeroSpecs } from "@/features/heroes/components/HeroSpecs";
+import { HeroChapters } from "@/features/heroes/components/HeroChapters";
+import { assetUrl, catNo, fmtCoords, fmtLong, lifespan, portrait } from "@thelastsignal/data";
 
 export default function HeroDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const hero = useHero(slug ?? "");
+  const isFav = useFavoritesStore((s) => s.isFavorite(slug ?? ""));
+  const toggleFav = useFavoritesStore((s) => s.toggleFavorite);
 
   if (!hero) {
     return (
@@ -25,13 +24,35 @@ export default function HeroDetailScreen() {
     );
   }
 
-  const imageUrl = assetUrl(`images/${portrait(hero)}.jpg`);
+  const isCutout = Boolean(hero.card);
+  const imageUrl = isCutout
+    ? assetUrl(`images/${hero.card}.webp`)
+    : assetUrl(`images/${portrait(hero)}.jpg`);
 
   return (
     <>
-      <Stack.Screen options={{ title: hero.name, headerBackTitle: "Heroes" }} />
+      <Stack.Screen
+        options={{
+          title: hero.name,
+          headerRight: () => (
+            <Pressable onPress={() => toggleFav(hero.slug)} style={styles.favBtn}>
+              <Ionicons
+                name={isFav ? "bookmark" : "bookmark-outline"}
+                size={22}
+                color={Colors.light.violet}
+              />
+            </Pressable>
+          ),
+        }}
+      />
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-        <Image source={{ uri: imageUrl }} style={styles.heroImage} contentFit="cover" />
+        <View style={[styles.imageWrap, isCutout && styles.cutoutWrap]}>
+          <Image
+            source={{ uri: imageUrl }}
+            style={styles.heroImage}
+            contentFit={isCutout ? "contain" : "cover"}
+          />
+        </View>
 
         <View style={styles.body}>
           <ThemedText style={styles.cat} type="small">{catNo(hero.no)}</ThemedText>
@@ -52,21 +73,13 @@ export default function HeroDetailScreen() {
 
           <View style={[styles.card, styles.lastSignalCard]}>
             <ThemedText style={styles.lastSignalTitle} type="subtitle">
-              Last Signal · {fmtLong(hero.end.date)}
+              {hero.end.label} · {fmtLong(hero.end.date)}
             </ThemedText>
             <ThemedText style={styles.lastSignalStory}>{hero.end.story}</ThemedText>
           </View>
 
-          {hero.stats && (
-            <View style={styles.statsRow}>
-              {hero.stats.map((s) => (
-                <View key={s.label} style={styles.statBox}>
-                  <ThemedText style={styles.statVal}>{s.value}</ThemedText>
-                  <ThemedText style={styles.statLabel} type="small">{s.label}</ThemedText>
-                </View>
-              ))}
-            </View>
-          )}
+          <HeroSpecs hero={hero} />
+          <HeroChapters hero={hero} />
         </View>
       </ScrollView>
     </>
@@ -77,7 +90,10 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#ffffff" },
   content: { paddingBottom: 40 },
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
-  heroImage: { width: "100%", aspectRatio: 16 / 10, backgroundColor: "#f7f7fb" },
+  favBtn: { padding: 4 },
+  imageWrap: { width: "100%", aspectRatio: 16 / 10, backgroundColor: "#f7f7fb" },
+  cutoutWrap: { padding: 18, backgroundColor: "#f7f6fc" },
+  heroImage: { width: "100%", height: "100%" },
   body: { padding: 18, gap: 14 },
   cat: { color: Colors.light.violet, fontWeight: "700" },
   title: { fontSize: 30, fontWeight: "800", marginTop: -6 },
@@ -91,8 +107,4 @@ const styles = StyleSheet.create({
   lastSignalCard: { borderColor: Colors.light.violet, backgroundColor: "#ece7ff" },
   lastSignalTitle: { color: Colors.light.violet, fontWeight: "700" },
   lastSignalStory: { fontSize: 15, lineHeight: 22, color: Colors.light.text, marginTop: 4 },
-  statsRow: { flexDirection: "row", gap: 10, flexWrap: "wrap" },
-  statBox: { flex: 1, minWidth: 100, backgroundColor: "#f7f7fb", padding: 12, borderRadius: 12, alignItems: "center" },
-  statVal: { fontSize: 18, fontWeight: "800", color: Colors.light.violet },
-  statLabel: { color: Colors.light.textSecondary, textAlign: "center", marginTop: 2 },
 });

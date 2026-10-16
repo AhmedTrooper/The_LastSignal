@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HeroList } from "@/features/heroes/components/HeroList";
+import { TimelineList } from "@/features/timeline/components/TimelineList";
 
-export default function HomeScreen() {
+export default function TimelineScreen() {
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <HeroList />
+      <TimelineList />
     </SafeAreaView>
   );
 }

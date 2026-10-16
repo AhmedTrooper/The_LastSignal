@@ -4,11 +4,7 @@
  * Configurable via:
  * - Next.js: process.env.NEXT_PUBLIC_ASSET_URL
  * - Expo: process.env.EXPO_PUBLIC_ASSET_URL
- *
- * When no remote CDN URL is provided, falls back to local relative paths ("/images/...", etc.).
  */
-
-export const CDN_BASE_URL = "https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev";
 
 declare const process: { env?: Record<string, string | undefined> } | undefined;
 
@@ -20,9 +16,9 @@ export function getAssetBaseUrl(): string {
       url = process.env.NEXT_PUBLIC_ASSET_URL || process.env.EXPO_PUBLIC_ASSET_URL;
     }
   } catch {
-    // Fall back to CDN_BASE_URL
+    // Process not available
   }
-  return (url || CDN_BASE_URL).replace(/\/+$/, "");
+  return (url || "").replace(/\/+$/, "");
 }
 
 export function assetUrl(path: string): string {

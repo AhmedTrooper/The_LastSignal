@@ -11,18 +11,21 @@ interface Props {
 
 export function HeroCard({ hero }: Props) {
   const router = useRouter();
-  const imageUrl = assetUrl(`images/${portrait(hero)}.jpg`);
+  const isCutout = Boolean(hero.card);
+  const imageUrl = isCutout
+    ? assetUrl(`images/${hero.card}.webp`)
+    : assetUrl(`images/${portrait(hero)}.jpg`);
 
   return (
     <Pressable
       onPress={() => router.push(`/heroes/${hero.slug}` as any)}
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
-      <View style={styles.imageContainer}>
+      <View style={[styles.imageContainer, isCutout && styles.cutoutContainer]}>
         <Image
           source={{ uri: imageUrl }}
           style={styles.image}
-          contentFit="cover"
+          contentFit={isCutout ? "contain" : "cover"}
           transition={300}
         />
         <View style={styles.tag}>
@@ -72,6 +75,10 @@ const styles = StyleSheet.create({
     aspectRatio: 16 / 9,
     backgroundColor: Colors.light.backgroundElement,
     position: "relative",
+  },
+  cutoutContainer: {
+    padding: 12,
+    backgroundColor: "#f7f6fc",
   },
   image: {
     width: "100%",
