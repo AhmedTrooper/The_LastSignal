@@ -18,19 +18,9 @@ export const Colors = {
     mars: '#ff5a1f',
     line: '#e8e6f2',
   },
-  dark: {
-    text: '#ffffff',
-    background: '#0d0b26',
-    backgroundElement: '#18153b',
-    backgroundSelected: '#2a225f',
-    textSecondary: '#a5a3c0',
-    violet: '#7a57ff',
-    mars: '#ff5a1f',
-    line: '#28244f',
-  },
 } as const;
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+export type ThemeColor = keyof typeof Colors.light;
 
 export const Fonts = Platform.select({
   ios: {
