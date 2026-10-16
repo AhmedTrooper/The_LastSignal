@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@thelastsignal/data": ["../../packages/data/src/index.ts"],
+      "@thelastsignal/data/*": ["../../packages/data/src/*"]
     }
   },
   "include": [

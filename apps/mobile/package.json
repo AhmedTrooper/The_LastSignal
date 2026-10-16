@@ -1,9 +1,10 @@
 {
-  "name": "thelastsignal",
+  "name": "@thelastsignal/mobile",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
     "@expo/ui": "~57.0.24",
+    "@thelastsignal/data": "*",
     "expo": "~57.0.29",
     "expo-constants": "~57.0.22",
     "expo-device": "~57.0.2",
