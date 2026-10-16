@@ -2,6 +2,7 @@ import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { useHero } from "@/features/heroes/hooks/useHeroes";
@@ -12,6 +13,7 @@ import { assetUrl, catNo, fmtCoords, fmtLong, lifespan, portrait } from "@thelas
 
 export default function HeroDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
+  const insets = useSafeAreaInsets();
   const hero = useHero(slug ?? "");
   const isFav = useFavoritesStore((s) => s.isFavorite(slug ?? ""));
   const toggleFav = useFavoritesStore((s) => s.toggleFavorite);
@@ -45,7 +47,10 @@ export default function HeroDetailScreen() {
           ),
         }}
       />
-      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 32 }]}
+      >
         <View style={[styles.imageWrap, isCutout && styles.cutoutWrap]}>
           <Image
             source={{ uri: imageUrl }}
