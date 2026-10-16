@@ -22,7 +22,8 @@ function HeroGallerySection({ hero }: GallerySectionItem) {
       </View>
 
       <View style={styles.photosGrid}>
-        {hero.gallery.map((imgName) => {
+        {hero.gallery?.map((imgName) => {
+          if (!imgName) return null;
           const meta = photo(imgName, hero.name);
           return (
             <View key={imgName} style={styles.photoCard}>

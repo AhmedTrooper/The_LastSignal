@@ -13,7 +13,8 @@ const FAMOUS_ENTRIES = [
   { slugs: ["apollo-15-rover"], title: "Apollo 15 Rover", label: "Lunar Roving Vehicle" },
 ];
 
-function getCutout(h: Hero) {
+function getCutout(h?: Hero) {
+  if (!h) return "";
   return h.card ? assetUrl(`images/${h.card}.webp`) : assetUrl(`images/${h.photo ?? h.image}.jpg`);
 }
 

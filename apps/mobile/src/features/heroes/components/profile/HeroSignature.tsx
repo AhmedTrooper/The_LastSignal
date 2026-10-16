@@ -23,7 +23,7 @@ export function HeroSignature({ hero }: Props) {
         <View style={styles.framesGrid}>
           {sig.frames.map((f, i) => (
             <View key={f.label} style={styles.frameItem}>
-              {f.image ? (
+              {f?.image ? (
                 <View style={styles.frameImgWrap}>
                   <Image source={{ uri: assetUrl(`images/${f.image}.jpg`) }} style={styles.frameImg} contentFit="cover" />
                 </View>

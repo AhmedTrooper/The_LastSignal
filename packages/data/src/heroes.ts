@@ -981,10 +981,10 @@ export const bodyName = (b: Body) => (b === "mars" ? "Mars" : "Moon");
 export const img = (name: string) => assetUrl(`images/${name}.jpg`);
 
 /** The best picture of the machine: a credited archive photo when there is one, otherwise the AI placeholder. */
-export const portrait = (h: Hero) => h.photo ?? h.image;
+export const portrait = (h?: Hero) => (h ? h.photo ?? h.image : "");
 
 /** True for AI-made placeholder images (anything that is not a credited `nasa/` archive photo). */
-export const isAIImage = (name: string) => !name.startsWith("nasa/");
+export const isAIImage = (name?: string) => Boolean(name && !name.startsWith("nasa/"));
 
 /** Chapters for Story mode: the hand-written story when there is one, otherwise built from the record. */
 export function storyChapters(h: Hero): Chapter[] {

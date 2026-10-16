@@ -60,27 +60,41 @@ export function StoryViewer({ hero }: Props) {
       }));
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentScene = scenes[currentIndex];
+
+  const safeIndex = scenes.length > 0 ? Math.min(Math.max(0, currentIndex), scenes.length - 1) : 0;
+  const currentScene = scenes[safeIndex];
   const next = nextHero(hero);
 
-  const isFirst = currentIndex === 0;
-  const isLast = currentIndex === scenes.length - 1;
+  const isFirst = safeIndex === 0;
+  const isLast = safeIndex === scenes.length - 1;
 
   const handleNext = () => {
     if (!isLast) {
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex((prev) => Math.min(prev + 1, scenes.length - 1));
     }
   };
 
   const handlePrev = () => {
     if (!isFirst) {
-      setCurrentIndex((prev) => prev - 1);
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
     }
   };
 
   const handleNextHero = () => {
+    setCurrentIndex(0);
     router.replace(`/heroes/${next.slug}/story`);
   };
+
+  if (!currentScene) {
+    return (
+      <View style={[styles.container, { justifyContent: "center", alignItems: "center", padding: 24 }]}>
+        <ThemedText style={styles.sceneTitle}>No scenes available</ThemedText>
+        <Pressable onPress={() => router.back()} style={[styles.navBtn, { marginTop: 16 }]}>
+          <ThemedText style={styles.navBtnText}>Go Back</ThemedText>
+        </Pressable>
+      </View>
+    );
+  }
 
   const currentImg = currentScene.image
     ? assetUrl(`images/${currentScene.image}.jpg`)
@@ -115,8 +129,8 @@ export function StoryViewer({ hero }: Props) {
               key={idx}
               style={[
                 styles.progressBar,
-                idx === currentIndex && styles.progressBarActive,
-                idx < currentIndex && styles.progressBarDone,
+                idx === safeIndex && styles.progressBarActive,
+                idx < safeIndex && styles.progressBarDone,
               ]}
             />
           ))}
@@ -125,7 +139,7 @@ export function StoryViewer({ hero }: Props) {
         <View style={styles.topActions}>
           <View style={styles.heroBadge}>
             <ThemedText style={styles.heroBadgeText} type="small">
-              {catNo(hero.no)} · {hero.name} ({currentIndex + 1}/{scenes.length})
+              {catNo(hero.no)} · {hero.name} ({safeIndex + 1}/{scenes.length})
             </ThemedText>
           </View>
           <Pressable

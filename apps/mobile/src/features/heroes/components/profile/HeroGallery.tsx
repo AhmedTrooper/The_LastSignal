@@ -20,7 +20,8 @@ export function HeroGallery({ hero }: Props) {
       </ThemedText>
 
       <View style={styles.galleryList}>
-        {hero.gallery.map((imgName) => {
+        {hero.gallery?.map((imgName) => {
+          if (!imgName) return null;
           const meta = photo(imgName, hero.name);
           return (
             <View key={imgName} style={styles.galleryItem}>

@@ -31,7 +31,7 @@ export function HomeLastSignals() {
       >
         {POLAROIDS.map((p) => {
           const hero = HEROES.find((h) => h.slug === p.slug);
-          if (!hero) return null;
+          if (!hero || !p?.image) return null;
           const imageUrl = assetUrl(`images/${p.image}.jpg`);
 
           return (

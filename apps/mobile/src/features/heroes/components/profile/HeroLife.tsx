@@ -23,7 +23,9 @@ export function HeroLife({ hero }: Props) {
           <View style={styles.discoveriesGrid}>
             {hero.discoveries.map((d) => (
               <View key={d.title} style={styles.discoveryCard}>
-                <Image source={{ uri: assetUrl(`images/${d.image}.jpg`) }} style={styles.discoveryImg} contentFit="cover" />
+                {d?.image ? (
+                  <Image source={{ uri: assetUrl(`images/${d.image}.jpg`) }} style={styles.discoveryImg} contentFit="cover" />
+                ) : null}
                 <ThemedText style={styles.discoveryTitle} type="small">{d.title}</ThemedText>
               </View>
             ))}
@@ -52,7 +54,7 @@ export function HeroLife({ hero }: Props) {
       {/* Chapters */}
       <View style={styles.chaptersList}>
         {chapters.map((ch, idx) => {
-          const imgUrl = ch.image ? assetUrl(`images/${ch.image}.jpg`) : null;
+          const imgUrl = ch?.image ? assetUrl(`images/${ch.image}.jpg`) : null;
           return (
             <View key={`${ch.title}-${idx}`} style={styles.chapterItem}>
               {imgUrl && (

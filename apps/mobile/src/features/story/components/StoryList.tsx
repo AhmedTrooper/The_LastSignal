@@ -7,6 +7,7 @@ import { Colors } from "@/constants/theme";
 import { HEROES, catNo, lifespan, portrait, storyChapters, assetUrl, type Hero } from "@thelastsignal/data";
 
 function StoryCard({ hero }: { hero: Hero }) {
+  if (!hero) return null;
   const chapters = storyChapters(hero);
   const imageUrl = assetUrl(`images/${portrait(hero)}.jpg`);
 

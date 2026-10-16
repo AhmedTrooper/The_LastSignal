@@ -49,22 +49,23 @@ const TITLE: Record<string, string> = {
 export type Photo = { name: string; src: string; title: string; credit: string; source: string; alt: string; ai: boolean; width?: number; height?: number };
 
 /** Real archive photo, or undefined for AI placeholders. */
-export function photoMeta(name: string): Photo | undefined {
-  if (!name.startsWith("nasa/")) return undefined;
+export function photoMeta(name?: string): Photo | undefined {
+  if (!name || typeof name !== "string" || !name.startsWith("nasa/")) return undefined;
   const id = name.slice(5);
   const r = DB[id];
   if (!r) return undefined;
   const title = TITLE[id] ?? r.title;
-  const alt = (r.description.split(/(?<=\.)\s/)[0] || title).slice(0, 220);
+  const alt = (r.description?.split(/(?<=\.)\s/)[0] || title).slice(0, 220);
   return { name, src: assetUrl(`images/${name}.jpg`), title, credit: r.credit, source: r.source, alt, ai: false, width: r.width, height: r.height };
 }
 
 /** Any image name as a captioned photo: archive metadata for real photos, a clear label for AI placeholders. */
-export function photo(name: string, fallbackAlt = ""): Photo {
+export function photo(name?: string, fallbackAlt = ""): Photo {
+  const safeName = name ?? "";
   return (
-    photoMeta(name) ?? {
-      name,
-      src: assetUrl(`images/${name}.jpg`),
+    photoMeta(safeName) ?? {
+      name: safeName,
+      src: assetUrl(`images/${safeName}.jpg`),
       title: "AI-generated placeholder",
       credit: "AI-generated placeholder",
       source: "",
@@ -74,4 +75,4 @@ export function photo(name: string, fallbackAlt = ""): Photo {
   );
 }
 
-export const isArchive = (name: string) => name.startsWith("nasa/") && !!DB[name.slice(5)];
+export const isArchive = (name?: string) => Boolean(name && typeof name === "string" && name.startsWith("nasa/") && DB[name.slice(5)]);

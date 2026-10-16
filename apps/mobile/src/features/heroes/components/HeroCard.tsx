@@ -11,6 +11,7 @@ interface Props {
 
 export function HeroCard({ hero }: Props) {
   const router = useRouter();
+  if (!hero) return null;
   const isCutout = Boolean(hero.card);
   const imageUrl = isCutout
     ? assetUrl(`images/${hero.card}.webp`)

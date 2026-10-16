@@ -19,7 +19,7 @@ export default function HeroStoryScreen() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <StoryViewer hero={hero} />
+      <StoryViewer key={hero.slug} hero={hero} />
     </>
   );
 }
