@@ -1,14 +1,14 @@
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppBarTheme } from "@/hooks/use-appbar-theme";
-import { FavoritesList } from "@/features/favorites/components/FavoritesList";
+import { TributesView } from "@/features/tributes/components/TributesView";
 
-export default function FavoritesScreen() {
+export default function TributesScreen() {
   const appbar = useAppBarTheme();
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: appbar.backgroundColor }]} edges={["top", "left", "right"]}>
       <View style={styles.body}>
-        <FavoritesList />
+        <TributesView />
       </View>
     </SafeAreaView>
   );

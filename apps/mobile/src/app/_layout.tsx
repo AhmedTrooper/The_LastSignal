@@ -36,7 +36,16 @@ export default function RootLayout() {
           options={{
             headerShown: true,
             headerTitle: '',
-            headerBackTitle: 'Memorial',
+            headerBackTitle: 'Back',
+            headerTintColor: appbar.tintColor,
+          }}
+        />
+        <Stack.Screen
+          name="favorites"
+          options={{
+            headerShown: true,
+            headerTitle: 'Saved',
+            headerBackTitle: 'Back',
             headerTintColor: appbar.tintColor,
           }}
         />

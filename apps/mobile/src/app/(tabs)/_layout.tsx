@@ -33,18 +33,27 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Memorial',
+          title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'planet' : 'planet-outline'} size={22} color={color} />
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={22} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="resting"
         options={{
-          title: 'Resting',
+          title: 'Map',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'location' : 'location-outline'} size={22} color={color} />
+            <Ionicons name={focused ? 'map' : 'map-outline'} size={22} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="story"
+        options={{
+          title: 'Story',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'book' : 'book-outline'} size={22} color={color} />
           ),
         }}
       />
@@ -58,11 +67,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="favorites"
+        name="tributes"
         options={{
-          title: 'Saved',
+          title: 'Tributes',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'bookmark' : 'bookmark-outline'} size={22} color={color} />
+            <Ionicons name={focused ? 'heart' : 'heart-outline'} size={22} color={color} />
           ),
         }}
       />
