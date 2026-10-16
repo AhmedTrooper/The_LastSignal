@@ -49,6 +49,24 @@ export default function RootLayout() {
             headerTintColor: appbar.tintColor,
           }}
         />
+        <Stack.Screen
+          name="about"
+          options={{
+            headerShown: true,
+            headerTitle: 'About',
+            headerBackTitle: 'Back',
+            headerTintColor: appbar.tintColor,
+          }}
+        />
+        <Stack.Screen
+          name="gallery"
+          options={{
+            headerShown: true,
+            headerTitle: 'Archive Gallery',
+            headerBackTitle: 'Back',
+            headerTintColor: appbar.tintColor,
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

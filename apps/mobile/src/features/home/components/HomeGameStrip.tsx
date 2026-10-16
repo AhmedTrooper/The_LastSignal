@@ -1,5 +1,6 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
@@ -12,10 +13,25 @@ interface HomeGameStripProps {
 export function HomeGameStrip({ onPlayPress }: HomeGameStripProps) {
   const iconUrl = assetUrl("images/icon-touchdown.webp");
 
+  const handlePress = () => {
+    if (onPlayPress) {
+      onPlayPress();
+    } else {
+      Alert.alert(
+        "Touchdown Simulator",
+        "Fly the landing yourself and discover the resting locations of 15 machines across Mars and the Moon.",
+        [
+          { text: "Open Landing Map", onPress: () => router.push("/(tabs)/resting") },
+          { text: "Dismiss", style: "cancel" },
+        ]
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Pressable
-        onPress={onPlayPress}
+        onPress={handlePress}
         style={({ pressed }) => [styles.strip, pressed && styles.stripPressed]}
       >
         <Image source={{ uri: iconUrl }} style={styles.gameIcon} contentFit="cover" />

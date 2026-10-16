@@ -17,11 +17,27 @@ export function HomeFooter() {
 
       <View style={styles.linksRow}>
         <Pressable
+          onPress={() => router.push("/about")}
+          style={styles.linkBtn}
+        >
+          <Ionicons name="information-circle-outline" size={16} color={Colors.light.violet} />
+          <ThemedText style={styles.linkText}>About</ThemedText>
+        </Pressable>
+
+        <Pressable
+          onPress={() => router.push("/gallery")}
+          style={styles.linkBtn}
+        >
+          <Ionicons name="images-outline" size={16} color={Colors.light.violet} />
+          <ThemedText style={styles.linkText}>Gallery</ThemedText>
+        </Pressable>
+
+        <Pressable
           onPress={() => router.push("/favorites")}
           style={styles.linkBtn}
         >
-          <Ionicons name="bookmark" size={16} color={Colors.light.violet} />
-          <ThemedText style={styles.linkText}>Saved Machines</ThemedText>
+          <Ionicons name="bookmark-outline" size={16} color={Colors.light.violet} />
+          <ThemedText style={styles.linkText}>Saved</ThemedText>
         </Pressable>
       </View>
 
