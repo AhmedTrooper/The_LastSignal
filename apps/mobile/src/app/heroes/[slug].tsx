@@ -8,8 +8,34 @@ import { Colors } from "@/constants/theme";
 import { useHero } from "@/features/heroes/hooks/useHeroes";
 import { useFavoritesStore } from "@/stores/use-favorites-store";
 import { HeroSpecs } from "@/features/heroes/components/HeroSpecs";
-import { HeroChapters } from "@/features/heroes/components/HeroChapters";
-import { assetUrl, catNo, fmtCoords, fmtLong, lifespan, portrait } from "@thelastsignal/data";
+import { HeroSignature } from "@/features/heroes/components/profile/HeroSignature";
+import { HeroJourney } from "@/features/heroes/components/profile/HeroJourney";
+import { HeroLife } from "@/features/heroes/components/profile/HeroLife";
+import { HeroWiki } from "@/features/heroes/components/profile/HeroWiki";
+import { HeroMedia } from "@/features/heroes/components/profile/HeroMedia";
+import { HeroGallery } from "@/features/heroes/components/profile/HeroGallery";
+import { HeroTwin } from "@/features/heroes/components/profile/HeroTwin";
+import { HeroModelSection } from "@/features/heroes/components/profile/HeroModelSection";
+import { HeroProfileTributes } from "@/features/heroes/components/profile/HeroProfileTributes";
+import { HeroFilmBanner } from "@/features/heroes/components/profile/HeroFilmBanner";
+import { HeroExplore } from "@/features/heroes/components/profile/HeroExplore";
+import {
+  LAYOUTS,
+  catNo,
+  fmtCoords,
+  fmtLong,
+  lifespan,
+  portrait,
+  assetUrl,
+  type SectionId,
+} from "@thelastsignal/data";
+
+const STAT_ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
+  route: "navigate-outline",
+  timer: "time-outline",
+  calendar: "calendar-outline",
+  spark: "flash-outline",
+};
 
 export default function HeroDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -31,6 +57,68 @@ export default function HeroDetailScreen() {
     ? assetUrl(`images/${hero.card}.webp`)
     : assetUrl(`images/${portrait(hero)}.jpg`);
 
+  const layoutOrder = LAYOUTS[hero.slug] ?? [
+    "model",
+    "signature",
+    "life",
+    "journey",
+    "lost",
+    "wiki",
+    "videos",
+    "gallery",
+    "twin",
+    "tributes",
+    "explore",
+  ];
+
+  const renderSection = (sectionId: SectionId) => {
+    switch (sectionId) {
+      case "model":
+        return <HeroModelSection key="model" hero={hero} />;
+      case "film":
+        return <HeroFilmBanner key="film" hero={hero} />;
+      case "signature":
+        return <HeroSignature key="signature" hero={hero} />;
+      case "life":
+        return <HeroLife key="life" hero={hero} />;
+      case "journey":
+        return <HeroJourney key="journey" hero={hero} />;
+      case "lost":
+        return (
+          <View key="lost" style={[styles.card, styles.lastSignalCard]}>
+            <View style={styles.lostHeader}>
+              <ThemedText style={styles.lostEyebrow} type="small">LAST SIGNAL</ThemedText>
+              <ThemedText style={styles.lastSignalTitle} type="subtitle">
+                {hero.end.label} · {fmtLong(hero.end.date)}
+              </ThemedText>
+            </View>
+            <ThemedText style={styles.lastSignalStory}>{hero.end.story}</ThemedText>
+            <View style={styles.lostFooter}>
+              <ThemedText style={styles.lostCoords} type="small">
+                📍 {hero.restingPlace} ({fmtCoords(hero.coords)})
+              </ThemedText>
+            </View>
+          </View>
+        );
+      case "wiki":
+        return <HeroWiki key="wiki" hero={hero} />;
+      case "videos":
+      case "news":
+      case "eyes":
+        return null;
+      case "gallery":
+        return <HeroGallery key="gallery" hero={hero} />;
+      case "twin":
+        return <HeroTwin key="twin" hero={hero} />;
+      case "tributes":
+        return <HeroProfileTributes key="tributes" hero={hero} />;
+      case "explore":
+        return <HeroExplore key="explore" hero={hero} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <Stack.Screen
@@ -50,43 +138,74 @@ export default function HeroDetailScreen() {
       <ScrollView
         style={styles.container}
         contentInsetAdjustmentBehavior="never"
-        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 32 }]}
+        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 40 }]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.imageWrap, isCutout && styles.cutoutWrap]}>
-          <Image
-            source={{ uri: imageUrl }}
-            style={styles.heroImage}
-            contentFit={isCutout ? "contain" : "cover"}
-          />
+        {/* Top Header Card */}
+        <View style={styles.topCard}>
+          <View style={[styles.imageWrap, isCutout && styles.cutoutWrap]}>
+            <Image
+              source={{ uri: imageUrl }}
+              style={styles.heroImage}
+              contentFit={isCutout ? "contain" : "cover"}
+            />
+          </View>
+
+          <View style={styles.heroHeaderInfo}>
+            <ThemedText style={styles.cat} type="small">{catNo(hero.no)}</ThemedText>
+            <ThemedText style={styles.title} type="title">{hero.name}</ThemedText>
+            {hero.nickname && <ThemedText style={styles.nickname}>&ldquo;{hero.nickname}&rdquo;</ThemedText>}
+            <ThemedText style={styles.meta} type="small">
+              {hero.designation} · {lifespan(hero)}
+            </ThemedText>
+
+            {/* Quick Meta List */}
+            <View style={styles.quickMetaList}>
+              <View style={styles.quickMetaRow}>
+                <ThemedText style={styles.quickMetaLabel} type="small">Born: </ThemedText>
+                <ThemedText style={styles.quickMetaVal} type="small">{fmtLong(hero.launch.date)}</ThemedText>
+              </View>
+              <View style={styles.quickMetaRow}>
+                <ThemedText style={styles.quickMetaLabel} type="small">{hero.end.label}: </ThemedText>
+                <ThemedText style={styles.quickMetaVal} type="small">{fmtLong(hero.end.date)}</ThemedText>
+              </View>
+              <View style={styles.quickMetaRow}>
+                <ThemedText style={styles.quickMetaLabel} type="small">Resting: </ThemedText>
+                <ThemedText style={styles.quickMetaVal} type="small">📍 {hero.restingPlace}</ThemedText>
+              </View>
+            </View>
+
+            {/* Stats Chips */}
+            {hero.stats && hero.stats.length > 0 && (
+              <View style={styles.statsRow}>
+                {hero.stats.map((st) => (
+                  <View key={st.label} style={styles.statChip}>
+                    <Ionicons name={STAT_ICONS[st.icon] ?? "sparkles-outline"} size={16} color={Colors.light.violet} />
+                    <View>
+                      <ThemedText style={styles.statValue}>{st.value}</ThemedText>
+                      <ThemedText style={styles.statLabel} type="small">{st.label}</ThemedText>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            {/* Summary */}
+            <View style={styles.summaryBox}>
+              <ThemedText style={styles.summaryText}>{hero.summary}</ThemedText>
+            </View>
+          </View>
         </View>
 
-        <View style={styles.body}>
-          <ThemedText style={styles.cat} type="small">{catNo(hero.no)}</ThemedText>
-          <ThemedText style={styles.title} type="title">{hero.name}</ThemedText>
-          {hero.nickname && <ThemedText style={styles.nickname}>&ldquo;{hero.nickname}&rdquo;</ThemedText>}
-          <ThemedText style={styles.meta} type="small">{hero.designation} · {lifespan(hero)}</ThemedText>
+        {/* Dynamic Layout Sections */}
+        <View style={styles.sectionsContainer}>
+          {layoutOrder.map((sectionId) => renderSection(sectionId))}
 
-          <View style={styles.card}>
-            <ThemedText style={styles.cardHeader} type="subtitle">Resting Place</ThemedText>
-            <ThemedText style={styles.cardText}>📍 {hero.restingPlace}</ThemedText>
-            <ThemedText style={styles.coords} type="small">{fmtCoords(hero.coords)}</ThemedText>
-          </View>
+          {/* Unified Media Section (Videos, News, Eyes) */}
+          <HeroMedia hero={hero} />
 
-          <View style={styles.card}>
-            <ThemedText style={styles.cardHeader} type="subtitle">Mission Summary</ThemedText>
-            <ThemedText style={styles.summary}>{hero.summary}</ThemedText>
-          </View>
-
-          <View style={[styles.card, styles.lastSignalCard]}>
-            <ThemedText style={styles.lastSignalTitle} type="subtitle">
-              {hero.end.label} · {fmtLong(hero.end.date)}
-            </ThemedText>
-            <ThemedText style={styles.lastSignalStory}>{hero.end.story}</ThemedText>
-          </View>
-
+          {/* Hardware Specifications */}
           <HeroSpecs hero={hero} />
-          <HeroChapters hero={hero} />
         </View>
       </ScrollView>
     </>
@@ -94,24 +213,165 @@ export default function HeroDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#ffffff" },
-  content: { paddingBottom: 40 },
-  center: { flex: 1, justifyContent: "center", alignItems: "center" },
-  favBtn: { padding: 4 },
-  imageWrap: { width: "100%", aspectRatio: 16 / 10, backgroundColor: "#f7f7fb" },
-  cutoutWrap: { padding: 18, backgroundColor: "#f7f6fc" },
-  heroImage: { width: "100%", height: "100%" },
-  body: { padding: 18, gap: 14 },
-  cat: { color: Colors.light.violet, fontWeight: "700" },
-  title: { fontSize: 30, fontWeight: "800", marginTop: -6 },
-  nickname: { fontSize: 18, fontStyle: "italic", color: Colors.light.textSecondary, marginTop: -8 },
-  meta: { color: Colors.light.textSecondary },
-  card: { backgroundColor: "#f7f7fb", padding: 16, borderRadius: 16, borderWidth: 1, borderColor: Colors.light.line },
-  cardHeader: { fontSize: 17, fontWeight: "700", marginBottom: 6 },
-  cardText: { fontSize: 15, fontWeight: "500" },
-  coords: { color: Colors.light.textSecondary, marginTop: 4 },
-  summary: { fontSize: 15, lineHeight: 22, color: Colors.light.text },
-  lastSignalCard: { borderColor: Colors.light.violet, backgroundColor: "#ece7ff" },
-  lastSignalTitle: { color: Colors.light.violet, fontWeight: "700" },
-  lastSignalStory: { fontSize: 15, lineHeight: 22, color: Colors.light.text, marginTop: 4 },
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+  },
+  content: {
+    padding: 16,
+    gap: 16,
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  favBtn: {
+    padding: 4,
+  },
+  topCard: {
+    backgroundColor: "#ffffff",
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+    overflow: "hidden",
+  },
+  imageWrap: {
+    width: "100%",
+    height: 240,
+    backgroundColor: "#0c0a22",
+  },
+  cutoutWrap: {
+    backgroundColor: Colors.light.backgroundElement,
+    padding: 16,
+  },
+  heroImage: {
+    width: "100%",
+    height: "100%",
+  },
+  heroHeaderInfo: {
+    padding: 18,
+    gap: 4,
+  },
+  cat: {
+    color: Colors.light.violet,
+    fontFamily: "monospace",
+    fontWeight: "700",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "900",
+  },
+  nickname: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: Colors.light.textSecondary,
+    fontStyle: "italic",
+    marginTop: -2,
+  },
+  meta: {
+    color: Colors.light.textSecondary,
+    marginTop: 2,
+  },
+  quickMetaList: {
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: Colors.light.line,
+    gap: 4,
+  },
+  quickMetaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  quickMetaLabel: {
+    color: Colors.light.textSecondary,
+    width: 70,
+  },
+  quickMetaVal: {
+    fontWeight: "600",
+    color: Colors.light.text,
+    flex: 1,
+  },
+  statsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 12,
+  },
+  statChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    backgroundColor: Colors.light.backgroundElement,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+    flex: 1,
+    minWidth: 140,
+  },
+  statValue: {
+    fontSize: 14,
+    fontWeight: "800",
+    color: Colors.light.text,
+  },
+  statLabel: {
+    fontSize: 10,
+    color: Colors.light.textSecondary,
+  },
+  summaryBox: {
+    marginTop: 12,
+    backgroundColor: Colors.light.backgroundElement,
+    padding: 14,
+    borderRadius: 14,
+  },
+  summaryText: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: Colors.light.text,
+  },
+  sectionsContainer: {
+    gap: 16,
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 20,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+  },
+  lastSignalCard: {
+    backgroundColor: "#0c0a22",
+    gap: 12,
+  },
+  lostHeader: {
+    gap: 2,
+  },
+  lostEyebrow: {
+    color: "#a78bfa",
+    fontFamily: "monospace",
+    fontWeight: "700",
+    letterSpacing: 1,
+  },
+  lastSignalTitle: {
+    color: "#ffffff",
+    fontSize: 18,
+    fontWeight: "800",
+  },
+  lastSignalStory: {
+    color: "rgba(255, 255, 255, 0.85)",
+    lineHeight: 22,
+    fontSize: 14,
+  },
+  lostFooter: {
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255, 255, 255, 0.15)",
+    paddingTop: 8,
+  },
+  lostCoords: {
+    color: "#a78bfa",
+    fontFamily: "monospace",
+  },
 });
