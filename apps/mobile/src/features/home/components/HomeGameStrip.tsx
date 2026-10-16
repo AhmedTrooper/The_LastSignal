@@ -1,4 +1,4 @@
-import { Alert, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,14 +17,7 @@ export function HomeGameStrip({ onPlayPress }: HomeGameStripProps) {
     if (onPlayPress) {
       onPlayPress();
     } else {
-      Alert.alert(
-        "Touchdown Simulator",
-        "Fly the landing yourself and discover the resting locations of 15 machines across Mars and the Moon.",
-        [
-          { text: "Open Landing Map", onPress: () => router.push("/(tabs)/resting") },
-          { text: "Dismiss", style: "cancel" },
-        ]
-      );
+      router.push("/games" as any);
     }
   };
 

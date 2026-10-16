@@ -67,6 +67,15 @@ export default function RootLayout() {
             headerTintColor: appbar.tintColor,
           }}
         />
+        <Stack.Screen
+          name="games"
+          options={{
+            headerShown: true,
+            headerTitle: 'Games',
+            headerBackTitle: 'Back',
+            headerTintColor: appbar.tintColor,
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

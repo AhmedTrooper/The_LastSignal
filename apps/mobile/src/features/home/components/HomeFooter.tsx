@@ -33,6 +33,14 @@ export function HomeFooter() {
         </Pressable>
 
         <Pressable
+          onPress={() => router.push("/games")}
+          style={styles.linkBtn}
+        >
+          <Ionicons name="game-controller-outline" size={16} color={Colors.light.violet} />
+          <ThemedText style={styles.linkText}>Games</ThemedText>
+        </Pressable>
+
+        <Pressable
           onPress={() => router.push("/favorites")}
           style={styles.linkBtn}
         >
