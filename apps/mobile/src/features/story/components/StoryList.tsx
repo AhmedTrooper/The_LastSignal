@@ -12,7 +12,7 @@ function StoryCard({ hero }: { hero: Hero }) {
 
   return (
     <Pressable
-      onPress={() => router.push(`/heroes/${hero.slug}`)}
+      onPress={() => router.push(`/heroes/${hero.slug}/story` as any)}
       style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
     >
       <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />

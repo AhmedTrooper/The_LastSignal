@@ -30,7 +30,7 @@ export function HeroFilmBanner({ hero }: Props) {
             : "Follow every milestone from launch and touchdown to their final transmission."}
         </ThemedText>
         <Pressable
-          onPress={() => router.push("/(tabs)/story")}
+          onPress={() => router.push(`/heroes/${hero.slug}/story` as any)}
           style={({ pressed }) => [styles.btn, pressed && styles.btnPressed]}
         >
           <ThemedText style={styles.btnText}>{isCinematic ? "Watch the Film" : "Read the Story"}</ThemedText>
