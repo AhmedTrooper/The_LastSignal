@@ -8,9 +8,11 @@
     "scheme": "thelastsignal",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "thelastsignal.ahmedtrooper.com",
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "thelastsignal.ahmedtrooper.com",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

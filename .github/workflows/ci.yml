@@ -37,3 +37,10 @@ jobs:
         env:
           NEXT_PUBLIC_ASSET_URL: ${{ secrets.NEXT_PUBLIC_ASSET_URL || vars.NEXT_PUBLIC_ASSET_URL }}
         run: bun run web:build
+
+      - name: Verify Mobile Web Export
+        env:
+          EXPO_PUBLIC_ASSET_URL: ${{ secrets.EXPO_PUBLIC_ASSET_URL || vars.EXPO_PUBLIC_ASSET_URL }}
+        run: |
+          cd apps/mobile
+          bun x expo export --platform web
