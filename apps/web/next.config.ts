@@ -4,6 +4,16 @@ const nextConfig: NextConfig = {
   output: process.env.STANDALONE !== 'false' ? 'standalone' : undefined,
   images: {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.r2.dev",
+      },
+      {
+        protocol: "https",
+        hostname: "assets.thelastsignal.org",
+      },
+    ],
   },
 };
 
