@@ -1,56 +1,113 @@
-# Welcome to your Expo app 👋
+# The Last Signal - Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Mobile application for **The Last Signal** — a digital memorial for the robots, landers, rovers, and orbiters left behind on Mars and the Moon. Built with [Expo](https://expo.dev), [React Native](https://reactnative.dev), and [Expo Router](https://docs.expo.dev/router/introduction).
 
-## Get started
+---
 
-1. Install dependencies
+## Getting Started
 
-   ```bash
-   npm install
-   ```
+### Prerequisites
 
-2. Start the app
+- [Bun](https://bun.sh) (v1.0+)
+- [Expo Go](https://expo.dev/go) app installed on your physical Android or iOS device (or Android Studio / Xcode for emulators)
 
-   ```bash
-   npx expo start
-   ```
+### Environment Setup
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Ensure environment variables are configured in `.env` at the root of the repository or in `.env.local`:
 
 ```bash
-npm run reset-project
+# Cloudflare R2 public asset bucket
+EXPO_PUBLIC_ASSET_URL=https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## Development Commands
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+All commands use `bun` as the package manager and runner.
 
-## Learn more
+### Running from `apps/mobile` directory
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+cd apps/mobile
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# Install workspace dependencies
+bun install
 
-## Join the community
+# Start the Expo development server
+bun run start
 
-Join our community of developers creating universal apps.
+# Launch on connected Android device / emulator
+bun run android
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Launch on iOS simulator (macOS required)
+bun run ios
+
+# Launch Expo mobile web version
+bun run web
+
+# Run ESLint on the mobile workspace
+bun run lint
+```
+
+### Running from Monorepo Root
+
+```bash
+# Start Expo development server
+bun run mobile
+
+# Target specific platforms directly
+bun run mobile:android
+bun run mobile:ios
+bun run mobile:web
+
+# Run lint and type checking
+bun run lint:mobile
+bun run typecheck
+```
+
+---
+
+## Testing on Physical Devices & Emulators
+
+- **Expo Go (Easiest):** Run `bun run start`, open the **Expo Go** app on your phone, and scan the QR code displayed in the terminal.
+- **Android Emulator:** Ensure Android Studio and an AVD (Android Virtual Device) are configured, then run `bun run android`.
+- **iOS Simulator:** Ensure Xcode and Command Line Tools are installed (macOS only), then run `bun run ios`.
+
+---
+
+## Project Structure
+
+```
+apps/mobile/
+├── src/
+│   ├── app/                    # Expo Router file-based navigation
+│   │   ├── (tabs)/             # Bottom tab navigation (Memorial, Resting, Timeline, Saved)
+│   │   │   ├── _layout.tsx     # Tab bar styling & safe area inset handling
+│   │   │   ├── index.tsx       # Memorial view
+│   │   │   ├── resting.tsx     # Where they rest view
+│   │   │   ├── timeline.tsx    # Chronological timeline view
+│   │   │   └── favorites.tsx   # Saved / bookmarked machines
+│   │   ├── heroes/[slug].tsx   # Hero detail & mission profile
+│   │   └── _layout.tsx         # Root stack layout, splash screen & status bar
+│   ├── components/             # Reusable UI components
+│   ├── constants/              # Theme definitions & layout constants
+│   ├── features/               # Feature-based business logic & UI components
+│   │   ├── favorites/          # Bookmarks & favorites list
+│   │   ├── heroes/             # Hero cards, filters, and detail specs
+│   │   ├── resting/            # Resting place locations and coordinate cards
+│   │   └── timeline/           # Chronological mission timeline
+│   ├── hooks/                  # Custom hooks (useAppBarTheme, useTheme, etc.)
+│   └── stores/                 # Zustand stores (useFavoritesStore with persistence)
+├── app.json                    # Expo configuration (icons, splash, navigation bar)
+├── package.json                # Dependencies and scripts
+└── tsconfig.json               # TypeScript configuration
+```
+
+---
+
+## Design System & Theme Notes
+
+- **Memorial Aesthetic:** The app strictly adheres to the clean, signature white memorial design matching the web app.
+- **Adaptive Appbar:** The status bar and appbar header dynamically adapt to device dark/light mode so Wi-Fi, battery, and Bluetooth indicators always have high-contrast visibility.
+- **Asset Streaming:** All heavy media assets (portraits, cutouts, telemetry waveforms) stream from Cloudflare R2 via `@thelastsignal/data` resolver rather than bloating the local bundle.

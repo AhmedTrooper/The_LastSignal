@@ -1,0 +1,47 @@
+name: Deploy Web Application
+
+on:
+  push:
+    tags:
+      - 'web-v*'
+      - 'v*'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-web-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build & Deploy Web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint & Typecheck
+        run: |
+          bun run lint:web
+          bun run typecheck
+
+      - name: Build Web Application
+        env:
+          NEXT_PUBLIC_ASSET_URL: https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+        run: bun run web:build
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'apps/web'
+          command: deploy
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}

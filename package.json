@@ -14,6 +14,10 @@
     "web": "bun --filter @thelastsignal/web dev",
     "web:build": "bun --filter @thelastsignal/web build",
     "mobile": "bun --filter @thelastsignal/mobile start",
-    "typecheck": "cd packages/data && bun x tsc --noEmit && cd ../../apps/mobile && bun x tsc --noEmit && cd ../web && bun x tsc --noEmit"
+    "mobile:android": "bun --filter @thelastsignal/mobile android",
+    "mobile:ios": "bun --filter @thelastsignal/mobile ios",
+    "mobile:web": "bun --filter @thelastsignal/mobile web",
+    "typecheck": "cd packages/data && bun x tsc --noEmit && cd ../../apps/mobile && bun x tsc --noEmit && cd ../web && bun x tsc --noEmit",
+    "check": "bun run lint && bun run typecheck"
   }
 }

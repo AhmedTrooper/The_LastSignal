@@ -4,13 +4,31 @@ A memorial for the machines we left behind on Mars and the Moon. See `CONCEPT.md
 
 ## Run
 
+### Development
+
+Ensure environment variables are set in `.env.local` or the repository root `.env` (such as `NEXT_PUBLIC_ASSET_URL` pointing to your Cloudflare R2 asset storage, matching `.env.example`).
+
 ```bash
-npm install
-npm run dev        # http://localhost:3000
-npm run build && npm start
+# Inside apps/web:
+bun install
+bun run dev          # Start Next.js dev server at http://localhost:3000
+bun run build        # Build production bundle
+bun run start        # Start production server
+bun run lint         # Run ESLint
+bun run typecheck    # Run TypeScript compiler check
+
+# Or from repository root:
+bun run web          # Start web dev server
+bun run web:build    # Build web bundle
+bun run lint:web     # Lint web package
 ```
 
-Docker: `docker build -t thelastsignal . && docker run -p 3000:3000 thelastsignal` (standalone output, health check at `/api/health`).
+### Docker
+
+```bash
+docker build -t thelastsignal . && docker run -p 3000:3000 thelastsignal
+```
+(standalone output, health check at `/api/health`).
 
 ## Where things live
 
