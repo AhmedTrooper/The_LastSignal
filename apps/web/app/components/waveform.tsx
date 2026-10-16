@@ -1,3 +1,5 @@
+const round = (n: number) => Math.round(n * 100) / 100;
+
 /** Deterministic pseudo-random heights so server and client render the same bars. */
 function heights(seed: string, count: number) {
   let h = 2166136261;
@@ -5,7 +7,7 @@ function heights(seed: string, count: number) {
   return Array.from({ length: count }, (_, i) => {
     h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0;
     const envelope = Math.sin(((i + 1) / (count + 1)) * Math.PI) ** 0.6;
-    return 0.18 + (h % 1000) / 1000 * 0.82 * envelope;
+    return round(0.18 + ((h % 1000) / 1000) * 0.82 * envelope);
   });
 }
 
@@ -29,7 +31,7 @@ export function Waveform({
   const hs = heights(seed, bars);
   const step = 4;
   const barsW = bars * step;
-  const width = barsW / (1 - fade);
+  const width = round(barsW / (1 - fade));
   return (
     <svg viewBox={`0 0 ${width} 40`} preserveAspectRatio="none" className={`${className} ${live ? "wave-live" : ""}`} aria-hidden>
       <line x1="0" x2={width} y1="20" y2="20" stroke="currentColor" strokeWidth="1.2" opacity={fade ? 0.55 : 0} />
@@ -37,9 +39,9 @@ export function Waveform({
         <rect
           key={i}
           x={i * step + 0.6}
-          y={20 - v * 19}
+          y={round(20 - v * 19)}
           width="1.8"
-          height={v * 38}
+          height={round(v * 38)}
           rx="0.9"
           fill="currentColor"
           style={live ? { animationDelay: `${(i % 7) * -0.23}s` } : undefined}
