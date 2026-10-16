@@ -1,21 +1,30 @@
 import { DefaultTheme, ThemeProvider, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { StatusBar as RNStatusBar, Platform } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { Colors } from '@/constants/theme';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
+import { useAppBarTheme } from '@/hooks/use-appbar-theme';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const appbar = useAppBarTheme();
+
   return (
     <ThemeProvider value={DefaultTheme}>
-      <StatusBar style="dark" />
+      <StatusBar style={appbar.statusBarStyle} />
+      {Platform.OS === 'android' && (
+        <RNStatusBar
+          backgroundColor={appbar.backgroundColor}
+          barStyle={appbar.statusBarStyle === 'light' ? 'light-content' : 'dark-content'}
+        />
+      )}
       <AnimatedSplashOverlay />
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: '#ffffff' },
-          headerTintColor: Colors.light.violet,
-          headerTitleStyle: { color: Colors.light.text },
+          headerStyle: { backgroundColor: appbar.backgroundColor },
+          headerTintColor: appbar.tintColor,
+          headerTitleStyle: { color: appbar.textColor },
           contentStyle: { backgroundColor: '#ffffff' },
         }}
       >
@@ -26,7 +35,7 @@ export default function RootLayout() {
             headerShown: true,
             headerTitle: '',
             headerBackTitle: 'Memorial',
-            headerTintColor: Colors.light.violet,
+            headerTintColor: appbar.tintColor,
           }}
         />
       </Stack>

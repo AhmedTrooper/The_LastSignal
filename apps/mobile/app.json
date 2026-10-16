@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "thelastsignal",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
     },
@@ -20,8 +20,7 @@
       "predictiveBackGestureEnabled": false
     },
     "androidStatusBar": {
-      "barStyle": "dark-content",
-      "backgroundColor": "#ffffff"
+      "translucent": true
     },
     "androidNavigationBar": {
       "barStyle": "dark-content",

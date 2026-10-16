@@ -1,13 +1,15 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "@/hooks/use-theme";
+import { useAppBarTheme } from "@/hooks/use-appbar-theme";
 import { TimelineList } from "@/features/timeline/components/TimelineList";
 
 export default function TimelineScreen() {
-  const theme = useTheme();
+  const appbar = useAppBarTheme();
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={["top", "left", "right"]}>
-      <TimelineList />
+    <SafeAreaView style={[styles.container, { backgroundColor: appbar.backgroundColor }]} edges={["top", "left", "right"]}>
+      <View style={styles.body}>
+        <TimelineList />
+      </View>
     </SafeAreaView>
   );
 }
@@ -15,5 +17,9 @@ export default function TimelineScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  body: {
+    flex: 1,
+    backgroundColor: "#ffffff",
   },
 });
