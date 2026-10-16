@@ -36,7 +36,7 @@ export default function HeroDetailScreen() {
         <View style={styles.body}>
           <ThemedText style={styles.cat} type="small">{catNo(hero.no)}</ThemedText>
           <ThemedText style={styles.title} type="title">{hero.name}</ThemedText>
-          {hero.nickname && <ThemedText style={styles.nickname}>"{hero.nickname}"</ThemedText>}
+          {hero.nickname && <ThemedText style={styles.nickname}>&ldquo;{hero.nickname}&rdquo;</ThemedText>}
           <ThemedText style={styles.meta} type="small">{hero.designation} · {lifespan(hero)}</ThemedText>
 
           <View style={styles.card}>

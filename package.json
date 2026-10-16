@@ -7,6 +7,10 @@
     "packages/*"
   ],
   "scripts": {
+    "lint": "bun --filter '*' lint",
+    "lint:web": "bun --filter @thelastsignal/web lint",
+    "lint:mobile": "bun --filter @thelastsignal/mobile lint",
+    "lint:data": "bun --filter @thelastsignal/data lint",
     "web": "bun --filter @thelastsignal/web dev",
     "web:build": "bun --filter @thelastsignal/web build",
     "mobile": "bun --filter @thelastsignal/mobile start",

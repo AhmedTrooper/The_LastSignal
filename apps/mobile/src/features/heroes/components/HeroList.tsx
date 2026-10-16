@@ -21,7 +21,7 @@ export function HeroList() {
             The Last Signal
           </ThemedText>
           <ThemedText style={styles.subtitle} type="small">
-            Their mission ended. Their story didn't.
+            Their mission ended. Their story didn&apos;t.
           </ThemedText>
           <SearchBar />
           <BodyFilterTabs />
