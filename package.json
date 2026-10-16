@@ -18,6 +18,7 @@
     "mobile:ios": "bun --filter @thelastsignal/mobile ios",
     "mobile:web": "bun --filter @thelastsignal/mobile web",
     "typecheck": "cd packages/data && bun x tsc --noEmit && cd ../../apps/mobile && bun x tsc --noEmit && cd ../web && bun x tsc --noEmit",
-    "check": "bun run lint && bun run typecheck"
+    "check": "bun run lint && bun run typecheck",
+    "eas-build-pre-install": "npm install -g bun@latest"
   }
 }
