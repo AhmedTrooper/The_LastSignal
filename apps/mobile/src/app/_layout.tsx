@@ -15,6 +15,7 @@ export default function RootLayout() {
       <StatusBar style={appbar.statusBarStyle} />
       {Platform.OS === 'android' && (
         <RNStatusBar
+          translucent
           backgroundColor={appbar.backgroundColor}
           barStyle={appbar.statusBarStyle === 'light' ? 'light-content' : 'dark-content'}
         />
@@ -26,6 +27,7 @@ export default function RootLayout() {
           headerTintColor: appbar.tintColor,
           headerTitleStyle: { color: appbar.textColor },
           contentStyle: { backgroundColor: '#ffffff' },
+          headerShadowVisible: false,
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

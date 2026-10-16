@@ -49,7 +49,9 @@ export default function HeroDetailScreen() {
       />
       <ScrollView
         style={styles.container}
+        contentInsetAdjustmentBehavior="never"
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 32 }]}
+        showsVerticalScrollIndicator={false}
       >
         <View style={[styles.imageWrap, isCutout && styles.cutoutWrap]}>
           <Image
