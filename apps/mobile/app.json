@@ -8,8 +8,7 @@
     "scheme": "thelastsignal",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "thelastsignal.ahmedtrooper.com",
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "thelastsignal.ahmedtrooper.com"
     },
     "android": {
       "package": "thelastsignal.ahmedtrooper.com",
@@ -20,13 +19,6 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
-    },
-    "androidStatusBar": {
-      "translucent": true
-    },
-    "androidNavigationBar": {
-      "barStyle": "dark-content",
-      "backgroundColor": "#ffffff"
     },
     "web": {
       "output": "static",
@@ -46,6 +38,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ca1cf5ff-e060-48ce-9f62-1ab536b4a77d"
+      }
     }
   }
 }
