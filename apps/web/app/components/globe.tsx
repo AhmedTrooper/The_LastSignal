@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { Body } from "@/lib/heroes";
+import { type Body, assetUrl } from "@/lib/heroes";
 
 export type GlobeSite = { id: string; name: string; lat: number; lon: number };
 
@@ -87,7 +87,7 @@ export default function Globe({
       camera.position.set(0, 0, 1 / Math.sin(15 * DEG) * 1.04);
 
       const size = el.clientWidth < 520 ? 1024 : 2048;
-      const texture = await new THREE.TextureLoader().loadAsync(`/textures/${body}-${size}.jpg`);
+      const texture = await new THREE.TextureLoader().loadAsync(assetUrl(`textures/${body}-${size}.jpg`));
       if (disposed) {
         texture.dispose();
         renderer.dispose();
@@ -256,7 +256,7 @@ export default function Globe({
     <div ref={wrap} className={`relative aspect-square select-none ${interactive ? "cursor-grab active:cursor-grabbing" : ""} ${className}`}>
       {/* Static stand-in until the real globe is ready. */}
       <div className={`pointer-events-none absolute inset-[2%] overflow-hidden rounded-full transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`} aria-hidden>
-        <Image src={`/images/${body}-globe.jpg`} alt="" fill sizes="(min-width:1024px) 640px, 90vw" className="scale-[1.05] object-cover mix-blend-multiply" />
+        <Image src={assetUrl(`images/${body}-globe.jpg`)} alt="" fill sizes="(min-width:1024px) 640px, 90vw" className="scale-[1.05] object-cover mix-blend-multiply" />
       </div>
 
       <div className="pointer-events-none absolute inset-0" aria-label={`Landing sites on ${body === "mars" ? "Mars" : "the Moon"}`}>

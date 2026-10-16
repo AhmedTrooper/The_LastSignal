@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
+import { assetUrl } from "@thelastsignal/data";
 
 export const metadata = generateSEO({
   title: "Games | The Last Signal",
@@ -19,7 +20,7 @@ const GAMES: Game[] = [
     title: "Touchdown",
     text: "Land on Mars and the Moon and find the machines we left there.",
     href: "/games/landing",
-    icon: <Image src="/images/icon-touchdown.webp" alt="" width={256} height={256} className={tile} />,
+    icon: <Image src={assetUrl("images/icon-touchdown.webp")} alt="" width={256} height={256} className={tile} />,
   },
   {
     title: "Drive with a delay",

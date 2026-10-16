@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { type Body, type Hero, catNo, img, lifespan, portrait } from "@/lib/heroes";
+import { type Body, type Hero, catNo, img, lifespan, portrait, assetUrl } from "@/lib/heroes";
 import { Waveform } from "@/app/components/waveform";
 import MachinePhoto from "@/app/components/machine-photo";
 import { ArrowRight } from "@/app/components/icons";
@@ -228,7 +228,7 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
             </div>
             <div className="relative">
               {h.card ? (
-                <Image src={`/images/${h.card}.webp`} alt="" fill sizes="(min-width:768px) 16vw, 50vw" className="object-contain object-bottom p-3 transition-transform duration-700 group-hover:-translate-y-1" />
+                <Image src={assetUrl(`images/${h.card}.webp`)} alt="" fill sizes="(min-width:768px) 16vw, 50vw" className="object-contain object-bottom p-3 transition-transform duration-700 group-hover:-translate-y-1" />
               ) : (
                 <MachinePhoto name={h.image} ratio={0.75} fill={0.92} anchor={{ x: 48, y: 55 }} sizes="(min-width:768px) 16vw, 50vw" className="inset-0" />
               )}

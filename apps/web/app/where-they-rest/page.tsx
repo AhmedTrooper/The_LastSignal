@@ -1,4 +1,4 @@
-import { HEROES } from "@/lib/heroes";
+import { HEROES, assetUrl } from "@/lib/heroes";
 import { generateSEO } from "@/lib/seo";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
@@ -8,7 +8,7 @@ export const metadata = generateSEO({
   title: "Where They Rest: landing sites on Mars and the Moon | The Last Signal",
   description: "Resting among the stars. Find where every rover, lander and probe came to rest on Mars and the Moon.",
   path: "/where-they-rest",
-  ogImage: "/images/mars-globe.jpg",
+  ogImage: assetUrl("images/mars-globe.jpg"),
 });
 
 export default function WhereTheyRestPage() {

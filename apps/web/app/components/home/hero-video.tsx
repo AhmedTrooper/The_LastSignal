@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { assetUrl } from "@/lib/heroes";
 
-const POSTER = "/video/opportunity-poster.webp";
+const POSTER = assetUrl("video/opportunity-poster.webp");
 
 /**
  * Muted, looping background video for the home hero. Picks the 540p or 720p encode by
@@ -47,8 +48,8 @@ export default function HeroVideo({ className = "" }: { className?: string }) {
     >
       {size && (
         <>
-          <source src={`/video/opportunity-${size}.webm`} type="video/webm" />
-          <source src={`/video/opportunity-${size}.mp4`} type="video/mp4" />
+          <source src={assetUrl(`video/opportunity-${size}.webm`)} type="video/webm" />
+          <source src={assetUrl(`video/opportunity-${size}.mp4`)} type="video/mp4" />
         </>
       )}
     </video>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { type Hero, catNo, lifespan } from "@/lib/heroes";
+import { type Hero, catNo, lifespan, assetUrl } from "@/lib/heroes";
 import { Waveform } from "@/app/components/waveform";
 import MachinePhoto from "@/app/components/machine-photo";
 
@@ -17,7 +17,7 @@ export default function HeroCard({ hero, size = "md", priority = false }: { hero
     <div className={`pointer-events-none absolute -z-10 ${lg ? "right-0 bottom-0 h-[58%] w-full p-4 lg:h-[66%] lg:w-[76%]" : "inset-x-0 bottom-0 h-[48%] px-3 pb-3 sm:inset-y-0 sm:left-auto sm:h-auto sm:w-[56%] sm:py-4 sm:pr-3 sm:pl-0"}`}>
       <div className="relative h-full w-full">
         <Image
-          src={`/images/${hero.card}.webp`}
+          src={assetUrl(`images/${hero.card}.webp`)}
           alt=""
           fill
           priority={priority}

@@ -214,7 +214,7 @@ export const HEROES: Hero[] = [
       { title: "Liftoff", year: "21 July 1969", text: "The ascent stage carried Armstrong and Aldrin back to Michael Collins in lunar orbit. The descent stage was their launch pad.", image: N("as11-44-6642") },
       { title: "Seen from orbit", year: "2009", text: "NASA's Lunar Reconnaissance Orbiter photographed the landing site, where Eagle's descent stage is visible.", image: N("PIA12909") },
     ],
-    model: { src: "/models/apollo-lunar-module.glb", title: "Apollo Lunar Module", source: NASA3D("Apollo Lunar Module"), note: "The full Lunar Module. Its descent stage is the part that stayed at Tranquility Base." },
+    model: { src: assetUrl("models/apollo-lunar-module.glb"), title: "Apollo Lunar Module", source: NASA3D("Apollo Lunar Module"), note: "The full Lunar Module. Its descent stage is the part that stayed at Tranquility Base." },
     links: [
       { label: "NASA: Apollo 11", url: "https://www.nasa.gov/mission/apollo-11/" },
       { label: "Apollo Lunar Surface Journal", url: "https://www.nasa.gov/history/alsj/" },
@@ -330,7 +330,7 @@ export const HEROES: Hero[] = [
       { title: "Looking for life", year: "28 July 1976", text: "Its robot arm scooped the first soil samples into the biology laboratory. The results were inconclusive.", image: N("PIA00567") },
       { title: "Seen from orbit", year: "2006", text: "The lander, renamed the Thomas Mutch Memorial Station in 1982, was imaged from orbit by HiRISE.", image: N("PIA01881") },
     ],
-    model: { src: "/models/viking-lander.glb", title: "Viking Lander", source: NASA3D("Viking Lander"), note: "Viking 1 and Viking 2 landed identical landers." },
+    model: { src: assetUrl("models/viking-lander.glb"), title: "Viking Lander", source: NASA3D("Viking Lander"), note: "Viking 1 and Viking 2 landed identical landers." },
     links: [
       { label: "NASA Science: Viking 1", url: SCI("viking-1") },
       { label: "NSSDCA catalogue entry", url: NSSDCA("1975-075C") },
@@ -387,7 +387,7 @@ export const HEROES: Hero[] = [
       { title: "A different Mars", year: "1976", text: "Its first colour picture showed a field of rocks stretching to a flat horizon.", image: N("PIA00568") },
       { title: "Gerald Soffen Memorial Station", year: "2001", text: "The lander was renamed for Viking's project scientist. It was later imaged from orbit by HiRISE.", image: N("PIA01882") },
     ],
-    model: { src: "/models/viking-lander.glb", title: "Viking Lander", source: NASA3D("Viking Lander"), note: "Viking 1 and Viking 2 landed identical landers." },
+    model: { src: assetUrl("models/viking-lander.glb"), title: "Viking Lander", source: NASA3D("Viking Lander"), note: "Viking 1 and Viking 2 landed identical landers." },
     links: [
       { label: "NASA Science: Viking 2", url: SCI("viking-2") },
       { label: "NSSDCA catalogue entry", url: NSSDCA("1975-083C") },
@@ -551,7 +551,7 @@ export const HEROES: Hero[] = [
       { title: "Silica", year: "2007", text: "A dragging wheel churned up soil that was nearly pure silica.", image: N("PIA09491") },
       { title: "Troy", year: "2009–2010", text: "Wheels broke through a crust into soft sand and Spirit could not get free.", image: N("PIA12007") },
     ],
-    model: { src: "/models/mer-opportunity.glb", title: "Mars Exploration Rover", source: NASA3D("Mars Exploration Rover - Opportunity (MER-B)"), note: "NASA's model of Opportunity. Spirit was its identical twin." },
+    model: { src: assetUrl("models/mer-opportunity.glb"), title: "Mars Exploration Rover", source: NASA3D("Mars Exploration Rover - Opportunity (MER-B)"), note: "NASA's model of Opportunity. Spirit was its identical twin." },
     links: [
       { label: "NASA Science: Spirit", url: SCI("mer-spirit") },
       { label: "Mars Exploration Rovers mission page", url: SCI("mars-exploration-rovers-spirit-and-opportunity") },
@@ -640,7 +640,7 @@ export const HEROES: Hero[] = [
         { name: "Endeavour", x: 86, y: 56 },
       ],
     },
-    model: { src: "/models/mer-opportunity.glb", title: "Mars Exploration Rover (MER-B)", source: NASA3D("Mars Exploration Rover - Opportunity (MER-B)") },
+    model: { src: assetUrl("models/mer-opportunity.glb"), title: "Mars Exploration Rover (MER-B)", source: NASA3D("Mars Exploration Rover - Opportunity (MER-B)") },
     links: [
       { label: "NASA Science: Opportunity", url: SCI("mer-opportunity") },
       { label: "Mars Exploration Rovers mission page", url: SCI("mars-exploration-rovers-spirit-and-opportunity") },
@@ -865,7 +865,7 @@ export const HEROES: Hero[] = [
       { title: "Final selfie", year: "24 April 2022", text: "Much dustier now, on its 1,211th Martian day.", image: N("PIA25287") },
       { title: "One of the last images", year: "11 December 2022", text: "Its seismometer on the surface, photographed on the 1,436th Martian day.", image: N("PIA25680") },
     ],
-    model: { src: "/models/insight-lander.glb", title: "InSight lander (arm deployed)", source: NASA3D("InSight Cruise Lander") },
+    model: { src: assetUrl("models/insight-lander.glb"), title: "InSight lander (arm deployed)", source: NASA3D("InSight Cruise Lander") },
     links: [
       { label: "NASA Science: InSight", url: SCI("insight") },
       { label: "NSSDCA catalogue entry", url: NSSDCA("2018-042A") },
@@ -925,7 +925,7 @@ export const HEROES: Hero[] = [
       { title: "A broken blade", year: "18 January 2024", text: "After its 72nd flight it photographed the shadow of a damaged rotor blade.", image: N("PIA26243") },
       { title: "Final airfield", year: "February 2024", text: "Perseverance photographed Ingenuity where it completed its last flight.", image: N("PIA26236") },
     ],
-    model: { src: "/models/ingenuity.glb", title: "Ingenuity Mars Helicopter", source: NASA3D("Ingenuity Mars Helicopter") },
+    model: { src: assetUrl("models/ingenuity.glb"), title: "Ingenuity Mars Helicopter", source: NASA3D("Ingenuity Mars Helicopter") },
     links: [
       { label: "NASA Science: Ingenuity", url: SCI("mars-2020-perseverance/ingenuity-mars-helicopter") },
       { label: "NSSDCA catalogue entry", url: NSSDCA("2020-052A") },

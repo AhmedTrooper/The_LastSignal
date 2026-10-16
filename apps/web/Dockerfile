@@ -16,6 +16,8 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ARG NEXT_PUBLIC_ASSET_URL=https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev
+ENV NEXT_PUBLIC_ASSET_URL=$NEXT_PUBLIC_ASSET_URL
 RUN cd apps/web && bun run build
 
 # Stage 3: Runner

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HEROES, bodyName, getHero, lifespan, type Body, type Hero } from "@/lib/heroes";
+import { HEROES, bodyName, getHero, lifespan, type Body, type Hero, assetUrl } from "@/lib/heroes";
 import { photoMeta } from "@/lib/photos";
 import { PARTS } from "@/lib/parts";
 import ModelStudio from "@/app/components/profile/model-studio";
@@ -24,7 +24,7 @@ const pic = (name: string) => {
 };
 
 /** Transparent studio cut-out of a machine, or its portrait when there is none. */
-const cutout = (h: Hero) => (h.card ? `/images/${h.card}.webp` : pic(h.photo!).src);
+const cutout = (h: Hero) => (h.card ? assetUrl(`images/${h.card}.webp`) : pic(h.photo!).src);
 
 /** Names short enough to sit under a small circle. */
 const SHORT: Record<string, string> = {
@@ -122,14 +122,14 @@ const WORLD: Record<Body, { title: string; lede: string; panel: string; accent: 
     lede: "Landers, rovers and a helicopter, from Viking 1 in 1976 to Ingenuity in 2024.",
     panel: "bg-[#fff1e8]",
     accent: "text-mars",
-    texture: "bg-[url(/textures/mars-1024.jpg)]",
+    texture: assetUrl("textures/mars-1024.jpg"),
   },
   moon: {
     title: "The Lunar family",
     lede: "Probes that struck it on purpose, landers, and the first car driven on another world.",
     panel: "bg-[#eef2f7]",
     accent: "text-violet",
-    texture: "bg-[url(/textures/moon-1024.jpg)]",
+    texture: assetUrl("textures/moon-1024.jpg"),
   },
 };
 
@@ -156,7 +156,8 @@ function Orbit({ body }: { body: Body }) {
         <div aria-hidden className="absolute inset-[11%] rounded-full border-2 border-dashed border-ink/10" />
         <div
           aria-hidden
-          className={`planet absolute inset-[31%] rounded-full shadow-[inset_-18px_-10px_34px_rgba(0,0,0,0.5),0_20px_40px_-12px_rgba(0,0,0,0.3)] ${w.texture}`}
+          className="planet absolute inset-[31%] rounded-full shadow-[inset_-18px_-10px_34px_rgba(0,0,0,0.5),0_20px_40px_-12px_rgba(0,0,0,0.3)] bg-cover"
+          style={{ backgroundImage: `url(${w.texture})` }}
         />
         <ul>
           {list.map((h, i) => {
@@ -316,7 +317,7 @@ export function GameStrip() {
   return (
     <section className="mx-auto max-w-[1440px] px-4 pt-10 sm:px-8">
       <Link href="/games/landing" className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-3 pr-5 transition-colors hover:border-violet">
-        <Image src="/images/icon-touchdown.webp" alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-[22%]" />
+        <Image src={assetUrl("images/icon-touchdown.webp")} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-[22%]" />
         <p className="min-w-0 flex-1 text-[15px]">
           <span className="font-semibold">Touchdown</span>
           <span className="text-ink-soft"> · a short landing game on Mars and the Moon</span>

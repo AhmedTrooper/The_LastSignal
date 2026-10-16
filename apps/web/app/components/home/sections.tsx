@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HEROES, lifespan } from "@/lib/heroes";
+import { HEROES, lifespan, assetUrl } from "@/lib/heroes";
 import Globe from "@/app/components/globe";
 import { ArrowRight } from "@/app/components/icons";
 
@@ -27,7 +27,7 @@ export function Hero() {
         {/* The picture's own background is white; a soft mask melts its edges into the page. */}
         <div className="rise relative -mx-4 aspect-[3/2] sm:mx-0" style={{ animationDelay: "160ms" }}>
           <Image
-            src="/images/hero-family.webp"
+            src={assetUrl("images/hero-family.webp")}
             alt="AI-generated illustration of old Mars and Moon rovers, landers and a helicopter crowding in for a group selfie"
             fill
             priority

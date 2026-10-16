@@ -11,6 +11,7 @@ import { migrateLegacy, site as siteSave, stars, totals, useSave, writeSave, typ
 import { Compass, DescentHud, HoldButton, Icon, IconButton, Joystick, Radio, Stars, type CompassHandle, type HudHandle, type RadioHandle } from "./ui";
 import { Credits, Journal, SettingsSheet } from "./overlays";
 import { ArrowRight } from "@/app/components/icons";
+import { assetUrl } from "@thelastsignal/data";
 
 export type GameSite = {
   slug: string;
@@ -612,7 +613,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
       {screen === "title" && (
         <div className="absolute inset-0 z-20 flex items-center bg-[linear-gradient(90deg,rgba(4,3,12,0.92)_0%,rgba(4,3,12,0.55)_50%,rgba(4,3,12,0.1)_100%)]">
           <div className="tls-fade-in max-w-xl px-6 sm:px-14">
-            <Image src="/images/icon-touchdown.webp" alt="" width={96} height={96} priority className="mb-5 h-20 w-20 rounded-[22%] shadow-[0_10px_40px_rgba(91,46,255,0.5)] ring-1 ring-white/15 sm:h-24 sm:w-24" title="Illustration, AI-generated" />
+            <Image src={assetUrl("images/icon-touchdown.webp")} alt="" width={96} height={96} priority className="mb-5 h-20 w-20 rounded-[22%] shadow-[0_10px_40px_rgba(91,46,255,0.5)] ring-1 ring-white/15 sm:h-24 sm:w-24" title="Illustration, AI-generated" />
             <p className="font-mono text-xs tracking-[0.24em] text-white/60 uppercase">The Last Signal · a game</p>
             <h2 className="display mt-4 text-6xl leading-none sm:text-8xl">Touchdown</h2>
             <p className="mt-5 text-lg leading-relaxed text-white/80 sm:text-xl">A pilgrimage to the machines we left on Mars and the Moon. Fly each landing yourself, then drive to where they rest.</p>

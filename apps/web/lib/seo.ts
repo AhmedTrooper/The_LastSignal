@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { assetUrl } from "@thelastsignal/data";
 
 export const BASE_URL = "https://thelastsignal.org";
 
@@ -27,7 +28,7 @@ export function generateSEO({
   title,
   description,
   path = "",
-  ogImage = "/images/hero-opportunity.jpg",
+  ogImage = assetUrl("images/hero-opportunity.jpg"),
   keywords = [],
 }: SEOConfig): Metadata {
   const url = `${BASE_URL}${path}`;

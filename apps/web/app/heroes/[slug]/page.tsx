@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HEROES, bodyName, catNo, fmtDots, fmtLong, getHero, img, lifespan, portrait, type Hero } from "@/lib/heroes";
+import { HEROES, bodyName, catNo, fmtDots, fmtLong, getHero, img, lifespan, portrait, type Hero, assetUrl } from "@/lib/heroes";
 import { photo, type Photo } from "@/lib/photos";
 import { generateSEO } from "@/lib/seo";
 import { WIKI } from "@/lib/wiki";
@@ -74,7 +74,7 @@ function Sidebar({ hero, nav }: { hero: Hero; nav: { id: string; label: string }
         {hero.card ? (
           <figure>
             <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-white lg:aspect-[4/3]">
-              <Image src={`/images/${hero.card}.webp`} alt={`${hero.name}, illustration`} fill priority sizes="(min-width:1024px) 260px, 100vw" className="object-contain p-2" />
+              <Image src={assetUrl(`images/${hero.card}.webp`)} alt={`${hero.name}, illustration`} fill priority sizes="(min-width:1024px) 260px, 100vw" className="object-contain p-2" />
             </div>
             <figcaption className="mt-1 font-mono text-[10px] text-ink-soft">Illustration, AI-generated</figcaption>
           </figure>
@@ -134,7 +134,7 @@ function RouteMap({ route }: { route: NonNullable<Hero["route"]> }) {
   const pts = route.points.map((p) => `${p.x},${p.y}`).join(" ");
   return (
     <div className="relative isolate h-full min-h-[260px] overflow-hidden rounded-2xl bg-night p-5 text-white sm:p-6">
-      <Image src="/images/nasa/PIA08812.jpg" alt="" fill sizes="(min-width:1024px) 45vw, 100vw" className="-z-10 object-cover" />
+      <Image src={assetUrl("images/nasa/PIA08812.jpg")} alt="" fill sizes="(min-width:1024px) 45vw, 100vw" className="-z-10 object-cover" />
       <div className="absolute inset-0 -z-10 bg-black/45" />
       <div className="flex items-start justify-between">
         <h3 className="display text-[28px] sm:text-[34px]">Route</h3>
@@ -175,7 +175,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   const eyes = EYES[hero.slug];
   const film = STORIES[hero.slug];
   const model: StudioSource = hero.model
-    ? { kind: "glb", src: hero.model.src, title: hero.model.title, credit: "NASA 3D Resources", source: hero.model.source, note: hero.model.note }
+    ? { kind: "glb", src: assetUrl(hero.model.src), title: hero.model.title, credit: "NASA 3D Resources", source: hero.model.source, note: hero.model.note }
     : { kind: "built", slug: hero.slug };
 
   // Sections present for this hero, in the order its life calls for.
