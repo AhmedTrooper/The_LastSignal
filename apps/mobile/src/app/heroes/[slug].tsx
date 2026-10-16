@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { Image } from "expo-image";
@@ -21,6 +22,7 @@ import { HeroFilmBanner } from "@/features/heroes/components/profile/HeroFilmBan
 import { HeroExplore } from "@/features/heroes/components/profile/HeroExplore";
 import {
   LAYOUTS,
+  SECTION_LABEL,
   catNo,
   fmtCoords,
   fmtLong,
@@ -43,6 +45,10 @@ export default function HeroDetailScreen() {
   const hero = useHero(slug ?? "");
   const isFav = useFavoritesStore((s) => s.isFavorite(slug ?? ""));
   const toggleFav = useFavoritesStore((s) => s.toggleFavorite);
+
+  const scrollRef = useRef<ScrollView>(null);
+  const sectionOffsets = useRef<Record<string, number>>({});
+  const [activeSection, setActiveSection] = useState<string>("model");
 
   if (!hero) {
     return (
@@ -138,6 +144,7 @@ export default function HeroDetailScreen() {
         }}
       />
       <ScrollView
+        ref={scrollRef}
         style={styles.container}
         contentInsetAdjustmentBehavior="never"
         contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 40 }]}
@@ -199,15 +206,78 @@ export default function HeroDetailScreen() {
           </View>
         </View>
 
+        {/* Quick Section Navigation Chips */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.sectionNav}
+        >
+          {layoutOrder
+            .filter((id) => Boolean(SECTION_LABEL[id]) && id !== "news" && id !== "eyes" && id !== "documentary")
+            .map((id) => (
+              <Pressable
+                key={id}
+                onPress={() => {
+                  setActiveSection(id);
+                  const y = sectionOffsets.current[id];
+                  if (y !== undefined) {
+                    scrollRef.current?.scrollTo({ y: y + 250, animated: true });
+                  }
+                }}
+                style={[styles.sectionChip, activeSection === id && styles.sectionChipActive]}
+              >
+                <ThemedText
+                  style={[styles.sectionChipText, activeSection === id && styles.sectionChipTextActive]}
+                  type="small"
+                >
+                  {SECTION_LABEL[id]}
+                </ThemedText>
+              </Pressable>
+            ))}
+          <Pressable
+            onPress={() => {
+              setActiveSection("specs");
+              const y = sectionOffsets.current["specs"];
+              if (y !== undefined) {
+                scrollRef.current?.scrollTo({ y: y + 250, animated: true });
+              }
+            }}
+            style={[styles.sectionChip, activeSection === "specs" && styles.sectionChipActive]}
+          >
+            <ThemedText
+              style={[styles.sectionChipText, activeSection === "specs" && styles.sectionChipTextActive]}
+              type="small"
+            >
+              Hardware Specs
+            </ThemedText>
+          </Pressable>
+        </ScrollView>
+
         {/* Dynamic Layout Sections */}
         <View style={styles.sectionsContainer}>
-          {layoutOrder.map((sectionId) => renderSection(sectionId))}
-
-          {/* Unified Media Section (Videos, News, Eyes) */}
-          <HeroMedia hero={hero} />
+          {layoutOrder.map((sectionId) => {
+            const content = renderSection(sectionId);
+            if (!content) return null;
+            return (
+              <View
+                key={sectionId}
+                onLayout={(e) => {
+                  sectionOffsets.current[sectionId] = e.nativeEvent.layout.y;
+                }}
+              >
+                {content}
+              </View>
+            );
+          })}
 
           {/* Hardware Specifications */}
-          <HeroSpecs hero={hero} />
+          <View
+            onLayout={(e) => {
+              sectionOffsets.current["specs"] = e.nativeEvent.layout.y;
+            }}
+          >
+            <HeroSpecs hero={hero} />
+          </View>
         </View>
       </ScrollView>
     </>
@@ -375,5 +445,31 @@ const styles = StyleSheet.create({
   lostCoords: {
     color: "#a78bfa",
     fontFamily: "monospace",
+  },
+  sectionNav: {
+    gap: 8,
+    paddingVertical: 2,
+    marginBottom: 4,
+  },
+  sectionChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: Colors.light.backgroundElement,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+  },
+  sectionChipActive: {
+    backgroundColor: Colors.light.violet,
+    borderColor: Colors.light.violet,
+  },
+  sectionChipText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: Colors.light.text,
+  },
+  sectionChipTextActive: {
+    color: "#ffffff",
+    fontWeight: "700",
   },
 });
