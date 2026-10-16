@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
+import { haptic } from "@/utils/haptics";
 import { useHero } from "@/features/heroes/hooks/useHeroes";
 import { useFavoritesStore } from "@/stores/use-favorites-store";
 import { HeroSpecs } from "@/features/heroes/components/HeroSpecs";
@@ -133,7 +134,13 @@ export default function HeroDetailScreen() {
         options={{
           title: hero.name,
           headerRight: () => (
-            <Pressable onPress={() => toggleFav(hero.slug)} style={styles.favBtn}>
+            <Pressable
+              onPress={() => {
+                haptic.light();
+                toggleFav(hero.slug);
+              }}
+              style={styles.favBtn}
+            >
               <Ionicons
                 name={isFav ? "bookmark" : "bookmark-outline"}
                 size={22}
@@ -218,6 +225,7 @@ export default function HeroDetailScreen() {
               <Pressable
                 key={id}
                 onPress={() => {
+                  haptic.light();
                   setActiveSection(id);
                   const y = sectionOffsets.current[id];
                   if (y !== undefined) {
@@ -236,6 +244,7 @@ export default function HeroDetailScreen() {
             ))}
           <Pressable
             onPress={() => {
+              haptic.light();
               setActiveSection("specs");
               const y = sectionOffsets.current["specs"];
               if (y !== undefined) {

@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import { ThemedText } from "@/components/themed-text";
 import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
+import { haptic } from "@/utils/haptics";
 import { HEROES, fmtDots, portrait, assetUrl } from "@thelastsignal/data";
 import { useTributesStore } from "@/stores/use-tributes-store";
 
@@ -18,6 +19,7 @@ export function TributesView() {
 
   const handleSubmit = () => {
     if (!message.trim()) return;
+    haptic.success();
     addTribute(hero.slug, author, message);
     setMessage("");
     setAuthor("");

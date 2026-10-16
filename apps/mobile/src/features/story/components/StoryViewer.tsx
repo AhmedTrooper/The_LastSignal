@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
+import { haptic } from "@/utils/haptics";
 import {
   STORIES,
   catNo,
@@ -70,17 +71,20 @@ export function StoryViewer({ hero }: Props) {
 
   const handleNext = () => {
     if (!isLast) {
+      haptic.light();
       setCurrentIndex((prev) => Math.min(prev + 1, scenes.length - 1));
     }
   };
 
   const handlePrev = () => {
     if (!isFirst) {
+      haptic.light();
       setCurrentIndex((prev) => Math.max(prev - 1, 0));
     }
   };
 
   const handleNextHero = () => {
+    haptic.light();
     setCurrentIndex(0);
     router.replace(`/heroes/${next.slug}/story`);
   };
