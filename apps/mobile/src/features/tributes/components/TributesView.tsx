@@ -1,122 +1,315 @@
 import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
+import {
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { Image } from "expo-image";
+import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
 import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { haptic } from "@/utils/haptics";
-import { HEROES, fmtDots, portrait, assetUrl } from "@thelastsignal/data";
+import { HEROES, catNo, fmtDots, portrait, assetUrl } from "@thelastsignal/data";
 import { useTributesStore } from "@/stores/use-tributes-store";
+
+const TRIBUTE_PROMPTS = [
+  "Rest easy beneath the dust ✦",
+  "Thank you for 45 km of wonder 🚀",
+  "Humanity will come find you 🌌",
+  "Fair winds across alien skies 🪐",
+];
 
 export function TributesView() {
   const [selectedSlug, setSelectedSlug] = useState("opportunity");
   const [author, setAuthor] = useState("");
   const [message, setMessage] = useState("");
+  const [isTransmitting, setIsTransmitting] = useState(false);
+  const [likedTributes, setLikedTributes] = useState<Record<string, boolean>>({});
+  const [refreshing, setRefreshing] = useState(false);
 
   const hero = HEROES.find((h) => h.slug === selectedSlug) ?? HEROES[0];
   const { addTribute, tributes } = useTributesStore();
   const heroTributes = tributes.filter((t) => t.heroSlug === hero.slug);
+  const isMars = hero.body === "mars";
+
+  const handleRefresh = () => {
+    haptic.light();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      haptic.success();
+    }, 600);
+  };
+
+  const handleSelectHero = (slug: string) => {
+    haptic.selection();
+    setSelectedSlug(slug);
+  };
+
+  const handleSelectPrompt = (prompt: string) => {
+    haptic.light();
+    setMessage((prev) => (prev ? `${prev} ${prompt}` : prompt));
+  };
+
+  const handleToggleLike = (id: string) => {
+    haptic.light();
+    setLikedTributes((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const handleSubmit = () => {
-    if (!message.trim()) return;
-    haptic.success();
-    addTribute(hero.slug, author, message);
-    setMessage("");
-    setAuthor("");
+    if (!message.trim() || isTransmitting) return;
+    setIsTransmitting(true);
+    haptic.light();
+
+    setTimeout(() => {
+      addTribute(hero.slug, author, message);
+      haptic.success();
+      setMessage("");
+      setAuthor("");
+      setIsTransmitting(false);
+    }, 500);
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          tintColor={Colors.light.violet}
+          colors={[Colors.light.violet]}
+        />
+      }
+    >
       <View style={styles.header}>
-        <ThemedText style={styles.eyebrow} type="small">TRIBUTES</ThemedText>
-        <ThemedText style={styles.title} type="title">In their memory.</ThemedText>
+        <ThemedText style={styles.eyebrow} type="small">
+          MEMORIAL CARRIER
+        </ThemedText>
+        <ThemedText style={styles.title} type="title">
+          Signals of Remembrance
+        </ThemedText>
         <ThemedText style={styles.subtitle} type="small">
-          Leave a message for the machines that went where we couldn&apos;t.
+          Transmit a tribute to the robotic pioneers resting quietly across the solar system.
         </ThemedText>
       </View>
 
       {/* Hero Selector Carousel */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.carousel}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.carousel}
+      >
         {HEROES.map((h) => {
           const isSelected = h.slug === hero.slug;
           const imageUrl = assetUrl(`images/${portrait(h)}.jpg`);
           return (
             <Pressable
               key={h.slug}
-              onPress={() => setSelectedSlug(h.slug)}
-              style={[styles.pill, isSelected && styles.pillActive]}
+              onPress={() => handleSelectHero(h.slug)}
+              style={({ pressed }) => [
+                styles.pill,
+                isSelected && styles.pillActive,
+                pressed && styles.btnPressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={`Select ${h.name}`}
             >
-              <Image source={{ uri: imageUrl }} style={styles.pillAvatar} contentFit="cover" />
-              <ThemedText style={[styles.pillText, isSelected && styles.pillTextActive]} type="small">
+              <Image
+                source={{ uri: imageUrl }}
+                style={styles.pillAvatar}
+                contentFit="cover"
+              />
+              <ThemedText
+                style={[styles.pillText, isSelected && styles.pillTextActive]}
+                type="small"
+              >
                 {h.name}
               </ThemedText>
+              {isSelected && <View style={styles.activeDot} />}
             </Pressable>
           );
         })}
       </ScrollView>
 
-      {/* Hero Signal Card */}
+      {/* Hero Last Signal Terminal Card */}
       <View style={styles.signalCard}>
-        <ThemedText style={styles.signalEndLabel} type="small">
-          {hero.end.label.toUpperCase()} · {fmtDots(hero.end.date)}
-        </ThemedText>
+        <View style={styles.signalTopRow}>
+          <View style={styles.signalStatusWrap}>
+            <View style={[styles.beaconDot, isMars ? styles.marsDot : styles.moonDot]} />
+            <ThemedText style={styles.signalEndLabel} type="small">
+              {hero.end.label.toUpperCase()} · {fmtDots(hero.end.date)}
+            </ThemedText>
+          </View>
+          <ThemedText style={styles.specimenBadge} type="small">
+            {catNo(hero.no)}
+          </ThemedText>
+        </View>
+
         <ThemedText style={styles.signalName}>{hero.name}</ThemedText>
         <ThemedText style={styles.signalStory}>{hero.end.story}</ThemedText>
-        <Waveform seed={`${hero.slug}-last`} bars={36} fade={0.3} color="#a78bfa" height={22} style={{ marginTop: 12 }} />
+
+        <View style={styles.waveformWrap}>
+          <ThemedText style={styles.waveformLabel} type="small">
+            CARRIER TELEMETRY FREQUENCY
+          </ThemedText>
+          <Waveform
+            seed={`${hero.slug}-tributes-last`}
+            bars={38}
+            fade={0.3}
+            color="#a78bfa"
+            height={20}
+          />
+        </View>
       </View>
 
-      {/* Compose Tribute Form */}
+      {/* Compose Tribute Station */}
       <View style={styles.formCard}>
-        <ThemedText style={styles.formTitle} type="subtitle">Leave a Tribute for {hero.name}</ThemedText>
+        <View style={styles.formHeaderRow}>
+          <Ionicons name="radio" size={18} color={Colors.light.violet} />
+          <ThemedText style={styles.formTitle} type="subtitle">
+            Transmit Signal to {hero.name}
+          </ThemedText>
+        </View>
+
         <TextInput
           style={styles.input}
-          placeholder="Your name or callsign (optional)"
+          placeholder="Your name or callsign (e.g. Earth Observer)"
           placeholderTextColor={Colors.light.textSecondary}
           value={author}
           onChangeText={setAuthor}
         />
+
         <TextInput
           style={[styles.input, styles.textArea]}
-          placeholder="Write your message..."
+          placeholder={`Write your message to ${hero.name}...`}
           placeholderTextColor={Colors.light.textSecondary}
           value={message}
           onChangeText={setMessage}
           multiline
           numberOfLines={3}
         />
+
+        {/* Quick Suggestion Chips */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.promptRow}
+        >
+          {TRIBUTE_PROMPTS.map((p) => (
+            <Pressable
+              key={p}
+              onPress={() => handleSelectPrompt(p)}
+              style={({ pressed }) => [
+                styles.promptChip,
+                pressed && styles.btnPressed,
+              ]}
+            >
+              <ThemedText style={styles.promptText} type="small">
+                {p}
+              </ThemedText>
+            </Pressable>
+          ))}
+        </ScrollView>
+
         <Pressable
           onPress={handleSubmit}
+          disabled={!message.trim() || isTransmitting}
           style={({ pressed }) => [
             styles.submitBtn,
-            (!message.trim() || pressed) && styles.submitBtnDisabled,
+            (!message.trim() || isTransmitting) && styles.submitBtnDisabled,
+            pressed && !isTransmitting && styles.btnPressed,
           ]}
-          disabled={!message.trim()}
+          accessibilityRole="button"
+          accessibilityLabel="Transmit tribute message"
         >
-          <ThemedText style={styles.submitBtnText}>Post Tribute</ThemedText>
+          <Ionicons
+            name={isTransmitting ? "hourglass-outline" : "paper-plane-outline"}
+            size={16}
+            color="#ffffff"
+          />
+          <ThemedText style={styles.submitBtnText}>
+            {isTransmitting ? "Broadcasting to Space..." : "Broadcast Tribute Signal"}
+          </ThemedText>
         </Pressable>
       </View>
 
-      {/* Tribute Wall List */}
+      {/* Community Tribute Wall */}
       <View style={styles.wallSection}>
-        <ThemedText style={styles.wallTitle} type="subtitle">
-          Tributes ({heroTributes.length})
-        </ThemedText>
+        <View style={styles.wallHeaderRow}>
+          <ThemedText style={styles.wallTitle} type="subtitle">
+            Transmissions Received ({heroTributes.length})
+          </ThemedText>
+          <ThemedText style={styles.wallHeroTag} type="small">
+            For {hero.name}
+          </ThemedText>
+        </View>
+
         {heroTributes.length === 0 ? (
           <View style={styles.emptyWall}>
+            <Ionicons name="chatbubbles-outline" size={32} color={Colors.light.violet} />
+            <ThemedText style={styles.emptyTitle}>No signals recorded yet</ThemedText>
             <ThemedText style={styles.emptyText} type="small">
-              No tributes left for {hero.name} yet. Be the first to leave one.
+              Be the first to broadcast a tribute message across space to {hero.name}.
             </ThemedText>
           </View>
         ) : (
-          heroTributes.map((item) => (
-            <View key={item.id} style={styles.tributeCard}>
-              <View style={styles.tributeHeader}>
-                <ThemedText style={styles.tributeAuthor}>{item.name}</ThemedText>
-                <ThemedText style={styles.tributeDate} type="small">{item.date}</ThemedText>
+          heroTributes.map((item) => {
+            const isLiked = likedTributes[item.id];
+            return (
+              <View key={item.id} style={styles.tributeCard}>
+                <View style={styles.tributeHeader}>
+                  <View style={styles.authorBadgeRow}>
+                    <Ionicons name="person-circle-outline" size={18} color={Colors.light.violet} />
+                    <ThemedText style={styles.tributeAuthor}>{item.name}</ThemedText>
+                  </View>
+                  <ThemedText style={styles.tributeDate} type="small">
+                    {item.date}
+                  </ThemedText>
+                </View>
+
+                <ThemedText style={styles.tributeMessage}>
+                  &ldquo;{item.message}&rdquo;
+                </ThemedText>
+
+                <View style={styles.tributeFooter}>
+                  <ThemedText style={styles.carrierTag} type="small">
+                    DEEP SPACE RELAY · VERIFIED
+                  </ThemedText>
+
+                  <Pressable
+                    onPress={() => handleToggleLike(item.id)}
+                    style={({ pressed }) => [
+                      styles.likeBtn,
+                      isLiked && styles.likeBtnActive,
+                      pressed && styles.btnPressed,
+                    ]}
+                  >
+                    <Ionicons
+                      name={isLiked ? "heart" : "heart-outline"}
+                      size={15}
+                      color={isLiked ? "#ef4444" : Colors.light.textSecondary}
+                    />
+                    <ThemedText
+                      style={[
+                        styles.likeBtnText,
+                        isLiked && styles.likeBtnTextActive,
+                      ]}
+                      type="small"
+                    >
+                      {isLiked ? "1" : "0"}
+                    </ThemedText>
+                  </Pressable>
+                </View>
               </View>
-              <ThemedText style={styles.tributeMessage}>{item.message}</ThemedText>
-            </View>
-          ))
+            );
+          })
         )}
       </View>
     </ScrollView>
@@ -136,14 +329,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     gap: 6,
   },
+  btnPressed: {
+    opacity: 0.88,
+    transform: [{ scale: 0.97 }],
+  },
   eyebrow: {
     color: Colors.light.violet,
-    fontWeight: "700",
+    fontWeight: "800",
     letterSpacing: 1.5,
   },
   title: {
     fontSize: 28,
-    fontWeight: "800",
+    fontWeight: "900",
     lineHeight: 34,
   },
   subtitle: {
@@ -161,7 +358,7 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingLeft: 4,
     paddingRight: 14,
-    paddingVertical: 4,
+    paddingVertical: 5,
     borderRadius: 24,
     backgroundColor: Colors.light.backgroundElement,
     borderWidth: 1,
@@ -182,108 +379,217 @@ const styles = StyleSheet.create({
   },
   pillTextActive: {
     color: "#ffffff",
+    fontWeight: "700",
+  },
+  activeDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: "#ffffff",
   },
   signalCard: {
-    backgroundColor: "#0c0a22",
-    borderRadius: 20,
+    backgroundColor: "#070814",
+    borderRadius: 24,
     padding: 20,
-    marginVertical: 12,
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: "rgba(167, 139, 250, 0.25)",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 4,
+    gap: 8,
+  },
+  signalTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  signalStatusWrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  beaconDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  marsDot: {
+    backgroundColor: Colors.light.mars,
+  },
+  moonDot: {
+    backgroundColor: "#a78bfa",
   },
   signalEndLabel: {
     color: "#a78bfa",
     fontFamily: "monospace",
-    fontSize: 12,
-    fontWeight: "700",
-    letterSpacing: 1,
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.8,
+  },
+  specimenBadge: {
+    color: "rgba(255, 255, 255, 0.6)",
+    fontFamily: "monospace",
+    fontSize: 11,
   },
   signalName: {
     color: "#ffffff",
-    fontSize: 24,
-    fontWeight: "800",
-    marginTop: 4,
-    marginBottom: 8,
+    fontSize: 26,
+    fontWeight: "900",
+    marginTop: 2,
   },
   signalStory: {
-    color: "rgba(255, 255, 255, 0.8)",
+    color: "rgba(255, 255, 255, 0.85)",
     lineHeight: 22,
     fontSize: 14,
   },
+  waveformWrap: {
+    marginTop: 6,
+    gap: 4,
+  },
+  waveformLabel: {
+    color: "rgba(167, 139, 250, 0.8)",
+    fontFamily: "monospace",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 0.6,
+  },
   formCard: {
-    backgroundColor: Colors.light.backgroundElement,
-    borderRadius: 20,
+    backgroundColor: "#ffffff",
+    borderRadius: 22,
     padding: 18,
     marginVertical: 12,
     borderWidth: 1,
     borderColor: Colors.light.line,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
+    gap: 10,
+  },
+  formHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   formTitle: {
     fontSize: 16,
-    fontWeight: "700",
-    marginBottom: 12,
+    fontWeight: "800",
+    color: Colors.light.text,
   },
   input: {
-    backgroundColor: "#ffffff",
+    backgroundColor: Colors.light.backgroundElement,
     borderWidth: 1,
     borderColor: Colors.light.line,
-    borderRadius: 12,
+    borderRadius: 14,
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingVertical: 11,
     fontSize: 14,
     color: Colors.light.text,
-    marginBottom: 10,
   },
   textArea: {
-    minHeight: 74,
+    minHeight: 80,
     textAlignVertical: "top",
   },
+  promptRow: {
+    gap: 8,
+    paddingVertical: 2,
+  },
+  promptChip: {
+    backgroundColor: "#f5f3ff",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#ede9fe",
+  },
+  promptText: {
+    color: Colors.light.violet,
+    fontSize: 11,
+    fontWeight: "600",
+  },
   submitBtn: {
-    backgroundColor: Colors.light.violet,
-    borderRadius: 12,
-    paddingVertical: 12,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    backgroundColor: Colors.light.violet,
+    borderRadius: 14,
+    paddingVertical: 13,
     marginTop: 4,
   },
   submitBtnDisabled: {
-    opacity: 0.6,
+    opacity: 0.55,
   },
   submitBtnText: {
     color: "#ffffff",
-    fontWeight: "700",
-    fontSize: 15,
+    fontWeight: "800",
+    fontSize: 14,
   },
   wallSection: {
-    marginTop: 16,
+    marginTop: 12,
     gap: 12,
+  },
+  wallHeaderRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
   },
   wallTitle: {
     fontSize: 18,
+    fontWeight: "800",
+  },
+  wallHeroTag: {
+    color: Colors.light.violet,
     fontWeight: "700",
+    fontFamily: "monospace",
   },
   emptyWall: {
-    padding: 24,
+    padding: 30,
     alignItems: "center",
     backgroundColor: Colors.light.backgroundElement,
-    borderRadius: 16,
+    borderRadius: 20,
+    gap: 6,
+  },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: Colors.light.text,
+    marginTop: 4,
   },
   emptyText: {
     color: Colors.light.textSecondary,
     textAlign: "center",
+    lineHeight: 18,
   },
   tributeCard: {
     backgroundColor: "#ffffff",
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 16,
     borderWidth: 1,
     borderColor: Colors.light.line,
-    gap: 6,
+    gap: 8,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
+    elevation: 2,
   },
   tributeHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
+  authorBadgeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
   tributeAuthor: {
-    fontWeight: "700",
+    fontWeight: "800",
     fontSize: 14,
     color: Colors.light.violet,
   },
@@ -294,7 +600,42 @@ const styles = StyleSheet.create({
   },
   tributeMessage: {
     color: Colors.light.text,
-    lineHeight: 20,
+    lineHeight: 21,
     fontSize: 14,
+    fontStyle: "italic",
+  },
+  tributeFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: Colors.light.line,
+  },
+  carrierTag: {
+    fontFamily: "monospace",
+    color: Colors.light.textSecondary,
+    fontSize: 10,
+    letterSpacing: 0.5,
+  },
+  likeBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    backgroundColor: Colors.light.backgroundElement,
+  },
+  likeBtnActive: {
+    backgroundColor: "#fef2f2",
+  },
+  likeBtnText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: Colors.light.textSecondary,
+  },
+  likeBtnTextActive: {
+    color: "#ef4444",
   },
 });
