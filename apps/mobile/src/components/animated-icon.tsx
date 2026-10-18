@@ -1,12 +1,12 @@
 import { Image } from 'expo-image';
 import * as SplashScreen from 'expo-splash-screen';
 import { useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Animated, { Easing, Keyframe } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import { Waveform } from '@/components/Waveform';
 
-const INITIAL_SCALE_FACTOR = Dimensions.get('screen').height / 90;
-const DURATION = 600;
+const DURATION = 500;
 
 export function AnimatedSplashOverlay() {
   const [animate, setAnimate] = useState(false);
@@ -16,24 +16,44 @@ export function AnimatedSplashOverlay() {
 
   const splashKeyframe = new Keyframe({
     0: {
+      opacity: 1,
       transform: [{ scale: 1 }],
-      opacity: 1,
-    },
-    20: {
-      opacity: 1,
     },
     70: {
-      opacity: 0,
-      easing: Easing.elastic(0.7),
+      opacity: 0.8,
+      transform: [{ scale: 1.02 }],
     },
     100: {
       opacity: 0,
-      transform: [{ scale: 1 }],
-      easing: Easing.elastic(0.7),
+      transform: [{ scale: 1.04 }],
+      easing: Easing.out(Easing.cubic),
     },
   });
 
-  const image = <Image style={styles.image} source={require('@/assets/images/splash-icon.png')} contentFit="contain" />;
+  const splashContent = (
+    <View style={styles.splashContent}>
+      <View style={styles.iconWrapper}>
+        <View style={styles.pulseRing} />
+        <Image
+          style={styles.image}
+          source={require('@/assets/images/splash-icon.png')}
+          contentFit="contain"
+        />
+      </View>
+
+      <View style={styles.textContainer}>
+        <Text style={styles.splashTitle}>THE LAST SIGNAL</Text>
+        <Text style={styles.splashSub}>MARS &amp; LUNAR ROBOTIC MEMORIAL</Text>
+      </View>
+
+      <View style={styles.badgePill}>
+        <View style={styles.beaconDot} />
+        <Text style={styles.badgeText}>8415.5 MHz • CARRIER LOCK</Text>
+      </View>
+
+      <Waveform seed="carrier-lock" bars={24} color="#38bdf8" height={16} style={styles.carrierWave} />
+    </View>
+  );
 
   return animate ? (
     <Animated.View
@@ -44,7 +64,7 @@ export function AnimatedSplashOverlay() {
         }
       })}
       style={styles.splashOverlay}>
-      {image}
+      {splashContent}
     </Animated.View>
   ) : (
     <View
@@ -54,90 +74,12 @@ export function AnimatedSplashOverlay() {
         });
       }}
       style={styles.splashOverlay}>
-      {image}
-    </View>
-  );
-}
-
-const keyframe = new Keyframe({
-  0: {
-    transform: [{ scale: INITIAL_SCALE_FACTOR }],
-  },
-  100: {
-    transform: [{ scale: 1 }],
-    easing: Easing.elastic(0.7),
-  },
-});
-
-const logoKeyframe = new Keyframe({
-  0: {
-    transform: [{ scale: 1.3 }],
-    opacity: 0,
-  },
-  40: {
-    transform: [{ scale: 1.3 }],
-    opacity: 0,
-    easing: Easing.elastic(0.7),
-  },
-  100: {
-    opacity: 1,
-    transform: [{ scale: 1 }],
-    easing: Easing.elastic(0.7),
-  },
-});
-
-const glowKeyframe = new Keyframe({
-  0: {
-    transform: [{ rotateZ: '0deg' }],
-  },
-  100: {
-    transform: [{ rotateZ: '7200deg' }],
-  },
-});
-
-export function AnimatedIcon() {
-  return (
-    <View style={styles.iconContainer}>
-      <Animated.View entering={glowKeyframe.duration(60 * 1000 * 4)} style={styles.glow}>
-        <Image style={styles.glow} source={require('@/assets/images/logo-glow.png')} />
-      </Animated.View>
-
-      <Animated.View entering={keyframe.duration(DURATION)} style={styles.background} />
-      <Animated.View style={styles.imageContainer} entering={logoKeyframe.duration(DURATION)}>
-        <Image style={styles.image} source={require('@/assets/images/splash-icon.png')} contentFit="contain" />
-      </Animated.View>
+      {splashContent}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  glow: {
-    width: 201,
-    height: 201,
-    position: 'absolute',
-  },
-  iconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 140,
-    height: 140,
-    zIndex: 100,
-  },
-  image: {
-    width: 140,
-    height: 140,
-  },
-  background: {
-    borderRadius: 40,
-    backgroundColor: '#070814',
-    width: 140,
-    height: 140,
-    position: 'absolute',
-  },
   splashOverlay: {
     ...StyleSheet.absoluteFill,
     backgroundColor: '#070814',
@@ -145,4 +87,76 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 1000,
   },
+  splashContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    paddingHorizontal: 24,
+  },
+  iconWrapper: {
+    width: 150,
+    height: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  pulseRing: {
+    position: 'absolute',
+    width: 146,
+    height: 146,
+    borderRadius: 73,
+    borderWidth: 1.5,
+    borderColor: 'rgba(56, 189, 248, 0.25)',
+  },
+  image: {
+    width: 140,
+    height: 140,
+  },
+  textContainer: {
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 4,
+  },
+  splashTitle: {
+    color: '#ffffff',
+    fontSize: 22,
+    fontWeight: '900',
+    letterSpacing: 4,
+    textAlign: 'center',
+  },
+  splashSub: {
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 2,
+    textAlign: 'center',
+  },
+  badgePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: 'rgba(56, 189, 248, 0.1)',
+    borderColor: 'rgba(56, 189, 248, 0.25)',
+    borderWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 999,
+  },
+  beaconDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#38bdf8',
+  },
+  badgeText: {
+    color: '#38bdf8',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+  },
+  carrierWave: {
+    marginTop: 8,
+    opacity: 0.8,
+  },
 });
+

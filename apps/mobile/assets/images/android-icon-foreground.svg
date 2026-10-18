@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Signal Pulse Glow -->
+    <radialGradient id="fgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="1" />
+      <stop offset="35%" stop-color="#818cf8" stop-opacity="0.6" />
+      <stop offset="70%" stop-color="#c084fc" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Golden Dish Gradient -->
+    <linearGradient id="fgGoldDish" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="30%" stop-color="#fbbf24" />
+      <stop offset="70%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <!-- Transmit Wave Gradient -->
+    <linearGradient id="fgWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+
+    <filter id="fgFilter" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="fgCoreGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Scale and center inside the 66% Adaptive Icon Safe Zone (center: 256, 260) -->
+  <g transform="translate(256, 262) scale(0.72)">
+    <!-- Radiating Broadcast Waves (Expanding Upward) -->
+    <g fill="none" stroke-linecap="round" filter="url(#fgFilter)">
+      <!-- Outer Wave -->
+      <path d="M -180 -120 A 180 180 0 0 1 180 -120" stroke="url(#fgWaveGrad)" stroke-width="5" opacity="0.5" />
+      <!-- Mid Wave -->
+      <path d="M -130 -80 A 130 130 0 0 1 130 -80" stroke="url(#fgWaveGrad)" stroke-width="7" opacity="0.8" />
+      <!-- Inner Primary Wave -->
+      <path d="M -75 -40 A 75 75 0 0 1 75 -40" stroke="#38bdf8" stroke-width="9" opacity="0.95" />
+    </g>
+
+    <!-- Beacon Pulse Glow Core -->
+    <circle cx="0" cy="0" r="46" fill="url(#fgGlow)" filter="url(#fgCoreGlow)" />
+
+    <!-- Parabolic Dish Receiver / Deep Space Transmitter -->
+    <g id="fgDish">
+      <!-- Dish Back Structure Rim -->
+      <ellipse cx="0" cy="95" rx="112" ry="46" fill="#1b153b" stroke="url(#fgGoldDish)" stroke-width="9.5" />
+      <!-- Inner Reflective Surface -->
+      <ellipse cx="0" cy="93" rx="98" ry="36" fill="#2a1254" opacity="0.8" />
+      <ellipse cx="0" cy="91" rx="90" ry="30" fill="none" stroke="#fde047" stroke-width="2.8" opacity="0.85" />
+
+      <!-- Antenna Sub-Reflector Feed Boom Struts -->
+      <line x1="-72" y1="105" x2="0" y2="0" stroke="#fef08a" stroke-width="4.8" stroke-linecap="round" />
+      <line x1="72" y1="105" x2="0" y2="0" stroke="#fef08a" stroke-width="4.8" stroke-linecap="round" />
+      <line x1="0" y1="115" x2="0" y2="0" stroke="#d97706" stroke-width="3.8" />
+
+      <!-- Central Pulsar Transmitter Emitter -->
+      <circle cx="0" cy="0" r="16" fill="#38bdf8" />
+      <circle cx="0" cy="0" r="8" fill="#ffffff" />
+      <!-- Light Cross Glint -->
+      <line x1="-28" y1="0" x2="28" y2="0" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" opacity="0.95" />
+      <line x1="0" y1="-28" x2="0" y2="28" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" opacity="0.95" />
+
+      <!-- Spacecraft Bus / Pedestal Base -->
+      <polygon points="-40,128 40,128 28,175 -28,175" fill="url(#fgGoldDish)" />
+      <!-- Solar Array Winglet -->
+      <rect x="-80" y="142" width="160" height="14" rx="4" fill="#38bdf8" opacity="0.95" />
+      <rect x="-35" y="175" width="70" height="9" rx="2" fill="#d97706" />
+      <circle cx="0" cy="192" r="5.5" fill="#f59e0b" />
+      <line x1="0" y1="184" x2="0" y2="192" stroke="#f59e0b" stroke-width="3" />
+    </g>
+  </g>
+</svg>
