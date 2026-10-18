@@ -1,34 +1,110 @@
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { useState } from "react";
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from "react-native";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
-import { HEROES, catNo, lifespan, portrait, storyChapters, assetUrl, type Hero } from "@thelastsignal/data";
+import { haptic } from "@/utils/haptics";
+import {
+  HEROES,
+  catNo,
+  lifespan,
+  portrait,
+  storyChapters,
+  assetUrl,
+  type Hero,
+} from "@thelastsignal/data";
 
 function StoryCard({ hero }: { hero: Hero }) {
+  const router = useRouter();
   if (!hero) return null;
   const chapters = storyChapters(hero);
   const imageUrl = assetUrl(`images/${portrait(hero)}.jpg`);
+  const isMars = hero.body === "mars";
+  const estMinutes = Math.max(2, Math.round(chapters.length * 0.4));
+
+  const handlePress = () => {
+    haptic.light();
+    router.push(`/heroes/${hero.slug}/story` as any);
+  };
 
   return (
     <Pressable
-      onPress={() => router.push(`/heroes/${hero.slug}/story` as any)}
+      onPress={handlePress}
       style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
+      accessibilityRole="button"
+      accessibilityLabel={`Read story of ${hero.name}, ${chapters.length} chapters`}
     >
-      <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />
-      <View style={styles.overlay} />
+      <Image
+        source={{ uri: imageUrl }}
+        style={styles.image}
+        contentFit="cover"
+        transition={300}
+      />
+      <View style={styles.gradientOverlay} />
+
       <View style={styles.cardContent}>
-        <View style={styles.tagRow}>
-          <ThemedText style={styles.badge} type="small">
-            {catNo(hero.no)} · {chapters.length} chapters
+        {/* Top Meta Badges */}
+        <View style={styles.topMetaRow}>
+          <View style={styles.catBadge}>
+            <ThemedText style={styles.catBadgeText} type="small">
+              {catNo(hero.no)}
+            </ThemedText>
+          </View>
+          <View
+            style={[
+              styles.worldBadge,
+              isMars ? styles.marsBadge : styles.moonBadge,
+            ]}
+          >
+            <Ionicons
+              name={isMars ? "planet-outline" : "moon-outline"}
+              size={11}
+              color="#ffffff"
+            />
+            <ThemedText style={styles.worldBadgeText} type="small">
+              {hero.body.toUpperCase()}
+            </ThemedText>
+          </View>
+          <View style={styles.timeBadge}>
+            <Ionicons name="time-outline" size={11} color="rgba(255,255,255,0.7)" />
+            <ThemedText style={styles.timeBadgeText} type="small">
+              {estMinutes} MIN READ
+            </ThemedText>
+          </View>
+        </View>
+
+        {/* Center Title & Designation */}
+        <View style={styles.titleWrap}>
+          <ThemedText style={styles.heroName}>{hero.name}</ThemedText>
+          {hero.nickname && (
+            <ThemedText style={styles.nickname}>&ldquo;{hero.nickname}&rdquo;</ThemedText>
+          )}
+          <ThemedText style={styles.lifespanText} type="small">
+            {hero.designation} · {lifespan(hero)}
           </ThemedText>
         </View>
-        <ThemedText style={styles.name}>{hero.name}</ThemedText>
-        <ThemedText style={styles.lifespan} type="small">{lifespan(hero)}</ThemedText>
-        <View style={styles.readRow}>
-          <ThemedText style={styles.readText}>Read the story</ThemedText>
-          <Ionicons name="arrow-forward" size={16} color="#ffffff" />
+
+        {/* Bottom Action Strip */}
+        <View style={styles.actionStrip}>
+          <View style={styles.chapterCountRow}>
+            <Ionicons name="book-outline" size={14} color="#a78bfa" />
+            <ThemedText style={styles.chapterCountText} type="small">
+              {chapters.length} Illustrated Chapters
+            </ThemedText>
+          </View>
+
+          <View style={styles.readPill}>
+            <ThemedText style={styles.readPillText}>Begin Story</ThemedText>
+            <Ionicons name="arrow-forward" size={13} color="#ffffff" />
+          </View>
         </View>
       </View>
     </Pressable>
@@ -36,6 +112,17 @@ function StoryCard({ hero }: { hero: Hero }) {
 }
 
 export function StoryList() {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = () => {
+    haptic.light();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      haptic.success();
+    }, 600);
+  };
+
   return (
     <FlatList
       data={HEROES}
@@ -43,12 +130,24 @@ export function StoryList() {
       renderItem={({ item }) => <StoryCard hero={item} />}
       contentContainerStyle={styles.list}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          tintColor={Colors.light.violet}
+          colors={[Colors.light.violet]}
+        />
+      }
       ListHeaderComponent={
         <View style={styles.header}>
-          <ThemedText style={styles.eyebrow} type="small">STORY</ThemedText>
-          <ThemedText style={styles.title} type="title">Their lives, chapter by chapter.</ThemedText>
+          <ThemedText style={styles.eyebrow} type="small">
+            CINEMATIC STORIES
+          </ThemedText>
+          <ThemedText style={styles.title} type="title">
+            Their Lives, Chapter by Chapter
+          </ThemedText>
           <ThemedText style={styles.subtitle} type="small">
-            Pick a machine. Its story unfolds from the cleanroom on Earth to its last signal across space.
+            Select a robotic explorer to experience their narrative unfolding from Earth&apos;s cleanroom to their final signal across space.
           </ThemedText>
         </View>
       }
@@ -59,7 +158,7 @@ export function StoryList() {
 const styles = StyleSheet.create({
   list: {
     padding: 16,
-    paddingBottom: 32,
+    paddingBottom: 40,
   },
   header: {
     marginBottom: 20,
@@ -67,12 +166,12 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     color: Colors.light.violet,
-    fontWeight: "700",
+    fontWeight: "800",
     letterSpacing: 1.5,
   },
   title: {
     fontSize: 28,
-    fontWeight: "800",
+    fontWeight: "900",
     lineHeight: 34,
   },
   subtitle: {
@@ -81,56 +180,137 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   card: {
-    height: 240,
-    borderRadius: 20,
+    height: 250,
+    borderRadius: 24,
     overflow: "hidden",
     marginBottom: 16,
-    backgroundColor: "#0c0a22",
+    backgroundColor: "#070814",
     position: "relative",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.12)",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 4,
   },
   cardPressed: {
     opacity: 0.92,
-    transform: [{ scale: 0.99 }],
+    transform: [{ scale: 0.985 }],
   },
   image: {
     ...StyleSheet.absoluteFill,
   },
-  overlay: {
+  gradientOverlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: "rgba(12, 10, 34, 0.55)",
+    backgroundColor: "rgba(7, 8, 20, 0.62)",
   },
   cardContent: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     padding: 18,
   },
-  tagRow: {
-    marginBottom: 4,
+  topMetaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
-  badge: {
-    color: "rgba(255, 255, 255, 0.8)",
-    fontFamily: "monospace",
-    fontSize: 12,
+  catBadge: {
+    backgroundColor: "rgba(255, 255, 255, 0.18)",
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
   },
-  name: {
+  catBadgeText: {
     color: "#ffffff",
-    fontSize: 26,
-    fontWeight: "800",
-  },
-  lifespan: {
-    color: "rgba(255, 255, 255, 0.8)",
     fontFamily: "monospace",
+    fontSize: 10,
+    fontWeight: "700",
+  },
+  worldBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+  },
+  marsBadge: {
+    backgroundColor: "rgba(234, 88, 12, 0.65)",
+  },
+  moonBadge: {
+    backgroundColor: "rgba(124, 58, 237, 0.65)",
+  },
+  worldBadgeText: {
+    color: "#ffffff",
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+  },
+  timeBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginLeft: "auto",
+  },
+  timeBadgeText: {
+    color: "rgba(255, 255, 255, 0.7)",
+    fontFamily: "monospace",
+    fontSize: 10,
+    fontWeight: "600",
+  },
+  titleWrap: {
+    gap: 2,
+  },
+  heroName: {
+    color: "#ffffff",
+    fontSize: 28,
+    fontWeight: "900",
+    letterSpacing: -0.5,
+  },
+  nickname: {
+    color: "#a78bfa",
+    fontSize: 15,
+    fontStyle: "italic",
+    fontWeight: "600",
+  },
+  lifespanText: {
+    color: "rgba(255, 255, 255, 0.8)",
+    fontSize: 12,
     marginTop: 2,
   },
-  readRow: {
+  actionStrip: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255, 255, 255, 0.15)",
+  },
+  chapterCountRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    marginTop: 12,
   },
-  readText: {
-    color: "#ffffff",
-    fontSize: 14,
+  chapterCountText: {
+    color: "#a78bfa",
     fontWeight: "700",
+    fontSize: 12,
+  },
+  readPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: Colors.light.violet,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  readPillText: {
+    color: "#ffffff",
+    fontWeight: "700",
+    fontSize: 12,
   },
 });
