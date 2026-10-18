@@ -8,10 +8,10 @@
     "scheme": "thelastsignal",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "thelastsignal.ahmedtrooper.com"
+      "bundleIdentifier": "com.nasa.lastsignal"
     },
     "android": {
-      "package": "thelastsignal.ahmedtrooper.com",
+      "package": "com.nasa.lastsignal",
       "adaptiveIcon": {
         "backgroundColor": "#070814",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
