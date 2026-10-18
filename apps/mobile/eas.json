@@ -6,7 +6,11 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "bun": "1.4.3",
+      "env": {
+        "EXPO_PUBLIC_ASSET_URL": "https://pub-89b67d288ba046e79e1350d4115fd96b.r2.dev"
+      }
     },
     "preview": {
       "distribution": "internal",
