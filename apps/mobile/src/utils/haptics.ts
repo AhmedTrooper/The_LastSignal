@@ -34,4 +34,26 @@ export const haptic = {
       // ignore
     }
   },
+  medium: () => {
+    try {
+      if (Platform.OS === "android") {
+        Vibration.vibrate(25);
+      } else {
+        Vibration.vibrate();
+      }
+    } catch {
+      // ignore
+    }
+  },
+  heavy: () => {
+    try {
+      if (Platform.OS === "android") {
+        Vibration.vibrate(45);
+      } else {
+        Vibration.vibrate();
+      }
+    } catch {
+      // ignore
+    }
+  },
 };
