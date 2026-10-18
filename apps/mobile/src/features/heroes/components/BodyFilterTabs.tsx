@@ -4,6 +4,8 @@ import { Colors } from "@/constants/theme";
 import { useHeroStore } from "@/stores/use-hero-store";
 import type { Body } from "@thelastsignal/data";
 
+import { haptic } from "@/utils/haptics";
+
 const TABS: { label: string; value: Body | "all" }[] = [
   { label: "All Worlds", value: "all" },
   { label: "Mars", value: "mars" },
@@ -14,6 +16,11 @@ export function BodyFilterTabs() {
   const selectedBody = useHeroStore((s) => s.selectedBody);
   const setSelectedBody = useHeroStore((s) => s.setSelectedBody);
 
+  const handleSelect = (val: Body | "all") => {
+    haptic.light();
+    setSelectedBody(val);
+  };
+
   return (
     <View style={styles.container}>
       {TABS.map((tab) => {
@@ -21,7 +28,7 @@ export function BodyFilterTabs() {
         return (
           <Pressable
             key={tab.value}
-            onPress={() => setSelectedBody(tab.value)}
+            onPress={() => handleSelect(tab.value)}
             style={[styles.tab, active && styles.activeTab]}
           >
             <ThemedText

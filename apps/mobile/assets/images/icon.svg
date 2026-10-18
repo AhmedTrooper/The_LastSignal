@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Cosmic Gradient -->
+    <radialGradient id="spaceGradient" cx="50%" cy="55%" r="70%">
+      <stop offset="0%" stop-color="#1e1842" />
+      <stop offset="45%" stop-color="#0e0f24" />
+      <stop offset="100%" stop-color="#05060f" />
+    </radialGradient>
+
+    <!-- Signal Pulse Glow -->
+    <radialGradient id="signalGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#818cf8" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Golden Antenna Gradient -->
+    <linearGradient id="goldDish" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="40%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <!-- Transmit Wave Gradient -->
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Deep Space Canvas -->
+  <rect width="512" height="512" rx="112" fill="url(#spaceGradient)" />
+
+  <!-- Constellation Specks -->
+  <g fill="#ffffff" opacity="0.6">
+    <circle cx="80" cy="120" r="1.5" opacity="0.8" />
+    <circle cx="140" cy="80" r="1" opacity="0.4" />
+    <circle cx="410" cy="110" r="2" opacity="0.9" />
+    <circle cx="440" cy="170" r="1.5" opacity="0.5" />
+    <circle cx="95" cy="380" r="1" opacity="0.4" />
+    <circle cx="430" cy="390" r="1.8" opacity="0.7" />
+    <circle cx="210" cy="90" r="1" opacity="0.5" />
+    <circle cx="350" cy="65" r="1.5" opacity="0.8" />
+  </g>
+
+  <!-- Distant Celestial Orbit Arc -->
+  <ellipse cx="256" cy="340" rx="210" ry="140" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.3" />
+
+  <!-- The Last Signal Radiating Broadcast Waves (Expanding Upward) -->
+  <g fill="none" stroke-linecap="round" filter="url(#softGlow)">
+    <!-- Outer Wave -->
+    <path d="M 126 145 A 170 170 0 0 1 386 145" stroke="url(#waveGrad)" stroke-width="4.5" opacity="0.45" />
+    <!-- Mid Wave -->
+    <path d="M 166 180 A 120 120 0 0 1 346 180" stroke="url(#waveGrad)" stroke-width="6.5" opacity="0.75" />
+    <!-- Inner Primary Wave -->
+    <path d="M 206 215 A 70 70 0 0 1 306 215" stroke="#38bdf8" stroke-width="8" opacity="0.95" />
+  </g>
+
+  <!-- Beacon Pulse Glow Core -->
+  <circle cx="256" cy="235" r="38" fill="url(#signalGlow)" />
+
+  <!-- Parabolic Dish Receiver / Deep Space Transmitter -->
+  <g id="dishAssembly">
+    <!-- Dish Back Structure -->
+    <ellipse cx="256" cy="305" rx="100" ry="42" fill="#1e1842" stroke="url(#goldDish)" stroke-width="9" />
+    <!-- Inner Reflective Surface -->
+    <ellipse cx="256" cy="303" rx="86" ry="32" fill="#2e1065" opacity="0.6" />
+    <ellipse cx="256" cy="301" rx="82" ry="28" fill="none" stroke="#fde047" stroke-width="2.5" opacity="0.7" />
+
+    <!-- Antenna Sub-Reflector Feed Boom Struts -->
+    <line x1="190" y1="315" x2="256" y2="235" stroke="#fef08a" stroke-width="4.5" stroke-linecap="round" />
+    <line x1="322" y1="315" x2="256" y2="235" stroke="#fef08a" stroke-width="4.5" stroke-linecap="round" />
+    <line x1="256" y1="325" x2="256" y2="235" stroke="#d97706" stroke-width="3.5" />
+
+    <!-- Central Pulsar Transmitter Emitter -->
+    <circle cx="256" cy="235" r="14" fill="#38bdf8" />
+    <circle cx="256" cy="235" r="7" fill="#ffffff" />
+    <!-- Light Cross Glint -->
+    <line x1="234" y1="235" x2="278" y2="235" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.9" />
+    <line x1="256" y1="213" x2="256" y2="257" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.9" />
+
+    <!-- Spacecraft Bus / Pedestal Base -->
+    <polygon points="220,335 292,335 280,380 232,380" fill="url(#goldDish)" />
+    <!-- Solar Array / Science Boom Winglet -->
+    <rect x="186" y="348" width="140" height="12" rx="4" fill="#38bdf8" opacity="0.85" />
+    <rect x="226" y="380" width="60" height="8" rx="2" fill="#d97706" />
+  </g>
+</svg>

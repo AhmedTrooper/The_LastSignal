@@ -5,6 +5,8 @@ import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { HEROES, type Body, portrait, assetUrl } from "@thelastsignal/data";
 
+import { haptic } from "@/utils/haptics";
+
 interface WorldCardProps {
   body: Body;
   title: string;
@@ -15,6 +17,11 @@ interface WorldCardProps {
 
 function WorldCard({ body, title, lede, bgColor, accentColor }: WorldCardProps) {
   const machines = HEROES.filter((h) => h.body === body);
+
+  const handleHeroPress = (slug: string) => {
+    haptic.light();
+    router.push(`/heroes/${slug}` as any);
+  };
 
   return (
     <View style={[styles.card, { backgroundColor: bgColor }]}>
@@ -35,7 +42,7 @@ function WorldCard({ body, title, lede, bgColor, accentColor }: WorldCardProps) 
           return (
             <Pressable
               key={h.slug}
-              onPress={() => router.push(`/heroes/${h.slug}`)}
+              onPress={() => handleHeroPress(h.slug)}
               style={({ pressed }) => [styles.avatarItem, pressed && styles.avatarPressed]}
             >
               <View style={styles.avatarBorder}>

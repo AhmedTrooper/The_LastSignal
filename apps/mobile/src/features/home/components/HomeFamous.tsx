@@ -2,15 +2,17 @@ import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/themed-text";
+import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { HEROES, lifespan, assetUrl, type Hero } from "@thelastsignal/data";
+import { haptic } from "@/utils/haptics";
 
 const FAMOUS_ENTRIES = [
-  { slugs: ["spirit", "opportunity"], title: "Spirit & Opportunity", label: "Mars Exploration Rovers" },
-  { slugs: ["ingenuity"], title: "Ingenuity", label: "Mars Helicopter" },
-  { slugs: ["apollo-11-lander"], title: "Apollo 11 Eagle", label: "Lunar Module LM-5" },
-  { slugs: ["insight"], title: "InSight", label: "Mars Seismic Lander" },
-  { slugs: ["apollo-15-rover"], title: "Apollo 15 Rover", label: "Lunar Roving Vehicle" },
+  { slugs: ["spirit", "opportunity"], title: "Spirit & Opportunity", label: "Mars Exploration Rovers", body: "Mars" },
+  { slugs: ["ingenuity"], title: "Ingenuity", label: "Mars Helicopter", body: "Mars" },
+  { slugs: ["apollo-11-lander"], title: "Apollo 11 Eagle", label: "Lunar Module LM-5", body: "Moon" },
+  { slugs: ["insight"], title: "InSight", label: "Mars Seismic Lander", body: "Mars" },
+  { slugs: ["apollo-15-rover"], title: "Apollo 15 Rover", label: "Lunar Roving Vehicle", body: "Moon" },
 ];
 
 function getCutout(h?: Hero) {
@@ -18,7 +20,15 @@ function getCutout(h?: Hero) {
   return h.card ? assetUrl(`images/${h.card}.webp`) : assetUrl(`images/${h.photo ?? h.image}.jpg`);
 }
 
+const CARD_WIDTH = 220;
+const CARD_GAP = 12;
+
 export function HomeFamous() {
+  const handlePress = (slug: string) => {
+    haptic.light();
+    router.push(`/heroes/${slug}` as any);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -29,6 +39,8 @@ export function HomeFamous() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        snapToInterval={CARD_WIDTH + CARD_GAP}
+        decelerationRate="fast"
         contentContainerStyle={styles.carousel}
       >
         {FAMOUS_ENTRIES.map((entry) => {
@@ -40,20 +52,32 @@ export function HomeFamous() {
           return (
             <Pressable
               key={entry.title}
-              onPress={() => router.push(`/heroes/${hero.slug}`)}
+              onPress={() => handlePress(hero.slug)}
               style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
             >
+              {/* Badge Header */}
+              <View style={styles.cardHeader}>
+                <View style={styles.badge}>
+                  <ThemedText style={styles.badgeText} type="small">{entry.body.toUpperCase()}</ThemedText>
+                </View>
+                <ThemedText style={styles.cardYears} type="small">{years}</ThemedText>
+              </View>
+
+              {/* Probe Image Cutout */}
               <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: imageUrl }}
                   style={styles.cutoutImage}
                   contentFit="contain"
+                  transition={250}
                 />
               </View>
+
+              {/* Card Meta & Waveform */}
               <View style={styles.cardInfo}>
-                <ThemedText style={styles.cardTitle}>{entry.title}</ThemedText>
-                <ThemedText style={styles.cardLabel} type="small">{entry.label}</ThemedText>
-                <ThemedText style={styles.cardYears} type="small">{years}</ThemedText>
+                <ThemedText style={styles.cardTitle} numberOfLines={1}>{entry.title}</ThemedText>
+                <ThemedText style={styles.cardLabel} numberOfLines={1} type="small">{entry.label}</ThemedText>
+                <Waveform seed={hero.slug} bars={16} height={12} style={styles.waveform} />
               </View>
             </Pressable>
           );
@@ -65,12 +89,12 @@ export function HomeFamous() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 16,
+    paddingVertical: 14,
     backgroundColor: "#ffffff",
   },
   header: {
     paddingHorizontal: 16,
-    marginBottom: 14,
+    marginBottom: 12,
     gap: 4,
   },
   eyebrow: {
@@ -85,37 +109,60 @@ const styles = StyleSheet.create({
   },
   carousel: {
     paddingHorizontal: 16,
-    gap: 14,
+    gap: CARD_GAP,
   },
   card: {
-    width: 200,
-    backgroundColor: Colors.light.backgroundElement,
-    borderRadius: 20,
+    width: CARD_WIDTH,
+    backgroundColor: "#f8fafc",
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: Colors.light.line,
-    overflow: "hidden",
+    borderColor: "#e2e8f0",
     padding: 14,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 2,
   },
   cardPressed: {
     opacity: 0.9,
-    transform: [{ scale: 0.98 }],
+    transform: [{ scale: 0.97 }],
+  },
+  cardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  badge: {
+    backgroundColor: "rgba(124, 58, 237, 0.08)",
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 12,
+  },
+  badgeText: {
+    color: Colors.light.violet,
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 0.5,
   },
   imageContainer: {
     width: "100%",
-    height: 140,
+    height: 125,
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 4,
   },
   cutoutImage: {
     width: "100%",
     height: "100%",
   },
   cardInfo: {
-    marginTop: 10,
-    gap: 2,
+    marginTop: 6,
+    gap: 3,
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "800",
     color: Colors.light.text,
   },
@@ -125,8 +172,12 @@ const styles = StyleSheet.create({
   },
   cardYears: {
     fontFamily: "monospace",
-    color: Colors.light.violet,
+    color: Colors.light.textSecondary,
     fontWeight: "600",
-    marginTop: 4,
+    fontSize: 11,
+  },
+  waveform: {
+    marginTop: 6,
+    opacity: 0.7,
   },
 });

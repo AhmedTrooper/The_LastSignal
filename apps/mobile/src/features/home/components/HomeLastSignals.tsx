@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { HEROES, assetUrl } from "@thelastsignal/data";
+import { haptic } from "@/utils/haptics";
 
 const POLAROIDS = [
   { slug: "apollo-15-rover", image: "nasa/S71-41509", date: "2 Aug 1971", text: "Its camera watched the crew leave." },
@@ -14,6 +15,11 @@ const POLAROIDS = [
 ];
 
 export function HomeLastSignals() {
+  const handlePress = (slug: string) => {
+    haptic.light();
+    router.push(`/heroes/${slug}` as any);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -27,6 +33,8 @@ export function HomeLastSignals() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        snapToInterval={220 + 14}
+        decelerationRate="fast"
         contentContainerStyle={styles.carousel}
       >
         {POLAROIDS.map((p) => {
@@ -37,13 +45,13 @@ export function HomeLastSignals() {
           return (
             <Pressable
               key={p.slug}
-              onPress={() => router.push(`/heroes/${hero.slug}`)}
+              onPress={() => handlePress(hero.slug)}
               style={({ pressed }) => [styles.polaroid, pressed && styles.polaroidPressed]}
             >
               <View style={styles.photoWrap}>
                 <Image source={{ uri: imageUrl }} style={styles.photo} contentFit="cover" />
               </View>
-              <ThemedText style={styles.polaroidCaption}>{p.text}</ThemedText>
+              <ThemedText style={styles.polaroidCaption}>&ldquo;{p.text}&rdquo;</ThemedText>
               <ThemedText style={styles.polaroidMeta} type="small">
                 {hero.name} · {p.date}
               </ThemedText>

@@ -6,9 +6,16 @@ import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { assetUrl } from "@thelastsignal/data";
 
+import { haptic } from "@/utils/haptics";
+
 export function HomeRestingTeaser() {
   const marsGlobe = assetUrl("images/mars-globe.jpg");
   const moonGlobe = assetUrl("images/moon-globe.jpg");
+
+  const handleMapPress = () => {
+    haptic.light();
+    router.push("/(tabs)/resting" as any);
+  };
 
   return (
     <View style={styles.container}>
@@ -33,7 +40,7 @@ export function HomeRestingTeaser() {
         </View>
 
         <Pressable
-          onPress={() => router.push("/(tabs)/resting")}
+          onPress={handleMapPress}
           style={({ pressed }) => [styles.mapBtn, pressed && styles.mapBtnPressed]}
         >
           <ThemedText style={styles.mapBtnText}>Open Landing Map</ThemedText>

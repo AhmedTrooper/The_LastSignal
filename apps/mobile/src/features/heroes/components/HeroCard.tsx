@@ -6,6 +6,8 @@ import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { catNo, lifespan, portrait, type Hero, assetUrl } from "@thelastsignal/data";
 
+import { haptic } from "@/utils/haptics";
+
 interface Props {
   hero: Hero;
 }
@@ -18,9 +20,14 @@ export function HeroCard({ hero }: Props) {
     ? assetUrl(`images/${hero.card}.webp`)
     : assetUrl(`images/${portrait(hero)}.jpg`);
 
+  const handlePress = () => {
+    haptic.light();
+    router.push(`/heroes/${hero.slug}` as any);
+  };
+
   return (
     <Pressable
-      onPress={() => router.push(`/heroes/${hero.slug}` as any)}
+      onPress={handlePress}
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
       <View style={[styles.imageContainer, isCutout && styles.cutoutContainer]}>
