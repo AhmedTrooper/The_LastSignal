@@ -23,4 +23,15 @@ export const haptic = {
       // ignore
     }
   },
+  selection: () => {
+    try {
+      if (Platform.OS === "android") {
+        Vibration.vibrate(8);
+      } else {
+        Vibration.vibrate();
+      }
+    } catch {
+      // ignore
+    }
+  },
 };
