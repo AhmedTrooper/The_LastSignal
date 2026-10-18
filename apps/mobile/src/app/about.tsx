@@ -1,62 +1,200 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { useState } from "react";
+import {
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
 import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
+import { haptic } from "@/utils/haptics";
 import { HEROES } from "@thelastsignal/data";
 
 const RULES = [
   {
-    title: "Facts only",
-    text: "Every date, number and last word comes from a real mission record, and each hero lists its sources. We never invent quotes.",
+    icon: "shield-checkmark-outline" as const,
+    title: "Facts Only",
+    text: "Every date, sol count, coordinate, and final transmission comes from official NASA, JPL, and agency mission logs. We never invent quotes.",
   },
   {
-    title: "Real imagery",
-    text: "We use public-domain mission photos and videos, credited. The images you see today are AI placeholders and are labelled as such.",
+    icon: "camera-outline" as const,
+    title: "Real Space Imagery",
+    text: "We use public-domain photography from NASA's Planetary Data System and mission image archives, fully attributed and credited one by one.",
   },
   {
-    title: "Independent",
-    text: "The Last Signal is not affiliated with or endorsed by any space agency, and carries no agency branding.",
+    icon: "planet-outline" as const,
+    title: "Independent Memorial",
+    text: "The Last Signal is an independent educational space tribute built for humanity, carrying no commercial or agency advertising.",
   },
   {
-    title: "AI is labelled",
-    text: "Narration or video made with AI is always marked as AI-made, and is built only from the real record.",
+    icon: "sparkles-outline" as const,
+    title: "AI Is Explicitly Labelled",
+    text: "Narration or reconstructive imagery produced with AI is always clearly marked as such, and is grounded strictly in historical telemetry records.",
   },
 ];
 
 export default function AboutScreen() {
+  const router = useRouter();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = () => {
+    haptic.light();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      haptic.success();
+    }, 500);
+  };
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          tintColor={Colors.light.violet}
+          colors={[Colors.light.violet]}
+        />
+      }
+    >
+      {/* Top Manifesto Header */}
       <View style={styles.header}>
-        <ThemedText style={styles.eyebrow} type="small">ABOUT</ThemedText>
+        <View style={styles.eyebrowRow}>
+          <View style={styles.beaconDot} />
+          <ThemedText style={styles.eyebrow} type="small">
+            THE LAST SIGNAL MANIFESTO
+          </ThemedText>
+        </View>
+
         <ThemedText style={styles.title} type="title">
-          They had names, birthdays and last words,{"\n"}
-          <ThemedText style={styles.titleViolet} type="title">just like us.</ThemedText>
+          They had names, birthdays, and last words,{"\n"}
+          <ThemedText style={styles.titleViolet} type="title">
+            just like us.
+          </ThemedText>
         </ThemedText>
-        <Waveform seed="about" bars={36} fade={0.3} height={24} style={{ marginTop: 14 }} />
+
+        <Waveform
+          seed="about-manifesto"
+          bars={38}
+          fade={0.3}
+          height={22}
+          color={Colors.light.violet}
+          style={{ marginTop: 10 }}
+        />
       </View>
 
+      {/* Lead Narrative Card */}
       <View style={styles.leadCard}>
         <ThemedText style={styles.leadText}>
-          Rovers, landers and probes went where we couldn&apos;t, and they never came back. Their missions are over, but they are still out there, on the plains of Mars and the dust of the Moon.
+          Rovers, landers, and probes went where humans could not, and they never returned. Their active missions are over, but their physical monuments remain permanently in place on the iron plains of Mars and the vacuum dust of the Moon.
         </ThemedText>
         <ThemedText style={styles.leadText}>
-          We remember them the way we remember great people: where they were born, the life they lived, what they discovered, and their last signal home. The archive holds {HEROES.length} of them today, from Ranger 7 in 1964 to Ingenuity.
+          We remember them the way we remember great explorers: where they were assembled, the life they lived, the milestones they uncovered, and their final signal transmitted back home to Earth.
         </ThemedText>
       </View>
 
+      {/* 4-Bento Telemetry Stats Grid */}
+      <View style={styles.statsGrid}>
+        <View style={styles.statBox}>
+          <ThemedText style={styles.statNumber}>{HEROES.length}</ThemedText>
+          <ThemedText style={styles.statLabel} type="small">
+            Pioneer Machines
+          </ThemedText>
+        </View>
+
+        <View style={styles.statBox}>
+          <ThemedText style={styles.statNumber}>60 Yrs</ThemedText>
+          <ThemedText style={styles.statLabel} type="small">
+            Exploration Span
+          </ThemedText>
+        </View>
+
+        <View style={styles.statBox}>
+          <ThemedText style={styles.statNumber}>2 Worlds</ThemedText>
+          <ThemedText style={styles.statLabel} type="small">
+            Mars &amp; The Moon
+          </ThemedText>
+        </View>
+
+        <View style={styles.statBox}>
+          <ThemedText style={styles.statNumber}>100%</ThemedText>
+          <ThemedText style={styles.statLabel} type="small">
+            Public Domain Facts
+          </ThemedText>
+        </View>
+      </View>
+
+      {/* Ground Rules Section */}
       <View style={styles.rulesSection}>
-        <ThemedText style={styles.rulesHeading} type="subtitle">Ground Rules</ThemedText>
+        <View style={styles.rulesHeaderRow}>
+          <Ionicons name="document-text-outline" size={18} color={Colors.light.violet} />
+          <ThemedText style={styles.rulesHeading} type="subtitle">
+            Archival Ground Rules
+          </ThemedText>
+        </View>
+
         {RULES.map((r, i) => (
-          <View key={r.title} style={styles.ruleCard}>
+          <Pressable
+            key={r.title}
+            onPress={() => haptic.light()}
+            style={({ pressed }) => [
+              styles.ruleCard,
+              pressed && styles.cardPressed,
+            ]}
+          >
             <View style={styles.ruleNumberBadge}>
-              <ThemedText style={styles.ruleNumber}>0{i + 1}</ThemedText>
+              <Ionicons name={r.icon} size={16} color="#ffffff" />
             </View>
             <View style={styles.ruleContent}>
-              <ThemedText style={styles.ruleTitle}>{r.title}</ThemedText>
-              <ThemedText style={styles.ruleText} type="small">{r.text}</ThemedText>
+              <View style={styles.ruleTitleRow}>
+                <ThemedText style={styles.ruleTitle}>{r.title}</ThemedText>
+                <ThemedText style={styles.ruleIndex} type="small">
+                  0{i + 1}
+                </ThemedText>
+              </View>
+              <ThemedText style={styles.ruleText} type="small">
+                {r.text}
+              </ThemedText>
             </View>
-          </View>
+          </Pressable>
         ))}
+      </View>
+
+      {/* App Metadata & Action Footer */}
+      <View style={styles.footerCard}>
+        <View style={styles.versionRow}>
+          <ThemedText style={styles.versionLabel} type="small">
+            BUILD
+          </ThemedText>
+          <ThemedText style={styles.versionText} type="small">
+            v1.0.0 (Production Release)
+          </ThemedText>
+        </View>
+
+        <Pressable
+          onPress={() => {
+            haptic.light();
+            router.push("/" as any);
+          }}
+          style={({ pressed }) => [
+            styles.exploreBtn,
+            pressed && styles.cardPressed,
+          ]}
+          accessibilityRole="button"
+          accessibilityLabel="Return to memorial fleet on home screen"
+        >
+          <Ionicons name="planet" size={16} color="#ffffff" />
+          <ThemedText style={styles.exploreBtnText}>
+            Explore The Memorial Fleet
+          </ThemedText>
+        </Pressable>
       </View>
     </ScrollView>
   );
@@ -72,28 +210,43 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     gap: 16,
   },
+  cardPressed: {
+    opacity: 0.88,
+    transform: [{ scale: 0.985 }],
+  },
   header: {
     gap: 6,
   },
+  eyebrowRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  beaconDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.light.violet,
+  },
   eyebrow: {
     color: Colors.light.violet,
-    fontWeight: "700",
+    fontWeight: "800",
     letterSpacing: 1.5,
   },
   title: {
     fontSize: 26,
-    fontWeight: "800",
+    fontWeight: "900",
     lineHeight: 32,
   },
   titleViolet: {
     color: Colors.light.violet,
     fontSize: 26,
-    fontWeight: "800",
+    fontWeight: "900",
   },
   leadCard: {
     backgroundColor: Colors.light.backgroundElement,
     padding: 18,
-    borderRadius: 20,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: Colors.light.line,
     gap: 12,
@@ -103,48 +256,130 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: Colors.light.text,
   },
+  statsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  statBox: {
+    flex: 1,
+    minWidth: "45%",
+    backgroundColor: "#fafafc",
+    padding: 14,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+    gap: 2,
+  },
+  statNumber: {
+    fontSize: 22,
+    fontWeight: "900",
+    color: Colors.light.violet,
+    fontFamily: "monospace",
+  },
+  statLabel: {
+    color: Colors.light.textSecondary,
+    fontSize: 11,
+    fontWeight: "600",
+  },
   rulesSection: {
-    gap: 12,
-    marginTop: 8,
+    gap: 10,
+    marginTop: 4,
+  },
+  rulesHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 4,
   },
   rulesHeading: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "800",
   },
   ruleCard: {
     flexDirection: "row",
     gap: 14,
-    backgroundColor: Colors.light.backgroundElement,
+    backgroundColor: "#ffffff",
     padding: 16,
-    borderRadius: 18,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: Colors.light.line,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
+    elevation: 2,
   },
   ruleNumberBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: Colors.light.violet,
     alignItems: "center",
     justifyContent: "center",
-  },
-  ruleNumber: {
-    color: "#ffffff",
-    fontWeight: "800",
-    fontSize: 13,
-    fontFamily: "monospace",
   },
   ruleContent: {
     flex: 1,
     gap: 4,
   },
+  ruleTitleRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   ruleTitle: {
-    fontSize: 16,
-    fontWeight: "700",
+    fontSize: 15,
+    fontWeight: "800",
     color: Colors.light.text,
+  },
+  ruleIndex: {
+    fontFamily: "monospace",
+    color: Colors.light.violet,
+    fontWeight: "700",
   },
   ruleText: {
     color: Colors.light.textSecondary,
     lineHeight: 20,
+    fontSize: 13,
+  },
+  footerCard: {
+    backgroundColor: Colors.light.backgroundElement,
+    padding: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+    gap: 12,
+    marginTop: 4,
+  },
+  versionRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  versionLabel: {
+    fontFamily: "monospace",
+    color: Colors.light.textSecondary,
+    fontWeight: "700",
+    fontSize: 11,
+  },
+  versionText: {
+    fontFamily: "monospace",
+    color: Colors.light.violet,
+    fontWeight: "700",
+    fontSize: 11,
+  },
+  exploreBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    backgroundColor: Colors.light.violet,
+    paddingVertical: 12,
+    borderRadius: 14,
+  },
+  exploreBtnText: {
+    color: "#ffffff",
+    fontWeight: "700",
+    fontSize: 13,
   },
 });
