@@ -5,7 +5,6 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { Image } from "expo-image";
@@ -19,15 +18,10 @@ import {
   HEROES,
   photo,
   assetUrl,
-  type Body,
-  type Hero,
 } from "@thelastsignal/data";
 import { useGameStore } from "@/stores/use-game-store";
-import { GlobeView } from "@/features/games/touchdown/components/GlobeView";
-import { DescentSimulator } from "@/features/games/touchdown/components/DescentSimulator";
-import { SurfaceSimulator } from "@/features/games/touchdown/components/SurfaceSimulator";
-import { DiscoveryModal } from "@/features/games/touchdown/components/DiscoveryModal";
-import { JournalModal } from "@/features/games/touchdown/components/JournalModal";
+import { TouchdownGame } from "@/features/games/touchdown/TouchdownGame";
+import { JournalSheet } from "@/features/games/touchdown/ui/JournalSheet";
 
 type ActiveGame = "touchdown" | "delay" | "quiz" | null;
 
@@ -225,10 +219,11 @@ export default function GamesScreen() {
         <QuizModal onClose={() => setActiveGame(null)} />
       )}
       {showJournal && (
-        <JournalModal
+        <JournalSheet
           visible={showJournal}
           onClose={() => setShowJournal(false)}
-          onSelectSite={() => {
+          onGoToSite={() => {
+            setShowJournal(false);
             setActiveGame("touchdown");
           }}
         />
@@ -238,183 +233,12 @@ export default function GamesScreen() {
 }
 
 /* ─────────────────────────────────────────────────────────
-   1. FULL TOUCHDOWN PILGRIMAGE GAME MODAL
+   1. FULL TOUCHDOWN PILGRIMAGE GAME MODAL (EXACT WEB CLONE)
    ───────────────────────────────────────────────────────── */
 function TouchdownGameModal({ onClose }: { onClose: () => void }) {
-  const insets = useSafeAreaInsets();
-  const { recordLanding, recordCrash } = useGameStore();
-
-  const [body, setBody] = useState<Body>("mars");
-  const [selectedHero, setSelectedHero] = useState<Hero>(
-    () => HEROES.find((h) => h.body === "mars") ?? HEROES[0]
-  );
-  const [phase, setPhase] = useState<"orbit" | "descent" | "surface" | "discovery">("orbit");
-  const [showJournal, setShowJournal] = useState(false);
-  const [crashReason, setCrashReason] = useState<string | null>(null);
-
-  const handleSelectHero = (hero: Hero) => {
-    setSelectedHero(hero);
-    if (hero.body !== body) setBody(hero.body);
-  };
-
-  const handleStartDescent = (hero: Hero) => {
-    setSelectedHero(hero);
-    setCrashReason(null);
-    setPhase("descent");
-  };
-
-  const handleDescentSuccess = () => {
-    recordLanding(selectedHero.slug, true);
-    setPhase("surface");
-  };
-
-  const handleDescentCrash = (reason: string) => {
-    recordCrash(selectedHero.slug);
-    setCrashReason(reason);
-  };
-
-  const handleSurfaceReach = () => {
-    setPhase("discovery");
-  };
-
-  const handleDiscoveryFinish = () => {
-    setPhase("orbit");
-  };
-
   return (
     <Modal visible animationType="slide">
-      <View style={[styles.modalRoot, { paddingTop: Math.max(insets.top + 6, 16) }]}>
-        {/* Top App Bar */}
-        <View style={styles.modalTopBar}>
-          <View style={styles.modalBrandRow}>
-            <Ionicons name="planet" size={18} color="#38bdf8" />
-            <ThemedText style={styles.modalBadgeText} type="small">
-              TOUCHDOWN: {selectedHero.name.toUpperCase()}
-            </ThemedText>
-          </View>
-          <Pressable onPress={onClose} style={styles.modalCloseBtn}>
-            <Ionicons name="close" size={20} color="#ffffff" />
-          </Pressable>
-        </View>
-
-        {/* Planet Switcher Tab Bar (Mars vs Moon) */}
-        {phase === "orbit" && (
-          <View style={styles.planetTabs}>
-            <Pressable
-              onPress={() => {
-                haptic.selection();
-                setBody("mars");
-                const firstMars = HEROES.find((h) => h.body === "mars");
-                if (firstMars) setSelectedHero(firstMars);
-              }}
-              style={[styles.planetTab, body === "mars" && styles.planetTabActiveMars]}
-            >
-              <Text style={[styles.planetTabText, body === "mars" && styles.planetTabTextActive]}>
-                MARS (8 EXPLORERS)
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                haptic.selection();
-                setBody("moon");
-                const firstMoon = HEROES.find((h) => h.body === "moon");
-                if (firstMoon) setSelectedHero(firstMoon);
-              }}
-              style={[styles.planetTab, body === "moon" && styles.planetTabActiveMoon]}
-            >
-              <Text style={[styles.planetTabText, body === "moon" && styles.planetTabTextActive]}>
-                THE MOON (7 EXPLORERS)
-              </Text>
-            </Pressable>
-          </View>
-        )}
-
-        {/* Phase 1: Interactive Orbit Globe */}
-        {phase === "orbit" && (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <GlobeView
-              body={body}
-              selectedHero={selectedHero}
-              onSelectHero={handleSelectHero}
-              onInitiateDescent={handleStartDescent}
-              onOpenJournal={() => setShowJournal(true)}
-            />
-          </ScrollView>
-        )}
-
-        {/* Phase 2: 60 FPS Atmospheric Entry & Retro-Burn Simulator */}
-        {phase === "descent" && (
-          <DescentSimulator
-            hero={selectedHero}
-            onSuccess={handleDescentSuccess}
-            onCrash={handleDescentCrash}
-            onAbort={() => setPhase("orbit")}
-          />
-        )}
-
-        {/* Crash Report Overlay */}
-        {crashReason && (
-          <View style={styles.crashOverlay}>
-            <View style={styles.crashCard}>
-              <View style={styles.crashIconWrap}>
-                <Ionicons name="alert-circle" size={32} color="#ef4444" />
-              </View>
-              <Text style={styles.crashTitle}>IMPACT DETECTED • HULL BREACH</Text>
-              <Text style={styles.crashReasonText}>{crashReason}</Text>
-              <View style={styles.crashBtnRow}>
-                <Pressable
-                  onPress={() => {
-                    haptic.medium();
-                    setCrashReason(null);
-                    setPhase("descent");
-                  }}
-                  style={styles.retryBtn}
-                >
-                  <Ionicons name="refresh" size={16} color="#ffffff" />
-                  <Text style={styles.retryBtnText}>RETRY DESCENT</Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => {
-                    haptic.light();
-                    setCrashReason(null);
-                    setPhase("orbit");
-                  }}
-                  style={styles.orbitReturnBtn}
-                >
-                  <Text style={styles.orbitReturnText}>ORBIT</Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        )}
-
-        {/* Phase 3: 60 FPS Surface Traversal & Rover Driving Simulator */}
-        {phase === "surface" && (
-          <SurfaceSimulator
-            hero={selectedHero}
-            onReachMachine={handleSurfaceReach}
-            onCollectEcho={() => {}}
-            onAbort={() => setPhase("orbit")}
-          />
-        )}
-
-        {/* Phase 4: Machine Discovery Ceremony & Memorial Beacon Ignition */}
-        <DiscoveryModal
-          hero={selectedHero}
-          visible={phase === "discovery"}
-          onFinish={handleDiscoveryFinish}
-        />
-
-        {/* Flight Log & Memorial Journal */}
-        <JournalModal
-          visible={showJournal}
-          onClose={() => setShowJournal(false)}
-          onSelectSite={(hero) => {
-            setSelectedHero(hero);
-            if (hero.body !== body) setBody(hero.body);
-          }}
-        />
-      </View>
+      <TouchdownGame onExit={onClose} />
     </Modal>
   );
 }
@@ -883,112 +707,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-  planetTabs: {
-    flexDirection: "row",
-    gap: 8,
-    marginBottom: 8,
-  },
-  planetTab: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: 12,
-    backgroundColor: "rgba(255, 255, 255, 0.06)",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
-  },
-  planetTabActiveMars: {
-    backgroundColor: "rgba(194, 65, 12, 0.25)",
-    borderColor: "#ea580c",
-  },
-  planetTabActiveMoon: {
-    backgroundColor: "rgba(99, 102, 241, 0.25)",
-    borderColor: "#a5b4fc",
-  },
-  planetTabText: {
-    color: "rgba(255, 255, 255, 0.6)",
-    fontSize: 10,
-    fontWeight: "800",
-    letterSpacing: 1,
-  },
-  planetTabTextActive: {
-    color: "#ffffff",
-  },
-  crashOverlay: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: "rgba(0, 0, 0, 0.82)",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 24,
-    zIndex: 999,
-  },
-  crashCard: {
-    width: "100%",
-    backgroundColor: "#0d0f1a",
-    borderRadius: 24,
-    borderColor: "rgba(239, 68, 68, 0.4)",
-    borderWidth: 1.5,
-    padding: 24,
-    alignItems: "center",
-    gap: 12,
-  },
-  crashIconWrap: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: "rgba(239, 68, 68, 0.15)",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  crashTitle: {
-    color: "#ef4444",
-    fontSize: 14,
-    fontWeight: "900",
-    letterSpacing: 1,
-    textAlign: "center",
-  },
-  crashReasonText: {
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: 12,
-    lineHeight: 18,
-    textAlign: "center",
-  },
-  crashBtnRow: {
-    flexDirection: "row",
-    gap: 12,
-    width: "100%",
-    marginTop: 8,
-  },
-  retryBtn: {
-    flex: 2,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-    backgroundColor: "#ef4444",
-    borderRadius: 12,
-    paddingVertical: 14,
-  },
-  retryBtnText: {
-    color: "#ffffff",
-    fontSize: 12,
-    fontWeight: "900",
-    letterSpacing: 0.8,
-  },
-  orbitReturnBtn: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: 12,
-    paddingVertical: 14,
-  },
-  orbitReturnText: {
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: 12,
-    fontWeight: "800",
-  },
-
   /* Signal Delay Game Modal */
   delayContent: {
     paddingBottom: 40,
