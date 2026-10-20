@@ -15,7 +15,7 @@ export default function Footer() {
         </p>
         <div className="space-y-2 font-mono text-sm text-ink-soft md:text-right">
           <p>
-            thelastsignal.org ·{" "}
+            thelastsignal.mtas.fi ·{" "}
             <Link href="/privacy" className="underline hover:text-violet">
               Privacy Policy
             </Link>

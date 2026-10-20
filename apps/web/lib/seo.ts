@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { assetUrl } from "@thelastsignal/data";
 
-export const BASE_URL = "https://thelastsignal.org";
+export const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://thelastsignal.mtas.fi";
 
 const SITE_KEYWORDS = [
   "The Last Signal",

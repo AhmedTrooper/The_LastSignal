@@ -40,8 +40,11 @@ export default function PrivacyPolicyPage() {
             independent educational, historical, and memorial application dedicated to the robotic
             explorers left behind on Mars and the Moon. This Privacy Policy informs users of our mobile
             application (available on Google Play under package identifier{" "}
-            <code className="font-mono text-violet">com.nasa.lastsignal</code>) and our website regarding
-            the collection, use, and disclosure of Personal Information.
+            <code className="font-mono text-violet">com.nasa.lastsignal</code>) and our official website (
+            <a href="https://thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">
+              https://thelastsignal.mtas.fi
+            </a>
+            ) regarding the collection, use, and disclosure of Personal Information.
           </p>
           <p className="leading-relaxed text-ink-soft">
             By installing, accessing, or using the Service, you consent to the collection and use of
@@ -196,10 +199,10 @@ export default function PrivacyPolicyPage() {
               <li>
                 Send an email with the subject line <strong>&ldquo;Data Deletion Request&rdquo;</strong> to{" "}
                 <a
-                  href="mailto:privacy@thelastsignal.org"
+                  href="mailto:privacy@thelastsignal.mtas.fi"
                   className="font-mono text-violet underline hover:text-violet-deep"
                 >
-                  privacy@thelastsignal.org
+                  privacy@thelastsignal.mtas.fi
                 </a>
                 .
               </li>
@@ -240,8 +243,8 @@ export default function PrivacyPolicyPage() {
           </p>
           <div className="rounded-xl border border-line bg-mist p-5 font-mono text-sm space-y-1">
             <p><strong>The Last Signal Team</strong></p>
-            <p>Website: <a href="https://thelastsignal.org" className="text-violet underline">https://thelastsignal.org</a></p>
-            <p>Email: <a href="mailto:privacy@thelastsignal.org" className="text-violet underline">privacy@thelastsignal.org</a></p>
+            <p>Website: <a href="https://thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">https://thelastsignal.mtas.fi</a></p>
+            <p>Email: <a href="mailto:privacy@thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">privacy@thelastsignal.mtas.fi</a></p>
           </div>
         </section>
       </div>

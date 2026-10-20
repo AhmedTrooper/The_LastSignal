@@ -308,13 +308,28 @@ export default function TributeWall({
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold">{t.userName}</p>
                     <p className="font-mono text-[11px] text-ink-soft">
-                      {t.createdAt?.toDate
-                        ? t.createdAt.toDate().toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })
-                        : "Just now"}
+                      {(() => {
+                        try {
+                          if (t.createdAt?.toDate) {
+                            return t.createdAt.toDate().toLocaleDateString("en-GB", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            });
+                          }
+                          const obj = t.createdAt as unknown as { seconds?: number };
+                          if (typeof obj?.seconds === "number") {
+                            return new Date(obj.seconds * 1000).toLocaleDateString("en-GB", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            });
+                          }
+                        } catch {
+                          // fallback below
+                        }
+                        return "Just now";
+                      })()}
                     </p>
                   </div>
                 </div>

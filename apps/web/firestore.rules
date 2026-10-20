@@ -10,37 +10,25 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    function isUserActive() {
-      return isAuthenticated() &&
-        (!exists(/databases/$(database)/documents/users/$(request.auth.uid)) ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isDeleted != true);
-    }
-
-    // 1. Users Collection (Supports Soft Deletes, Blocks Hard Deletes)
+    // 1. Users Collection (Profile & Cooldown timestamps)
     match /users/{userId} {
       allow read: if true;
-      allow create: if isOwner(userId);
-      allow update: if isOwner(userId)
-                    && request.resource.data.uid == userId;
-      allow delete: if false; 
+      allow write: if isOwner(userId);
     }
 
-    // 2. Tributes Collection (Threaded with parentId & UUIDv7 ID)
+    // 2. Tributes Collection (Public Memorial Wall)
     match /tributes/{tributeId} {
-      // Only approved comments are publicly visible; authors can read their own
-      allow read: if resource.data.status == "approved"
-                  || (isAuthenticated() && resource.data.userId == request.auth.uid);
+      // Anyone can read memorial transmissions
+      allow read: if true;
 
-      // Active authenticated users can create a tribute
-      allow create: if isUserActive()
+      // Authenticated users can create tributes within character limits
+      allow create: if isAuthenticated()
                     && request.resource.data.userId == request.auth.uid
-                    && request.resource.data.status == "approved"
-                    && (request.resource.data.parentId == null || request.resource.data.parentId is string)
                     && request.resource.data.text is string
                     && request.resource.data.text.size() > 0
                     && request.resource.data.text.size() <= 1000;
 
-      // Disallow client-side direct update and deletion
+      // Memorial history is permanent - client updates and deletes are blocked
       allow update, delete: if false;
     }
   }

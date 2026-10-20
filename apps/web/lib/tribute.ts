@@ -5,8 +5,6 @@ import {
   serverTimestamp,
   getDoc,
   query,
-  where,
-  orderBy,
   onSnapshot,
   type Timestamp,
   type Unsubscribe,
@@ -89,11 +87,16 @@ export async function submitTribute({
     createdAt: serverTimestamp(),
   });
 
-  // Update user's lastCommentedAt timestamp
-  batch.update(userRef, {
-    lastCommentedAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
+  // Update user's lastCommentedAt timestamp (use set with merge to succeed even if user doc does not exist yet)
+  batch.set(
+    userRef,
+    {
+      uid: userId,
+      lastCommentedAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
 
   await batch.commit();
   return { success: true, tributeId };
@@ -101,25 +104,38 @@ export async function submitTribute({
 
 /**
  * Subscribes to real-time tributes across the memorial transmission wall.
+ * Avoids multi-field composite indexes by reading the collection and sorting client-side.
  */
 export function subscribeTributes(
   onUpdate: (tributes: Tribute[]) => void,
   onError?: (error: Error) => void
 ): Unsubscribe {
   const tributesCol = collection(db, "tributes");
-  const q = query(
-    tributesCol,
-    where("status", "==", "approved"),
-    orderBy("createdAt", "desc")
-  );
+  const q = query(tributesCol);
 
   return onSnapshot(
     q,
     (snapshot) => {
       const list: Tribute[] = [];
       snapshot.forEach((d) => {
-        list.push(d.data() as Tribute);
+        const data = d.data() as Tribute;
+        if (data.status !== "blocked") {
+          list.push({ ...data, id: d.id });
+        }
       });
+
+      // Sort client-side by createdAt descending (newest first)
+      list.sort((a, b) => {
+        const getMillis = (ts: Timestamp | null | undefined): number => {
+          if (!ts) return 0;
+          if (typeof ts.toMillis === "function") return ts.toMillis();
+          const obj = ts as unknown as { seconds?: number };
+          if (typeof obj.seconds === "number") return obj.seconds * 1000;
+          return 0;
+        };
+        return getMillis(b.createdAt) - getMillis(a.createdAt);
+      });
+
       onUpdate(list);
     },
     (err) => {
