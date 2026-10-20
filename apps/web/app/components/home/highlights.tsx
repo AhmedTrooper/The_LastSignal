@@ -1,14 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { HEROES, bodyName, getHero, lifespan, type Body, type Hero, assetUrl } from "@/lib/heroes";
 import { photoMeta } from "@/lib/photos";
 import { PARTS } from "@/lib/parts";
+import ModelStudio from "@/app/components/profile/model-studio";
 import { ArrowRight } from "@/app/components/icons";
-
-const ModelStudio = dynamic(() => import("@/app/components/profile/model-studio"), {
-  ssr: false,
-});
 
 /*
  * Home page sections below the hero. Facts come from the archive in lib/heroes.ts; the few

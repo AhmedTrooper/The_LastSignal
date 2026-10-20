@@ -88,6 +88,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (err: unknown) {
       const error = err as { code?: string; message?: string };
+      if (error?.code === "auth/configuration-not-found") {
+        const msg = "Google Sign-In is not enabled in Firebase Console yet. Please go to Firebase Console > Authentication > Sign-in method, click Google, and enable it.";
+        console.error(msg);
+        alert(msg);
+        return;
+      }
       // Ignore user closed popup
       if (error?.code !== "auth/popup-closed-by-user") {
         throw err;
