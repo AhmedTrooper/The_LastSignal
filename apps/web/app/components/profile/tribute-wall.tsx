@@ -25,20 +25,24 @@ export default function TributeWall({
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  // 1. Real-time tributes listener for this specific rover
+  // 1. Real-time tributes listener
   useEffect(() => {
     const unsubscribe = subscribeTributes(
-      slug,
       (list) => {
-        setTributes(list);
+        if (Array.isArray(list)) {
+          setTributes(list);
+        } else {
+          setTributes([]);
+        }
       },
-      () => {
-        // Fallback gracefully if firestore is initializing
+      (err) => {
+        console.warn("Could not fetch tributes:", err);
+        setTributes([]);
       }
     );
 
     return () => unsubscribe();
-  }, [slug]);
+  }, []);
 
   // 2. Check user's lastCommentedAt to restore remaining cooldown on load
   useEffect(() => {
@@ -89,7 +93,6 @@ export default function TributeWall({
 
     try {
       await submitTribute({
-        roverSlug: slug,
         userId: user.uid,
         userName: user.displayName || "Anonymous Explorer",
         userPhotoUrl: user.photoURL || "",
@@ -262,13 +265,13 @@ export default function TributeWall({
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <h4 className={`text-xs font-mono font-bold tracking-wider uppercase ${dark ? "text-white/70" : "text-ink-soft"}`}>
-              MEMORIAL DOWNLINK ({tributes.length})
+              MEMORIAL DOWNLINK ({Array.isArray(tributes) ? tributes.length : 0})
             </h4>
           </div>
         </div>
 
         <ul className="grid grid-cols-1 content-start gap-3 sm:grid-cols-2" aria-live="polite">
-          {tributes.length === 0 ? (
+          {!Array.isArray(tributes) || tributes.length === 0 ? (
             <li
               className={`rounded-2xl border border-dashed p-8 text-center text-sm sm:col-span-2 ${
                 dark ? "border-white/20 text-white/60" : "border-line text-ink-soft"

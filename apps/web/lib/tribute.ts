@@ -16,7 +16,6 @@ import { validateComment } from "./validation";
 
 export interface Tribute {
   id: string;
-  roverSlug?: string | null;
   parentId: string | null;
   userId: string;
   userName: string;
@@ -27,7 +26,6 @@ export interface Tribute {
 }
 
 export interface CreateTributeParams {
-  roverSlug?: string | null;
   userId: string;
   userName: string;
   userPhotoUrl: string;
@@ -42,7 +40,6 @@ export interface CreateTributeParams {
  * 3. Commits tribute doc and updates user's lastCommentedAt timestamp
  */
 export async function submitTribute({
-  roverSlug,
   userId,
   userName,
   userPhotoUrl,
@@ -81,7 +78,7 @@ export async function submitTribute({
 
   const tributeRef = doc(db, "tributes", tributeId);
 
-  const tributeData: Record<string, unknown> = {
+  batch.set(tributeRef, {
     id: tributeId,
     parentId: parentId || null,
     userId,
@@ -90,13 +87,7 @@ export async function submitTribute({
     text: text.trim(),
     status: "approved",
     createdAt: serverTimestamp(),
-  };
-
-  if (roverSlug) {
-    tributeData.roverSlug = roverSlug;
-  }
-
-  batch.set(tributeRef, tributeData);
+  });
 
   // Update user's lastCommentedAt timestamp
   batch.update(userRef, {
@@ -109,26 +100,18 @@ export async function submitTribute({
 }
 
 /**
- * Subscribes to real-time tributes for a specific rover/site or worldwide.
+ * Subscribes to real-time tributes across the memorial transmission wall.
  */
 export function subscribeTributes(
-  roverSlug: string | undefined | null,
   onUpdate: (tributes: Tribute[]) => void,
   onError?: (error: Error) => void
 ): Unsubscribe {
   const tributesCol = collection(db, "tributes");
-  const q = roverSlug
-    ? query(
-        tributesCol,
-        where("roverSlug", "==", roverSlug),
-        where("status", "==", "approved"),
-        orderBy("createdAt", "desc")
-      )
-    : query(
-        tributesCol,
-        where("status", "==", "approved"),
-        orderBy("createdAt", "desc")
-      );
+  const q = query(
+    tributesCol,
+    where("status", "==", "approved"),
+    orderBy("createdAt", "desc")
+  );
 
   return onSnapshot(
     q,
