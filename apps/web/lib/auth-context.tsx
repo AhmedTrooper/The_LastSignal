@@ -10,6 +10,8 @@ import {
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
   type User,
@@ -67,6 +69,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    // Completes the sign-in when signInWithPopup was blocked and we fell back
+    // to signInWithRedirect. Must run before/alongside onAuthStateChanged.
+    getRedirectResult(auth)
+      .then(async (result) => {
+        if (result?.user) {
+          await syncUserProfile(result.user);
+        }
+      })
+      .catch(() => {
+        // No redirect in flight, or the user never completed it. Non-blocking.
+      });
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
@@ -79,9 +93,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
     try {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: "select_account" });
+      // Keep signInWithPopup first and synchronous w.r.t. the click handler
+      // (callers invoke this from onClick with no preceding await).
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
         await syncUserProfile(result.user);
@@ -89,15 +105,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err: unknown) {
       const error = err as { code?: string; message?: string };
       if (error?.code === "auth/configuration-not-found") {
-        const msg = "Google Sign-In is not enabled in Firebase Console yet. Please go to Firebase Console > Authentication > Sign-in method, click Google, and enable it.";
+        const msg =
+          "Google Sign-In is not enabled in Firebase Console yet. Please go to Firebase Console > Authentication > Sign-in method, click Google, and enable it.";
         console.error(msg);
         alert(msg);
         return;
       }
-      // Ignore user closed popup
-      if (error?.code !== "auth/popup-closed-by-user") {
-        throw err;
+      if (error?.code === "auth/popup-closed-by-user") {
+        return; // User dismissed; nothing to do.
       }
+      if (
+        error?.code === "auth/popup-blocked" ||
+        error?.code === "auth/operation-not-supported-in-this-environment"
+      ) {
+        // Browser (Firefox ETP, Safari webviews, mobile browsers) blocked the
+        // popup. Fall back to a full-page redirect — completes via
+        // getRedirectResult() in the effect above.
+        await signInWithRedirect(auth, provider);
+        return;
+      }
+      throw err;
     }
   };
 
