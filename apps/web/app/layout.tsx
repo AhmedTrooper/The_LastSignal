@@ -4,6 +4,7 @@ import "./globals.css";
 import { defaultSEO } from "@/lib/seo";
 import { WebSiteSchema } from "@/app/components/structured-data";
 import TabBar from "@/app/components/tab-bar";
+import { AuthProvider } from "@/lib/auth-context";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,8 +50,10 @@ export default function RootLayout({
         <WebSiteSchema />
       </head>
       <body className="pb-tabbar">
-        {children}
-        <TabBar />
+        <AuthProvider>
+          {children}
+          <TabBar />
+        </AuthProvider>
       </body>
     </html>
   );

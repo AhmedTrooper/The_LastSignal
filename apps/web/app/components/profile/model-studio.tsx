@@ -434,6 +434,7 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <button
+            suppressHydrationWarning
             onClick={() => setSpin(!spin)}
             aria-pressed={spin}
             disabled={state !== "ready"}
@@ -441,13 +442,14 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
           >
             {spin ? "Pause" : "Rotate"}
           </button>
-          <button onClick={reset} disabled={state !== "ready"} className="rounded-full border border-line px-4 py-2 text-sm font-semibold hover:border-violet disabled:opacity-40">
+          <button suppressHydrationWarning onClick={reset} disabled={state !== "ready"} className="rounded-full border border-line px-4 py-2 text-sm font-semibold hover:border-violet disabled:opacity-40">
             Reset view
           </button>
           {canExplode && (
             <label className="flex items-center gap-2 rounded-full border border-line px-4 py-1.5 text-sm font-semibold">
               Explode
               <input
+                suppressHydrationWarning
                 type="range"
                 min={0}
                 max={1}
@@ -481,6 +483,7 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
             {parts.map((p, i) => (
               <li key={p.id}>
                 <button
+                  suppressHydrationWarning
                   onClick={() => pick(p.id)}
                   disabled={state !== "ready"}
                   aria-pressed={sel === p.id}
@@ -501,11 +504,11 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
                 NASA model (.glb)
               </a>
             ) : (
-              <button onClick={() => download("glb")} disabled={state !== "ready" || !!busy} className="rounded-lg border border-line px-3 py-2 text-left text-sm font-semibold hover:border-violet hover:text-violet disabled:opacity-50">
+              <button suppressHydrationWarning onClick={() => download("glb")} disabled={state !== "ready" || !!busy} className="rounded-lg border border-line px-3 py-2 text-left text-sm font-semibold hover:border-violet hover:text-violet disabled:opacity-50">
                 {busy === "glb" ? "Preparing…" : "This model (.glb)"}
               </button>
             )}
-            <button onClick={() => download("stl")} disabled={state !== "ready" || !!busy} className="rounded-lg border border-line px-3 py-2 text-left text-sm font-semibold hover:border-violet hover:text-violet disabled:opacity-50">
+            <button suppressHydrationWarning onClick={() => download("stl")} disabled={state !== "ready" || !!busy} className="rounded-lg border border-line px-3 py-2 text-left text-sm font-semibold hover:border-violet hover:text-violet disabled:opacity-50">
               {busy === "stl" ? "Preparing…" : "For 3D printing (.stl)"}
             </button>
             {downloads.map((d) => (

@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/app/components/logo";
 import { ArrowRight } from "@/app/components/icons";
+import { useAuth } from "@/lib/auth-context";
 
 const LINKS = [
   { href: "/heroes", label: "Heroes" },
@@ -31,6 +33,45 @@ export function TributeButton({ className = "" }: { className?: string }) {
       Leave a tribute
       <ArrowRight />
     </Link>
+  );
+}
+
+export function AuthButton() {
+  const { user, loading, signInWithGoogle, signOutUser } = useAuth();
+  if (loading) return null;
+  if (!user) {
+    return (
+      <button
+        onClick={() => signInWithGoogle()}
+        className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink hover:border-violet hover:text-violet transition-colors"
+      >
+        Sign in
+      </button>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2">
+      {user.photoURL ? (
+        <Image
+          src={user.photoURL}
+          alt={user.displayName || "User"}
+          width={32}
+          height={32}
+          className="rounded-full ring-1 ring-violet/30"
+        />
+      ) : (
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-violet text-xs font-bold text-white">
+          {(user.displayName || "U")[0]?.toUpperCase()}
+        </span>
+      )}
+      <button
+        onClick={() => signOutUser()}
+        title="Sign out"
+        className="text-[11px] text-ink-soft hover:text-red-500 transition-colors"
+      >
+        Sign out
+      </button>
+    </div>
   );
 }
 
@@ -77,8 +118,9 @@ export default function Header() {
             })}
           </nav>
 
-          <div className="hidden lg:flex">
+          <div className="hidden lg:flex items-center gap-3">
             <TributeButton />
+            <AuthButton />
           </div>
 
           <button
@@ -115,6 +157,9 @@ export default function Header() {
         <div className="space-y-4 p-6">
           <div onClick={() => setOpen(false)}>
             <TributeButton className="w-full justify-center py-4" />
+          </div>
+          <div className="flex justify-center pt-2">
+            <AuthButton />
           </div>
         </div>
       </div>

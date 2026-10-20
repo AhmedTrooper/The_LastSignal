@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isUserActive() {
+      return isAuthenticated() &&
+        (!exists(/databases/$(database)/documents/users/$(request.auth.uid)) ||
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isDeleted != true);
+    }
+
+    // Cooldown verification: checks if at least 60 seconds elapsed since last comment
+    function canPostComment() {
+      let userDoc = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return isUserActive()
+        && (!('lastCommentedAt' in userDoc.data) 
+            || request.time > userDoc.data.lastCommentedAt + duration.value(60, 's'));
+    }
+
+    // 1. Users Collection (Supports Soft Deletes, Blocks Hard Deletes)
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId)
+                    && request.resource.data.uid == userId;
+      // Hard delete blocked
+      allow delete: if false;
+    }
+
+    // 2. Tributes Collection (Threaded with parentId & Rover Slug)
+    match /tributes/{tributeId} {
+      // Only approved comments are publicly visible; authors can read their own
+      allow read: if resource.data.status == "approved"
+                  || (isAuthenticated() && resource.data.userId == request.auth.uid);
+
+      // Active authenticated users who satisfy the 60s cooldown can create tributes
+      allow create: if isAuthenticated()
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.status == "approved"
+                    && (request.resource.data.parentId == null || request.resource.data.parentId is string)
+                    && request.resource.data.roverSlug is string
+                    && request.resource.data.text is string
+                    && request.resource.data.text.trim().size() >= 2
+                    && request.resource.data.text.size() <= 1000;
+
+      // Disallow client-side direct update and deletion to preserve history
+      allow update, delete: if false;
+    }
+  }
+}

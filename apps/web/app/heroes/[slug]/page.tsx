@@ -14,9 +14,14 @@ import { STORIES } from "@/lib/stories";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import { ArrowRight, Pin, STAT_ICONS } from "@/app/components/icons";
+import dynamic from "next/dynamic";
 import SectionNav from "@/app/components/profile/section-nav";
 import Documentary from "@/app/components/profile/documentary";
-import ModelStudio, { type StudioSource } from "@/app/components/profile/model-studio";
+import { type StudioSource } from "@/app/components/profile/model-studio";
+
+const ModelStudio = dynamic(() => import("@/app/components/profile/model-studio"), {
+  ssr: false,
+});
 import Gallery from "@/app/components/profile/gallery";
 import TributeWall from "@/app/components/profile/tribute-wall";
 import LastSignalArt, { CAPTION } from "@/app/components/profile/last-signal";
