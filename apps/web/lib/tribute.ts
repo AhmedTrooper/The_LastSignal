@@ -16,7 +16,7 @@ import { validateComment } from "./validation";
 
 export interface Tribute {
   id: string;
-  roverSlug: string;
+  roverSlug?: string | null;
   parentId: string | null;
   userId: string;
   userName: string;
@@ -27,7 +27,7 @@ export interface Tribute {
 }
 
 export interface CreateTributeParams {
-  roverSlug: string;
+  roverSlug?: string | null;
   userId: string;
   userName: string;
   userPhotoUrl: string;
@@ -81,9 +81,8 @@ export async function submitTribute({
 
   const tributeRef = doc(db, "tributes", tributeId);
 
-  batch.set(tributeRef, {
+  const tributeData: Record<string, unknown> = {
     id: tributeId,
-    roverSlug,
     parentId: parentId || null,
     userId,
     userName: userName || "Anonymous",
@@ -91,7 +90,13 @@ export async function submitTribute({
     text: text.trim(),
     status: "approved",
     createdAt: serverTimestamp(),
-  });
+  };
+
+  if (roverSlug) {
+    tributeData.roverSlug = roverSlug;
+  }
+
+  batch.set(tributeRef, tributeData);
 
   // Update user's lastCommentedAt timestamp
   batch.update(userRef, {
@@ -104,20 +109,26 @@ export async function submitTribute({
 }
 
 /**
- * Subscribes to real-time tributes for a specific rover/site.
+ * Subscribes to real-time tributes for a specific rover/site or worldwide.
  */
 export function subscribeTributes(
-  roverSlug: string,
+  roverSlug: string | undefined | null,
   onUpdate: (tributes: Tribute[]) => void,
   onError?: (error: Error) => void
 ): Unsubscribe {
   const tributesCol = collection(db, "tributes");
-  const q = query(
-    tributesCol,
-    where("roverSlug", "==", roverSlug),
-    where("status", "==", "approved"),
-    orderBy("createdAt", "desc")
-  );
+  const q = roverSlug
+    ? query(
+        tributesCol,
+        where("roverSlug", "==", roverSlug),
+        where("status", "==", "approved"),
+        orderBy("createdAt", "desc")
+      )
+    : query(
+        tributesCol,
+        where("status", "==", "approved"),
+        orderBy("createdAt", "desc")
+      );
 
   return onSnapshot(
     q,
