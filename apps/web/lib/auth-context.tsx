@@ -69,27 +69,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    // Completes the sign-in when signInWithPopup was blocked and we fell back
-    // to signInWithRedirect. Must run before/alongside onAuthStateChanged.
-    getRedirectResult(auth)
-      .then(async (result) => {
-        if (result?.user) {
-          await syncUserProfile(result.user);
+    let cancelled = false;
+
+    // getRedirectResult MUST resolve before we consider auth settled. If
+    // onAuthStateChanged resolves first it settles on null and the credential
+    // that arrives afterwards never produces a fresh user state — the page
+    // refreshes but no session is created.
+    const init = async () => {
+      let redirectUser: User | null = null;
+      try {
+        const result = await getRedirectResult(auth);
+        redirectUser = result?.user ?? null;
+      } catch (err) {
+        // No redirect in flight, or the user never completed it. Non-blocking,
+        // but surfaced so a genuine failure isn't mistaken for "just browsing".
+        console.warn("getRedirectResult:", (err as { code?: string })?.code ?? err);
+      }
+
+      // Seed state from the redirect credential before subscribing, so the
+      // listener never observes a transient null.
+      if (redirectUser && !cancelled) {
+        setUser(redirectUser);
+      }
+
+      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        if (cancelled) return;
+        setUser(currentUser);
+        if (currentUser) {
+          await syncUserProfile(currentUser);
         }
-      })
-      .catch(() => {
-        // No redirect in flight, or the user never completed it. Non-blocking.
+        setLoading(false);
       });
 
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        await syncUserProfile(currentUser);
-      }
-      setLoading(false);
-    });
+      return unsubscribe;
+    };
 
-    return () => unsubscribe();
+    let unsubscribe: (() => void) | undefined;
+    init()
+      .then((fn) => {
+        unsubscribe = fn;
+      })
+      .catch((err) => {
+        console.error("Auth init failed:", err);
+      })
+      .finally(() => {
+        // Safety net: never leave the UI stuck on `loading`, which hides the
+        // sign-in button entirely.
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+      unsubscribe?.();
+    };
   }, []);
 
   const signInWithGoogle = async () => {
