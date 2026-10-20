@@ -14,7 +14,12 @@ export default function Footer() {
           So we bring their stories home.
         </p>
         <div className="space-y-2 font-mono text-sm text-ink-soft md:text-right">
-          <p>thelastsignal.org</p>
+          <p>
+            thelastsignal.org ·{" "}
+            <Link href="/privacy" className="underline hover:text-violet">
+              Privacy Policy
+            </Link>
+          </p>
           <p className="max-w-xs text-xs leading-relaxed">
             An independent memorial, not affiliated with or endorsed by any space agency. Images marked AI are placeholders, and the home page illustration is AI-generated.
           </p>
