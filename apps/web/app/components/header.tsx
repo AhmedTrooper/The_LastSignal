@@ -57,6 +57,7 @@ export function AuthButton() {
           alt={user.displayName || "User"}
           width={32}
           height={32}
+          referrerPolicy="no-referrer"
           className="rounded-full ring-1 ring-violet/30"
         />
       ) : (

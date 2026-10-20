@@ -170,6 +170,7 @@ export default function TributeWall({
                     alt={user.displayName || "User"}
                     width={36}
                     height={36}
+                    referrerPolicy="no-referrer"
                     className="rounded-full ring-2 ring-violet/20"
                   />
                 ) : (
@@ -290,6 +291,7 @@ export default function TributeWall({
                       alt={t.userName}
                       width={40}
                       height={40}
+                      referrerPolicy="no-referrer"
                       className="rounded-full ring-1 ring-violet/20 object-cover"
                     />
                   ) : (
