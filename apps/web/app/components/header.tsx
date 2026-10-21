@@ -52,7 +52,7 @@ export function AuthButton() {
     );
   }
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-2">
       {user.photoURL ? (
         <Image
           src={user.photoURL}
@@ -67,13 +67,6 @@ export function AuthButton() {
           {(user.displayName || "U")[0]?.toUpperCase()}
         </span>
       )}
-      <Link
-        href="/delete-account"
-        title="Account & Data Deletion"
-        className="rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-600 hover:bg-red-100 transition-colors"
-      >
-        Delete Account
-      </Link>
       <button
         onClick={() => signOutUser()}
         title="Sign out"
