@@ -273,7 +273,19 @@ export function TributesView() {
               <View key={item.id} style={styles.tributeCard}>
                 <View style={styles.tributeHeader}>
                   <View style={styles.authorBadgeRow}>
-                    <Ionicons name="person-circle-outline" size={18} color={Colors.light.violet} />
+                    {item.photoUrl ? (
+                      <Image
+                        source={{ uri: item.photoUrl }}
+                        style={styles.authorAvatar}
+                        contentFit="cover"
+                      />
+                    ) : (
+                      <Ionicons
+                        name="person-circle-outline"
+                        size={18}
+                        color={Colors.light.violet}
+                      />
+                    )}
                     <ThemedText style={styles.tributeAuthor}>{item.name}</ThemedText>
                   </View>
                   <ThemedText style={styles.tributeDate} type="small">
@@ -594,6 +606,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
+  },
+  authorAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
   },
   tributeAuthor: {
     fontWeight: "800",
