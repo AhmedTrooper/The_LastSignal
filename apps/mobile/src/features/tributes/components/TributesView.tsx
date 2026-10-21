@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Pressable,
   RefreshControl,
@@ -15,6 +15,7 @@ import { Colors } from "@/constants/theme";
 import { haptic } from "@/utils/haptics";
 import { HEROES, catNo, fmtDots, portrait, assetUrl } from "@thelastsignal/data";
 import { useTributesStore } from "@/stores/use-tributes-store";
+import { useAuthStore } from "@/stores/use-auth-store";
 
 const TRIBUTE_PROMPTS = [
   "Rest easy beneath the dust ✦",
@@ -32,17 +33,24 @@ export function TributesView() {
   const [refreshing, setRefreshing] = useState(false);
 
   const hero = HEROES.find((h) => h.slug === selectedSlug) ?? HEROES[0];
-  const { addTribute, tributes } = useTributesStore();
-  const heroTributes = tributes.filter((t) => t.heroSlug === hero.slug);
+  const { addTribute, tributes, fetchFirebaseTributes } = useTributesStore();
+  const user = useAuthStore((s) => s.user);
+
+  useEffect(() => {
+    fetchFirebaseTributes();
+  }, [fetchFirebaseTributes]);
+
+  const heroTributes = tributes.filter(
+    (t) => !t.heroSlug || t.heroSlug === "all" || t.heroSlug === hero.slug
+  );
   const isMars = hero.body === "mars";
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     haptic.light();
     setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-      haptic.success();
-    }, 600);
+    await fetchFirebaseTributes();
+    setRefreshing(false);
+    haptic.success();
   };
 
   const handleSelectHero = (slug: string) => {
@@ -60,18 +68,17 @@ export function TributesView() {
     setLikedTributes((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!message.trim() || isTransmitting) return;
     setIsTransmitting(true);
     haptic.light();
 
-    setTimeout(() => {
-      addTribute(hero.slug, author, message);
-      haptic.success();
-      setMessage("");
-      setAuthor("");
-      setIsTransmitting(false);
-    }, 500);
+    const authorName = author.trim() || user?.name || "Anonymous Explorer";
+    await addTribute(hero.slug, authorName, message, user?.photoUrl);
+    haptic.success();
+    setMessage("");
+    setAuthor("");
+    setIsTransmitting(false);
   };
 
   return (
@@ -275,7 +282,7 @@ export function TributesView() {
                 </View>
 
                 <ThemedText style={styles.tributeMessage}>
-                  &ldquo;{item.message}&rdquo;
+                  {`"${item.message}"`}
                 </ThemedText>
 
                 <View style={styles.tributeFooter}>

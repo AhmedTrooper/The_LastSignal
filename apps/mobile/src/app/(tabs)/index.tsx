@@ -15,6 +15,7 @@ import { ThemedText } from "@/components/themed-text";
 import { Colors } from "@/constants/theme";
 import { useAppBarTheme } from "@/hooks/use-appbar-theme";
 import { useFavoritesStore } from "@/stores/use-favorites-store";
+import { useAuthStore } from "@/stores/use-auth-store";
 import { haptic } from "@/utils/haptics";
 import { HomeHero } from "@/features/home/components/HomeHero";
 import { HomeTicker } from "@/features/home/components/HomeTicker";
@@ -33,6 +34,7 @@ export default function HomeScreen() {
   const [browserOffset, setBrowserOffset] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const favorites = useFavoritesStore((s) => s.favorites);
+  const user = useAuthStore((s) => s.user);
 
   const handleMeetHeroes = () => {
     scrollRef.current?.scrollTo({ y: browserOffset, animated: true });
@@ -59,6 +61,11 @@ export default function HomeScreen() {
   const handleFavoritesPress = () => {
     haptic.light();
     router.push("/favorites" as any);
+  };
+
+  const handleAccountPress = () => {
+    haptic.light();
+    router.push("/login" as any);
   };
 
   return (
@@ -97,6 +104,18 @@ export default function HomeScreen() {
                 <ThemedText style={styles.badgeCountText}>{favorites.length}</ThemedText>
               </View>
             )}
+          </Pressable>
+
+          <Pressable
+            onPress={handleAccountPress}
+            style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
+            accessibilityLabel="Explorer Account"
+          >
+            <Ionicons
+              name={user ? (user.isAnonymous ? "person-outline" : "person") : "person-circle-outline"}
+              size={20}
+              color={user && !user.isAnonymous ? Colors.light.violet : "#0f172a"}
+            />
           </Pressable>
         </View>
       </View>

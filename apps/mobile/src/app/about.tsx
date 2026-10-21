@@ -173,53 +173,68 @@ export default function AboutScreen() {
         <View style={styles.rulesHeaderRow}>
           <Ionicons name="shield-checkmark-outline" size={18} color={Colors.light.violet} />
           <ThemedText style={styles.rulesHeading} type="subtitle">
-            Legal &amp; Account Data
+            Legal & Account Data
           </ThemedText>
         </View>
         <View style={styles.legalLinksRow}>
           <Pressable
             onPress={() => {
               haptic.light();
-              Linking.openURL("https://the-last-signal-theta.vercel.app/privacy");
+              router.push("/login" as any);
             }}
             style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
-            accessibilityRole="link"
-            accessibilityLabel="Open Privacy Policy in browser"
+            accessibilityRole="button"
+            accessibilityLabel="Open Account and Sign In screen"
+          >
+            <ThemedText style={styles.legalButtonText} type="small">
+              Explorer Account & Sign In
+            </ThemedText>
+            <Ionicons name="person-circle-outline" size={15} color={Colors.light.violet} />
+          </Pressable>
+
+          <Pressable
+            onPress={() => {
+              haptic.light();
+              router.push("/privacy" as any);
+            }}
+            style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
+            accessibilityRole="button"
+            accessibilityLabel="Open Privacy Policy screen"
           >
             <ThemedText style={styles.legalButtonText} type="small">
               Privacy Policy
             </ThemedText>
-            <Ionicons name="open-outline" size={13} color={Colors.light.violet} />
+            <Ionicons name="document-text-outline" size={14} color={Colors.light.violet} />
           </Pressable>
 
           <Pressable
             onPress={() => {
               haptic.light();
-              Linking.openURL("https://the-last-signal-theta.vercel.app/terms");
+              router.push("/terms" as any);
             }}
             style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
-            accessibilityRole="link"
-            accessibilityLabel="Open Terms of Service in browser"
+            accessibilityRole="button"
+            accessibilityLabel="Open Terms of Service screen"
           >
             <ThemedText style={styles.legalButtonText} type="small">
               Terms of Service
             </ThemedText>
-            <Ionicons name="open-outline" size={13} color={Colors.light.violet} />
+            <Ionicons name="document-text-outline" size={14} color={Colors.light.violet} />
           </Pressable>
 
           <Pressable
             onPress={() => {
               haptic.light();
-              Linking.openURL("https://the-last-signal-theta.vercel.app/delete-account");
+              router.push("/delete-account" as any);
             }}
             style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
-            accessibilityRole="link"
-            accessibilityLabel="Open Account and Data Deletion page in browser"
+            accessibilityRole="button"
+            accessibilityLabel="Open Account and Data Deletion screen"
           >
             <ThemedText style={styles.legalButtonText} type="small">
-              Delete Account &amp; Data
+              Delete Account & Data
             </ThemedText>
-            <Ionicons name="trash-outline" size={13} color="#e11d48" />
+            <Ionicons name="trash-outline" size={14} color="#e11d48" />
           </Pressable>
         </View>
       </View>

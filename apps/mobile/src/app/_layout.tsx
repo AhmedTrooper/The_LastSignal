@@ -78,6 +78,42 @@ export default function RootLayout() {
               headerTintColor: appbar.tintColor,
             }}
           />
+          <Stack.Screen
+            name="login"
+            options={{
+              headerShown: true,
+              headerTitle: 'Account & Sign In',
+              headerBackTitle: 'Back',
+              headerTintColor: appbar.tintColor,
+            }}
+          />
+          <Stack.Screen
+            name="privacy"
+            options={{
+              headerShown: true,
+              headerTitle: 'Privacy Policy',
+              headerBackTitle: 'Back',
+              headerTintColor: appbar.tintColor,
+            }}
+          />
+          <Stack.Screen
+            name="terms"
+            options={{
+              headerShown: true,
+              headerTitle: 'Terms of Service',
+              headerBackTitle: 'Back',
+              headerTintColor: appbar.tintColor,
+            }}
+          />
+          <Stack.Screen
+            name="delete-account"
+            options={{
+              headerShown: true,
+              headerTitle: 'Delete Account & Data',
+              headerBackTitle: 'Back',
+              headerTintColor: appbar.tintColor,
+            }}
+          />
         </Stack>
         <BottomNavBar />
       </View>

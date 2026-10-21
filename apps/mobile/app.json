@@ -12,6 +12,7 @@
     },
     "android": {
       "package": "com.nasa.lastsignal",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#070814",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

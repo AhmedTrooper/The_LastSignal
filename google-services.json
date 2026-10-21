@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1003209827567",
+    "project_id": "thelastsignal",
+    "storage_bucket": "thelastsignal.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003209827567:android:ac9dabe19d8c359030271a",
+        "android_client_info": {
+          "package_name": "com.nasa.lastsignal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003209827567-d46941l3q7ffqehkth92kisf74q2j7dl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxwoJYHLqNsxXnjgI9MY6O0OAyWRRYXCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003209827567-d46941l3q7ffqehkth92kisf74q2j7dl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
