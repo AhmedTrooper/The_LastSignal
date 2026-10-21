@@ -1,15 +1,42 @@
+import { useEffect } from 'react';
 import { View, StyleSheet, Platform, StatusBar as RNStatusBar } from 'react-native';
 import { DefaultTheme, ThemeProvider, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Linking from 'expo-linking';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { useAppBarTheme } from '@/hooks/use-appbar-theme';
 import { BottomNavBar } from '@/components/BottomNavBar';
+import { useAuthStore } from '@/stores/use-auth-store';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const appbar = useAppBarTheme();
+
+  useEffect(() => {
+    // Listen for the deep link that the web auth bridge redirects back with
+    // the Firebase `id_token`. Fires when the app is already in the
+    // foreground (the normal case: `openAuthSessionAsync` already resolved,
+    // this is a belt-and-suspenders path for OS-level cold/warm relaunches).
+    const subscription = Linking.addEventListener('url', ({ url }) => {
+      if (url) {
+        useAuthStore.getState().handleAuthUrl(url);
+      }
+    });
+
+    // Check the initial URL on cold launch (e.g. the user tapped the redirect
+    // link after the app had been killed).
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        useAuthStore.getState().handleAuthUrl(url);
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   return (
     <ThemeProvider value={DefaultTheme}>

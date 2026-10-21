@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -13,7 +14,7 @@ import { ThemedText } from "@/components/themed-text";
 import { Waveform } from "@/components/Waveform";
 import { Colors } from "@/constants/theme";
 import { haptic } from "@/utils/haptics";
-import { useAuthStore } from "@/stores/use-auth-store";
+import { useAuthStore, type AuthUser } from "@/stores/use-auth-store";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -25,28 +26,37 @@ export default function LoginScreen() {
     haptic.selection();
     setLoadingGoogle(true);
     try {
+      // Opens the deployed web-bridge in the system browser, which signs in
+      // the user and deep-links back with a real Firebase id_token. The store
+      // then exchanges it via `signInWithCredential`, so by the time this
+      // resolves the auth listener has populated the user.
       await signInWithGoogle();
-      const currentUser = useAuthStore.getState().user;
-      if (currentUser) {
-        haptic.success();
-        router.back();
-      }
-    } catch {
-      haptic.light();
-    } finally {
+      haptic.success();
+      router.back();
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Google sign-in failed. Please try again.";
+      // Most common cause here: Firebase Web client wasn't rebuilt with the
+      // new bridge page that sends `id_token`, or the token round-trip
+      // failed (network, expired). Surface, don't silently swallow.
+      haptic.warning();
+      Alert.alert("Sign-In Failed", message);
       setLoadingGoogle(false);
     }
   };
 
-  const handleAnonymousSignIn = () => {
+  const handleAnonymousSignIn = async () => {
     haptic.selection();
     setLoadingAnon(true);
-    setTimeout(() => {
-      signInAnonymously();
-      setLoadingAnon(false);
+    try {
+      await signInAnonymously();
       haptic.success();
       router.back();
-    }, 300);
+    } catch {
+      haptic.light();
+    } finally {
+      setLoadingAnon(false);
+    }
   };
 
   const handleSignOut = async () => {
@@ -95,50 +105,12 @@ export default function LoginScreen() {
       </View>
 
       {/* Active User Card (if signed in) */}
-      {user ? (
-        <View style={styles.profileCard}>
-          <View style={styles.profileHeader}>
-            <View style={styles.avatarCircle}>
-              <Ionicons
-                name={user.isAnonymous ? "person-outline" : "checkmark-circle"}
-                size={24}
-                color="#ffffff"
-              />
-            </View>
-            <View style={styles.profileInfo}>
-              <ThemedText style={styles.profileName}>{user.name}</ThemedText>
-              <ThemedText style={styles.profileRole} type="small">
-                {user.isAnonymous ? "Anonymous Guest" : user.email || "Verified Explorer"}
-              </ThemedText>
-            </View>
-          </View>
-
-          <View style={styles.profileActions}>
-            <Pressable
-              onPress={() => router.push("/delete-account" as any)}
-              style={({ pressed }) => [styles.deleteBtn, pressed && styles.cardPressed]}
-            >
-              <Ionicons name="trash-outline" size={15} color="#e11d48" />
-              <ThemedText style={styles.deleteBtnText} type="small">
-                Delete Account
-              </ThemedText>
-            </Pressable>
-
-            <Pressable
-              onPress={handleSignOut}
-              style={({ pressed }) => [styles.signOutBtn, pressed && styles.cardPressed]}
-            >
-              <Ionicons name="log-out-outline" size={15} color={Colors.light.textSecondary} />
-              <ThemedText style={styles.signOutBtnText} type="small">
-                Sign Out
-              </ThemedText>
-            </Pressable>
-          </View>
-        </View>
-      ) : (
+      {user ? <ActiveAccountCard user={user} onSignOut={handleSignOut} /> : (
         /* Sign-in Buttons */
         <View style={styles.authActionsCard}>
-          {/* Google Sign In */}
+          {/* Google Sign In — opens the real system account picker via
+              expo-auth-session. Only this path yields a verified Firebase
+              session; the previous fake account list was removed. */}
           <Pressable
             onPress={handleGoogleSignIn}
             disabled={loadingGoogle || loadingAnon}
@@ -150,28 +122,26 @@ export default function LoginScreen() {
             accessibilityRole="button"
             accessibilityLabel="Sign in with Google"
           >
-            {loadingGoogle ? (
-              <ActivityIndicator size="small" color="#ffffff" />
-            ) : (
-              <>
-                <View style={styles.googleIconCircle}>
-                  <Ionicons name="logo-google" size={16} color={Colors.light.violet} />
-                </View>
-                <ThemedText style={styles.googleButtonText}>
-                  Sign in with Google
-                </ThemedText>
-              </>
-            )}
+            <View style={styles.googleIconCircle}>
+              {loadingGoogle ? (
+                <ActivityIndicator size="small" color={Colors.light.violet} />
+              ) : (
+                <Ionicons name="logo-google" size={16} color={Colors.light.violet} />
+              )}
+            </View>
+            <ThemedText style={styles.googleButtonText}>
+              {loadingGoogle ? "Opening Google…" : "Sign in with Google"}
+            </ThemedText>
           </Pressable>
 
           {/* Continue Anonymously */}
           <Pressable
             onPress={handleAnonymousSignIn}
-            disabled={loadingGoogle || loadingAnon}
+            disabled={loadingAnon || loadingGoogle}
             style={({ pressed }) => [
               styles.anonButton,
               pressed && styles.cardPressed,
-              loadingAnon && styles.buttonDisabled,
+              (loadingAnon || loadingGoogle) && styles.buttonDisabled,
             ]}
             accessibilityRole="button"
             accessibilityLabel="Continue anonymously as guest"
@@ -199,58 +169,78 @@ export default function LoginScreen() {
             <View style={styles.perkRow}>
               <Ionicons name="bookmark-outline" size={15} color={Colors.light.violet} />
               <ThemedText style={styles.perkText} type="small">
-                Save and organize your favorite spacecraft
+                Save missions to your personal offline archive
               </ThemedText>
             </View>
             <View style={styles.perkRow}>
-              <Ionicons name="shield-checkmark-outline" size={15} color={Colors.light.violet} />
+              <Ionicons
+                name="shield-checkmark-outline"
+                size={15}
+                color={Colors.light.violet}
+              />
               <ThemedText style={styles.perkText} type="small">
-                No passwords required · Delete data anytime
+                End-to-end account deletion and data safety compliant
               </ThemedText>
             </View>
           </View>
         </View>
       )}
+    </ScrollView>
+  );
+}
 
-      {/* Legal & Policy Links */}
-      <View style={styles.legalFooter}>
-        <ThemedText style={styles.legalNotice} type="small">
-          {"By signing in or continuing as a guest, you agree to The Last Signal's:"}
-        </ThemedText>
-        <View style={styles.legalLinksRow}>
-          <Pressable
-            onPress={() => router.push("/terms" as any)}
-            accessibilityRole="link"
-          >
-            <ThemedText style={styles.legalLink} type="small">
-              Terms of Service
-            </ThemedText>
-          </Pressable>
-          <ThemedText style={styles.dotSeparator} type="small">
-            {"·"}
+function ActiveAccountCard({
+  user,
+  onSignOut,
+}: {
+  user: AuthUser;
+  onSignOut: () => void;
+}) {
+  const router = useRouter();
+  return (
+    <View style={styles.profileCard}>
+      <View style={styles.profileHeader}>
+        <View style={styles.avatarCircle}>
+          <Ionicons
+            name={user.isAnonymous ? "person-outline" : "checkmark-circle"}
+            size={24}
+            color="#ffffff"
+          />
+        </View>
+        <View style={styles.profileInfo}>
+          <ThemedText style={styles.profileName}>{user.name}</ThemedText>
+          <ThemedText style={styles.profileRole} type="small">
+            {user.isAnonymous ? "Anonymous Guest" : user.email || "Verified Explorer"}
           </ThemedText>
-          <Pressable
-            onPress={() => router.push("/privacy" as any)}
-            accessibilityRole="link"
-          >
-            <ThemedText style={styles.legalLink} type="small">
-              Privacy Policy
-            </ThemedText>
-          </Pressable>
-          <ThemedText style={styles.dotSeparator} type="small">
-            {"·"}
-          </ThemedText>
-          <Pressable
-            onPress={() => router.push("/delete-account" as any)}
-            accessibilityRole="link"
-          >
-            <ThemedText style={styles.legalLinkDelete} type="small">
-              Delete Account
-            </ThemedText>
-          </Pressable>
         </View>
       </View>
-    </ScrollView>
+
+      <View style={styles.profileActions}>
+        <Pressable
+          onPress={() => router.push("/delete-account" as any)}
+          style={({ pressed }) => [styles.deleteBtn, pressed && styles.cardPressed]}
+        >
+          <Ionicons name="trash-outline" size={15} color="#e11d48" />
+          <ThemedText style={styles.deleteBtnText} type="small">
+            Delete Account
+          </ThemedText>
+        </Pressable>
+
+        <Pressable
+          onPress={onSignOut}
+          style={({ pressed }) => [styles.signOutBtn, pressed && styles.cardPressed]}
+        >
+          <Ionicons
+            name="log-out-outline"
+            size={15}
+            color={Colors.light.textSecondary}
+          />
+          <ThemedText style={styles.signOutBtnText} type="small">
+            Sign Out
+          </ThemedText>
+        </Pressable>
+      </View>
+    </View>
   );
 }
 
@@ -261,37 +251,39 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
-    paddingBottom: 48,
-    gap: 20,
+    paddingBottom: 40,
   },
   header: {
     alignItems: "center",
-    textAlign: "center",
+    marginBottom: 24,
     gap: 8,
-    paddingTop: 12,
   },
   logoBadge: {
     width: 64,
     height: 64,
-    borderRadius: 20,
+    borderRadius: 18,
     backgroundColor: "#070814",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 6,
+    shadowColor: Colors.light.violet,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 3,
   },
   logo: {
-    width: 44,
-    height: 44,
+    width: 42,
+    height: 42,
   },
   eyebrow: {
     fontFamily: "monospace",
     color: Colors.light.violet,
     fontWeight: "700",
-    fontSize: 10,
-    letterSpacing: 1.2,
+    letterSpacing: 0.6,
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "800",
     color: Colors.light.text,
     textAlign: "center",
@@ -299,16 +291,87 @@ const styles = StyleSheet.create({
   subtitle: {
     color: Colors.light.textSecondary,
     textAlign: "center",
-    lineHeight: 19,
+    lineHeight: 18,
     maxWidth: 320,
   },
-  authActionsCard: {
+  profileCard: {
     backgroundColor: Colors.light.backgroundElement,
-    padding: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+    padding: 16,
+    gap: 14,
+  },
+  profileHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  avatarCircle: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: Colors.light.violet,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profileInfo: {
+    flex: 1,
+  },
+  profileName: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: Colors.light.text,
+  },
+  profileRole: {
+    color: Colors.light.textSecondary,
+  },
+  profileActions: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  deleteBtn: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    backgroundColor: "#fff1f2",
+    borderRadius: 12,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: "#ffe4e6",
+  },
+  deleteBtnText: {
+    color: "#e11d48",
+    fontWeight: "700",
+  },
+  signOutBtn: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    backgroundColor: "#f4f4f5",
+    borderRadius: 12,
+    paddingVertical: 10,
+  },
+  signOutBtnText: {
+    color: Colors.light.textSecondary,
+    fontWeight: "700",
+  },
+  authActionsCard: {
+    backgroundColor: "#ffffff",
     borderRadius: 24,
     borderWidth: 1,
     borderColor: Colors.light.line,
-    gap: 12,
+    padding: 20,
+    gap: 14,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.04,
+    shadowRadius: 10,
+    elevation: 2,
   },
   googleButton: {
     flexDirection: "row",
@@ -316,10 +379,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
     backgroundColor: Colors.light.violet,
-    paddingVertical: 14,
     borderRadius: 16,
+    paddingVertical: 14,
     shadowColor: Colors.light.violet,
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 8,
     elevation: 3,
@@ -334,150 +397,47 @@ const styles = StyleSheet.create({
   },
   googleButtonText: {
     color: "#ffffff",
+    fontWeight: "800",
     fontSize: 15,
-    fontWeight: "700",
   },
   anonButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
-    backgroundColor: "#ffffff",
-    paddingVertical: 13,
+    backgroundColor: Colors.light.backgroundElement,
     borderRadius: 16,
+    paddingVertical: 13,
     borderWidth: 1,
     borderColor: Colors.light.line,
   },
   anonButtonText: {
     color: Colors.light.text,
+    fontWeight: "700",
     fontSize: 14,
-    fontWeight: "600",
   },
   buttonDisabled: {
     opacity: 0.6,
   },
+  cardPressed: {
+    opacity: 0.75,
+    transform: [{ scale: 0.98 }],
+  },
   perksList: {
-    gap: 8,
-    paddingTop: 12,
+    marginTop: 10,
+    gap: 10,
     borderTopWidth: 1,
     borderTopColor: Colors.light.line,
+    paddingTop: 14,
   },
   perkRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
   },
   perkText: {
-    color: Colors.light.textSecondary,
-    fontSize: 12,
-  },
-  profileCard: {
-    backgroundColor: Colors.light.backgroundElement,
-    padding: 20,
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: Colors.light.line,
-    gap: 16,
-  },
-  profileHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  avatarCircle: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: Colors.light.violet,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  profileInfo: {
     flex: 1,
-  },
-  profileName: {
-    fontSize: 17,
-    fontWeight: "800",
-    color: Colors.light.text,
-  },
-  profileRole: {
     color: Colors.light.textSecondary,
-    fontSize: 12,
-  },
-  profileActions: {
-    flexDirection: "row",
-    gap: 10,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: Colors.light.line,
-  },
-  deleteBtn: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-    backgroundColor: "#fff1f2",
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#fecdd3",
-  },
-  deleteBtnText: {
-    color: "#be123c",
-    fontWeight: "700",
-    fontSize: 12,
-  },
-  signOutBtn: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-    backgroundColor: "#ffffff",
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.light.line,
-  },
-  signOutBtnText: {
-    color: Colors.light.textSecondary,
-    fontWeight: "600",
-    fontSize: 12,
-  },
-  legalFooter: {
-    alignItems: "center",
-    gap: 6,
-    paddingTop: 8,
-  },
-  legalNotice: {
-    color: Colors.light.textSecondary,
-    fontSize: 11,
-    textAlign: "center",
-  },
-  legalLinksRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  legalLink: {
-    color: Colors.light.violet,
-    fontWeight: "600",
-    fontSize: 11,
-    textDecorationLine: "underline",
-  },
-  legalLinkDelete: {
-    color: "#e11d48",
-    fontWeight: "600",
-    fontSize: 11,
-    textDecorationLine: "underline",
-  },
-  dotSeparator: {
-    color: Colors.light.textSecondary,
-    fontSize: 11,
-  },
-  cardPressed: {
-    opacity: 0.88,
-    transform: [{ scale: 0.985 }],
+    lineHeight: 17,
   },
 });
