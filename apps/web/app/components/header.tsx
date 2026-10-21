@@ -144,12 +144,12 @@ export default function Header() {
         id="mobile-menu"
         aria-hidden={!open}
         inert={!open ? true : undefined}
-        className={`fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col overflow-y-auto bg-white lg:hidden ${
+        className={`fixed inset-x-0 top-16 bottom-0 h-[calc(100dvh-4rem)] z-40 flex flex-col overflow-y-auto bg-white lg:hidden ${
           open ? "flex" : "hidden"
         }`}
       >
         {/* Account / Sign-in section placed at the top of the scrollable menu */}
-        <div className="flex items-center justify-between border-b border-line bg-mist/60 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-line bg-mist/60 px-6 py-4 shrink-0">
           <span className="text-xs font-mono uppercase tracking-wider text-ink-soft">Account</span>
           <AuthButton />
         </div>
@@ -160,11 +160,13 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="p-6 pb-12 mt-auto">
+        <div className="p-6 pt-4 pb-12 mb-16 shrink-0">
           <div onClick={() => setOpen(false)}>
-            <TributeButton className="w-full justify-center py-4" />
+            <TributeButton className="w-full justify-center py-4 text-base" />
           </div>
         </div>
+        {/* Extra bottom spacer to ensure full clearance above mobile browser bars */}
+        <div className="h-16 shrink-0" aria-hidden="true" />
       </div>
     </>
   );
