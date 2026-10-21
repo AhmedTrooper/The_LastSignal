@@ -143,24 +143,26 @@ export default function Header() {
       <div
         id="mobile-menu"
         aria-hidden={!open}
-        inert={!open}
-        className={`fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col overflow-y-auto bg-white transition-[opacity,transform] duration-300 lg:hidden ${
-          open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"
+        inert={!open ? true : undefined}
+        className={`fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col overflow-y-auto bg-white lg:hidden ${
+          open ? "flex" : "hidden"
         }`}
       >
-        <nav className="flex flex-col gap-1 px-6 pt-6">
+        {/* Account / Sign-in section placed at the top of the scrollable menu */}
+        <div className="flex items-center justify-between border-b border-line bg-mist/60 px-6 py-4">
+          <span className="text-xs font-mono uppercase tracking-wider text-ink-soft">Account</span>
+          <AuthButton />
+        </div>
+        <nav className="flex flex-col gap-1 px-6 pt-2">
           {[...LINKS, { href: "/tributes", label: "Tributes" }].map((l) => (
-            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="display border-b border-line py-4 text-3xl text-ink">
+            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="display border-b border-line py-3.5 text-2xl text-ink">
               {l.label}
             </Link>
           ))}
         </nav>
-        <div className="space-y-4 p-6">
+        <div className="p-6 pb-12 mt-auto">
           <div onClick={() => setOpen(false)}>
             <TributeButton className="w-full justify-center py-4" />
-          </div>
-          <div className="flex justify-center pt-2">
-            <AuthButton />
           </div>
         </div>
       </div>
