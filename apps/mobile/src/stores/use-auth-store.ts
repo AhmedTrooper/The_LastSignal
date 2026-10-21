@@ -63,6 +63,53 @@ interface AuthState {
   handleAuthUrl: (url: string) => Promise<boolean>;
 }
 
+// Tracks the most recent Google-issued id_token we exchanged with Firebase
+// in this process lifetime. Used to deduplicate handleAuthUrl calls — Android
+// routinely broadcasts the same deep-link URL twice (once for the auth
+// session, once for the relaunched window) and the second exchange of the
+// same token would error with "id token is not issued by Google".
+let lastExchangedToken: string | null = null;
+
+// True iff the JWT's `iss` claim names Google as the issuer. Decode without
+// a signature check — Firebase will re-verify cryptographically when we call
+// signInWithCredential.
+function isGoogleIssuedIdToken(jwt: string): boolean {
+  try {
+    const parts = jwt.split(".");
+    if (parts.length < 2) return false;
+    const payloadB64 = parts[1];
+    // base64url → base64
+    const b64 =
+      payloadB64.replace(/-/g, "+").replace(/_/g, "/") +
+      "=".repeat((4 - (payloadB64.length % 4)) % 4);
+
+    // Minimal base64 → string decoder. React Native ships neither `atob`
+    // (Hermes) nor Node's `Buffer`, so decode by hand. We only need the
+    // ASCII `iss` value, so a byte-wise latin1 read is sufficient.
+    const alphabet =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let out = "";
+    let buffer = 0;
+    let bits = 0;
+    for (const ch of b64) {
+      if (ch === "=") break;
+      const val = alphabet.indexOf(ch);
+      if (val < 0) continue;
+      buffer = (buffer << 6) | val;
+      bits += 6;
+      if (bits >= 8) {
+        bits -= 8;
+        out += String.fromCharCode((buffer >> bits) & 0xff);
+      }
+    }
+
+    const issMatch = out.match(/"iss"\s*:\s*"([^"]+)"/);
+    return !!issMatch && issMatch[1].startsWith("https://accounts.google.com");
+  } catch {
+    return false;
+  }
+}
+
 // Sync user to Firestore `users/{uid}` collection matching web schema
 async function syncFirestoreUserProfile(
   uid: string,
@@ -138,14 +185,36 @@ export const useAuthStore = create<AuthState>((set, get) => {
         const idToken = (q.id_token as string) || (q.token as string);
 
         if (idToken) {
-          // Hand the token to Firebase. This is what creates the real session;
-          // the previous version of this function fabricated a local user with
-          // `id: g_<email>` — that path was impersonable and matched no
-          // Firebase user, so calls to Firestore that required auth would
-          // fail.
+          // Idempotency: a single bridge round-trip fires handleAuthUrl twice
+          // on Android (once via Linking.addEventListener and once again from
+          // openAuthSessionAsync resolving with the same deep-link URL). The
+          // first exchange succeeds and signs the user in; the second would
+          // reuse an already-consumed token (or, worse, a Firebase-issued
+          // token that Android's intent re-broadcast) and crash with
+          // "id token is not issued by Google". Skip if we've already seen
+          // this exact token in this process.
+          if (idToken === lastExchangedToken) {
+            return true;
+          }
+
+          // Only accept tokens signed by Google itself. Firebase issues its
+          // own JWTs (iss: securetoken.google.com/<project>) for end-user
+          // sessions, but those are not valid Google credentials and will be
+          // rejected by signInWithCredential. Decoding the JWT here is a
+          // pre-flight check that avoids the noisy auth/invalid-credential
+          // error when iOS or Android re-broadcasts an unrelated deep link
+          // that happens to contain a Firebase-issued id_token.
+          if (!isGoogleIssuedIdToken(idToken)) {
+            console.warn(
+              "handleAuthUrl: token is not Google-issued; ignoring."
+            );
+            return false;
+          }
+
           try {
             const credential = GoogleAuthProvider.credential(idToken);
             await signInWithCredential(auth, credential);
+            lastExchangedToken = idToken;
             return true;
           } catch (err) {
             console.warn("Firebase credential exchange failed:", err);
@@ -237,6 +306,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
       } catch {
         // ignore
       }
+      lastExchangedToken = null;
       set({ user: null, isLoading: false });
     },
 
