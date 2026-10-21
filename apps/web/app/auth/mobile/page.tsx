@@ -47,12 +47,19 @@ function MobileAuthBridgeContent() {
     // If we just returned from a redirect-flow sign-in, finish it now.
     getRedirectResult(auth)
       .then(async (res) => {
-        if (res?.user) {
+        if (res) {
           try {
-            const idToken = await res.user.getIdToken(/*forceRefresh*/ false);
-            await returnToAppWithCredential(res.user, idToken);
+            // The Google-issued id_token is on the OAuth credential, not on
+            // user.getIdToken() (which returns Firebase's own session token,
+            // iss: securetoken.google.com). Firebase validates the Google
+            // id_token only when the credential is presented directly.
+            const credential = GoogleAuthProvider.credentialFromResult(res);
+            const googleIdToken = credential?.idToken;
+            if (res.user && googleIdToken) {
+              await returnToAppWithCredential(res.user, googleIdToken);
+            }
           } catch (err) {
-            console.warn("Failed to fetch id_token after redirect:", err);
+            console.warn("Failed to extract Google id_token after redirect:", err);
             setStatus("error");
             setErrorMessage("We couldn't refresh your session. Please try again.");
           }
@@ -72,12 +79,10 @@ function MobileAuthBridgeContent() {
 
     try {
       const result = await signInWithPopup(auth, provider);
-      if (result.user) {
-        // Force-refresh false: the cached access/id token from popup is fresh.
-        // signInWithCredential in the app will get fresh tokens from the
-        // same session via Firebase's secure cookie/local storage chain.
-        const idToken = await result.user.getIdToken(/*forceRefresh*/ false);
-        await returnToAppWithCredential(result.user, idToken);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const googleIdToken = credential?.idToken;
+      if (result.user && googleIdToken) {
+        await returnToAppWithCredential(result.user, googleIdToken);
       }
     } catch (err: unknown) {
       const e = err as { code?: string; message?: string };
