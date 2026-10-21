@@ -1,29 +1,61 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  type User,
+} from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
-export default function MobileAuthBridgePage() {
+function MobileAuthBridgeContent() {
+  const searchParams = useSearchParams();
+  // Default to the Expo dev scheme. In a standalone install, Expo Router
+  // exposes this same scheme via Linking.createURL("auth").
+  const redirectUri = searchParams.get("redirect_uri") || "thelastsignal://auth";
   const [status, setStatus] = useState<"loading" | "prompt" | "success" | "error">("prompt");
   const [errorMessage, setErrorMessage] = useState("");
+  const [appRedirectUrl, setAppRedirectUrl] = useState("");
 
-  const returnToApp = (user: { displayName?: string | null; email?: string | null; photoURL?: string | null; uid: string }) => {
+  // Send the user back to the mobile app with a REAL Firebase id_token.
+  // The app will pass that token to signInWithCredential, creating a real,
+  // verified Firebase session. This replaces the previous version which only
+  // forwarded name/email/uid and let the app fabricate its own user.
+  const returnToAppWithCredential = async (user: User, idToken: string) => {
     setStatus("success");
     const name = encodeURIComponent(user.displayName || "Explorer");
     const email = encodeURIComponent(user.email || "");
     const photo = encodeURIComponent(user.photoURL || "");
     const uid = encodeURIComponent(user.uid);
-    const target = `thelastsignal://auth?name=${name}&email=${email}&photo=${photo}&uid=${uid}`;
-    window.location.href = target;
+    const token = encodeURIComponent(idToken);
+    const separator = redirectUri.includes("?") ? "&" : "?";
+    const target = `${redirectUri}${separator}name=${name}&email=${email}&photo=${photo}&uid=${uid}&id_token=${token}`;
+    setAppRedirectUrl(target);
+
+    // Try automatic redirect
+    try {
+      window.location.href = target;
+    } catch {
+      // User can click button if automatic redirect is blocked
+    }
   };
 
   useEffect(() => {
-    // Check if redirect just finished
+    // If we just returned from a redirect-flow sign-in, finish it now.
     getRedirectResult(auth)
-      .then((res) => {
+      .then(async (res) => {
         if (res?.user) {
-          returnToApp(res.user);
+          try {
+            const idToken = await res.user.getIdToken(/*forceRefresh*/ false);
+            await returnToAppWithCredential(res.user, idToken);
+          } catch (err) {
+            console.warn("Failed to fetch id_token after redirect:", err);
+            setStatus("error");
+            setErrorMessage("We couldn't refresh your session. Please try again.");
+          }
         }
       })
       .catch((err) => {
@@ -41,12 +73,24 @@ export default function MobileAuthBridgePage() {
     try {
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
-        returnToApp(result.user);
+        // Force-refresh false: the cached access/id token from popup is fresh.
+        // signInWithCredential in the app will get fresh tokens from the
+        // same session via Firebase's secure cookie/local storage chain.
+        const idToken = await result.user.getIdToken(/*forceRefresh*/ false);
+        await returnToAppWithCredential(result.user, idToken);
       }
     } catch (err: unknown) {
       const e = err as { code?: string; message?: string };
-      if (e?.code === "auth/popup-blocked" || e?.code === "auth/operation-not-supported-in-this-environment") {
+      if (
+        e?.code === "auth/popup-blocked" ||
+        e?.code === "auth/operation-not-supported-in-this-environment"
+      ) {
         await signInWithRedirect(auth, provider);
+        return;
+      }
+      if (e?.code === "auth/popup-closed-by-user") {
+        // User dismissed; return to the prompt state without an error.
+        setStatus("prompt");
         return;
       }
       setStatus("error");
@@ -64,11 +108,23 @@ export default function MobileAuthBridgePage() {
         </div>
 
         <h1 className="text-xl font-bold">The Last Signal</h1>
-        <p className="mt-1 text-xs text-white/60">Choose your Google Account to authenticate the mobile app</p>
+        <p className="mt-1 text-xs text-white/60">
+          Choose your Google Account to authenticate the mobile app
+        </p>
 
         {status === "success" ? (
-          <div className="mt-6 rounded-xl bg-emerald-500/20 p-4 text-xs font-semibold text-emerald-300">
-            ✓ Authenticated! Returning to The Last Signal app…
+          <div className="mt-6 space-y-4">
+            <div className="rounded-xl bg-emerald-500/20 p-4 text-xs font-semibold text-emerald-300">
+              ✓ Authenticated! Returning to The Last Signal app…
+            </div>
+            {appRedirectUrl ? (
+              <a
+                href={appRedirectUrl}
+                className="inline-block w-full rounded-full bg-[#5b2eff] px-5 py-3 text-xs font-bold text-white shadow-lg transition hover:bg-[#6d42ff]"
+              >
+                Tap here to return to app →
+              </a>
+            ) : null}
           </div>
         ) : (
           <div className="mt-6 space-y-3">
@@ -105,5 +161,13 @@ export default function MobileAuthBridgePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function MobileAuthBridgePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#070814]" />}>
+      <MobileAuthBridgeContent />
+    </Suspense>
   );
 }
