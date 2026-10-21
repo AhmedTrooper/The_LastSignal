@@ -23,6 +23,7 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-plex-mono",
   display: "swap",
+  preload: false,
 });
 
 /** Handwriting for photo captions on the home page. */
@@ -31,6 +32,7 @@ const caveat = Caveat({
   subsets: ["latin"],
   variable: "--font-caveat",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = defaultSEO;

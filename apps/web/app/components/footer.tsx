@@ -14,10 +14,22 @@ export default function Footer() {
           So we bring their stories home.
         </p>
         <div className="space-y-2 font-mono text-sm text-ink-soft md:text-right">
-          <p>
-            thelastsignal.mtas.fi ·{" "}
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 md:justify-end">
+            <span>thelastsignal.mtas.fi</span>
+            <span>·</span>
             <Link href="/privacy" className="underline hover:text-violet">
-              Privacy Policy
+              Privacy
+            </Link>
+            <span>·</span>
+            <Link href="/terms" className="underline hover:text-violet">
+              Terms
+            </Link>
+            <span>·</span>
+            <Link
+              href="/delete-account"
+              className="rounded bg-red-500/10 px-2 py-0.5 text-xs font-semibold text-red-600 hover:bg-red-500/20 transition-colors"
+            >
+              Delete Account
             </Link>
           </p>
           <p className="max-w-xs text-xs leading-relaxed">

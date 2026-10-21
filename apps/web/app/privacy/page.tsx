@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
 
@@ -40,9 +41,13 @@ export default function PrivacyPolicyPage() {
             independent educational, historical, and memorial application dedicated to the robotic
             explorers left behind on Mars and the Moon. This Privacy Policy informs users of our mobile
             application (available on Google Play under package identifier{" "}
-            <code className="font-mono text-violet">com.nasa.lastsignal</code>) and our official website (
+            <code className="font-mono text-violet">com.nasa.lastsignal</code>) and our official web platforms (
             <a href="https://thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">
               https://thelastsignal.mtas.fi
+            </a>{" "}
+            and{" "}
+            <a href="https://the-last-signal-theta.vercel.app" className="text-violet underline hover:text-violet-deep">
+              https://the-last-signal-theta.vercel.app
             </a>
             ) regarding the collection, use, and disclosure of Personal Information.
           </p>
@@ -184,34 +189,76 @@ export default function PrivacyPolicyPage() {
 
         {/* Data Retention and Deletion */}
         <section className="space-y-4">
-          <h2 className="display text-2xl">6. Data Retention and Account Deletion</h2>
+          <h2 className="display text-2xl">6. Account Deletion and Data Retention (Google Play Compliance)</h2>
           <p className="leading-relaxed text-ink-soft">
-            We retain user profile data and published tributes only for as long as necessary to provide the
-            memorial service. In compliance with Google Play Developer Policies:
+            In compliance with the <strong>Google Play User Data &amp; Account Deletion Policy</strong> and
+            international privacy regulations (including GDPR), we provide both an immediate self-service web tool and
+            a direct manual submission channel for users to delete their account and associated data without requiring
+            app reinstallation.
           </p>
-          <div className="rounded-xl border border-line p-5 space-y-2 text-ink-soft">
-            <h3 className="text-base font-bold text-ink">Right to Request Deletion:</h3>
-            <p>
-              Users have the right to request deletion of their account and all associated tribute messages
-              at any time. To request account and data deletion:
+
+          <div className="rounded-2xl border border-line bg-mist p-6 space-y-4 text-ink-soft">
+            <h3 className="text-base font-bold text-ink">
+              Official Account &amp; Data Deletion Options:
+            </h3>
+            <p className="text-sm">
+              Users can delete their account and associated personal data at any time via two official pathways:
             </p>
-            <ul className="list-inside list-disc space-y-1">
+            <ul className="list-inside list-disc space-y-2 text-sm text-ink-soft">
               <li>
-                Send an email with the subject line <strong>&ldquo;Data Deletion Request&rdquo;</strong> to{" "}
-                <a
-                  href="mailto:privacy@thelastsignal.mtas.fi"
-                  className="font-mono text-violet underline hover:text-violet-deep"
-                >
-                  privacy@thelastsignal.mtas.fi
-                </a>
-                .
+                <strong>In-App Deletion Path (Android):</strong> Open <em>The Last Signal</em> mobile app &rarr; go to <em>About</em> &rarr; scroll to <em>Legal &amp; Account Data</em> &rarr; tap <em>Delete Account &amp; Data</em>.
               </li>
-              <li>Include the email address associated with your Google account.</li>
+              <li>
+                <strong>Web-Based Deletion URL (No App Required):</strong> Access our public account deletion portal below, allowing deletion without opening or reinstalling the mobile app:
+              </li>
             </ul>
-            <p className="text-xs">
-              All associated records from our Firebase Authentication and Firestore collections will be
-              permanently purged within 30 days of verification.
-            </p>
+            <div className="rounded-xl border border-violet/30 bg-white p-4 font-mono text-sm text-violet">
+              <Link
+                href="/delete-account"
+                className="font-bold underline hover:text-violet-deep break-all"
+              >
+                https://the-last-signal-theta.vercel.app/delete-account
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
+              <div className="rounded-xl border border-line bg-white p-4 space-y-2">
+                <h4 className="font-bold text-ink text-sm">Method 1: Instant Self-Service</h4>
+                <p className="text-xs leading-relaxed">
+                  Sign in with Google on our deletion page and confirm. Your Firebase Auth account, Firestore user
+                  profile, and all memorial transmissions are permanently deleted in real-time.
+                </p>
+              </div>
+              <div className="rounded-xl border border-line bg-white p-4 space-y-2">
+                <h4 className="font-bold text-ink text-sm">Method 2: Manual Request (Email)</h4>
+                <p className="text-xs leading-relaxed">
+                  Email{" "}
+                  <a
+                    href="mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal"
+                    className="font-mono text-violet underline hover:text-violet-deep"
+                  >
+                    privacy@thelastsignal.mtas.fi
+                  </a>{" "}
+                  with subject &ldquo;Account Deletion Request - com.nasa.lastsignal&rdquo;. We verify ownership and
+                  purge all records within 30 days.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2 text-xs">
+              <p className="font-bold text-ink">What data is deleted:</p>
+              <ul className="list-inside list-disc space-y-1">
+                <li>Google display name, email address, and profile photo URL.</li>
+                <li>All public memorial messages, tributes, and comments authored by the user in Cloud Firestore.</li>
+                <li>Rate-limiting timestamps and cooldown tracking data.</li>
+                <li>Firebase Authentication credentials.</li>
+              </ul>
+              <p className="font-bold text-ink pt-2">What data is retained:</p>
+              <p>
+                No personal data is retained following account deletion. Anonymous, aggregate crash metrics (without
+                identifying device IDs, IP addresses, or accounts) may be retained purely for system stability.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -245,6 +292,18 @@ export default function PrivacyPolicyPage() {
             <p><strong>The Last Signal Team</strong></p>
             <p>Website: <a href="https://thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">https://thelastsignal.mtas.fi</a></p>
             <p>Email: <a href="mailto:privacy@thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">privacy@thelastsignal.mtas.fi</a></p>
+            <p>
+              Account Deletion:{" "}
+              <Link href="/delete-account" className="text-violet underline hover:text-violet-deep">
+                https://the-last-signal-theta.vercel.app/delete-account
+              </Link>
+            </p>
+            <p>
+              Terms of Service:{" "}
+              <Link href="/terms" className="text-violet underline hover:text-violet-deep">
+                https://the-last-signal-theta.vercel.app/terms
+              </Link>
+            </p>
           </div>
         </section>
       </div>

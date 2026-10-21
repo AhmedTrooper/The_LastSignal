@@ -15,6 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/tributes", priority: 0.6 },
     { path: "/about", priority: 0.5 },
     { path: "/privacy", priority: 0.3 },
+    { path: "/terms", priority: 0.3 },
+    { path: "/delete-account", priority: 0.3 },
   ];
   const heroRoutes = HEROES.flatMap((h) => [
     { path: `/heroes/${h.slug}`, priority: 0.8 },

@@ -41,16 +41,18 @@ export function AuthButton() {
   if (loading) return null;
   if (!user) {
     return (
-      <button
-        onClick={() => signInWithGoogle()}
-        className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink hover:border-violet hover:text-violet transition-colors"
-      >
-        Sign in
-      </button>
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => signInWithGoogle()}
+          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink hover:border-violet hover:text-violet transition-colors"
+        >
+          Sign in
+        </button>
+      </div>
     );
   }
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2.5">
       {user.photoURL ? (
         <Image
           src={user.photoURL}
@@ -65,6 +67,13 @@ export function AuthButton() {
           {(user.displayName || "U")[0]?.toUpperCase()}
         </span>
       )}
+      <Link
+        href="/delete-account"
+        title="Account & Data Deletion"
+        className="rounded-full border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-600 hover:bg-red-100 transition-colors"
+      >
+        Delete Account
+      </Link>
       <button
         onClick={() => signOutUser()}
         title="Sign out"
@@ -160,10 +169,27 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="p-6 pt-4 pb-12 mb-16 shrink-0">
+        <div className="p-6 pt-4 pb-4 shrink-0">
           <div onClick={() => setOpen(false)}>
             <TributeButton className="w-full justify-center py-4 text-base" />
           </div>
+        </div>
+        <div className="flex flex-col gap-2 border-t border-line bg-mist/40 px-6 py-4 mb-20 text-xs font-mono text-ink-soft shrink-0">
+          <div className="flex items-center justify-between">
+            <Link href="/privacy" onClick={() => setOpen(false)} className="hover:text-violet">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" onClick={() => setOpen(false)} className="hover:text-violet">
+              Terms
+            </Link>
+          </div>
+          <Link
+            href="/delete-account"
+            onClick={() => setOpen(false)}
+            className="mt-1 inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 py-2.5 font-bold text-red-600 hover:bg-red-100"
+          >
+            Delete Account &amp; Data
+          </Link>
         </div>
         {/* Extra bottom spacer to ensure full clearance above mobile browser bars */}
         <div className="h-16 shrink-0" aria-hidden="true" />

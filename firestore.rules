@@ -28,8 +28,9 @@ service cloud.firestore {
                     && request.resource.data.text.size() > 0
                     && request.resource.data.text.size() <= 1000;
 
-      // Memorial history is permanent - client updates and deletes are blocked
-      allow update, delete: if false;
+      // Allow users to delete their own tributes during account deletion
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow update: if false;
     }
   }
 }

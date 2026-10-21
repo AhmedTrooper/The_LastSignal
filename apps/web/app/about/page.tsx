@@ -44,6 +44,24 @@ export default function AboutPage() {
               <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{r.text}</p>
             </li>
           ))}
+          <li className="rounded-2xl border border-line bg-mist p-6 sm:col-span-2" data-reveal>
+            <p className="font-mono text-xs">LEGAL &amp; COMPLIANCE</p>
+            <h2 className="display mt-2 text-2xl">Your Data &amp; Privacy</h2>
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+              We respect your privacy and provide full transparency over all collected data. You can inspect our policies or permanently purge your account and memorial transmissions at any time.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-semibold">
+              <Link href="/privacy" className="rounded-full border border-line bg-white px-4 py-2 text-ink hover:border-violet hover:text-violet transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="rounded-full border border-line bg-white px-4 py-2 text-ink hover:border-violet hover:text-violet transition-colors">
+                Terms of Service
+              </Link>
+              <Link href="/delete-account" className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-red-600 hover:bg-red-100 transition-colors">
+                Delete Account &amp; Data →
+              </Link>
+            </div>
+          </li>
         </ul>
       </div>
     </SitePage>

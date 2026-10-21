@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Linking,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -165,6 +166,62 @@ export default function AboutScreen() {
             </View>
           </Pressable>
         ))}
+      </View>
+
+      {/* Legal & Account Deletion (Google Play Compliance) */}
+      <View style={styles.legalSection}>
+        <View style={styles.rulesHeaderRow}>
+          <Ionicons name="shield-checkmark-outline" size={18} color={Colors.light.violet} />
+          <ThemedText style={styles.rulesHeading} type="subtitle">
+            Legal &amp; Account Data
+          </ThemedText>
+        </View>
+        <View style={styles.legalLinksRow}>
+          <Pressable
+            onPress={() => {
+              haptic.light();
+              Linking.openURL("https://the-last-signal-theta.vercel.app/privacy");
+            }}
+            style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
+            accessibilityRole="link"
+            accessibilityLabel="Open Privacy Policy in browser"
+          >
+            <ThemedText style={styles.legalButtonText} type="small">
+              Privacy Policy
+            </ThemedText>
+            <Ionicons name="open-outline" size={13} color={Colors.light.violet} />
+          </Pressable>
+
+          <Pressable
+            onPress={() => {
+              haptic.light();
+              Linking.openURL("https://the-last-signal-theta.vercel.app/terms");
+            }}
+            style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
+            accessibilityRole="link"
+            accessibilityLabel="Open Terms of Service in browser"
+          >
+            <ThemedText style={styles.legalButtonText} type="small">
+              Terms of Service
+            </ThemedText>
+            <Ionicons name="open-outline" size={13} color={Colors.light.violet} />
+          </Pressable>
+
+          <Pressable
+            onPress={() => {
+              haptic.light();
+              Linking.openURL("https://the-last-signal-theta.vercel.app/delete-account");
+            }}
+            style={({ pressed }) => [styles.legalButton, pressed && styles.cardPressed]}
+            accessibilityRole="link"
+            accessibilityLabel="Open Account and Data Deletion page in browser"
+          >
+            <ThemedText style={styles.legalButtonText} type="small">
+              Delete Account &amp; Data
+            </ThemedText>
+            <Ionicons name="trash-outline" size={13} color="#e11d48" />
+          </Pressable>
+        </View>
       </View>
 
       {/* App Metadata & Action Footer */}
@@ -381,5 +438,31 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "700",
     fontSize: 13,
+  },
+  legalSection: {
+    gap: 12,
+    backgroundColor: Colors.light.backgroundElement,
+    padding: 16,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+  },
+  legalLinksRow: {
+    gap: 8,
+  },
+  legalButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#ffffff",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.light.line,
+  },
+  legalButtonText: {
+    fontWeight: "600",
+    color: Colors.light.text,
   },
 });

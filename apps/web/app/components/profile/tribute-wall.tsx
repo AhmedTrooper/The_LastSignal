@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "@/app/components/icons";
 import { useAuth } from "@/lib/auth-context";
 import { submitTribute, subscribeTributes, type Tribute } from "@/lib/tribute";
@@ -190,13 +191,22 @@ export default function TributeWall({
                   </p>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => signOutUser()}
-                className="text-xs text-ink-soft hover:text-red-500 transition-colors"
-              >
-                Sign out
-              </button>
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/delete-account"
+                  className="text-xs text-red-500/80 hover:text-red-500 underline transition-colors"
+                >
+                  Delete Account
+                </Link>
+                <span className={dark ? "text-white/20" : "text-line"}>·</span>
+                <button
+                  type="button"
+                  onClick={() => signOutUser()}
+                  className="text-xs text-ink-soft hover:text-red-500 transition-colors"
+                >
+                  Sign out
+                </button>
+              </div>
             </div>
 
             {/* Tribute Textarea */}
