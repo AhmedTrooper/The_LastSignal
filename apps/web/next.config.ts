@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "www.lpi.usra.edu",
+      },
+      {
+        protocol: "https",
+        hostname: "lroc.im-ldi.com",
+      },
     ],
   },
   async redirects() {

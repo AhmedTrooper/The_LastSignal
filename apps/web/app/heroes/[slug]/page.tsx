@@ -21,6 +21,7 @@ import Gallery from "@/app/components/profile/gallery";
 import TributeWall from "@/app/components/profile/tribute-wall";
 import LastSignalArt, { CAPTION } from "@/app/components/profile/last-signal";
 import SignatureBlock from "@/app/components/profile/signature";
+import RangerDive from "@/app/components/profile/ranger-dive";
 import Videos from "@/app/components/profile/videos";
 import EyesEmbed from "@/app/components/profile/eyes-embed";
 import Wiki from "@/app/components/profile/wiki";
@@ -231,9 +232,13 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
       ),
 
     signature: () =>
-      sig && (
-        <section id="signature" className={`${card} scroll-mt-24`}>
-          <SignatureBlock sig={sig} accent={mars ? "mars" : "moon"} />
+      (sig || hero.slug === "ranger-7") && (
+        <section id="signature" className={`${hero.slug === "ranger-7" ? "scroll-mt-24" : `${card} scroll-mt-24`}`}>
+          {hero.slug === "ranger-7" ? (
+            <RangerDive />
+          ) : (
+            sig && <SignatureBlock sig={sig} accent={mars ? "mars" : "moon"} />
+          )}
         </section>
       ),
 

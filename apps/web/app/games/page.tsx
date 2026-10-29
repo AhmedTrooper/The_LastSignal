@@ -17,6 +17,22 @@ const tile = "h-full w-full rounded-[22%]";
 
 const GAMES: Game[] = [
   {
+    title: "17-Minute Impact Dive",
+    text: "Scrub Ranger 7's kamikaze dive from 2,110 km to the Moon's surface.",
+    href: "/games/ranger-7-dive",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-violet-600 via-indigo-700 to-black text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:12px_12px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden>
+          <circle cx="32" cy="32" r="22" strokeDasharray="4 4" className="text-violet-300" />
+          <circle cx="32" cy="32" r="8" className="text-amber-400" />
+          <path d="M32 4v16M32 44v16M4 32h16M44 32h16" />
+          <path d="M22 22l20 20" strokeWidth="2" strokeDasharray="2 2" className="text-red-400" />
+        </svg>
+      </span>
+    ),
+  },
+  {
     title: "Touchdown",
     text: "Land on Mars and the Moon and find the machines we left there.",
     href: "/games/landing",
