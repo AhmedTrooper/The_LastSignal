@@ -467,6 +467,11 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
             <Link href={`/heroes/${slug}`} className="inline-flex items-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold hover:bg-violet-deep">
               Explore {name}&apos;s page <ArrowRight />
             </Link>
+            {slug === "ranger-7" && (
+              <Link href="/games/ranger-7-dive" className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 text-sm font-bold text-black hover:bg-amber-300 shadow-lg">
+                <span>🎯</span> Play 17-Minute Impact Dive <ArrowRight />
+              </Link>
+            )}
             <Link href="/story" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
               All stories
             </Link>

@@ -8,7 +8,7 @@ export type SectionId = "model" | "film" | "signature" | "life" | "journey" | "l
 const TAIL: SectionId[] = ["videos", "news", "gallery", "twin", "tributes", "explore", "documentary"];
 
 export const LAYOUTS: Record<string, SectionId[]> = {
-  "ranger-7": ["model", "signature", "lost", "journey", "wiki", "life", ...TAIL],
+  "ranger-7": ["model", "film", "signature", "lost", "journey", "wiki", "life", ...TAIL],
   "surveyor-1": ["model", "signature", "journey", "life", "lost", "wiki", ...TAIL],
   "apollo-11-lander": ["model", "signature", "life", "lost", "journey", "wiki", ...TAIL],
   "apollo-15-rover": ["model", "signature", "life", "lost", "journey", "wiki", ...TAIL],
