@@ -1,0 +1,91 @@
+import type { Story } from "./types";
+
+/**
+ * Mars Polar Lander (COSPAR: 1999-001A) & Deep Space 2
+ * Sourced directly from NASA NSSDCA and the Casani Board Review.
+ */
+export const MARS_POLAR_LANDER: Story = {
+  slug: "mars-polar-lander",
+  title: "Mars Polar Lander",
+  lede: "Targeted to the frozen edge of Mars's South Pole carrying one million children's names. A single un-cleared sensor bit silenced it 40 meters above the ice.",
+  scenes: [
+    {
+      id: "title",
+      year: 1999,
+      date: "NASA Mars Surveyor '98 · 1999",
+      title: "Mars Polar Lander",
+      text: "While Viking and Pathfinder explored the equatorial deserts, Mars Polar Lander set out for the south polar layered terrains—an ancient frozen archive of Martian climate history.",
+      image: "mars-polar-lander",
+      from: { s: 1.4, x: 0.5, y: 0.4 },
+      to: { s: 1, x: 0.5, y: 0.5 },
+      len: 1.2,
+    },
+    {
+      id: "launch",
+      year: 1999,
+      date: "3 January 1999 · Cape Canaveral SLC-17B",
+      title: "Delta II 7425 launch",
+      text: "Launched aboard a Delta II Med-Lite rocket with two basketball-sized Deep Space 2 penetrator probes attached to its cruise stage, beginning an 11-month cruise to the Martian South Pole.",
+      image: "launch",
+      from: { s: 1.1, x: 0.5, y: 0.5 },
+      to: { s: 1.5, x: 0.6, y: 0.4 },
+    },
+    {
+      id: "children-names",
+      year: 1999,
+      date: "Planetary Society CD-ROM",
+      title: "One million names on Mars",
+      text: "Fastened to the lander deck was a silica CD-ROM containing the names of over 1,000,000 children and space enthusiasts from around the globe—ready to become permanent residents of Mars.",
+      image: "mars-polar-lander",
+      from: { s: 1.2, x: 0.5, y: 0.5 },
+      to: { s: 1.5, x: 0.5, y: 0.5 },
+    },
+    {
+      id: "leg-deployment",
+      year: 1999,
+      date: "3 December 1999 · 20:05 UTC (1,500m Altitude)",
+      title: "The hidden switch pulse",
+      text: "At 1,500 meters altitude, the landing legs deployed. The extension springs snapped open with a jolt, causing the Hall-effect magnetic switches to briefly close. In the flight computer, the touchdown flag flipped to TRUE.",
+      image: "mars-polar-lander",
+      from: { s: 1.1, x: 0.5, y: 0.5 },
+      to: { s: 1.5, x: 0.5, y: 0.3 },
+    },
+    {
+      id: "fatal-cutoff",
+      year: 1999,
+      date: "3 December 1999 · 20:14 UTC (40m Altitude)",
+      title: "40 meters above the ice",
+      text: "At 40 meters altitude, terminal descent logic activated to sense ground contact. It checked the flag, found TRUE, and instantly shut off all 12 descent rocket thrusters. The lander fell through the thin polar air.",
+      image: "mars-polar-lander",
+      from: { s: 1.5, x: 0.5, y: 0.3 },
+      to: { s: 1, x: 0.5, y: 0.7 },
+      len: 1.3,
+    },
+    {
+      id: "impact",
+      year: 1999,
+      date: "Planum Australe · 76.05° S, 164.70° E",
+      title: "Impact in the polar silence",
+      text: "Accelerating under Martian gravity, the lander hit the frozen regolith at 63 km/h (17.4 m/s). Deep Space 2 penetrators Amundsen and Scott followed, impacting into the polar ice sheet.",
+      image: "mars-polar-lander",
+      from: { s: 1.2, x: 0.5, y: 0.5 },
+      to: { s: 1.5, x: 0.5, y: 0.5 },
+    },
+    {
+      id: "reform",
+      year: 2000,
+      date: "The Casani Board & NASA Reform",
+      title: "The lessons that saved Curiosity",
+      text: "The loss transformed NASA. Rigorous end-to-end testing, real-time descent telemetry, and redundant sensor voting were mandated across the agency—laying the foundation that safely landed Spirit, Opportunity, Phoenix, Curiosity, and Perseverance.",
+      image: "mars-polar-lander",
+      from: { s: 1.4, x: 0.5, y: 0.5 },
+      to: { s: 1, x: 0.5, y: 0.5 },
+      len: 1.2,
+    },
+  ],
+  sources: [
+    { label: "NASA NSSDCA Master Record: Mars Polar Lander (1999-001A)", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1999-001A" },
+    { label: "NASA JPL Report on the Loss of the Mars Polar Lander (Casani Board)", url: "https://www.jpl.nasa.gov/news/press_kits/mplstudy.pdf" },
+    { label: "The Planetary Society: Voices from Earth 1-Million Names Archive", url: "https://www.planetary.org/space-missions/mars-polar-lander" },
+  ],
+};

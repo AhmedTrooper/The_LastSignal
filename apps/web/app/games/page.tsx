@@ -17,6 +17,97 @@ const tile = "h-full w-full rounded-[22%]";
 
 const GAMES: Game[] = [
   {
+    title: "GRAIL: Microwave Gravity Lab",
+    text: "Measure Moon gravity down to 0.02 µm/s in tandem orbit and explore the Sally K. Ride Impact Site.",
+    href: "/games/grail-gravity",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-purple-600 via-indigo-700 to-slate-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="20" cy="32" r="8" className="text-purple-300" strokeWidth="2.5" />
+          <circle cx="44" cy="32" r="8" className="text-cyan-300" strokeWidth="2.5" />
+          <path d="M28 32h8" strokeDasharray="2 2" className="text-amber-400" strokeWidth="2" />
+        </svg>
+      </span>
+    ),
+  },
+  {
+    title: "LCROSS: 7.2 GJ Water Plume",
+    text: "Simulate the 9,000 km/h kinetic impact into Cabeus crater and detect water ice at 1.4 µm & 1.9 µm.",
+    href: "/games/lcross-impact",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-sky-500 via-cyan-600 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M12 50l20-30 20 30" className="text-cyan-300" strokeWidth="3" />
+          <circle cx="32" cy="16" r="4" className="text-amber-300" fill="currentColor" />
+          <path d="M24 50c4-6 12-6 16 0" className="text-white" strokeWidth="2" />
+        </svg>
+      </span>
+    ),
+  },
+  {
+    title: "Mars Polar Lander: 40m Bug Forensics",
+    text: "Calculate free-fall physics, dissect the un-cleared sensor bit, and discover the reforms that saved Curiosity.",
+    href: "/games/polar-lander-forensics",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-rose-600 via-red-700 to-zinc-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M32 10v32m-8-8l8 8 8-8" className="text-rose-300" strokeWidth="3" />
+          <path d="M14 54h36" className="text-white" strokeWidth="3" />
+          <circle cx="32" cy="12" r="3" className="text-amber-400" fill="currentColor" />
+        </svg>
+      </span>
+    ),
+  },
+  {
+    title: "Viking: Mars Biology Lab",
+    text: "Inject 14C nutrient broth into Martian soil, listen to the Geiger counter, and solve the perchlorate mystery.",
+    href: "/games/viking-biology",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-amber-600 via-rose-700 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M24 12v12l-10 24h36l-10-24v-12" className="text-amber-300" strokeWidth="3" />
+          <path d="M20 12h24" className="text-white" strokeWidth="3" />
+          <circle cx="32" cy="40" r="3" className="text-cyan-300" fill="currentColor" />
+          <circle cx="26" cy="44" r="2" className="text-cyan-300" fill="currentColor" />
+          <circle cx="38" cy="43" r="2.5" className="text-cyan-300" fill="currentColor" />
+        </svg>
+      </span>
+    ),
+  },
+  {
+    title: "InSight: Mars Seismology Lab",
+    text: "Hear deep marsquakes, analyze seismograms, and hammer the heat probe through Martian regolith.",
+    href: "/games/insight-seismology",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-emerald-600 via-teal-700 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M6 32h14l4-12 6 24 6-18 4 10 4-4h14" className="text-emerald-300" strokeWidth="3" />
+          <circle cx="32" cy="52" r="4" className="text-amber-400" fill="currentColor" />
+        </svg>
+      </span>
+    ),
+  },
+  {
+    title: "Ingenuity: Mars Aerodynamics",
+    text: "Spin rotors at 2,900 RPM in Mars's 1% air and fly across 72 missions.",
+    href: "/games/ingenuity-flight",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-cyan-500 via-sky-600 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M12 20h40M8 26h48" className="text-cyan-300" strokeWidth="3" />
+          <rect x="26" y="26" width="12" height="14" rx="2" className="text-amber-400" fill="currentColor" />
+          <path d="M26 40l-8 14M38 40l8 14M22 54h-4M46 54h-4" className="text-white" />
+        </svg>
+      </span>
+    ),
+  },
+  {
     title: "Mars Twins: Dust & Power",
     text: "Scrub atmospheric dust (tau) from clear skies to blackout and survive on Mars.",
     href: "/games/mer-twins",

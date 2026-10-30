@@ -24,6 +24,13 @@ import SignatureBlock from "@/app/components/profile/signature";
 import RangerDive from "@/app/components/profile/ranger-dive";
 import ApolloSimulator from "@/app/components/profile/apollo-simulator";
 import MERSimulator from "@/app/components/profile/mer-simulator";
+import IngenuitySimulator from "@/app/components/profile/ingenuity-simulator";
+import InSightSimulator from "@/app/components/profile/insight-simulator";
+import VikingSimulator from "@/app/components/profile/viking-simulator";
+import MPLSimulator from "@/app/components/profile/mpl-simulator";
+import SurveyorSimulator from "@/app/components/profile/surveyor-simulator";
+import LCROSSSimulator from "@/app/components/profile/lcross-simulator";
+import GRAILSimulator from "@/app/components/profile/grail-simulator";
 import Videos from "@/app/components/profile/videos";
 import EyesEmbed from "@/app/components/profile/eyes-embed";
 import Wiki from "@/app/components/profile/wiki";
@@ -185,7 +192,20 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   const has: Record<SectionId, boolean> = {
     model: true,
     film: !!film,
-    signature: !!sig,
+    signature:
+      !!sig ||
+      hero.slug === "ranger-7" ||
+      hero.slug === "apollo-11-lander" ||
+      hero.slug === "spirit" ||
+      hero.slug === "opportunity" ||
+      hero.slug === "ingenuity" ||
+      hero.slug === "insight" ||
+      hero.slug === "viking-1" ||
+      hero.slug === "viking-2" ||
+      hero.slug === "mars-polar-lander" ||
+      hero.slug === "surveyor-1" ||
+      hero.slug === "lcross" ||
+      hero.slug === "grail",
     life: !!hero.chapters?.length,
     journey: true,
     lost: true,
@@ -234,14 +254,58 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
       ),
 
     signature: () =>
-      (sig || hero.slug === "ranger-7" || hero.slug === "apollo-11-lander" || hero.slug === "spirit" || hero.slug === "opportunity") && (
-        <section id="signature" className={`${hero.slug === "ranger-7" || hero.slug === "apollo-11-lander" || hero.slug === "spirit" || hero.slug === "opportunity" ? "scroll-mt-24" : `${card} scroll-mt-24`}`}>
+      (sig ||
+        hero.slug === "ranger-7" ||
+        hero.slug === "apollo-11-lander" ||
+        hero.slug === "spirit" ||
+        hero.slug === "opportunity" ||
+        hero.slug === "ingenuity" ||
+        hero.slug === "insight" ||
+        hero.slug === "viking-1" ||
+        hero.slug === "viking-2" ||
+        hero.slug === "mars-polar-lander" ||
+        hero.slug === "surveyor-1" ||
+        hero.slug === "lcross" ||
+        hero.slug === "grail") && (
+        <section
+          id="signature"
+          className={`${
+            hero.slug === "ranger-7" ||
+            hero.slug === "apollo-11-lander" ||
+            hero.slug === "spirit" ||
+            hero.slug === "opportunity" ||
+            hero.slug === "ingenuity" ||
+            hero.slug === "insight" ||
+            hero.slug === "viking-1" ||
+            hero.slug === "viking-2" ||
+            hero.slug === "mars-polar-lander" ||
+            hero.slug === "surveyor-1" ||
+            hero.slug === "lcross" ||
+            hero.slug === "grail"
+              ? "scroll-mt-24"
+              : `${card} scroll-mt-24`
+          }`}
+        >
           {hero.slug === "ranger-7" ? (
             <RangerDive />
           ) : hero.slug === "apollo-11-lander" ? (
             <ApolloSimulator />
           ) : hero.slug === "spirit" || hero.slug === "opportunity" ? (
-            <MERSimulator initialRover={hero.slug as "spirit" | "opportunity"} />
+            <MERSimulator rover={hero.slug as "spirit" | "opportunity"} />
+          ) : hero.slug === "ingenuity" ? (
+            <IngenuitySimulator />
+          ) : hero.slug === "insight" ? (
+            <InSightSimulator />
+          ) : hero.slug === "viking-1" || hero.slug === "viking-2" ? (
+            <VikingSimulator lander={hero.slug as "viking-1" | "viking-2"} />
+          ) : hero.slug === "mars-polar-lander" ? (
+            <MPLSimulator />
+          ) : hero.slug === "surveyor-1" ? (
+            <SurveyorSimulator />
+          ) : hero.slug === "lcross" ? (
+            <LCROSSSimulator />
+          ) : hero.slug === "grail" ? (
+            <GRAILSimulator />
           ) : (
             sig && <SignatureBlock sig={sig} accent={mars ? "mars" : "moon"} />
           )}

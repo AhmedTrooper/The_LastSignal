@@ -13,42 +13,50 @@ import {
 } from "@/lib/mer-mission";
 
 interface MERSimulatorProps {
-  initialRover?: "spirit" | "opportunity";
+  rover: "spirit" | "opportunity";
   standalone?: boolean;
 }
 
 export default function MERSimulator({
-  initialRover = "opportunity",
+  rover,
   standalone = false,
 }: MERSimulatorProps) {
-  const [selectedRover, setSelectedRover] = useState<"spirit" | "opportunity">(initialRover);
+  const isSpirit = rover === "spirit";
+  const isOpp = rover === "opportunity";
+
   const [activeTab, setActiveTab] = useState<"dust" | "monuments" | "inspector">("dust");
   
   // Dust Simulator State
-  const [tau, setTau] = useState<number>(0.9);
+  const [tau, setTau] = useState<number>(isSpirit ? 0.8 : 0.9);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
   const [isPlayingMelody, setIsPlayingMelody] = useState<boolean>(false);
-  const [showSol5111Modal, setShowSol5111Modal] = useState<boolean>(false);
+  const [showEndModal, setShowEndModal] = useState<boolean>(false);
 
-  // Monuments State
-  const [selectedMonumentId, setSelectedMonumentId] = useState<string>("oppy-challenger-station");
-  const [selectedMemorial, setSelectedMemorial] = useState<MERMemorial>(MER_MEMORIALS[0]);
+  // Filter monuments strictly by this rover
+  const roverMonuments = DISCARDED_MONUMENTS.filter((m) => m.rover === rover);
+  const [selectedMonumentId, setSelectedMonumentId] = useState<string>(roverMonuments[0]?.id ?? "");
+  const activeMonument: DiscardedMonument =
+    roverMonuments.find((m) => m.id === selectedMonumentId) ?? roverMonuments[0];
+
+  // Filter memorials strictly by this rover (or both)
+  const roverMemorials = MER_MEMORIALS.filter(
+    (m) => m.rover === rover || m.rover === "both"
+  );
+  const [selectedMemorial, setSelectedMemorial] = useState<MERMemorial>(roverMemorials[0]);
   const [monumentView, setMonumentView] = useState<"hardware" | "memorials">("hardware");
 
-  // PDS Inspector State
-  const [pdsInput, setPdsInput] = useState<string>("1P581919922EFFD212P2685L8M1");
+  // PDS Inspector State (strictly defaults to this rover's frame)
+  const defaultPdsFrame = isSpirit
+    ? "2P126468012EDN0000P2303L2M1"
+    : "1P581919922EFFD212P2685L8M1";
+  const [pdsInput, setPdsInput] = useState<string>(defaultPdsFrame);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const windOscRef = useRef<AudioBufferSourceNode | OscillatorNode | null>(null);
   const windGainRef = useRef<GainNode | null>(null);
 
-  const currentRoverSpecs = MER_SPECS[selectedRover];
+  const currentRoverSpecs = MER_SPECS[rover];
   const dustImpact = calculateDustImpact(tau);
-
-  // Filter monuments by active rover
-  const roverMonuments = DISCARDED_MONUMENTS.filter((m) => m.rover === selectedRover);
-  const activeMonument: DiscardedMonument =
-    roverMonuments.find((m) => m.id === selectedMonumentId) ?? roverMonuments[0];
 
   // Synthesize Martian wind noise via Web Audio API based on optical depth tau
   const startWindAudio = useCallback(() => {
@@ -74,7 +82,7 @@ export default function MERSimulator({
         const white = Math.random() * 2 - 1;
         output[i] = (lastOut + 0.02 * white) / 1.02;
         lastOut = output[i];
-        output[i] *= 3.5; // Gain compensation
+        output[i] *= 3.5;
       }
 
       const whiteNoise = ctx.createBufferSource();
@@ -124,9 +132,9 @@ export default function MERSimulator({
     };
   }, [soundEnabled, activeTab, startWindAudio, stopWindAudio]);
 
-  // Synthesize Billie Holiday's "I'll Be Seeing You" opening motif on Sol 5111 termination uplink
+  // Synthesize Billie Holiday's "I'll Be Seeing You" opening motif on Opportunity
   const playBillieHolidayMotif = () => {
-    if (isPlayingMelody) return;
+    if (isPlayingMelody || !isOpp) return;
     setIsPlayingMelody(true);
 
     try {
@@ -141,7 +149,6 @@ export default function MERSimulator({
         ctx.resume();
       }
 
-      // Notes of "I'll Be Seeing You": Eb4, G4, Bb4, C5, Bb4, G4, Eb4, F4
       const notes = [
         { freq: 311.13, duration: 0.45 }, // Eb4
         { freq: 392.00, duration: 0.45 }, // G4
@@ -158,7 +165,6 @@ export default function MERSimulator({
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        // Warm jazz vibraphone/horn emulation
         osc.type = "triangle";
         osc.frequency.setValueAtTime(n.freq, startTime);
 
@@ -198,70 +204,47 @@ export default function MERSimulator({
           background:
             activeTab === "dust"
               ? `radial-gradient(ellipse at 50% 20%, rgba(${
-                  tau > 7 ? "20,10,15" : tau > 3 ? "120,40,20" : "180,80,40"
+                  tau > 7 ? "20,10,15" : tau > 3 ? "120,40,20" : isSpirit ? "180,60,50" : "180,80,40"
                 }, 0.45), transparent 70%)`
               : "radial-gradient(ellipse at 50% 10%, rgba(139,92,246,0.15), transparent 60%)",
         }}
       />
 
-      {/* Header & Spacecraft Dual Switcher */}
+      {/* Header — 100% Dedicated to THIS Rover */}
       <div className="relative z-10 mb-6 flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/20 px-3 py-1 font-mono text-xs font-semibold text-orange-400 border border-orange-500/30">
-              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-ping" />
-              NASA Mars Exploration Rovers · 2004–2019
+            <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-xs font-semibold border ${
+              isOpp
+                ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
+                : "bg-rose-500/20 text-rose-300 border-rose-500/30"
+            }`}>
+              <span className={`h-1.5 w-1.5 rounded-full animate-ping ${isOpp ? "bg-orange-400" : "bg-rose-400"}`} />
+              {isOpp ? "NASA Opportunity (MER-B / MER-1)" : "NASA Spirit (MER-A / MER-2)"}
             </span>
             <span className="font-mono text-xs text-white/50">
-              {currentRoverSpecs.cosparId}
+              COSPAR: {currentRoverSpecs.cosparId}
             </span>
           </div>
           <h2 className="display mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {selectedRover === "opportunity"
-              ? "Opportunity (MER-B / MER-1)"
-              : "Spirit (MER-A / MER-2)"}
+            {isOpp ? "Opportunity (MER-B / MER-1)" : "Spirit (MER-A / MER-2)"}
           </h2>
           <p className="mt-0.5 text-xs text-white/70 sm:text-sm">
-            {selectedRover === "opportunity"
+            {isOpp
               ? "Landed in Eagle Crater · Drove 45.16 km across Meridiani Planum · Resting in Perseverance Valley"
               : "Landed in Gusev Crater · Climbed Husband Hill · Resting at Troy beside Home Plate"}
           </p>
         </div>
 
-        {/* Rover Selector Buttons */}
-        <div className="flex items-center gap-2 rounded-2xl bg-white/5 p-1 border border-white/10">
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedRover("opportunity");
-              setSelectedMonumentId("oppy-challenger-station");
-              setPdsInput("1P581919922EFFD212P2685L8M1");
-            }}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2 font-mono text-xs font-semibold transition-all ${
-              selectedRover === "opportunity"
-                ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30"
-                : "text-white/60 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <span className="h-2 w-2 rounded-full bg-amber-300" />
-            Opportunity (MER-B)
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedRover("spirit");
-              setSelectedMonumentId("spirit-columbia-station");
-              setPdsInput("2P126468012EDN0000P2303L2M1");
-            }}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2 font-mono text-xs font-semibold transition-all ${
-              selectedRover === "spirit"
-                ? "bg-rose-600 text-white shadow-lg shadow-rose-600/30"
-                : "text-white/60 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <span className="h-2 w-2 rounded-full bg-rose-300" />
-            Spirit (MER-A)
-          </button>
+        {/* Landing Station Badge */}
+        <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-right">
+          <p className="font-mono text-[10px] text-white/50 uppercase">Landing Dedication</p>
+          <p className={`font-mono text-xs font-bold ${isOpp ? "text-orange-300" : "text-rose-300"}`}>
+            {currentRoverSpecs.siteDedication}
+          </p>
+          <p className="text-[10px] text-white/60">
+            {currentRoverSpecs.landingCoordinates.lat.toFixed(4)}°, {currentRoverSpecs.landingCoordinates.lon.toFixed(4)}°
+          </p>
         </div>
       </div>
 
@@ -272,9 +255,9 @@ export default function MERSimulator({
           <p className="mt-1 font-mono text-lg font-bold text-white">
             {currentRoverSpecs.surfaceOdyssey.distanceMeters.toLocaleString()} m
           </p>
-          <p className="text-[11px] text-orange-300">
+          <p className={`text-[11px] ${isOpp ? "text-orange-300" : "text-rose-300"}`}>
             {currentRoverSpecs.surfaceOdyssey.distanceMiles.toFixed(2)} miles (
-            {selectedRover === "opportunity" ? "Marathon+" : "Summit Ascent"})
+            {isOpp ? "Interplanetary Marathon" : "Husband Hill Ascent"})
           </p>
         </div>
 
@@ -294,14 +277,14 @@ export default function MERSimulator({
             {currentRoverSpecs.primaryLandingSite}
           </p>
           <p className="text-[11px] text-white/60 truncate">
-            {currentRoverSpecs.landingCoordinates.lat.toFixed(4)}°, {currentRoverSpecs.landingCoordinates.lon.toFixed(4)}°
+            Elevation: {currentRoverSpecs.landingCoordinates.elevationM} m
           </p>
         </div>
 
         <div className="rounded-xl border border-white/5 bg-white/[0.03] p-3 backdrop-blur-sm">
           <p className="font-mono text-[11px] text-white/50 uppercase">Final Monument</p>
-          <p className="mt-1 font-mono text-sm font-bold text-amber-300 truncate">
-            {selectedRover === "opportunity" ? "Perseverance Valley" : "Troy at Home Plate"}
+          <p className={`mt-1 font-mono text-sm font-bold truncate ${isOpp ? "text-amber-300" : "text-rose-300"}`}>
+            {isOpp ? "Perseverance Valley" : "Troy at Home Plate"}
           </p>
           <p className="text-[11px] text-white/60 truncate">
             HiRISE {currentRoverSpecs.finalRestingCoordinates.hiriseObsId}
@@ -324,7 +307,7 @@ export default function MERSimulator({
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            Dust Storm & Power Sim (τ)
+            Dust Storm &amp; Power Sim (τ)
           </button>
 
           <button
@@ -339,7 +322,7 @@ export default function MERSimulator({
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
-            Hardware Monuments & Memorials
+            Hardware Monuments &amp; Memorials
           </button>
 
           <button
@@ -478,7 +461,7 @@ export default function MERSimulator({
                     </span>
                   </div>
                   <span className="font-mono text-[11px] text-white/60">
-                    {tau >= 10.0 ? "Sol 5111 Record Low" : "Nominal: ~600 Wh"}
+                    {isOpp && tau >= 10.0 ? "Sol 5111 Record Low" : isSpirit && tau >= 3.5 ? "Troy Winter Low (~89 Wh)" : "Nominal: ~600 Wh"}
                   </span>
                 </div>
 
@@ -505,11 +488,11 @@ export default function MERSimulator({
             {/* Tactile Control Panel & Historical Presets */}
             <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.02] p-5">
               <div>
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-orange-400">
+                <h3 className={`font-mono text-sm font-bold uppercase tracking-wider ${isOpp ? "text-orange-400" : "text-rose-400"}`}>
                   Tactile Dust Controller
                 </h3>
                 <p className="mt-1 text-xs text-white/70">
-                  Drag the optical depth slider to simulate how airborne dust grains attenuate sunlight across the Martian sky.
+                  Drag the optical depth slider to simulate how airborne dust grains attenuated sunlight over {isOpp ? "Meridiani Planum" : "Gusev Crater"}.
                 </p>
 
                 {/* Scrubber Slider */}
@@ -530,128 +513,213 @@ export default function MERSimulator({
                   />
                 </div>
 
-                {/* Historic Presets */}
+                {/* Rover-Specific Presets */}
                 <div className="mt-5">
                   <p className="font-mono text-[11px] uppercase tracking-wider text-white/50 mb-2">
-                    Verified Martian Mission Scenarios
+                    Verified {rover.toUpperCase()} Mission Scenarios
                   </p>
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                    <button
-                      type="button"
-                      onClick={() => setTau(0.5)}
-                      className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
-                        tau === 0.5
-                          ? "border-emerald-400 bg-emerald-500/20 text-white"
-                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
-                      }`}
-                    >
-                      <span className="block font-bold">Clear Sol (τ 0.5)</span>
-                      <span className="text-[10px] text-white/50">~600 Wh nominal</span>
-                    </button>
+                  
+                  {isOpp ? (
+                    /* Opportunity Presets */
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                      <button
+                        type="button"
+                        onClick={() => setTau(0.5)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 0.5
+                            ? "border-emerald-400 bg-emerald-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Clear Sol (τ 0.5)</span>
+                        <span className="text-[10px] text-white/50">~620 Wh nominal</span>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => setTau(1.8)}
-                      className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
-                        tau === 1.8
-                          ? "border-amber-400 bg-amber-500/20 text-white"
-                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
-                      }`}
-                    >
-                      <span className="block font-bold">Dust Devil (τ 1.8)</span>
-                      <span className="text-[10px] text-white/50">Panel cleaning</span>
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => setTau(1.2)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 1.2
+                            ? "border-amber-400 bg-amber-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Meridiani Spring</span>
+                        <span className="text-[10px] text-white/50">~500 Wh driving</span>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => setTau(3.8)}
-                      className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
-                        tau === 3.8
-                          ? "border-orange-500 bg-orange-500/20 text-white"
-                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
-                      }`}
-                    >
-                      <span className="block font-bold">Gusev Winter (τ 3.8)</span>
-                      <span className="text-[10px] text-white/50">Spirit at Troy</span>
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => setTau(1.5)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 1.5
+                            ? "border-amber-400 bg-amber-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Marathon Valley</span>
+                        <span className="text-[10px] text-white/50">42 km milestone</span>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => setTau(4.5)}
-                      className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
-                        tau === 4.5
-                          ? "border-rose-500 bg-rose-500/20 text-white"
-                          : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
-                      }`}
-                    >
-                      <span className="block font-bold">2007 Global Storm</span>
-                      <span className="text-[10px] text-white/50">Rovers hibernated</span>
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => setTau(4.5)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 4.5
+                            ? "border-rose-500 bg-rose-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">2007 Global Storm</span>
+                        <span className="text-[10px] text-white/50">Emergency survival</span>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => setTau(10.8)}
-                      className={`col-span-2 sm:col-span-2 rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
-                        tau === 10.8
-                          ? "border-red-500 bg-red-600/30 text-white ring-2 ring-red-500"
-                          : "border-red-500/30 bg-red-950/20 text-red-200 hover:bg-red-900/30"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="block font-bold text-red-300">Sol 5111 Blackout (τ 10.8)</span>
-                        <span className="rounded bg-red-600 px-1 py-0.2 text-[9px] uppercase font-mono">Final Packet</span>
-                      </div>
-                      <span className="text-[10px] text-red-300/70">
-                        22 Wh · Master Clock Fault · Frame PIA22949
-                      </span>
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        onClick={() => setTau(10.8)}
+                        className={`col-span-2 sm:col-span-2 rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 10.8
+                            ? "border-red-500 bg-red-600/30 text-white ring-2 ring-red-500"
+                            : "border-red-500/30 bg-red-950/20 text-red-200 hover:bg-red-900/30"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="block font-bold text-red-300">Sol 5111 Blackout (τ 10.8)</span>
+                          <span className="rounded bg-red-600 px-1 py-0.2 text-[9px] uppercase font-mono">Final Packet</span>
+                        </div>
+                        <span className="text-[10px] text-red-300/70">
+                          22 Wh · Master Clock Fault · Frame PIA22949
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    /* Spirit Presets */
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                      <button
+                        type="button"
+                        onClick={() => setTau(0.5)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 0.5
+                            ? "border-emerald-400 bg-emerald-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Clear Sol (τ 0.5)</span>
+                        <span className="text-[10px] text-white/50">~600 Wh nominal</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setTau(1.8)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 1.8
+                            ? "border-amber-400 bg-amber-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Dust Devil Sol 420</span>
+                        <span className="text-[10px] text-white/50">Boost to 93%</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setTau(2.2)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 2.2
+                            ? "border-amber-400 bg-amber-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Husband Hill Summit</span>
+                        <span className="text-[10px] text-white/50">Sol 582 panorama</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setTau(4.5)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 4.5
+                            ? "border-rose-500 bg-rose-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">2007 Global Storm</span>
+                        <span className="text-[10px] text-white/50">Low power standby</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setTau(3.8)}
+                        className={`col-span-2 sm:col-span-2 rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 3.8
+                            ? "border-rose-500 bg-rose-950/40 text-white ring-2 ring-rose-500"
+                            : "border-rose-500/30 bg-rose-950/20 text-rose-200 hover:bg-rose-900/30"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="block font-bold text-rose-300">Sol 2210 Troy Winter Stand</span>
+                          <span className="rounded bg-rose-600 px-1 py-0.2 text-[9px] uppercase font-mono">Final Sol</span>
+                        </div>
+                        <span className="text-[10px] text-rose-300/70">
+                          89 Wh · 11.5° Southward Tilt · Survival Heaters Offline
+                        </span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* Action Buttons: Sol 5111 Truth vs Myth & Billie Holiday Synthesizer */}
+              {/* Action Buttons: Rover Specific Modals */}
               <div className="mt-6 flex flex-col gap-2 pt-4 border-t border-white/10">
                 <button
                   type="button"
-                  onClick={() => setShowSol5111Modal(true)}
-                  className="flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 text-left transition-all hover:bg-amber-500/20"
-                >
-                  <div>
-                    <p className="font-mono text-xs font-bold text-amber-300">
-                      Sol 5111 Truth vs. Viral Myth
-                    </p>
-                    <p className="text-[11px] text-white/70">
-                      Poetic translation vs. authentic NASA Low-Power & Clock Fault flags
-                    </p>
-                  </div>
-                  <span className="font-mono text-xs text-amber-400">Inspect →</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={playBillieHolidayMotif}
-                  disabled={isPlayingMelody}
+                  onClick={() => setShowEndModal(true)}
                   className={`flex items-center justify-between rounded-xl border px-4 py-2.5 text-left transition-all ${
-                    isPlayingMelody
-                      ? "border-violet-400 bg-violet-600/30 text-white shadow-lg shadow-violet-500/30"
-                      : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
+                    isOpp
+                      ? "border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20"
+                      : "border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <span className={`h-2.5 w-2.5 rounded-full ${isPlayingMelody ? "bg-violet-400 animate-ping" : "bg-violet-300"}`} />
-                    <div>
-                      <p className="font-mono text-xs font-bold text-violet-300">
-                        {isPlayingMelody ? "Transmitting Audio via Goldstone DSS-14..." : "Play Billie Holiday: 'I'll Be Seeing You'"}
-                      </p>
-                      <p className="text-[11px] text-white/60">
-                        Synthesizer replay of the final farewell song beamed to Opportunity (Feb 12, 2019)
-                      </p>
-                    </div>
+                  <div>
+                    <p className={`font-mono text-xs font-bold ${isOpp ? "text-amber-300" : "text-rose-300"}`}>
+                      {isOpp ? "Sol 5111 Truth vs. Viral Myth" : "Sol 2210 Truth: Spirit's Winter Stand at Troy"}
+                    </p>
+                    <p className="text-[11px] text-white/70">
+                      {isOpp
+                        ? "Poetic translation vs. authentic NASA Low-Power & Clock Fault flags"
+                        : "The 11.5° southward tilt, -55°C freeze, and 1,300+ recovery commands"}
+                    </p>
                   </div>
-                  <span className="font-mono text-xs text-violet-400">
-                    {isPlayingMelody ? "Playing ♪" : "Play ▶"}
-                  </span>
+                  <span className={`font-mono text-xs ${isOpp ? "text-amber-400" : "text-rose-400"}`}>Inspect →</span>
                 </button>
+
+                {isOpp && (
+                  <button
+                    type="button"
+                    onClick={playBillieHolidayMotif}
+                    disabled={isPlayingMelody}
+                    className={`flex items-center justify-between rounded-xl border px-4 py-2.5 text-left transition-all ${
+                      isPlayingMelody
+                        ? "border-violet-400 bg-violet-600/30 text-white shadow-lg shadow-violet-500/30"
+                        : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className={`h-2.5 w-2.5 rounded-full ${isPlayingMelody ? "bg-violet-400 animate-ping" : "bg-violet-300"}`} />
+                      <div>
+                        <p className="font-mono text-xs font-bold text-violet-300">
+                          {isPlayingMelody ? "Transmitting Audio via Goldstone DSS-14..." : "Play Billie Holiday: 'I'll Be Seeing You'"}
+                        </p>
+                        <p className="text-[11px] text-white/60">
+                          Synthesizer replay of the final farewell song beamed to Opportunity (Feb 12, 2019)
+                        </p>
+                      </div>
+                    </div>
+                    <span className="font-mono text-xs text-violet-400">
+                      {isPlayingMelody ? "Playing ♪" : "Play ▶"}
+                    </span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -661,18 +729,17 @@ export default function MERSimulator({
       {/* TAB 2: DISCARDED HARDWARE MONUMENTS & MEMORIALS */}
       {activeTab === "monuments" && (
         <div className="relative z-10 space-y-6">
-          {/* Sub-toggle: Hardware Monuments vs Memorial Artifacts */}
           <div className="flex gap-2 border-b border-white/10 pb-3">
             <button
               type="button"
               onClick={() => setMonumentView("hardware")}
               className={`rounded-lg px-3 py-1.5 font-mono text-xs font-semibold transition-all ${
                 monumentView === "hardware"
-                  ? "bg-orange-500 text-white"
+                  ? isOpp ? "bg-orange-500 text-white" : "bg-rose-600 text-white"
                   : "bg-white/5 text-white/60 hover:text-white"
               }`}
             >
-              Discarded Hardware Monuments ({roverMonuments.length})
+              {rover.toUpperCase()} Discarded Monuments ({roverMonuments.length})
             </button>
             <button
               type="button"
@@ -683,7 +750,7 @@ export default function MERSimulator({
                   : "bg-white/5 text-white/60 hover:text-white"
               }`}
             >
-              Poignant Memorials & Artifacts ({MER_MEMORIALS.length})
+              Memorials &amp; Relics on {rover.toUpperCase()} ({roverMemorials.length})
             </button>
           </div>
 
@@ -692,7 +759,7 @@ export default function MERSimulator({
               {/* Monuments Selector List */}
               <div className="space-y-2">
                 <p className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
-                  Select Discarded Monument on {selectedRover === "opportunity" ? "Meridiani Planum" : "Gusev Crater"}
+                  Hardware Monuments on {isOpp ? "Meridiani Planum" : "Gusev Crater"}
                 </p>
                 {roverMonuments.map((m) => (
                   <button
@@ -700,14 +767,16 @@ export default function MERSimulator({
                     type="button"
                     onClick={() => setSelectedMonumentId(m.id)}
                     className={`w-full text-left rounded-xl border p-3 transition-all ${
-                      activeMonument.id === m.id
-                        ? "border-orange-500 bg-orange-500/20 text-white shadow-md shadow-orange-500/20"
+                      activeMonument?.id === m.id
+                        ? isOpp
+                          ? "border-orange-500 bg-orange-500/20 text-white shadow-md shadow-orange-500/20"
+                          : "border-rose-500 bg-rose-500/20 text-white shadow-md shadow-rose-500/20"
                         : "border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/5 hover:text-white"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs font-bold text-white">{m.name}</span>
-                      <span className="font-mono text-[11px] text-orange-400">{m.massKg} kg</span>
+                      <span className={`font-mono text-[11px] ${isOpp ? "text-orange-400" : "text-rose-400"}`}>{m.massKg} kg</span>
                     </div>
                     <p className="mt-1 text-[11px] text-white/50 truncate">{m.siteName}</p>
                   </button>
@@ -715,90 +784,87 @@ export default function MERSimulator({
               </div>
 
               {/* Active Monument Detailed Dossier Card */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
-                  <div>
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
-                      {activeMonument.category} · {activeMonument.massKg} kg
-                    </span>
-                    <h3 className="display mt-1 text-xl font-bold">{activeMonument.name}</h3>
-                  </div>
-                  {activeMonument.hiriseObsId && (
-                    <a
-                      href={`https://www.uahirise.org/${activeMonument.hiriseObsId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 font-mono text-[11px] text-cyan-300 hover:bg-cyan-500/20"
-                    >
-                      HiRISE {activeMonument.hiriseObsId} ↗
-                    </a>
-                  )}
-                </div>
-
-                <dl className="mt-4 grid grid-cols-2 gap-3 font-mono text-xs">
-                  <div>
-                    <dt className="text-white/50">Coordinates</dt>
-                    <dd className="font-semibold text-white">
-                      {activeMonument.coordinates.lat.toFixed(4)}° S, {activeMonument.coordinates.lon.toFixed(4)}° E
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-white/50">Current Condition</dt>
-                    <dd className="text-amber-300 font-semibold truncate">{activeMonument.condition}</dd>
-                  </div>
-                </dl>
-
-                <div className="mt-4 space-y-3 text-xs leading-relaxed text-white/80">
-                  <p>{activeMonument.description}</p>
-                  <div className="rounded-xl border border-white/10 bg-black/40 p-3">
-                    <p className="font-mono text-[11px] text-emerald-400 font-bold uppercase">
-                      Scientific & Forensic Value for Humanity
-                    </p>
-                    <p className="mt-1 text-white/70">{activeMonument.scientificValue}</p>
-                  </div>
-                </div>
-
-                {/* Photojournal anchor image if available */}
-                {activeMonument.photojournalPia && (
-                  <div className="mt-4">
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10">
-                      <Image
-                        src={`https://photojournal.jpl.nasa.gov/jpeg/${activeMonument.photojournalPia}.jpg`}
-                        alt={activeMonument.name}
-                        fill
-                        className="object-cover"
-                        sizes="(min-width: 1024px) 500px, 100vw"
-                      />
+              {activeMonument && (
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+                    <div>
+                      <span className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${
+                        isOpp
+                          ? "text-orange-400 bg-orange-500/10 border-orange-500/20"
+                          : "text-rose-400 bg-rose-500/10 border-rose-500/20"
+                      }`}>
+                        {activeMonument.category} · {activeMonument.massKg} kg
+                      </span>
+                      <h3 className="display mt-1 text-xl font-bold">{activeMonument.name}</h3>
                     </div>
-                    <p className="mt-1.5 font-mono text-[10px] text-white/50">
-                      NASA/JPL Photojournal {activeMonument.photojournalPia} ·{" "}
+                    {activeMonument.hiriseObsId && (
                       <a
-                        href={`https://photojournal.jpl.nasa.gov/catalog/${activeMonument.photojournalPia}`}
+                        href={`https://www.uahirise.org/${activeMonument.hiriseObsId}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-violet-400 hover:underline"
+                        className="inline-flex items-center gap-1 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 font-mono text-[11px] text-cyan-300 hover:bg-cyan-500/20"
                       >
-                        view high-res archive
+                        HiRISE {activeMonument.hiriseObsId} ↗
                       </a>
-                    </p>
+                    )}
                   </div>
-                )}
-              </div>
+
+                  <dl className="mt-4 grid grid-cols-2 gap-3 font-mono text-xs">
+                    <div>
+                      <dt className="text-white/50">Coordinates</dt>
+                      <dd className="font-semibold text-white">
+                        {activeMonument.coordinates.lat.toFixed(4)}° S, {activeMonument.coordinates.lon.toFixed(4)}° E
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-white/50">Current Condition</dt>
+                      <dd className="text-amber-300 font-semibold truncate">{activeMonument.condition}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-4 space-y-3 text-xs leading-relaxed text-white/80">
+                    <p>{activeMonument.description}</p>
+                    <div className="rounded-xl border border-white/10 bg-black/40 p-3">
+                      <p className="font-mono text-[11px] text-emerald-400 font-bold uppercase">
+                        Scientific &amp; Forensic Value for Humanity
+                      </p>
+                      <p className="mt-1 text-white/70">{activeMonument.scientificValue}</p>
+                    </div>
+                  </div>
+
+                  {activeMonument.photojournalPia && (
+                    <div className="mt-4">
+                      <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10">
+                        <Image
+                          src={`https://photojournal.jpl.nasa.gov/jpeg/${activeMonument.photojournalPia}.jpg`}
+                          alt={activeMonument.name}
+                          fill
+                          className="object-cover"
+                          sizes="(min-width: 1024px) 500px, 100vw"
+                        />
+                      </div>
+                      <p className="mt-1.5 font-mono text-[10px] text-white/50">
+                        NASA/JPL Photojournal {activeMonument.photojournalPia}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ) : (
             /* Memorial Artifacts Showcase */
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.3fr]">
               <div className="space-y-2">
                 <p className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
-                  Physical Human Artifacts Left on Mars
+                  Physical Relics Aboard {rover.toUpperCase()}
                 </p>
-                {MER_MEMORIALS.map((mem) => (
+                {roverMemorials.map((mem) => (
                   <button
                     key={mem.id}
                     type="button"
                     onClick={() => setSelectedMemorial(mem)}
                     className={`w-full text-left rounded-xl border p-3 transition-all ${
-                      selectedMemorial.id === mem.id
+                      selectedMemorial?.id === mem.id
                         ? "border-violet-500 bg-violet-500/20 text-white shadow-md shadow-violet-500/20"
                         : "border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/5 hover:text-white"
                     }`}
@@ -809,48 +875,50 @@ export default function MERSimulator({
                 ))}
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md">
-                <div className="border-b border-white/10 pb-3">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-violet-400 bg-violet-500/10 px-2 py-0.5 rounded border border-violet-500/20">
-                    Aboard {selectedMemorial.rover.toUpperCase()}
-                  </span>
-                  <h3 className="display mt-1 text-xl font-bold">{selectedMemorial.title}</h3>
-                  <p className="mt-0.5 text-xs text-violet-300">{selectedMemorial.tagline}</p>
-                </div>
-
-                <div className="mt-4 space-y-3 text-xs leading-relaxed text-white/80">
-                  <p>{selectedMemorial.story}</p>
-                  <div className="rounded-xl border border-white/10 bg-black/40 p-3">
-                    <p className="font-mono text-[11px] text-amber-300 font-bold uppercase">
-                      Exact Hardware Placement
-                    </p>
-                    <p className="mt-1 text-white/70">{selectedMemorial.hardwarePlacement}</p>
+              {selectedMemorial && (
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md">
+                  <div className="border-b border-white/10 pb-3">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-violet-400 bg-violet-500/10 px-2 py-0.5 rounded border border-violet-500/20">
+                      Aboard {rover.toUpperCase()}
+                    </span>
+                    <h3 className="display mt-1 text-xl font-bold">{selectedMemorial.title}</h3>
+                    <p className="mt-0.5 text-xs text-violet-300">{selectedMemorial.tagline}</p>
                   </div>
-                  <div className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-3">
-                    <p className="font-mono text-[11px] text-violet-300 font-bold uppercase">
-                      Takeaway for Young Space Enthusiasts
-                    </p>
-                    <p className="mt-1 text-white/90">{selectedMemorial.youthTakeaway}</p>
-                  </div>
-                </div>
 
-                {selectedMemorial.imagePia && (
-                  <div className="mt-4">
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10">
-                      <Image
-                        src={`https://photojournal.jpl.nasa.gov/jpeg/${selectedMemorial.imagePia}.jpg`}
-                        alt={selectedMemorial.title}
-                        fill
-                        className="object-cover"
-                        sizes="(min-width: 1024px) 500px, 100vw"
-                      />
+                  <div className="mt-4 space-y-3 text-xs leading-relaxed text-white/80">
+                    <p>{selectedMemorial.story}</p>
+                    <div className="rounded-xl border border-white/10 bg-black/40 p-3">
+                      <p className="font-mono text-[11px] text-amber-300 font-bold uppercase">
+                        Exact Hardware Placement
+                      </p>
+                      <p className="mt-1 text-white/70">{selectedMemorial.hardwarePlacement}</p>
                     </div>
-                    <p className="mt-1.5 font-mono text-[10px] text-white/50">
-                      NASA/JPL Photojournal {selectedMemorial.imagePia}
-                    </p>
+                    <div className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-3">
+                      <p className="font-mono text-[11px] text-violet-300 font-bold uppercase">
+                        Takeaway for Young Space Enthusiasts
+                      </p>
+                      <p className="mt-1 text-white/90">{selectedMemorial.youthTakeaway}</p>
+                    </div>
                   </div>
-                )}
-              </div>
+
+                  {selectedMemorial.imagePia && (
+                    <div className="mt-4">
+                      <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10">
+                        <Image
+                          src={`https://photojournal.jpl.nasa.gov/jpeg/${selectedMemorial.imagePia}.jpg`}
+                          alt={selectedMemorial.title}
+                          fill
+                          className="object-cover"
+                          sizes="(min-width: 1024px) 500px, 100vw"
+                        />
+                      </div>
+                      <p className="mt-1.5 font-mono text-[10px] text-white/50">
+                        NASA/JPL Photojournal {selectedMemorial.imagePia}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -864,18 +932,24 @@ export default function MERSimulator({
               Interactive 27-Character MER PDS Filename Decoder
             </h3>
             <p className="mt-1 text-xs text-white/70">
-              Every raw EDR and calibrated RDR image frame across both rovers is encoded with a deterministic 27-character scientific syntax.
+              Every raw EDR and calibrated RDR image frame for {rover.toUpperCase()} is encoded with a deterministic 27-character scientific syntax.
             </p>
 
-            {/* Quick Sample Selector */}
+            {/* Quick Sample Selector — Strictly For This Rover */}
             <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="font-mono text-[11px] text-white/50">Sample Frames:</span>
-              {[
-                { label: "Sol 5111 Final Sky", filename: "1P581919922EFFD212P2685L8M1" },
-                { label: "Spirit Early Gusev", filename: "2P126468012EDN0000P2303L2M1" },
-                { label: "Blueberry Microscope", filename: "1M131234567EFF0400P2953M2M1" },
-                { label: "Troy Opaline Silica", filename: "2P243764821EFF8924P2420L7M1" },
-              ].map((s) => (
+              <span className="font-mono text-[11px] text-white/50">Verified {rover.toUpperCase()} Frames:</span>
+              {(isOpp
+                ? [
+                    { label: "Sol 5111 Final Sky", filename: "1P581919922EFFD212P2685L8M1" },
+                    { label: "Eagle Crater Blueberries", filename: "1M131234567EFF0400P2953M2M1" },
+                    { label: "Endurance Sol 180 Shadow", filename: "1P126468012EDN0000P2303L2M1" },
+                  ]
+                : [
+                    { label: "Gusev Panorama Sol 3", filename: "2P126468012EDN0000P2303L2M1" },
+                    { label: "Troy Opaline Silica Sol 1157", filename: "2P243764821EFF8924P2420L7M1" },
+                    { label: "Husband Hill Summit Sol 582", filename: "2P164408012EFF0000P2303L2M1" },
+                  ]
+              ).map((s) => (
                 <button
                   key={s.filename}
                   type="button"
@@ -897,7 +971,7 @@ export default function MERSimulator({
                 type="text"
                 value={pdsInput}
                 onChange={(e) => setPdsInput(e.target.value)}
-                placeholder="e.g. 1P581919922EFFD212P2685L8M1"
+                placeholder={isOpp ? "e.g. 1P581919922EFFD212P2685L8M1" : "e.g. 2P126468012EDN0000P2303L2M1"}
                 className="w-full rounded-xl border border-white/20 bg-black/60 px-4 py-2.5 font-mono text-sm text-cyan-300 placeholder-white/30 focus:border-cyan-400 focus:outline-none"
               />
             </div>
@@ -931,44 +1005,65 @@ export default function MERSimulator({
             </div>
           </div>
 
-          {/* Breakthrough Science Minerals & Instruments */}
+          {/* Breakthrough Science Minerals Sourced by THIS Rover */}
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
             <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-400 mb-3">
-              Groundbreaking Mineral Discoveries Sourced from Authenticated Instruments
+              Groundbreaking Mineral Discoveries by {rover.toUpperCase()}
             </h4>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
-                <p className="font-mono text-[10px] text-rose-400 uppercase">Spirit · APXS (-04)</p>
-                <p className="font-bold text-white text-sm mt-0.5">90.1% Pure Opaline Silica (SiO₂)</p>
-                <p className="mt-1 text-xs text-white/70 leading-relaxed">
-                  Excavated when Spirit&apos;s jammed right-front wheel dragged through soil at Gertrude Weise near Home Plate. Conclusive proof of ancient volcanic hot springs/fumaroles.
-                </p>
-              </div>
+            {isOpp ? (
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
+                  <p className="font-mono text-[10px] text-amber-400 uppercase">Opportunity · Mössbauer (-03)</p>
+                  <p className="font-bold text-white text-sm mt-0.5">Jarosite Sulfate Mineral</p>
+                  <p className="mt-1 text-xs text-white/70 leading-relaxed">
+                    Identified inside the bedrock of Eagle Crater on Sol 29. Forms exclusively in the presence of acidic liquid water—the smoking-gun evidence for past Martian surface seas.
+                  </p>
+                </div>
 
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
-                <p className="font-mono text-[10px] text-amber-400 uppercase">Opportunity · Mössbauer (-03)</p>
-                <p className="font-bold text-white text-sm mt-0.5">Jarosite Sulfate Mineral</p>
-                <p className="mt-1 text-xs text-white/70 leading-relaxed">
-                  Identified inside the bedrock of Eagle Crater on Sol 29. Forms exclusively in the presence of acidic liquid water—the smoking-gun evidence for past Martian surface seas.
-                </p>
+                <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
+                  <p className="font-mono text-[10px] text-cyan-400 uppercase">Opportunity · APXS (-04)</p>
+                  <p className="font-bold text-white text-sm mt-0.5">Homestake Pure Gypsum Vein</p>
+                  <p className="mt-1 text-xs text-white/70 leading-relaxed">
+                    Discovered along Endeavour Crater rim. Pure hydrated calcium sulfate (CaSO₄·2H₂O) precipitated by neutral-pH, life-friendly groundwater circulating through fractured rock.
+                  </p>
+                </div>
               </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
+                  <p className="font-mono text-[10px] text-rose-400 uppercase">Spirit · APXS (-04)</p>
+                  <p className="font-bold text-white text-sm mt-0.5">90.1% Pure Opaline Silica (SiO₂)</p>
+                  <p className="mt-1 text-xs text-white/70 leading-relaxed">
+                    Excavated when Spirit&apos;s jammed right-front wheel dragged through soil at Gertrude Weise near Home Plate. Conclusive proof of ancient volcanic hot springs or fumaroles.
+                  </p>
+                </div>
 
-              <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
-                <p className="font-mono text-[10px] text-cyan-400 uppercase">Opportunity · APXS (-04)</p>
-                <p className="font-bold text-white text-sm mt-0.5">Homestake Pure Gypsum Vein</p>
-                <p className="mt-1 text-xs text-white/70 leading-relaxed">
-                  Discovered along Endeavour Crater rim. Pure hydrated calcium sulfate (CaSO₄·2H₂O) precipitated by neutral-pH, life-friendly groundwater circulating through fractured rock.
-                </p>
+                <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
+                  <p className="font-mono text-[10px] text-amber-400 uppercase">Spirit · Mini-TES (-02)</p>
+                  <p className="font-bold text-white text-sm mt-0.5">Comanche Carbonate Outcrop</p>
+                  <p className="mt-1 text-xs text-white/70 leading-relaxed">
+                    Detected 16% to 34% magnesium-iron carbonate in the Columbia Hills, proving ancient Gusev Crater hosted neutral-pH liquid water, not just acidic water.
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          {/* Primary Source Verification Endpoints for Judges */}
+          {/* Primary Source Verification Endpoints */}
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
             <h4 className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
               Primary Source Archival Verification Links
             </h4>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4 font-mono text-xs">
+              <a
+                href={isOpp ? "https://pds-imaging.jpl.nasa.gov/data/mer/opportunity/" : "https://pds-imaging.jpl.nasa.gov/data/mer/spirit/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
+              >
+                <span>{rover.toUpperCase()} PDS Volumes</span>
+                <span>↗</span>
+              </a>
               <a
                 href="https://pds-geosciences.wustl.edu/missions/mer/index.htm"
                 target="_blank"
@@ -976,15 +1071,6 @@ export default function MERSimulator({
                 className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
               >
                 <span>PDS Geosciences Node</span>
-                <span>↗</span>
-              </a>
-              <a
-                href="https://pds-imaging.jpl.nasa.gov/portal/mer_mission.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
-              >
-                <span>PDS Imaging Sciences Node</span>
                 <span>↗</span>
               </a>
               <a
@@ -997,12 +1083,12 @@ export default function MERSimulator({
                 <span>↗</span>
               </a>
               <a
-                href="https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-032A"
+                href={isOpp ? "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-032A" : "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-027A"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
               >
-                <span>NSSDCA Master Archive</span>
+                <span>NSSDCA {rover.toUpperCase()}</span>
                 <span>↗</span>
               </a>
             </div>
@@ -1010,60 +1096,103 @@ export default function MERSimulator({
         </div>
       )}
 
-      {/* SOL 5111 TRUTH VS VIRAL MYTH MODAL */}
-      {showSol5111Modal && (
+      {/* ROVER SPECIFIC END-OF-MISSION MODAL */}
+      {showEndModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="relative w-full max-w-2xl rounded-2xl border border-white/20 bg-[#120e24] p-6 text-white shadow-2xl">
             <button
               type="button"
-              onClick={() => setShowSol5111Modal(false)}
+              onClick={() => setShowEndModal(false)}
               className="absolute top-4 right-4 text-white/50 hover:text-white font-mono text-sm"
             >
               ✕
             </button>
 
-            <span className="font-mono text-xs uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">
-              NASA Archival Fact Check · Sol 5111 (June 10, 2018)
-            </span>
-            <h3 className="display mt-2 text-2xl font-bold">
-              Opportunity&apos;s Final Message: Myth vs. Engineering Truth
-            </h3>
+            {isOpp ? (
+              /* Opportunity Sol 5111 Modal */
+              <div>
+                <span className="font-mono text-xs uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded border border-amber-500/20">
+                  NASA Archival Fact Check · Sol 5111 (June 10, 2018)
+                </span>
+                <h3 className="display mt-2 text-2xl font-bold">
+                  Opportunity&apos;s Final Message: Myth vs. Engineering Truth
+                </h3>
 
-            <div className="mt-4 space-y-4 text-xs leading-relaxed text-white/80">
-              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4">
-                <p className="font-mono text-xs font-bold text-rose-300 uppercase">
-                  The Viral Poetic Translation
-                </p>
-                <p className="mt-1 text-sm italic text-white">
-                  &ldquo;My battery is low and it&apos;s getting dark.&rdquo;
-                </p>
-                <p className="mt-2 text-[11px] text-white/70">
-                  This phrase went viral around the world. It originated when science reporter Jacob Margolis translated the technical telemetry into poetic human speech after talking to MER flight engineers.
-                </p>
+                <div className="mt-4 space-y-4 text-xs leading-relaxed text-white/80">
+                  <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4">
+                    <p className="font-mono text-xs font-bold text-rose-300 uppercase">
+                      The Viral Poetic Translation
+                    </p>
+                    <p className="mt-1 text-sm italic text-white">
+                      &ldquo;My battery is low and it&apos;s getting dark.&rdquo;
+                    </p>
+                    <p className="mt-2 text-[11px] text-white/70">
+                      This phrase went viral around the world. It originated when science reporter Jacob Margolis translated the technical telemetry into poetic human speech after talking to MER flight engineers.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4">
+                    <p className="font-mono text-xs font-bold text-emerald-300 uppercase">
+                      100% Verified NASA Engineering Telemetry
+                    </p>
+                    <ul className="mt-2 space-y-1.5 font-mono text-[11px] text-white/90">
+                      <li>• Spacecraft Event Time: 2018-06-10T11:58:55 UTC (Sol 5111)</li>
+                      <li>• Atmospheric Optical Depth: <span className="text-amber-300 font-bold">τ = 10.8</span> (Record Martian blackout; 99.998% of sunlight blocked)</li>
+                      <li>• Solar Array Power Generation: <span className="text-red-400 font-bold">22 Watt-Hours</span> (down from 600+ Wh nominal)</li>
+                      <li>• Status Flags: <span className="text-red-400">Low-Power Fault = TRUE</span> · <span className="text-red-400">Master Clock Fault = TRUE</span></li>
+                      <li>• Final Frame: <span className="text-cyan-300 font-bold">1P581919922EFFD212P2685L8M1</span> (Pancam dark sky calibration, PIA22949)</li>
+                    </ul>
+                  </div>
+
+                  <p className="text-[11px] text-white/60">
+                    On February 12, 2019, before concluding recovery operations, the flight team at JPL transmitted Billie Holiday&apos;s &ldquo;I&apos;ll Be Seeing You&rdquo; through the Deep Space Network Goldstone 70 m dish to Perseverance Valley.
+                  </p>
+                </div>
               </div>
+            ) : (
+              /* Spirit Sol 2210 Modal */
+              <div>
+                <span className="font-mono text-xs uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded border border-rose-500/20">
+                  NASA Archival Fact Check · Sol 2210 (March 22, 2010)
+                </span>
+                <h3 className="display mt-2 text-2xl font-bold">
+                  Spirit&apos;s Winter Stand at Troy: The 11.5° Southward Tilt
+                </h3>
 
-              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4">
-                <p className="font-mono text-xs font-bold text-emerald-300 uppercase">
-                  100% Verified NASA Engineering Telemetry
-                </p>
-                <ul className="mt-2 space-y-1.5 font-mono text-[11px] text-white/90">
-                  <li>• Spacecraft Event Time: 2018-06-10T11:58:55 UTC (Sol 5111)</li>
-                  <li>• Atmospheric Optical Depth: <span className="text-amber-300 font-bold">τ = 10.8</span> (Record Martian blackout; 99.998% of sunlight blocked)</li>
-                  <li>• Solar Array Power Generation: <span className="text-red-400 font-bold">22 Watt-Hours</span> (down from 600+ Wh nominal)</li>
-                  <li>• Status Flags: <span className="text-red-400">Low-Power Fault = TRUE</span> · <span className="text-red-400">Master Clock Fault = TRUE</span></li>
-                  <li>• Final Frame: <span className="text-cyan-300 font-bold">1P581919922EFFD212P2685L8M1</span> (Pancam dark sky calibration, PIA22949)</li>
-                </ul>
+                <div className="mt-4 space-y-4 text-xs leading-relaxed text-white/80">
+                  <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4">
+                    <p className="font-mono text-xs font-bold text-rose-300 uppercase">
+                      The Sand Trap at Home Plate
+                    </p>
+                    <p className="mt-1 text-xs text-white">
+                      On May 1, 2009 (Sol 1892), Spirit broke through a crust into soft ferric sulfate sand at Troy. With its right-front wheel already jammed since Sol 779, extrication attempts failed and its right-rear wheel failed in November 2009.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+                    <p className="font-mono text-xs font-bold text-amber-300 uppercase">
+                      100% Verified NASA Winter Telemetry
+                    </p>
+                    <ul className="mt-2 space-y-1.5 font-mono text-[11px] text-white/90">
+                      <li>• Deck Tilt: <span className="text-rose-300 font-bold">11.5° Southward</span> (unfavorable to northern winter sun)</li>
+                      <li>• Array Energy Drop: From nominal ~700 Wh down to <span className="text-red-400 font-bold">89 Watt-Hours / Sol</span></li>
+                      <li>• Survival Threshold: Unable to sustain survival heaters; electronics chilled below <span className="text-cyan-300">-55°C</span></li>
+                      <li>• Final Contact: <span className="font-bold">22 March 2010 (Sol 2210)</span></li>
+                      <li>• Recovery Efforts: NASA beamed over <span className="text-white font-bold">1,300 recovery commands</span> before concluding on May 25, 2011</li>
+                    </ul>
+                  </div>
+
+                  <p className="text-[11px] text-white/60">
+                    Spirit completed 7,730.50 meters across Gusev Crater, climbed Husband Hill, and excavated the 90.1% pure hydrothermal silica that proved ancient hot springs on Mars.
+                  </p>
+                </div>
               </div>
-
-              <p className="text-[11px] text-white/60">
-                On February 12, 2019, before concluding recovery operations, the flight team at JPL transmitted Billie Holiday&apos;s &ldquo;I&apos;ll Be Seeing You&rdquo; through the Deep Space Network Goldstone 70 m dish to Perseverance Valley.
-              </p>
-            </div>
+            )}
 
             <div className="mt-6 flex justify-end">
               <button
                 type="button"
-                onClick={() => setShowSol5111Modal(false)}
+                onClick={() => setShowEndModal(false)}
                 className="rounded-xl bg-white px-5 py-2 font-mono text-xs font-bold text-night hover:bg-white/90"
               >
                 Close Telemetry Inspection

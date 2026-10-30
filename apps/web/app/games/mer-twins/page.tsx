@@ -42,7 +42,7 @@ export default function MERTwinsGamePage() {
             </div>
           </div>
 
-          <MERSimulator standalone initialRover="opportunity" />
+          <MERSimulator standalone rover="opportunity" />
         </div>
       </main>
     </>
