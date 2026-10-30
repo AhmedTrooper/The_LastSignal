@@ -25,6 +25,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lroc.im-ldi.com",
       },
+      {
+        protocol: "https",
+        hostname: "www.lroc.asu.edu",
+      },
+      {
+        protocol: "https",
+        hostname: "lroc.asu.edu",
+      },
     ],
   },
   async redirects() {

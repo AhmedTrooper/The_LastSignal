@@ -10,7 +10,7 @@ const TAIL: SectionId[] = ["videos", "news", "gallery", "twin", "tributes", "exp
 export const LAYOUTS: Record<string, SectionId[]> = {
   "ranger-7": ["model", "film", "signature", "lost", "journey", "wiki", "life", ...TAIL],
   "surveyor-1": ["model", "signature", "journey", "life", "lost", "wiki", ...TAIL],
-  "apollo-11-lander": ["model", "signature", "life", "lost", "journey", "wiki", ...TAIL],
+  "apollo-11-lander": ["model", "film", "signature", "life", "lost", "journey", "wiki", ...TAIL],
   "apollo-15-rover": ["model", "signature", "life", "lost", "journey", "wiki", ...TAIL],
   "viking-1": ["model", "life", "signature", "journey", "lost", "wiki", "eyes", ...TAIL],
   "viking-2": ["model", "signature", "life", "journey", "lost", "wiki", "eyes", ...TAIL],

@@ -17,6 +17,21 @@ const tile = "h-full w-full rounded-[22%]";
 
 const GAMES: Game[] = [
   {
+    title: "Tranquility Base Cockpit",
+    text: "Fly Eagle past West Crater and explore 100+ discarded Moon artifacts.",
+    href: "/games/apollo-11-landing",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-amber-500 via-sky-600 to-indigo-900 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M16 48l16-32 16 32-16-8-16 8z" className="text-amber-300" />
+          <path d="M12 56l10-8M52 56l-10-8" className="text-white" />
+          <circle cx="32" cy="16" r="3" className="text-cyan-300" fill="currentColor" />
+        </svg>
+      </span>
+    ),
+  },
+  {
     title: "17-Minute Impact Dive",
     text: "Scrub Ranger 7's kamikaze dive from 2,110 km to the Moon's surface.",
     href: "/games/ranger-7-dive",

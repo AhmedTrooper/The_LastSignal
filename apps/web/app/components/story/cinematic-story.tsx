@@ -472,6 +472,11 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
                 <span>🎯</span> Play 17-Minute Impact Dive <ArrowRight />
               </Link>
             )}
+            {slug === "apollo-11-lander" && (
+              <Link href="/games/apollo-11-landing" className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3.5 text-sm font-bold text-black hover:bg-cyan-300 shadow-lg">
+                <span>🌕</span> Explore Tranquility Base &amp; Cockpit <ArrowRight />
+              </Link>
+            )}
             <Link href="/story" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
               All stories
             </Link>
