@@ -16,7 +16,7 @@ export const LAYOUTS: Record<string, SectionId[]> = {
   "viking-2": ["model", "signature", "life", "journey", "lost", "wiki", "eyes", ...TAIL],
   "pathfinder-sojourner": ["model", "signature", "journey", "life", "lost", "wiki", "eyes", ...TAIL],
   "mars-polar-lander": ["model", "lost", "signature", "life", "journey", "wiki", "eyes", ...TAIL],
-  spirit: ["model", "life", "signature", "journey", "lost", "wiki", "eyes", ...TAIL],
+  spirit: ["model", "film", "signature", "life", "journey", "lost", "wiki", "eyes", ...TAIL],
   opportunity: ["model", "film", "signature", "life", "journey", "lost", "wiki", "eyes", ...TAIL],
   phoenix: ["model", "signature", "journey", "life", "lost", "wiki", "eyes", ...TAIL],
   lcross: ["model", "signature", "eyes", "life", "lost", "journey", "wiki", ...TAIL],

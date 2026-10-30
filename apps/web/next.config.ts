@@ -33,6 +33,30 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lroc.asu.edu",
       },
+      {
+        protocol: "https",
+        hostname: "photojournal.jpl.nasa.gov",
+      },
+      {
+        protocol: "https",
+        hostname: "www.uahirise.org",
+      },
+      {
+        protocol: "https",
+        hostname: "uahirise.org",
+      },
+      {
+        protocol: "https",
+        hostname: "pds-geosciences.wustl.edu",
+      },
+      {
+        protocol: "https",
+        hostname: "pds-imaging.jpl.nasa.gov",
+      },
+      {
+        protocol: "https",
+        hostname: "mars.nasa.gov",
+      },
     ],
   },
   async redirects() {

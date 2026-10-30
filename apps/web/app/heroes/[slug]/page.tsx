@@ -23,6 +23,7 @@ import LastSignalArt, { CAPTION } from "@/app/components/profile/last-signal";
 import SignatureBlock from "@/app/components/profile/signature";
 import RangerDive from "@/app/components/profile/ranger-dive";
 import ApolloSimulator from "@/app/components/profile/apollo-simulator";
+import MERSimulator from "@/app/components/profile/mer-simulator";
 import Videos from "@/app/components/profile/videos";
 import EyesEmbed from "@/app/components/profile/eyes-embed";
 import Wiki from "@/app/components/profile/wiki";
@@ -233,12 +234,14 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
       ),
 
     signature: () =>
-      (sig || hero.slug === "ranger-7" || hero.slug === "apollo-11-lander") && (
-        <section id="signature" className={`${hero.slug === "ranger-7" || hero.slug === "apollo-11-lander" ? "scroll-mt-24" : `${card} scroll-mt-24`}`}>
+      (sig || hero.slug === "ranger-7" || hero.slug === "apollo-11-lander" || hero.slug === "spirit" || hero.slug === "opportunity") && (
+        <section id="signature" className={`${hero.slug === "ranger-7" || hero.slug === "apollo-11-lander" || hero.slug === "spirit" || hero.slug === "opportunity" ? "scroll-mt-24" : `${card} scroll-mt-24`}`}>
           {hero.slug === "ranger-7" ? (
             <RangerDive />
           ) : hero.slug === "apollo-11-lander" ? (
             <ApolloSimulator />
+          ) : hero.slug === "spirit" || hero.slug === "opportunity" ? (
+            <MERSimulator initialRover={hero.slug as "spirit" | "opportunity"} />
           ) : (
             sig && <SignatureBlock sig={sig} accent={mars ? "mars" : "moon"} />
           )}

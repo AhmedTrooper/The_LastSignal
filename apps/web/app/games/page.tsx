@@ -17,6 +17,22 @@ const tile = "h-full w-full rounded-[22%]";
 
 const GAMES: Game[] = [
   {
+    title: "Mars Twins: Dust & Power",
+    text: "Scrub atmospheric dust (tau) from clear skies to blackout and survive on Mars.",
+    href: "/games/mer-twins",
+    icon: (
+      <span className={`${tile} flex items-center justify-center bg-linear-to-br from-amber-600 via-orange-600 to-rose-950 text-white relative overflow-hidden shadow-inner`}>
+        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
+        <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="32" cy="24" r="12" className="text-amber-300" strokeWidth="2.5" />
+          <path d="M12 52c8-8 16-12 24-8s16 4 20-4" className="text-orange-200" strokeWidth="2.5" />
+          <circle cx="20" cy="46" r="3" className="text-white" fill="currentColor" />
+          <circle cx="44" cy="44" r="3" className="text-white" fill="currentColor" />
+        </svg>
+      </span>
+    ),
+  },
+  {
     title: "Tranquility Base Cockpit",
     text: "Fly Eagle past West Crater and explore 100+ discarded Moon artifacts.",
     href: "/games/apollo-11-landing",

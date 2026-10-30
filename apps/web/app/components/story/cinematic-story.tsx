@@ -477,6 +477,11 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
                 <span>🌕</span> Explore Tranquility Base &amp; Cockpit <ArrowRight />
               </Link>
             )}
+            {(slug === "spirit" || slug === "opportunity") && (
+              <Link href="/games/mer-twins" className="inline-flex items-center gap-2 rounded-full bg-orange-500 px-6 py-3.5 text-sm font-bold text-white hover:bg-orange-400 shadow-lg shadow-orange-500/20">
+                <span>🔴</span> Play Mars Twins Dust &amp; Power Sim <ArrowRight />
+              </Link>
+            )}
             <Link href="/story" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
               All stories
             </Link>
