@@ -711,6 +711,23 @@ const SPREADS: ChapterSpread[] = [
   },
 ];
 
+const TOC_ITEMS = [
+  { spread: 1, title: "Prologue: The Whisper Across the Void", page: 3 },
+  { spread: 2, title: "Ch 1: Ranger 7 (1964) — The Blind Diver", page: 5 },
+  { spread: 3, title: "Ch 2: Surveyor 1 (1966) — The Soft Step", page: 7 },
+  { spread: 4, title: "Ch 3: Apollo 11 'Eagle' (1969) — Tranquility Base", page: 9 },
+  { spread: 5, title: "Ch 4: Apollo 15 Rover (1971) — The Moon Buggy", page: 11 },
+  { spread: 6, title: "Ch 5: Viking 1 (1976) — The Red Frontier", page: 13 },
+  { spread: 7, title: "Ch 6: Pathfinder & Sojourner (1997) — The Skateboard", page: 15 },
+  { spread: 8, title: "Ch 7: Mars Polar Lander (1999) — The Polar Mystery", page: 17 },
+  { spread: 9, title: "Ch 8: Spirit & Opportunity (2004) — The Indomitable Twins", page: 19 },
+  { spread: 10, title: "Ch 9: Phoenix (2008) — The Arctic Digger", page: 21 },
+  { spread: 11, title: "Ch 10: LCROSS & GRAIL (2009–2012) — Kinetic Impactors", page: 23 },
+  { spread: 12, title: "Ch 11: InSight (2018–2022) — The Stethoscope", page: 25 },
+  { spread: 13, title: "Ch 12: Ingenuity (2021–2024) — Wings Over Mars", page: 27 },
+  { spread: 14, title: "Epilogue: The Guardians of Tomorrow", page: 29 },
+];
+
 export default function StoryBookPage() {
   const [spreadIndex, setSpreadIndex] = useState<number>(0);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
@@ -884,6 +901,25 @@ export default function StoryBookPage() {
         {/* THE PHYSICAL BOOK CONTAINER                                               */}
         {/* ========================================================================= */}
         <div className="relative w-full max-w-6xl">
+          {/* Floating Outer Page Turn Buttons */}
+          <button
+            onClick={goToPrevSpread}
+            disabled={spreadIndex === 0}
+            className="hidden lg:flex absolute -left-14 top-1/2 -translate-y-1/2 h-12 w-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 shadow-xl transition-all disabled:opacity-0 disabled:pointer-events-none hover:scale-110 active:scale-95 cursor-pointer z-40"
+            title="Turn to previous page"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={goToNextSpread}
+            disabled={spreadIndex === totalSpreads - 1}
+            className="hidden lg:flex absolute -right-14 top-1/2 -translate-y-1/2 h-12 w-12 items-center justify-center rounded-full bg-rose-600 hover:bg-rose-500 text-white shadow-xl shadow-rose-600/40 transition-all disabled:opacity-0 disabled:pointer-events-none hover:scale-110 active:scale-95 cursor-pointer z-40"
+            title="Turn to next page"
+          >
+            <ArrowRight className="h-5 w-5" />
+          </button>
+
           {/* Silk Bookmark Ribbon hanging from top center */}
           <div className="absolute left-1/2 -top-3 -translate-x-1/2 w-5 h-16 bg-gradient-to-b from-rose-700 via-rose-600 to-rose-800 rounded-b shadow-lg z-30 pointer-events-none border-x border-rose-900/40">
             <div className="absolute bottom-0 left-0 right-0 h-3 bg-[#070510] [clip-path:polygon(0_100%,50%_0,100%_100%)]" />
@@ -996,6 +1032,21 @@ export default function StoryBookPage() {
                       </p>
                     </div>
                   )}
+
+                  {/* Spread 0 Cover: Prominent "Open Book & Start Reading" Button */}
+                  {spreadIndex === 0 && (
+                    <div className="mt-6 pt-4 border-t border-[#e5dcce]">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToNextSpread();
+                        }}
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-2xl bg-rose-900 px-6 py-3.5 font-mono text-sm font-bold text-white shadow-xl shadow-rose-950/30 transition-all hover:bg-rose-800 hover:scale-105 active:scale-95 cursor-pointer"
+                      >
+                        Open Book &amp; Start Reading 📖 <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Left Page Footer (Page Number Even) */}
@@ -1034,12 +1085,38 @@ export default function StoryBookPage() {
                     )}
                   </div>
 
-                  {/* Right Page Body Paragraphs */}
-                  <div className="space-y-3 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
-                    {currentSpread.rightPage.paragraphs.map((p, idx) => (
-                      <p key={idx}>{p}</p>
-                    ))}
-                  </div>
+                  {/* Right Page Body or Interactive Table of Contents */}
+                  {spreadIndex === 0 ? (
+                    <div className="space-y-1.5 my-2">
+                      <p className="font-mono text-[10px] uppercase tracking-wider text-rose-900 font-bold mb-2">
+                        Select a chapter to jump directly:
+                      </p>
+                      {TOC_ITEMS.map((item, idx) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSpreadIndex(item.spread);
+                            playPageTurnSound();
+                          }}
+                          className="w-full text-left rounded-lg p-2 font-serif text-xs sm:text-sm text-[#3b2d26] hover:bg-rose-900/10 hover:text-rose-900 transition-all flex items-center justify-between border border-transparent hover:border-rose-900/20 group cursor-pointer"
+                        >
+                          <span className="font-medium group-hover:translate-x-1 transition-transform truncate mr-2">
+                            {item.title}
+                          </span>
+                          <span className="shrink-0 font-mono text-[10px] text-[#8c7b70] bg-[#efe7da] px-2 py-0.5 rounded group-hover:bg-rose-900 group-hover:text-white transition-colors">
+                            Pg {item.page} ➔
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-3 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
+                      {currentSpread.rightPage.paragraphs.map((p, idx) => (
+                        <p key={idx}>{p}</p>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Quote Plate */}
                   {currentSpread.rightPage.quote && (
@@ -1059,18 +1136,30 @@ export default function StoryBookPage() {
                     </div>
                   )}
 
-                  {/* Hero Link if applicable */}
-                  {currentSpread.heroSlug && (
-                    <div className="mt-4 text-right">
+                  {/* Bottom Actions on Right Page */}
+                  <div className="mt-6 pt-3 border-t border-[#e5dcce] flex items-center justify-between">
+                    {currentSpread.heroSlug ? (
                       <Link
                         href={`/heroes/${currentSpread.heroSlug}`}
                         onClick={(e) => e.stopPropagation()}
                         className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-rose-900 hover:text-rose-700 underline transition-colors"
                       >
-                        Inspect Raw Telemetry Dossier ↗
+                        Inspect Telemetry Dossier ↗
                       </Link>
-                    </div>
-                  )}
+                    ) : <span />}
+
+                    {spreadIndex < totalSpreads - 1 && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToNextSpread();
+                        }}
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-white bg-rose-900 hover:bg-rose-800 px-3.5 py-1.5 rounded-lg shadow transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                      >
+                        Turn Page ▸
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Right Page Footer (Page Number Odd) */}

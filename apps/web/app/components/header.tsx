@@ -11,6 +11,7 @@ import { useAuth } from "@/lib/auth-context";
 const LINKS = [
   { href: "/heroes", label: "Heroes" },
   { href: "/story", label: "Story" },
+  { href: "/story/book", label: "Storybook" },
   { href: "/timeline", label: "Timeline" },
   { href: "/where-they-rest", label: "Where They Rest" },
   { href: "/gallery", label: "Gallery" },
@@ -20,7 +21,13 @@ const LINKS = [
 
 /** Hero profiles live under /heroes, but their story pages belong to the Story section. */
 const isActive = (pathname: string, href: string) =>
-  href === "/story" ? pathname === "/story" || pathname.endsWith("/story") : href === "/heroes" ? pathname.startsWith("/heroes") && !pathname.endsWith("/story") : pathname.startsWith(href);
+  href === "/story/book"
+    ? pathname === "/story/book"
+    : href === "/story"
+      ? pathname === "/story" || (pathname.endsWith("/story") && pathname !== "/story/book")
+      : href === "/heroes"
+        ? pathname.startsWith("/heroes") && !pathname.endsWith("/story")
+        : pathname.startsWith(href);
 
 export function TributeButton({ className = "" }: { className?: string }) {
   const pathname = usePathname();

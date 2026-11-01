@@ -16,13 +16,23 @@ export function Hero() {
           <h1 className="display rise max-w-[11ch] text-[36px] leading-[1.02] sm:text-5xl lg:text-[60px] xl:text-[68px]">
             Their mission ended. <span className="text-violet">Their story didn’t.</span>
           </h1>
-          <Link
-            href="#famous"
-            className="rise mt-5 inline-flex w-fit items-center gap-3 rounded-full bg-violet px-6 py-3.5 text-[15px] font-semibold text-white shadow-[0_12px_30px_-10px_rgba(91,46,255,0.6)] transition-colors hover:bg-violet-deep lg:mt-7"
-            style={{ animationDelay: "120ms" }}
-          >
-            Meet the heroes <ArrowRight />
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="#famous"
+              className="rise mt-5 inline-flex w-fit items-center gap-3 rounded-full bg-violet px-6 py-3.5 text-[15px] font-semibold text-white shadow-[0_12px_30px_-10px_rgba(91,46,255,0.6)] transition-colors hover:bg-violet-deep lg:mt-7"
+              style={{ animationDelay: "120ms" }}
+            >
+              Meet the heroes <ArrowRight />
+            </Link>
+
+            <Link
+              href="/story/book"
+              className="rise mt-5 inline-flex w-fit items-center gap-2 rounded-full border-2 border-violet bg-violet/10 px-6 py-3.5 text-[15px] font-bold text-violet transition-all hover:bg-violet hover:text-white lg:mt-7"
+              style={{ animationDelay: "160ms" }}
+            >
+              📖 Read Master Storybook <ArrowRight />
+            </Link>
+          </div>
         </div>
         {/* The picture's own background is white; a soft mask melts its edges into the page. */}
         <div className="rise relative -mx-4 aspect-[3/2] sm:mx-0" style={{ animationDelay: "160ms" }}>
