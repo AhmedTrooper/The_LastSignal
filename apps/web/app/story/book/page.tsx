@@ -39,6 +39,23 @@ interface ChapterSpread {
   };
 }
 
+const TOC_ITEMS = [
+  { spread: 1, title: "Prologue: The Whisper Across the Void", page: 3 },
+  { spread: 2, title: "Ch 1: Ranger 7 (1964) — The Blind Diver", page: 5 },
+  { spread: 3, title: "Ch 2: Surveyor 1 (1966) — The Soft Step", page: 7 },
+  { spread: 4, title: "Ch 3: Apollo 11 'Eagle' (1969) — Tranquility Base", page: 9 },
+  { spread: 5, title: "Ch 4: Apollo 15 Rover (1971) — The Moon Buggy", page: 11 },
+  { spread: 6, title: "Ch 5: Viking 1 (1976) — The Red Frontier", page: 13 },
+  { spread: 7, title: "Ch 6: Pathfinder & Sojourner (1997) — The Skateboard", page: 15 },
+  { spread: 8, title: "Ch 7: Mars Polar Lander (1999) — The Polar Mystery", page: 17 },
+  { spread: 9, title: "Ch 8: Spirit & Opportunity (2004) — The Indomitable Twins", page: 19 },
+  { spread: 10, title: "Ch 9: Phoenix (2008) — The Arctic Digger", page: 21 },
+  { spread: 11, title: "Ch 10: LCROSS & GRAIL (2009–2012) — Kinetic Impactors", page: 23 },
+  { spread: 12, title: "Ch 11: InSight (2018–2022) — The Stethoscope", page: 25 },
+  { spread: 13, title: "Ch 12: Ingenuity (2021–2024) — Wings Over Mars", page: 27 },
+  { spread: 14, title: "Epilogue: The Guardians of Tomorrow", page: 29 },
+];
+
 const SPREADS: ChapterSpread[] = [
   // SPREAD 0: COVER & TABLE OF CONTENTS
   {
@@ -65,20 +82,7 @@ const SPREADS: ChapterSpread[] = [
       heading: "Table of Contents",
       subheading: "Chronicles of 12 Pioneer Machines",
       paragraphs: [
-        "1. Prologue: The Whisper Across the Void",
-        "2. Ranger 7 (1964) — The Blind Diver (The Moon)",
-        "3. Surveyor 1 (1966) — The Soft Step (The Moon)",
-        "4. Apollo 11 'Eagle' (1969) — Tranquility Base (The Moon)",
-        "5. Apollo 15 Rover (1971) — The Moon Buggy (The Moon)",
-        "6. Viking 1 (1976) — The Red Frontier (Mars)",
-        "7. Pathfinder & Sojourner (1997) — The Skateboard (Mars)",
-        "8. Mars Polar Lander (1999) — The Polar Mystery (Mars)",
-        "9. Spirit & Opportunity (2004) — The Indomitable Twins (Mars)",
-        "10. Phoenix (2008) — The Arctic Digger (Mars)",
-        "11. LCROSS & GRAIL (2009–2012) — The Kinetic Impactors (The Moon)",
-        "12. InSight (2018–2022) — The Planetary Stethoscope (Mars)",
-        "13. Ingenuity (2021–2024) — Wings Over Mars (Mars)",
-        "14. Epilogue: The Guardians of Tomorrow",
+        "Select any chapter to begin your journey through humanity's off-world monuments.",
       ],
       quote: {
         text: "They went where our bodies could not. They did not return. But they showed us the way.",
@@ -583,7 +587,7 @@ const SPREADS: ChapterSpread[] = [
     },
   },
 
-  // SPREAD 12: CHAPTER 11 - INSIGHT
+  // SPREAD 12: CHAPTER 11 - INSIGHT (HANDLED BY DEDICATED INTERACTIVE POP-UP)
   {
     chapterNumber: 11,
     title: "InSight",
@@ -711,30 +715,36 @@ const SPREADS: ChapterSpread[] = [
   },
 ];
 
-const TOC_ITEMS = [
-  { spread: 1, title: "Prologue: The Whisper Across the Void", page: 3 },
-  { spread: 2, title: "Ch 1: Ranger 7 (1964) — The Blind Diver", page: 5 },
-  { spread: 3, title: "Ch 2: Surveyor 1 (1966) — The Soft Step", page: 7 },
-  { spread: 4, title: "Ch 3: Apollo 11 'Eagle' (1969) — Tranquility Base", page: 9 },
-  { spread: 5, title: "Ch 4: Apollo 15 Rover (1971) — The Moon Buggy", page: 11 },
-  { spread: 6, title: "Ch 5: Viking 1 (1976) — The Red Frontier", page: 13 },
-  { spread: 7, title: "Ch 6: Pathfinder & Sojourner (1997) — The Skateboard", page: 15 },
-  { spread: 8, title: "Ch 7: Mars Polar Lander (1999) — The Polar Mystery", page: 17 },
-  { spread: 9, title: "Ch 8: Spirit & Opportunity (2004) — The Indomitable Twins", page: 19 },
-  { spread: 10, title: "Ch 9: Phoenix (2008) — The Arctic Digger", page: 21 },
-  { spread: 11, title: "Ch 10: LCROSS & GRAIL (2009–2012) — Kinetic Impactors", page: 23 },
-  { spread: 12, title: "Ch 11: InSight (2018–2022) — The Stethoscope", page: 25 },
-  { spread: 13, title: "Ch 12: Ingenuity (2021–2024) — Wings Over Mars", page: 27 },
-  { spread: 14, title: "Epilogue: The Guardians of Tomorrow", page: 29 },
-];
-
 export default function StoryBookPage() {
   const [spreadIndex, setSpreadIndex] = useState<number>(0);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [tocOpen, setTocOpen] = useState<boolean>(false);
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
 
+  // InSight Living Interactive State
+  const [insightActiveAudio, setInsightActiveAudio] = useState<"wind" | "bloop" | "quake" | null>(null);
+  const [insightGlitchFilter, setInsightGlitchFilter] = useState<boolean>(true);
+  const [insightDeltaT, setInsightDeltaT] = useState<number>(180); // seconds
+  const [insightSaltationBonus, setInsightSaltationBonus] = useState<number>(0);
+  const [insightSaltationSparkle, setInsightSaltationSparkle] = useState<boolean>(false);
+  const [insightActiveDiscovery, setInsightActiveDiscovery] = useState<"ocean" | "meteoroids" | "spin" | "dust">("ocean");
+  const [insightBlueprintPart, setInsightBlueprintPart] = useState<"cpu" | "larri" | "seis" | "names">("larri");
+
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const activeNodesRef = useRef<{ stop: () => void } | null>(null);
+
+  // Stop any active Web Audio
+  const stopAudio = useCallback(() => {
+    try {
+      if (activeNodesRef.current) {
+        activeNodesRef.current.stop();
+        activeNodesRef.current = null;
+      }
+      setInsightActiveAudio(null);
+    } catch {
+      // Ignore
+    }
+  }, []);
 
   // Play realistic paper page-turn sound using Web Audio API pink noise flutter
   const playPageTurnSound = useCallback(() => {
@@ -786,6 +796,123 @@ export default function StoryBookPage() {
     }
   }, [soundEnabled]);
 
+  // Authentic Web Audio Synthesizer for InSight Sounds (Wind, Bloop, Quake + Glitch Filter)
+  const playInSightSound = useCallback(
+    (mode: "wind" | "bloop" | "quake") => {
+      stopAudio();
+      try {
+        const AudioContextClass =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (!audioCtxRef.current) {
+          audioCtxRef.current = new AudioContextClass();
+        }
+        const ctx = audioCtxRef.current;
+        if (ctx.state === "suspended") {
+          ctx.resume();
+        }
+
+        const now = ctx.currentTime;
+        setInsightActiveAudio(mode);
+
+        if (mode === "wind") {
+          // Sol 5 Martian Wind Breeze (10-15 mph vibrating UltraFlex panels)
+          const bufferSize = ctx.sampleRate * 3.5;
+          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          let last = 0.0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            data[i] = (last + 0.02 * white) / 1.02;
+            last = data[i];
+            data[i] *= 4.0;
+          }
+          const noise = ctx.createBufferSource();
+          noise.buffer = buffer;
+
+          const filter = ctx.createBiquadFilter();
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(130, now);
+
+          const gain = ctx.createGain();
+          gain.gain.setValueAtTime(0.01, now);
+          gain.gain.linearRampToValueAtTime(0.25, now + 0.6);
+          gain.gain.linearRampToValueAtTime(0.01, now + 3.4);
+
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          noise.start(now);
+          noise.stop(now + 3.5);
+          activeNodesRef.current = { stop: () => noise.stop() };
+        } else if (mode === "bloop") {
+          // Sol 988 Meteoroid Impact Bloop (Atmospheric bass-reflex effect)
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(40, now);
+          osc.frequency.exponentialRampToValueAtTime(340, now + 0.7);
+
+          gain.gain.setValueAtTime(0.01, now);
+          gain.gain.exponentialRampToValueAtTime(0.3, now + 0.2);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 1.1);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 1.1);
+          activeNodesRef.current = { stop: () => osc.stop() };
+        } else {
+          // Sol 1222 Monster Quake S1222a (Mag 4.7, 6-hour reverberation)
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const filter = ctx.createBiquadFilter();
+          const gain = ctx.createGain();
+
+          osc1.type = "triangle";
+          osc1.frequency.setValueAtTime(52, now);
+          osc2.type = "sine";
+          osc2.frequency.setValueAtTime(78, now);
+
+          // If glitch filter is OFF, add thermal pop clicks
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(insightGlitchFilter ? 110 : 900, now);
+
+          gain.gain.setValueAtTime(0.01, now);
+          gain.gain.linearRampToValueAtTime(0.22, now + 0.4);
+          gain.gain.linearRampToValueAtTime(0.08, now + 2.4);
+          gain.gain.linearRampToValueAtTime(0.001, now + 4.2);
+
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc1.start(now);
+          osc2.start(now);
+          osc1.stop(now + 4.2);
+          osc2.stop(now + 4.2);
+          activeNodesRef.current = {
+            stop: () => {
+              osc1.stop();
+              osc2.stop();
+            },
+          };
+        }
+
+        setTimeout(() => {
+          setInsightActiveAudio(null);
+        }, mode === "bloop" ? 1100 : mode === "wind" ? 3500 : 4200);
+      } catch {
+        setInsightActiveAudio(null);
+      }
+    },
+    [insightGlitchFilter, stopAudio]
+  );
+
   const goToNextSpread = useCallback(() => {
     if (spreadIndex < SPREADS.length - 1) {
       setIsFlipping(true);
@@ -829,6 +956,20 @@ export default function StoryBookPage() {
   const currentSpread = SPREADS[spreadIndex];
   const totalSpreads = SPREADS.length;
 
+  // Real formula: d ≈ Δt * 9.35 km
+  const calculatedQuakeDistanceKm = Math.round(insightDeltaT * 9.35);
+  const calculatedQuakeDegrees = (calculatedQuakeDistanceKm / 59.2).toFixed(1);
+
+  // Trigger saltation sand-pouring trick
+  const handleSaltationTrick = () => {
+    if (insightSaltationSparkle) return;
+    setInsightSaltationSparkle(true);
+    setTimeout(() => {
+      setInsightSaltationBonus((prev) => Math.min(prev + 30, 90));
+      setInsightSaltationSparkle(false);
+    }, 1000);
+  };
+
   return (
     <>
       <Header />
@@ -847,7 +988,7 @@ export default function StoryBookPage() {
             <div className="relative">
               <button
                 onClick={() => setTocOpen((prev) => !prev)}
-                className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/80 hover:bg-white/10 hover:text-white transition-all"
+                className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/80 hover:bg-white/10 hover:text-white transition-all cursor-pointer"
               >
                 <span>📖 Chapters</span>
                 <span className="text-[10px] text-white/40">▾</span>
@@ -867,7 +1008,7 @@ export default function StoryBookPage() {
                           setTocOpen(false);
                           playPageTurnSound();
                         }}
-                        className={`w-full rounded-lg px-2.5 py-1.5 text-left text-xs transition-all ${
+                        className={`w-full rounded-lg px-2.5 py-1.5 text-left text-xs transition-all cursor-pointer ${
                           spreadIndex === idx
                             ? "bg-rose-500 font-bold text-white"
                             : "text-white/70 hover:bg-white/10 hover:text-white"
@@ -889,7 +1030,7 @@ export default function StoryBookPage() {
             {/* Sound Toggle */}
             <button
               onClick={() => setSoundEnabled((prev) => !prev)}
-              className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/80 hover:bg-white/10 hover:text-white transition-all"
+              className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/80 hover:bg-white/10 hover:text-white transition-all cursor-pointer"
               title="Toggle Page Turning Audio"
             >
               {soundEnabled ? "🔊 Sound: On" : "🔇 Sound: Off"}
@@ -968,69 +1109,185 @@ export default function StoryBookPage() {
                     )}
                   </div>
 
-                  {/* Optional Image Plate */}
-                  {currentSpread.image && (
-                    <div className="my-4 rounded-xl overflow-hidden border border-[#e5dcce] bg-[#efe9dc] p-1.5 shadow-sm">
-                      <div className="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-[#ded6c7]">
-                        <Image
-                          src={assetUrl(currentSpread.image)}
-                          alt={currentSpread.title}
-                          fill
-                          sizes="(min-width:768px) 400px, 100vw"
-                          className="object-cover"
-                        />
+                  {/* ========================================================================= */}
+                  {/* SPECIAL CHAPTER 11: INSIGHT INTERACTIVE STETHOSCOPE & SALTATION WIDGETS  */}
+                  {/* ========================================================================= */}
+                  {currentSpread.heroSlug === "insight" ? (
+                    <div className="space-y-4 my-2" onClick={(e) => e.stopPropagation()}>
+                      {/* Lead Narrative */}
+                      <p className="font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26] first-letter:float-left first-letter:text-4xl first-letter:font-serif first-letter:mr-2 first-letter:font-bold first-letter:text-rose-900">
+                        While other landers scraped the surface, InSight pressed an ear against the ground. Its SEIS seismometer detected 1,319 marsquakes—sensitive enough to feel ground motion smaller than a single hydrogen atom.
+                      </p>
+
+                      {/* Tactile Audio Stethoscope Box */}
+                      <div className="rounded-xl border border-rose-900/30 bg-[#f4ede0] p-3 shadow-sm">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-mono text-[10px] uppercase font-bold text-rose-900">
+                            🎧 Interactive Mars Stethoscope
+                          </span>
+                          <span className="text-[9px] font-mono text-[#8c7b70]">Real SEIS Waves</span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-1.5">
+                          <button
+                            onClick={() => playInSightSound("wind")}
+                            className={`rounded-lg p-2 text-left font-mono text-[11px] transition-all cursor-pointer border ${
+                              insightActiveAudio === "wind"
+                                ? "bg-cyan-700 text-white border-cyan-800 shadow"
+                                : "bg-[#ded5c5] text-[#2c221e] hover:bg-cyan-900 hover:text-white border-transparent"
+                            }`}
+                          >
+                            <span className="block font-bold">Sol 5 Wind</span>
+                            <span className="text-[9px] opacity-80">10-15 mph</span>
+                          </button>
+
+                          <button
+                            onClick={() => playInSightSound("bloop")}
+                            className={`rounded-lg p-2 text-left font-mono text-[11px] transition-all cursor-pointer border ${
+                              insightActiveAudio === "bloop"
+                                ? "bg-amber-700 text-white border-amber-800 shadow"
+                                : "bg-[#ded5c5] text-[#2c221e] hover:bg-amber-900 hover:text-white border-transparent"
+                            }`}
+                          >
+                            <span className="block font-bold">Meteor Bloop</span>
+                            <span className="text-[9px] opacity-80">Sol 988 Chirp</span>
+                          </button>
+
+                          <button
+                            onClick={() => playInSightSound("quake")}
+                            className={`rounded-lg p-2 text-left font-mono text-[11px] transition-all cursor-pointer border ${
+                              insightActiveAudio === "quake"
+                                ? "bg-rose-800 text-white border-rose-900 shadow"
+                                : "bg-[#ded5c5] text-[#2c221e] hover:bg-rose-900 hover:text-white border-transparent"
+                            }`}
+                          >
+                            <span className="block font-bold">S1222a Quake</span>
+                            <span className="text-[9px] opacity-80">Mag 4.7 Rumble</span>
+                          </button>
+                        </div>
+
+                        {/* Glitch & Donk Toggle */}
+                        <div className="mt-2.5 pt-2 border-t border-[#ded5c5] flex items-center justify-between">
+                          <span className="text-[10px] font-serif italic text-[#736357]">
+                            Tether pops from -80°C nightly thermal contraction:
+                          </span>
+                          <button
+                            onClick={() => setInsightGlitchFilter((prev) => !prev)}
+                            className={`rounded px-2 py-0.5 text-[10px] font-mono font-bold cursor-pointer transition-colors ${
+                              insightGlitchFilter
+                                ? "bg-emerald-800 text-white"
+                                : "bg-amber-800 text-white animate-pulse"
+                            }`}
+                          >
+                            {insightGlitchFilter ? "Glitch Filter: ON (0.05–1.0 Hz)" : "Raw Clicks: ACTIVE"}
+                          </button>
+                        </div>
                       </div>
-                      {currentSpread.imageCaption && (
-                        <p className="mt-1.5 text-[10px] font-mono text-[#736357] text-center italic">
-                          {currentSpread.imageCaption}
+
+                      {/* Saltation Sand-Pouring Interactive Hack */}
+                      <div className="rounded-xl border border-amber-900/30 bg-[#f6f0e4] p-3">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-amber-950">
+                            Sol 884 Genius Hack: Cleaning with Dirt
+                          </span>
+                          <span className="font-mono text-xs font-bold text-amber-900">
+                            +{30 + insightSaltationBonus} Wh/sol
+                          </span>
+                        </div>
+                        <p className="font-serif text-[11px] text-[#5c4a3f] leading-relaxed mb-2">
+                          No dust devil ever cleaned InSight. Engineers commanded the robotic arm to scoop coarse sand and trickle it above the solar wing into a wind gust. Bouncing grains knocked stuck dust off!
                         </p>
-                      )}
+                        <button
+                          onClick={handleSaltationTrick}
+                          disabled={insightSaltationSparkle}
+                          className="w-full rounded-lg bg-amber-900 hover:bg-amber-800 text-white font-mono text-xs py-1.5 font-bold transition-all shadow cursor-pointer disabled:opacity-60"
+                        >
+                          {insightSaltationSparkle ? "Trickling Sand Over Panel..." : "Tap to Pour Sand on Solar Panel (+30 Wh)"}
+                        </button>
+                      </div>
+
+                      {/* InSight Telemetry Stamp */}
+                      <div className="rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-2.5 text-[10px] font-mono grid grid-cols-2 gap-2 text-[#4a3b32]">
+                        <div>
+                          <span className="text-[#8c7b70] block">Location:</span>
+                          <b>4.5024° N, 135.6234° E</b>
+                        </div>
+                        <div>
+                          <span className="text-[#8c7b70] block">Crater Site:</span>
+                          <b>Homestead Hollow (27m)</b>
+                        </div>
+                      </div>
                     </div>
-                  )}
-
-                  {/* Left Page Body Paragraphs */}
-                  <div className="space-y-3 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
-                    {currentSpread.leftPage.paragraphs.map((p, idx) => (
-                      <p key={idx} className={idx === 0 && !currentSpread.image ? "first-letter:float-left first-letter:text-4xl first-letter:font-serif first-letter:mr-2 first-letter:font-bold first-letter:text-rose-900" : ""}>
-                        {p}
-                      </p>
-                    ))}
-                  </div>
-
-                  {/* Telemetry Summary Box if present */}
-                  {currentSpread.telemetrySummary && (
-                    <div className="mt-4 rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-3 text-[11px] font-mono text-[#4a3b32]">
-                      <p className="text-[10px] uppercase font-bold text-rose-900 tracking-wider mb-1.5">
-                        Verified Mission Telemetry
-                      </p>
-                      <div className="grid grid-cols-2 gap-x-2 gap-y-1">
-                        {currentSpread.telemetrySummary.map((item, idx) => (
-                          <div key={idx}>
-                            <span className="text-[#8c7b70] block text-[9px]">{item.label}</span>
-                            <span className="font-bold text-[#231815]">{item.value}</span>
+                  ) : (
+                    /* Default Image & Body Paragraphs for other chapters */
+                    <>
+                      {currentSpread.image && (
+                        <div className="my-4 rounded-xl overflow-hidden border border-[#e5dcce] bg-[#efe9dc] p-1.5 shadow-sm">
+                          <div className="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-[#ded6c7]">
+                            <Image
+                              src={assetUrl(currentSpread.image)}
+                              alt={currentSpread.title}
+                              fill
+                              sizes="(min-width:768px) 400px, 100vw"
+                              className="object-cover"
+                            />
                           </div>
+                          {currentSpread.imageCaption && (
+                            <p className="mt-1.5 text-[10px] font-mono text-[#736357] text-center italic">
+                              {currentSpread.imageCaption}
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="space-y-3 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
+                        {currentSpread.leftPage.paragraphs.map((p, idx) => (
+                          <p
+                            key={idx}
+                            className={
+                              idx === 0 && !currentSpread.image
+                                ? "first-letter:float-left first-letter:text-4xl first-letter:font-serif first-letter:mr-2 first-letter:font-bold first-letter:text-rose-900"
+                                : ""
+                            }
+                          >
+                            {p}
+                          </p>
                         ))}
                       </div>
-                    </div>
-                  )}
 
-                  {/* Left Page Callout Box */}
-                  {currentSpread.leftPage.calloutBox && (
-                    <div className="mt-4 rounded-xl border border-rose-900/20 bg-rose-950/5 p-3 text-[11px] text-[#4a3b32]">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-bold text-rose-950">
-                          {currentSpread.leftPage.calloutBox.title}
-                        </span>
-                        {currentSpread.leftPage.calloutBox.badge && (
-                          <span className="bg-rose-900/10 text-rose-900 text-[9px] font-mono px-1.5 py-0.5 rounded uppercase font-bold">
-                            {currentSpread.leftPage.calloutBox.badge}
-                          </span>
-                        )}
-                      </div>
-                      <p className="font-serif italic leading-relaxed text-[#5c4a3f]">
-                        {currentSpread.leftPage.calloutBox.text}
-                      </p>
-                    </div>
+                      {currentSpread.telemetrySummary && (
+                        <div className="mt-4 rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-3 text-[11px] font-mono text-[#4a3b32]">
+                          <p className="text-[10px] uppercase font-bold text-rose-900 tracking-wider mb-1.5">
+                            Verified Mission Telemetry
+                          </p>
+                          <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            {currentSpread.telemetrySummary.map((item, idx) => (
+                              <div key={idx}>
+                                <span className="text-[#8c7b70] block text-[9px]">{item.label}</span>
+                                <span className="font-bold text-[#231815]">{item.value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {currentSpread.leftPage.calloutBox && (
+                        <div className="mt-4 rounded-xl border border-rose-900/20 bg-rose-950/5 p-3 text-[11px] text-[#4a3b32]">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-bold text-rose-950">
+                              {currentSpread.leftPage.calloutBox.title}
+                            </span>
+                            {currentSpread.leftPage.calloutBox.badge && (
+                              <span className="bg-rose-900/10 text-rose-900 text-[9px] font-mono px-1.5 py-0.5 rounded uppercase font-bold">
+                                {currentSpread.leftPage.calloutBox.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="font-serif italic leading-relaxed text-[#5c4a3f]">
+                            {currentSpread.leftPage.calloutBox.text}
+                          </p>
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {/* Spread 0 Cover: Prominent "Open Book & Start Reading" Button */}
@@ -1085,55 +1342,204 @@ export default function StoryBookPage() {
                     )}
                   </div>
 
-                  {/* Right Page Body or Interactive Table of Contents */}
-                  {spreadIndex === 0 ? (
-                    <div className="space-y-1.5 my-2">
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-rose-900 font-bold mb-2">
-                        Select a chapter to jump directly:
-                      </p>
-                      {TOC_ITEMS.map((item, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSpreadIndex(item.spread);
-                            playPageTurnSound();
-                          }}
-                          className="w-full text-left rounded-lg p-2 font-serif text-xs sm:text-sm text-[#3b2d26] hover:bg-rose-900/10 hover:text-rose-900 transition-all flex items-center justify-between border border-transparent hover:border-rose-900/20 group cursor-pointer"
-                        >
-                          <span className="font-medium group-hover:translate-x-1 transition-transform truncate mr-2">
-                            {item.title}
+                  {/* ========================================================================= */}
+                  {/* SPECIAL CHAPTER 11: INSIGHT INTERACTIVE MATH CALIPER & DISCOVERIES        */}
+                  {/* ========================================================================= */}
+                  {currentSpread.heroSlug === "insight" ? (
+                    <div className="space-y-4 my-2" onClick={(e) => e.stopPropagation()}>
+                      {/* Interactive P-S Wave Triangulation Caliper */}
+                      <div className="rounded-xl border border-rose-900/30 bg-[#f4ede0] p-3">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-rose-900">
+                            📐 P-to-S Wave Triangulator
                           </span>
-                          <span className="shrink-0 font-mono text-[10px] text-[#8c7b70] bg-[#efe7da] px-2 py-0.5 rounded group-hover:bg-rose-900 group-hover:text-white transition-colors">
-                            Pg {item.page} ➔
+                          <span className="font-mono text-xs font-bold text-rose-950">
+                            {calculatedQuakeDistanceKm} km ({calculatedQuakeDegrees}°)
                           </span>
-                        </button>
-                      ))}
+                        </div>
+                        <p className="font-serif text-[11px] text-[#5c4a3f] mb-2 leading-relaxed">
+                          Compressional P-waves race ahead at <b className="text-[#231815]">7.3 km/s</b>; shear S-waves follow at <b className="text-[#231815]">4.1 km/s</b>. Drag the arrival delay to calculate the distance:
+                        </p>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between font-mono text-[10px] text-[#736357]">
+                            <span>Time Delay Δt: <b>{insightDeltaT}s</b></span>
+                            <span className="text-rose-900 font-bold">d = Δt × 9.35 km/s</span>
+                          </div>
+                          <input
+                            type="range"
+                            min="10"
+                            max="600"
+                            value={insightDeltaT}
+                            onChange={(e) => setInsightDeltaT(parseInt(e.target.value, 10))}
+                            className="w-full accent-rose-900 h-1.5 bg-[#ded5c5] rounded cursor-pointer"
+                          />
+                          <div className="flex justify-between font-mono text-[9px] text-[#8c7b70]">
+                            <span>Local (10s)</span>
+                            <span>Cerberus Fossae (180s)</span>
+                            <span>Far Side (600s)</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Post-Mission Science Tabs (2023–2026 Breakthroughs) */}
+                      <div className="rounded-xl border border-cyan-900/30 bg-[#eef5f6] p-3 text-[#2c3e42]">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-mono text-[10px] uppercase font-bold text-cyan-950">
+                            Living Science (2023–2026 Discoveries)
+                          </span>
+                          <span className="text-[9px] font-mono text-cyan-800">Dead Hardware, Living Data</span>
+                        </div>
+
+                        <div className="grid grid-cols-4 gap-1 mb-2">
+                          {[
+                            { id: "ocean", label: "Ocean" },
+                            { id: "meteoroids", label: "Meteors" },
+                            { id: "spin", label: "Spin Rate" },
+                            { id: "dust", label: "HiRISE" },
+                          ].map((t) => (
+                            <button
+                              key={t.id}
+                              onClick={() => setInsightActiveDiscovery(t.id as typeof insightActiveDiscovery)}
+                              className={`py-1 rounded font-mono text-[10px] font-bold cursor-pointer transition-colors ${
+                                insightActiveDiscovery === t.id
+                                  ? "bg-cyan-900 text-white"
+                                  : "bg-[#d8e6e8] text-cyan-900 hover:bg-cyan-800 hover:text-white"
+                              }`}
+                            >
+                              {t.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="font-serif text-xs leading-relaxed text-[#2c3e42]">
+                          {insightActiveDiscovery === "ocean" && (
+                            <p>
+                              <b>PNAS (Aug 2024):</b> Seismic shear-wave velocities proved fractured rock at 11.5–20 km depth is saturated with liquid water—holding enough water to form a planet-wide ocean 1 to 2 km deep!
+                            </p>
+                          )}
+                          {insightActiveDiscovery === "meteoroids" && (
+                            <p>
+                              <b>Science Advances (July 2024):</b> SEIS acoustic chirps revealed 280 to 360 basketball-sized meteoroids hit Mars every single year, excavating craters &gt;8 meters wide almost daily.
+                            </p>
+                          )}
+                          {insightActiveDiscovery === "spin" && (
+                            <p>
+                              <b>Nature (Aug 2023):</b> RISE Doppler radio tracking measured Mars accelerating by 4 milliarcseconds/year² as polar ice shifts and ancient ice sheets rebound.
+                            </p>
+                          )}
+                          {insightActiveDiscovery === "dust" && (
+                            <p>
+                              <b>HiRISE PIA26515 (Dec 2024):</b> InSight&apos;s dormant body acts as an active calibration target, measuring how quickly dust devil tracks and rocket scorch marks fade over Martian years.
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Hardware Blueprint Drawer */}
+                      <div className="rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-2.5">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="font-mono text-[10px] uppercase font-bold text-rose-950">
+                            Hardware Blueprint
+                          </span>
+                          <span className="text-[9px] font-mono text-emerald-800 font-bold">
+                            LaRRI: STILL FUNCTIONAL
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-4 gap-1 mb-1.5">
+                          {[
+                            { id: "larri", label: "LaRRI Dome" },
+                            { id: "names", label: "2.4M Names" },
+                            { id: "cpu", label: "RAD750 CPU" },
+                            { id: "seis", label: "SEIS Pendulums" },
+                          ].map((b) => (
+                            <button
+                              key={b.id}
+                              onClick={() => setInsightBlueprintPart(b.id as typeof insightBlueprintPart)}
+                              className={`py-1 rounded font-mono text-[9px] font-bold cursor-pointer transition-colors ${
+                                insightBlueprintPart === b.id
+                                  ? "bg-rose-900 text-white"
+                                  : "bg-[#ded6c7] text-[#42342c] hover:bg-rose-900 hover:text-white"
+                              }`}
+                            >
+                              {b.label}
+                            </button>
+                          ))}
+                        </div>
+                        <p className="font-serif text-[11px] text-[#42342c]">
+                          {insightBlueprintPart === "larri" &&
+                            "Eight quartz corner-cube mirrors from Italian Space Agency (ASI). 100% passive, requires 0 Watts. Future Mars orbiters can fire lasers at it for centuries to track tectonic shifts."}
+                          {insightBlueprintPart === "names" &&
+                            "Two 8mm silicon wafers carrying 2,429,807 human names submitted by space enthusiasts worldwide, etched with an electron beam in letters 1/1000th human hair width."}
+                          {insightBlueprintPart === "cpu" &&
+                            "BAE Systems RAD750 radiation-hardened 32-bit PowerPC running at 115.5 MHz on VxWorks, with 128 MB DRAM and 4 GB flash."}
+                          {insightBlueprintPart === "seis" &&
+                            "Inverted-pendulum leaf-spring sensors inside a titanium sphere evacuated to <10⁻⁵ mbar, measuring ground motion down to 2.5×10⁻¹⁰ meters."}
+                        </p>
+                      </div>
+
+                      {/* Verbatim Final Words */}
+                      <blockquote className="border-l-2 border-rose-900 pl-3 italic font-serif text-xs text-[#523d32] bg-[#f4ede0] py-1.5 rounded-r">
+                        &ldquo;My power’s really low, so this may be the last image I can send... my time here has been both productive and serene. Thanks for staying with me.&rdquo;
+                        <span className="block not-italic font-mono text-[9px] text-[#8c7b70] mt-0.5">
+                          — InSight Final Radio Transmission (Dec 19, 2022 / Sol 1436)
+                        </span>
+                      </blockquote>
                     </div>
                   ) : (
-                    <div className="space-y-3 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
-                      {currentSpread.rightPage.paragraphs.map((p, idx) => (
-                        <p key={idx}>{p}</p>
-                      ))}
-                    </div>
-                  )}
+                    /* Default Content for other spreads */
+                    <>
+                      {/* Right Page Body or Interactive Table of Contents */}
+                      {spreadIndex === 0 ? (
+                        <div className="space-y-1.5 my-2">
+                          <p className="font-mono text-[10px] uppercase tracking-wider text-rose-900 font-bold mb-2">
+                            Select a chapter to jump directly:
+                          </p>
+                          {TOC_ITEMS.map((item, idx) => (
+                            <button
+                              key={idx}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSpreadIndex(item.spread);
+                                playPageTurnSound();
+                              }}
+                              className="w-full text-left rounded-lg p-2 font-serif text-xs sm:text-sm text-[#3b2d26] hover:bg-rose-900/10 hover:text-rose-900 transition-all flex items-center justify-between border border-transparent hover:border-rose-900/20 group cursor-pointer"
+                            >
+                              <span className="font-medium group-hover:translate-x-1 transition-transform truncate mr-2">
+                                {item.title}
+                              </span>
+                              <span className="shrink-0 font-mono text-[10px] text-[#8c7b70] bg-[#efe7da] px-2 py-0.5 rounded group-hover:bg-rose-900 group-hover:text-white transition-colors">
+                                Pg {item.page} ➔
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-3 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
+                          {currentSpread.rightPage.paragraphs.map((p, idx) => (
+                            <p key={idx}>{p}</p>
+                          ))}
+                        </div>
+                      )}
 
-                  {/* Quote Plate */}
-                  {currentSpread.rightPage.quote && (
-                    <blockquote className="my-4 border-l-2 border-rose-900 pl-3 italic font-serif text-xs sm:text-sm text-[#523d32] bg-[#f4ede0] py-2 rounded-r-lg">
-                      &ldquo;{currentSpread.rightPage.quote.text}&rdquo;
-                      <span className="block mt-1 font-mono not-italic text-[10px] text-[#8c7b70]">
-                        — {currentSpread.rightPage.quote.author}
-                      </span>
-                    </blockquote>
-                  )}
+                      {/* Quote Plate */}
+                      {currentSpread.rightPage.quote && (
+                        <blockquote className="my-4 border-l-2 border-rose-900 pl-3 italic font-serif text-xs sm:text-sm text-[#523d32] bg-[#f4ede0] py-2 rounded-r-lg">
+                          &ldquo;{currentSpread.rightPage.quote.text}&rdquo;
+                          <span className="block mt-1 font-mono not-italic text-[10px] text-[#8c7b70]">
+                            — {currentSpread.rightPage.quote.author}
+                          </span>
+                        </blockquote>
+                      )}
 
-                  {/* Core Takeaway */}
-                  {currentSpread.rightPage.takeaway && (
-                    <div className="mt-4 rounded-xl border border-[#dcd1be] bg-[#f0e8d8] p-3 text-xs font-mono text-[#42342c]">
-                      <span className="font-bold text-rose-900 block mb-0.5">Core Discovery:</span>
-                      {currentSpread.rightPage.takeaway}
-                    </div>
+                      {/* Core Takeaway */}
+                      {currentSpread.rightPage.takeaway && (
+                        <div className="mt-4 rounded-xl border border-[#dcd1be] bg-[#f0e8d8] p-3 text-xs font-mono text-[#42342c]">
+                          <span className="font-bold text-rose-900 block mb-0.5">Core Discovery:</span>
+                          {currentSpread.rightPage.takeaway}
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {/* Bottom Actions on Right Page */}
@@ -1146,7 +1552,9 @@ export default function StoryBookPage() {
                       >
                         Inspect Telemetry Dossier ↗
                       </Link>
-                    ) : <span />}
+                    ) : (
+                      <span />
+                    )}
 
                     {spreadIndex < totalSpreads - 1 && (
                       <button
@@ -1183,7 +1591,7 @@ export default function StoryBookPage() {
             <button
               onClick={goToPrevSpread}
               disabled={spreadIndex === 0}
-              className="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 font-mono text-xs text-white hover:bg-white/20 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-lg"
+              className="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 font-mono text-xs text-white hover:bg-white/20 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-lg cursor-pointer"
             >
               <ArrowLeft className="h-4 w-4" /> Previous Spread
             </button>
@@ -1195,7 +1603,7 @@ export default function StoryBookPage() {
             <button
               onClick={goToNextSpread}
               disabled={spreadIndex === totalSpreads - 1}
-              className="flex items-center gap-1.5 rounded-full bg-rose-600 px-5 py-2.5 font-mono text-xs font-bold text-white hover:bg-rose-500 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-lg shadow-rose-600/30"
+              className="flex items-center gap-1.5 rounded-full bg-rose-600 px-5 py-2.5 font-mono text-xs font-bold text-white hover:bg-rose-500 transition-all disabled:opacity-30 disabled:pointer-events-none shadow-lg shadow-rose-600/30 cursor-pointer"
             >
               Next Spread <ArrowRight className="h-4 w-4" />
             </button>
@@ -1219,6 +1627,7 @@ export default function StoryBookPage() {
               <span>1964: Ranger 7</span>
               <span>1976: Viking</span>
               <span>2004: MER</span>
+              <span className="text-rose-400 font-bold">2018: InSight</span>
               <span>2024: Ingenuity</span>
             </div>
           </div>
