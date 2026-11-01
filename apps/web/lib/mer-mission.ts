@@ -58,6 +58,15 @@ export interface MERSpecs {
     status: string;
     lastTelemetrySummary: string;
   };
+  avionics: {
+    cpu: string;
+    clockSpeed: string;
+    ramMb: number;
+    flashMb: number;
+    eepromMb: number;
+    os: string;
+    telecom: string;
+  };
 }
 
 export const MER_SPECS: Record<"spirit" | "opportunity", MERSpecs> = {
@@ -105,6 +114,15 @@ export const MER_SPECS: Record<"spirit" | "opportunity", MERSpecs> = {
       status: "Mission officially concluded May 25, 2011 after 1,300+ recovery commands",
       lastTelemetrySummary: "Solar array power fell to ~89 Wh/sol during winter. Electronics could not sustain clock and heaters.",
     },
+    avionics: {
+      cpu: "Radiation-hardened BAE Systems RAD6000 (32-bit RISC)",
+      clockSpeed: "20 MHz",
+      ramMb: 128,
+      flashMb: 256,
+      eepromMb: 3,
+      os: "VxWorks Real-Time Operating System",
+      telecom: "UHF relay (401.5/437.1 MHz) to Odyssey/MRO + X-band Direct-to-Earth High/Low Gain Antennas",
+    },
   },
 
   opportunity: {
@@ -150,6 +168,15 @@ export const MER_SPECS: Record<"spirit" | "opportunity", MERSpecs> = {
       cause: "Global planet-encircling dust storm (tau = 10.8); solar array output plunged to 22 Wh",
       status: "Mission officially concluded February 13, 2019 following final Goldstone uplink of 'I\\'ll Be Seeing You'",
       lastTelemetrySummary: "Low-Power Fault & Master Clock Fault flags active; tau = 10.8 (99.998% sunlight blocked); dark sky frame PIA22949.",
+    },
+    avionics: {
+      cpu: "Radiation-hardened BAE Systems RAD6000 (32-bit RISC)",
+      clockSpeed: "20 MHz",
+      ramMb: 128,
+      flashMb: 256,
+      eepromMb: 3,
+      os: "VxWorks Real-Time Operating System",
+      telecom: "UHF relay (401.5/437.1 MHz) to Odyssey/MRO + X-band Direct-to-Earth High/Low Gain Antennas",
     },
   },
 };
@@ -254,7 +281,208 @@ export const MER_EXPERIMENTS: MERExperiment[] = [
     scienceRole: "36 distinct X-band semaphore musical Doppler carrier tones transmitted directly to Goldstone & Canberra 70 m antennas.",
     breakthroughResult: "Provided live real-time parachute deployment, heat shield separation, RAD motor firing, and bounce telemetry during 6-min landing.",
   },
+  {
+    num: "09",
+    name: "Engineering Cameras (Hazcam & Navcam)",
+    acronym: "Hazcam / Navcam",
+    leadInvestigator: "Dr. Justin N. Maki",
+    institution: "NASA Jet Propulsion Laboratory (JPL)",
+    massKg: 0.5,
+    powerWatts: 2.2,
+    scienceRole: "Body-mounted Hazard Avoidance Cameras (Hazcam, 120° FOV) and mast-mounted Navigation Cameras (Navcam, 45° FOV) monochrome stereo pairs.",
+    breakthroughResult: "Enabled autonomous hazard detection (AutoNav), slip-check visual odometry, and precision robotic arm placement.",
+  },
 ];
+
+/**
+ * 8 Verified Traverse Waypoints & Odyssey Milestones
+ */
+export interface MERTraverseWaypoint {
+  sol: number;
+  dateUtc: string;
+  siteName: string;
+  lat: number;
+  lonEast: number;
+  odometryKm: number;
+  artifactLeftBehind: string;
+  discovery: string;
+  photoPia?: string;
+  hiriseObsId?: string;
+}
+
+export const OPPORTUNITY_TRAVERSE_WAYPOINTS: MERTraverseWaypoint[] = [
+  {
+    sol: 1,
+    dateUtc: "2004-01-25",
+    siteName: "Eagle Crater (Challenger Memorial Station)",
+    lat: -1.9462,
+    lonEast: 354.4734,
+    odometryKm: 0.0,
+    artifactLeftBehind: "MER-B Lander Petal Base & Airbags",
+    discovery: "First exposed bedrock on Mars; hematite 'blueberries' and jarosite proving ancient acidic liquid water.",
+    photoPia: "PIA05199",
+    hiriseObsId: "PSP_001414_1780",
+  },
+  {
+    sol: 134,
+    dateUtc: "2004-06-09",
+    siteName: "Endurance Crater (Karatepe Entry)",
+    lat: -1.9502,
+    lonEast: 354.4852,
+    odometryKm: 0.85,
+    artifactLeftBehind: "RAT grind holes along Burns Cliff stratigraphic column",
+    discovery: "Mapped 7 meters of cross-bedded sulfate sandstone showing cyclical groundwater table fluctuations.",
+    photoPia: "PIA06739",
+  },
+  {
+    sol: 339,
+    dateUtc: "2005-01-06",
+    siteName: "Heat Shield Impact Site & Heat Shield Rock",
+    lat: -1.9615,
+    lonEast: 354.4830,
+    odometryKm: 2.1,
+    artifactLeftBehind: "Fractured MER-B Thermal Protection System Aeroshell Heat Shield & Flank Debris",
+    discovery: "Inspected own discarded heat shield and discovered 'Heat Shield Rock' (Meridiani Planum), the first meteorite found on another world.",
+    photoPia: "PIA07269",
+    hiriseObsId: "PSP_001414_1780",
+  },
+  {
+    sol: 446,
+    dateUtc: "2005-04-26",
+    siteName: "Purgatory Dune",
+    lat: -1.9995,
+    lonEast: 354.4770,
+    odometryKm: 5.34,
+    artifactLeftBehind: "Deep wheel trenches in aeolian ripple",
+    discovery: "Embedded for 38 sols; led to new slip-check autonomous navigation algorithms.",
+    photoPia: "PIA07997",
+  },
+  {
+    sol: 951,
+    dateUtc: "2006-09-26",
+    siteName: "Victoria Crater (Duck Bay & Cape Verde)",
+    lat: -2.0510,
+    lonEast: 354.5015,
+    odometryKm: 9.28,
+    artifactLeftBehind: "Wheel tracks descending Duck Bay alcove",
+    discovery: "Studied 750m impact crater walls exposing thick ancient wind-blown dune layers.",
+    photoPia: "PIA08812",
+  },
+  {
+    sol: 2681,
+    dateUtc: "2011-08-09",
+    siteName: "Spirit Point & Cape York (Endeavour Crater Rim)",
+    lat: -2.1930,
+    lonEast: 354.6460,
+    odometryKm: 33.49,
+    artifactLeftBehind: "Contact science abrasions at Homestake gypsum vein and Matijevic Hill",
+    discovery: "Reached 22-km Endeavour Crater; discovered calcium sulfate (gypsum) veins and neutral-pH smectite clay minerals conducive to ancient microbial life.",
+    photoPia: "PIA14884",
+  },
+  {
+    sol: 3968,
+    dateUtc: "2015-03-24",
+    siteName: "Marathon Valley",
+    lat: -2.2610,
+    lonEast: 354.6410,
+    odometryKm: 42.195,
+    artifactLeftBehind: "First human machine to complete a 42.195 km marathon on Mars",
+    discovery: "Investigated iron-magnesium smectite clay outcrops detected from orbit by MRO CRISM.",
+    photoPia: "PIA19393",
+  },
+  {
+    sol: 5111,
+    dateUtc: "2018-06-10",
+    siteName: "Perseverance Valley (Final Resting Place)",
+    lat: -2.2800,
+    lonEast: 354.6520,
+    odometryKm: 45.16,
+    artifactLeftBehind: "Dormant Opportunity Rover (MER-B) on 16-degree valley slope",
+    discovery: "Mapped ancient fluid/debris-carved spillway cutting through Endeavour Crater's western rim before planet-encircling dust storm (Tau = 10.8) ended communications.",
+    photoPia: "PIA22949",
+    hiriseObsId: "ESP_056955_1775",
+  },
+];
+
+export const SPIRIT_TRAVERSE_WAYPOINTS: MERTraverseWaypoint[] = [
+  {
+    sol: 1,
+    dateUtc: "2004-01-04",
+    siteName: "Columbia Memorial Station (Gusev Crater)",
+    lat: -14.5684,
+    lonEast: 175.4726,
+    odometryKm: 0.0,
+    artifactLeftBehind: "MER-A Lander Petal Base & Deflated Airbags",
+    discovery: "Landed in basalt-strewn Gusev Crater plain; initial volcanic basalt bedrock analysis.",
+    photoPia: "PIA05109",
+    hiriseObsId: "PSP_001513_1655",
+  },
+  {
+    sol: 66,
+    dateUtc: "2004-03-12",
+    siteName: "Bonneville Crater Rim",
+    lat: -14.5650,
+    lonEast: 175.4790,
+    odometryKm: 0.37,
+    artifactLeftBehind: "Rover tracks along impact ejecta blanket",
+    discovery: "Peer into 210-meter crater revealing unaltered basaltic volcanic floor.",
+    photoPia: "PIA05537",
+  },
+  {
+    sol: 156,
+    dateUtc: "2004-06-11",
+    siteName: "West Spur (Base of Columbia Hills)",
+    lat: -14.5750,
+    lonEast: 175.4950,
+    odometryKm: 3.0,
+    artifactLeftBehind: "RAT grind holes on Clovis and Ebenezer rocks",
+    discovery: "First altered bedrock showing hematite, goethite, and phosphate indicating aqueous weathering.",
+    photoPia: "PIA06803",
+  },
+  {
+    sol: 582,
+    dateUtc: "2005-08-21",
+    siteName: "Husband Hill Summit",
+    lat: -14.5820,
+    lonEast: 175.5010,
+    odometryKm: 4.8,
+    artifactLeftBehind: "Summit panorama mark 82m above surrounding plain",
+    discovery: "360° panoramic view of ancient impact structures; Comanche carbonate discovery proving neutral-pH water.",
+    photoPia: "PIA03610",
+  },
+  {
+    sol: 779,
+    dateUtc: "2006-03-13",
+    siteName: "Gertrude Weise (Silica Trench)",
+    lat: -14.5900,
+    lonEast: 175.5150,
+    odometryKm: 6.2,
+    artifactLeftBehind: "Dragged right-front wheel trench",
+    discovery: "Excavated bright 90.1% pure hydrothermal opaline silica deposits, smoking-gun evidence for ancient Martian hot springs or fumaroles.",
+    photoPia: "PIA10214",
+  },
+  {
+    sol: 1892,
+    dateUtc: "2009-05-01",
+    siteName: "Troy (Home Plate Plateau - Final Resting Site)",
+    lat: -14.5994,
+    lonEast: 175.5284,
+    odometryKm: 7.73,
+    artifactLeftBehind: "Dormant Spirit Rover Chassis at Troy",
+    discovery: "Immobilized in soft ferric sulfate; operated as stationary science outpost until winter low-power freeze on Sol 2210.",
+    photoPia: "PIA12007",
+    hiriseObsId: "ESP_021925_1650",
+  },
+];
+
+export const OFFICIAL_OPPORTUNITY_ENDPOINTS = {
+  nssdc_master: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-032A",
+  pds_analysts_notebook: "https://an.rsl.wustl.edu/merb/AN/an3.aspx",
+  pds_rmc_traverse_coords: "https://pds-geosciences.wustl.edu/mer/mer1-m-eng-6-rmc-ops-v1/mer1rm_0xxx/data/",
+  pds_contact_science_targets: "https://pds-geosciences.wustl.edu/missions/mer/mer_cs_targets.htm",
+  hirise_orbital_resting_site: "https://www.uahirise.org/ESP_056955_1775",
+  final_pancam_image: "https://science.nasa.gov/photojournal/opportunitys-last-message/",
+};
 
 /**
  * Discarded Hardware Monuments Manifest

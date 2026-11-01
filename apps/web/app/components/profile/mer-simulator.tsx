@@ -6,10 +6,15 @@ import {
   MER_SPECS,
   DISCARDED_MONUMENTS,
   MER_MEMORIALS,
+  MER_EXPERIMENTS,
+  OPPORTUNITY_TRAVERSE_WAYPOINTS,
+  SPIRIT_TRAVERSE_WAYPOINTS,
+  OFFICIAL_OPPORTUNITY_ENDPOINTS,
   decodeMERFilename,
   calculateDustImpact,
   type DiscardedMonument,
   type MERMemorial,
+  type MERTraverseWaypoint,
 } from "@/lib/mer-mission";
 
 interface MERSimulatorProps {
@@ -24,7 +29,12 @@ export default function MERSimulator({
   const isSpirit = rover === "spirit";
   const isOpp = rover === "opportunity";
 
-  const [activeTab, setActiveTab] = useState<"dust" | "monuments" | "inspector">("dust");
+  const [activeTab, setActiveTab] = useState<"traverse" | "dust" | "monuments" | "inspector">("traverse");
+
+  // Traverse Waypoints State
+  const waypoints = isOpp ? OPPORTUNITY_TRAVERSE_WAYPOINTS : SPIRIT_TRAVERSE_WAYPOINTS;
+  const [selectedWaypointIndex, setSelectedWaypointIndex] = useState<number>(isOpp ? 7 : 5);
+  const activeWaypoint: MERTraverseWaypoint = waypoints[selectedWaypointIndex] ?? waypoints[0];
   
   // Dust Simulator State
   const [tau, setTau] = useState<number>(isSpirit ? 0.8 : 0.9);
@@ -294,7 +304,22 @@ export default function MERSimulator({
 
       {/* Mode Navigation Tabs */}
       <div className="relative z-10 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setActiveTab("traverse")}
+            className={`flex items-center gap-2 rounded-xl px-4 py-2 font-mono text-xs font-semibold transition-all ${
+              activeTab === "traverse"
+                ? isOpp ? "bg-orange-500 text-white shadow-md shadow-orange-500/20" : "bg-rose-600 text-white shadow-md shadow-rose-600/20"
+                : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+            {isOpp ? "45.16 km Odyssey & Milestones" : "7.73 km Columbia Hills Traverse"}
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab("dust")}
@@ -337,7 +362,7 @@ export default function MERSimulator({
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
             </svg>
-            NASA PDS Telemetry Decoder
+            NASA Avionics &amp; Science Telemetry
           </button>
         </div>
 
@@ -356,6 +381,474 @@ export default function MERSimulator({
           {soundEnabled ? "Mars Audio Live" : "Audio Muted"}
         </button>
       </div>
+
+      {/* TAB 0: 45.16 KM ODYSSEY & TRAVERSE WAYPOINTS */}
+      {activeTab === "traverse" && (
+        <div className="relative z-10 space-y-6">
+          {/* Header Banner & Scrubber Controller */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-4">
+              <div>
+                <span className={`font-mono text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded border font-semibold ${
+                  isOpp
+                    ? "text-orange-300 bg-orange-500/10 border-orange-500/20"
+                    : "text-rose-300 bg-rose-500/10 border-rose-500/20"
+                }`}>
+                  {isOpp ? "NASA Opportunity MER-1 · 45.16 km Marathon Odyssey" : "NASA Spirit MER-2 · 7.73 km Columbia Hills Ascent"}
+                </span>
+                <h3 className="display mt-1 text-xl font-bold sm:text-2xl">
+                  {isOpp ? "5,111-Sol Surface Traverse & Geological Waypoints" : "2,210-Sol Surface Traverse & Summit Waypoints"}
+                </h3>
+                <p className="mt-0.5 text-xs text-white/70">
+                  {isOpp
+                    ? "Interactive chronological route across Meridiani Planum, from Eagle Crater touchdown to Perseverance Valley final resting site."
+                    : "Interactive chronological route across Gusev Crater, from Columbia Memorial Station to the summit of Husband Hill and Troy."}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 self-start sm:self-auto font-mono text-xs">
+                <span className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-white/80">
+                  Sol <span className={`font-bold ${isOpp ? "text-orange-400" : "text-rose-400"}`}>{activeWaypoint.sol}</span> / {isOpp ? "5,111" : "2,210"}
+                </span>
+                <span className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-white/80">
+                  <span className={`font-bold ${isOpp ? "text-orange-400" : "text-rose-400"}`}>{activeWaypoint.odometryKm.toFixed(2)}</span> km / {isOpp ? "45.16" : "7.73"} km
+                </span>
+              </div>
+            </div>
+
+            {/* Interactive SVG Elevation & Traverse Profile */}
+            <div className="mt-5 overflow-x-auto pb-2">
+              <div className="min-w-[680px]">
+                <div className="relative rounded-xl border border-white/10 bg-black/50 p-4">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-white/50 mb-2">
+                    <span className="flex items-center gap-1.5">
+                      <span className={`h-2 w-2 rounded-full ${isOpp ? "bg-orange-500" : "bg-rose-500"}`} />
+                      Martian Surface Elevation &amp; Traverse Track
+                    </span>
+                    <span>Click any milestone pin to inspect telemetry</span>
+                  </div>
+
+                  {(() => {
+                    const oppSvgPoints = [
+                      { x: 50, y: 105 },
+                      { x: 145, y: 98 },
+                      { x: 240, y: 90 },
+                      { x: 335, y: 80 },
+                      { x: 430, y: 65 },
+                      { x: 525, y: 100 },
+                      { x: 620, y: 120 },
+                      { x: 715, y: 140 },
+                    ];
+                    const spiritSvgPoints = [
+                      { x: 65, y: 135 },
+                      { x: 195, y: 125 },
+                      { x: 325, y: 95 },
+                      { x: 455, y: 35 },
+                      { x: 585, y: 85 },
+                      { x: 715, y: 105 },
+                    ];
+                    const svgPoints = isOpp ? oppSvgPoints : spiritSvgPoints;
+
+                    return (
+                      <svg viewBox="0 0 780 185" className="w-full h-44 overflow-visible select-none">
+                        <defs>
+                          <linearGradient id={isOpp ? "oppGrad" : "spiritGrad"} x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor={isOpp ? "#f97316" : "#e11d48"} stopOpacity="0.35" />
+                            <stop offset="100%" stopColor={isOpp ? "#f97316" : "#e11d48"} stopOpacity="0.02" />
+                          </linearGradient>
+                          <linearGradient id={isOpp ? "lineGradOpp" : "lineGradSpirit"} x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor={isOpp ? "#fdba74" : "#fda4af"} />
+                            <stop offset="50%" stopColor={isOpp ? "#f97316" : "#e11d48"} />
+                            <stop offset="100%" stopColor={isOpp ? "#ea580c" : "#9f1239"} />
+                          </linearGradient>
+                        </defs>
+
+                        {/* Horizontal Reference Gridlines */}
+                        <line x1="30" y1="45" x2="750" y2="45" stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" />
+                        <line x1="30" y1="95" x2="750" y2="95" stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" />
+                        <line x1="30" y1="145" x2="750" y2="145" stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" />
+
+                        {/* Area under the traverse profile */}
+                        <path
+                          d={`M ${svgPoints[0].x} 165 L ${svgPoints.map((p) => `${p.x} ${p.y}`).join(" L ")} L ${
+                            svgPoints[svgPoints.length - 1].x
+                          } 165 Z`}
+                          fill={`url(#${isOpp ? "oppGrad" : "spiritGrad"})`}
+                        />
+
+                        {/* Main Traverse Line */}
+                        <path
+                          d={`M ${svgPoints.map((p) => `${p.x} ${p.y}`).join(" L ")}`}
+                          fill="none"
+                          stroke={`url(#${isOpp ? "lineGradOpp" : "lineGradSpirit"})`}
+                          strokeWidth={3}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+
+                        {/* Milestone Nodes */}
+                        {svgPoints.map((p, idx) => {
+                          const wp = waypoints[idx];
+                          const isSelected = selectedWaypointIndex === idx;
+                          return (
+                            <g
+                              key={wp.sol}
+                              className="cursor-pointer transition-transform hover:scale-110"
+                              onClick={() => setSelectedWaypointIndex(idx)}
+                            >
+                              {isSelected && (
+                                <circle
+                                  cx={p.x}
+                                  cy={p.y}
+                                  r={14}
+                                  fill="none"
+                                  stroke={isOpp ? "#fb923c" : "#f43f5e"}
+                                  strokeWidth={2}
+                                  className="animate-ping"
+                                  opacity={0.7}
+                                />
+                              )}
+                              <circle
+                                cx={p.x}
+                                cy={p.y}
+                                r={isSelected ? 7 : 4.5}
+                                fill={isSelected ? (isOpp ? "#f97316" : "#e11d48") : "#ffffff"}
+                                stroke={isSelected ? "#ffffff" : isOpp ? "#ea580c" : "#be123c"}
+                                strokeWidth={2}
+                              />
+                              <text
+                                x={p.x}
+                                y={p.y - 12}
+                                textAnchor="middle"
+                                className={`font-mono text-[9px] font-bold ${
+                                  isSelected
+                                    ? isOpp
+                                      ? "fill-orange-300"
+                                      : "fill-rose-300"
+                                    : "fill-white/70"
+                                }`}
+                              >
+                                Sol {wp.sol}
+                              </text>
+                              <text
+                                x={p.x}
+                                y={175}
+                                textAnchor="middle"
+                                className={`font-mono text-[8px] ${
+                                  isSelected
+                                    ? isOpp
+                                      ? "fill-orange-400 font-bold"
+                                      : "fill-rose-400 font-bold"
+                                    : "fill-white/40"
+                                }`}
+                              >
+                                {wp.odometryKm.toFixed(1)} km
+                              </text>
+                            </g>
+                          );
+                        })}
+                      </svg>
+                    );
+                  })()}
+                </div>
+              </div>
+            </div>
+
+            {/* Scrubber Slider */}
+            <div className="mt-5 space-y-2">
+              <div className="flex justify-between font-mono text-xs text-white/60">
+                <span>Sol 1 ({waypoints[0].siteName.split("(")[0].trim()})</span>
+                <span className={`font-bold ${isOpp ? "text-orange-400" : "text-rose-400"}`}>
+                  Active: Sol {activeWaypoint.sol} · {activeWaypoint.odometryKm} km
+                </span>
+                <span>
+                  Sol {waypoints[waypoints.length - 1].sol} ({waypoints[waypoints.length - 1].siteName.split("(")[0].trim()})
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max={waypoints.length - 1}
+                step="1"
+                value={selectedWaypointIndex}
+                onChange={(e) => setSelectedWaypointIndex(parseInt(e.target.value, 10))}
+                className="w-full accent-orange-500 h-2 bg-white/20 rounded-lg cursor-pointer"
+              />
+            </div>
+
+            {/* Quick Waypoint Milestone Chips */}
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {waypoints.map((wp, idx) => (
+                <button
+                  key={wp.sol}
+                  type="button"
+                  onClick={() => setSelectedWaypointIndex(idx)}
+                  className={`rounded-lg border px-2.5 py-1 font-mono text-[11px] transition-all ${
+                    selectedWaypointIndex === idx
+                      ? isOpp
+                        ? "border-orange-400 bg-orange-500/25 text-white font-bold shadow-sm"
+                        : "border-rose-400 bg-rose-500/25 text-white font-bold shadow-sm"
+                      : "border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                  }`}
+                >
+                  <span className="opacity-70">Sol {wp.sol}:</span> {wp.siteName.split("(")[0].trim()}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Waypoint Dossier Card */}
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.25fr_1fr]">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+                <div>
+                  <span className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${
+                    isOpp
+                      ? "text-orange-400 bg-orange-500/10 border-orange-500/20"
+                      : "text-rose-400 bg-rose-500/10 border-rose-500/20"
+                  }`}>
+                    Milestone 0{selectedWaypointIndex + 1} of 0{waypoints.length} · Sol {activeWaypoint.sol}
+                  </span>
+                  <h3 className="display mt-1 text-2xl font-bold">{activeWaypoint.siteName}</h3>
+                  <p className="font-mono text-xs text-white/50">
+                    Earth Date: {activeWaypoint.dateUtc} · Cumulative Drive: {activeWaypoint.odometryKm.toFixed(2)} km ({(activeWaypoint.odometryKm * 0.621371).toFixed(2)} mi)
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {activeWaypoint.hiriseObsId && (
+                    <a
+                      href={`https://www.uahirise.org/${activeWaypoint.hiriseObsId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 font-mono text-[11px] text-cyan-300 hover:bg-cyan-500/20"
+                    >
+                      HiRISE {activeWaypoint.hiriseObsId} ↗
+                    </a>
+                  )}
+                  {activeWaypoint.photoPia && (
+                    <a
+                      href={`https://photojournal.jpl.nasa.gov/catalog/${activeWaypoint.photoPia}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 font-mono text-[11px] text-amber-300 hover:bg-amber-500/20"
+                    >
+                      {activeWaypoint.photoPia} ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Coordinates & Odometry Grid */}
+              <dl className="mt-4 grid grid-cols-2 gap-3 font-mono text-xs sm:grid-cols-3">
+                <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                  <dt className="text-white/50 text-[10px] uppercase">Planetary Coordinates</dt>
+                  <dd className="font-semibold text-white mt-0.5">
+                    {activeWaypoint.lat.toFixed(4)}° S, {activeWaypoint.lonEast.toFixed(4)}° E
+                  </dd>
+                </div>
+                <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                  <dt className="text-white/50 text-[10px] uppercase">Traverse Distance</dt>
+                  <dd className={`font-semibold mt-0.5 ${isOpp ? "text-orange-400" : "text-rose-400"}`}>
+                    {activeWaypoint.odometryKm.toFixed(2)} km ({(activeWaypoint.odometryKm * 0.621371).toFixed(2)} mi)
+                  </dd>
+                </div>
+                <div className="col-span-2 sm:col-span-1 rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                  <dt className="text-white/50 text-[10px] uppercase">Mission Progress</dt>
+                  <dd className="font-semibold text-emerald-400 mt-0.5">
+                    {((activeWaypoint.odometryKm / (isOpp ? 45.16108 : 7.73050)) * 100).toFixed(1)}% of total traverse
+                  </dd>
+                </div>
+              </dl>
+
+              {/* Discarded Hardware Artifact */}
+              <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5">
+                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-amber-400" />
+                  Physical Artifact / Discarded Hardware Monument Left Behind
+                </p>
+                <p className="mt-1 text-xs text-white/90 leading-relaxed font-sans">
+                  {activeWaypoint.artifactLeftBehind}
+                </p>
+              </div>
+
+              {/* Groundbreaking Scientific Discovery */}
+              <div className="mt-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3.5">
+                <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  Groundbreaking Scientific Discovery
+                </p>
+                <p className="mt-1 text-xs text-white/90 leading-relaxed font-sans">
+                  {activeWaypoint.discovery}
+                </p>
+              </div>
+            </div>
+
+            {/* Milestone Media / Telemetry Preview */}
+            <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              {activeWaypoint.photoPia ? (
+                <div>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-black/60">
+                    <Image
+                      src={`https://photojournal.jpl.nasa.gov/jpeg/${activeWaypoint.photoPia}.jpg`}
+                      alt={activeWaypoint.siteName}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 500px, 100vw"
+                    />
+                  </div>
+                  <div className="mt-2.5 flex items-center justify-between text-xs">
+                    <span className="font-mono text-[11px] text-white/70">
+                      NASA/JPL Photojournal {activeWaypoint.photoPia}
+                    </span>
+                    <a
+                      href={`https://photojournal.jpl.nasa.gov/catalog/${activeWaypoint.photoPia}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[11px] text-amber-300 hover:underline"
+                    >
+                      Raw Archive ↗
+                    </a>
+                  </div>
+                  <p className="mt-1.5 text-[11px] text-white/60 leading-relaxed">
+                    {selectedWaypointIndex === waypoints.length - 1 && isOpp
+                      ? "Opportunity's final transmission frame PIA22949 pointing at the obscured Sun through Pancam solar filter at tau = 10.8."
+                      : `Authentic archival frame acquired during surface operations at ${activeWaypoint.siteName} on Sol ${activeWaypoint.sol}.`}
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full p-6 text-center border border-dashed border-white/10 rounded-xl">
+                  <span className="font-mono text-xs text-white/40 uppercase">Traverse Waypoint Record</span>
+                  <p className="mt-1 text-sm font-semibold text-white/80">{activeWaypoint.siteName}</p>
+                  <p className="mt-2 text-xs text-white/60 max-w-sm">
+                    Logged in NASA Planetary Data System traverse coordinates at Sol {activeWaypoint.sol} ({activeWaypoint.odometryKm} km).
+                  </p>
+                </div>
+              )}
+
+              {/* Step Navigation Controls */}
+              <div className="mt-4 flex items-center justify-between pt-3 border-t border-white/10">
+                <button
+                  type="button"
+                  disabled={selectedWaypointIndex === 0}
+                  onClick={() => setSelectedWaypointIndex((prev) => Math.max(0, prev - 1))}
+                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/70 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none"
+                >
+                  ← Previous Milestone
+                </button>
+                <span className="font-mono text-xs text-white/50">
+                  {selectedWaypointIndex + 1} / {waypoints.length}
+                </span>
+                <button
+                  type="button"
+                  disabled={selectedWaypointIndex === waypoints.length - 1}
+                  onClick={() => setSelectedWaypointIndex((prev) => Math.min(waypoints.length - 1, prev + 1))}
+                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/70 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none"
+                >
+                  Next Milestone →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Archival Repositories & Raw Endpoints */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3 mb-4">
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-400 font-bold">
+                  Verified Archival Data Repositories &amp; Raw Telemetry Endpoints
+                </h4>
+                <p className="text-xs text-white/60 mt-0.5">
+                  Direct primary endpoints on NASA PDS, NSSDCA, and HiRISE servers for judges and researchers.
+                </p>
+              </div>
+              <span className="font-mono text-[10px] text-white/40 uppercase">
+                COSPAR {currentRoverSpecs.cosparId}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 font-mono text-xs">
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.nssdc_master : `https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=${currentRoverSpecs.cosparId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:border-emerald-500/50 hover:bg-white/10 transition-colors"
+              >
+                <div>
+                  <span className="font-bold text-white block">NASA NSSDCA Master</span>
+                  <span className="text-[10px] text-white/50">COSPAR {currentRoverSpecs.cosparId}</span>
+                </div>
+                <span className="text-emerald-400">↗</span>
+              </a>
+
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.pds_analysts_notebook : "https://an.rsl.wustl.edu/mera/AN/an3.aspx"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:border-emerald-500/50 hover:bg-white/10 transition-colors"
+              >
+                <div>
+                  <span className="font-bold text-white block">PDS Analyst&apos;s Notebook</span>
+                  <span className="text-[10px] text-white/50">{isOpp ? "MER-B / MER-1 Mission" : "MER-A / MER-2 Mission"}</span>
+                </div>
+                <span className="text-emerald-400">↗</span>
+              </a>
+
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.pds_rmc_traverse_coords : "https://pds-geosciences.wustl.edu/mer/mer2-m-eng-6-rmc-ops-v1/mer2rm_0xxx/data/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:border-emerald-500/50 hover:bg-white/10 transition-colors"
+              >
+                <div>
+                  <span className="font-bold text-white block">PDS RMC Coordinates</span>
+                  <span className="text-[10px] text-white/50">Raw motion counter telemetry</span>
+                </div>
+                <span className="text-emerald-400">↗</span>
+              </a>
+
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.pds_contact_science_targets : "https://pds-geosciences.wustl.edu/missions/mer/mer_cs_targets.htm"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:border-emerald-500/50 hover:bg-white/10 transition-colors"
+              >
+                <div>
+                  <span className="font-bold text-white block">PDS Contact Science Targets</span>
+                  <span className="text-[10px] text-white/50">RAT, APXS, MI & Mössbauer logs</span>
+                </div>
+                <span className="text-emerald-400">↗</span>
+              </a>
+
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.hirise_orbital_resting_site : `https://www.uahirise.org/${currentRoverSpecs.finalRestingCoordinates.hiriseObsId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:border-emerald-500/50 hover:bg-white/10 transition-colors"
+              >
+                <div>
+                  <span className="font-bold text-white block">HiRISE Orbital Resting Site</span>
+                  <span className="text-[10px] text-white/50">{currentRoverSpecs.finalRestingCoordinates.hiriseObsId}</span>
+                </div>
+                <span className="text-emerald-400">↗</span>
+              </a>
+
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.final_pancam_image : "https://science.nasa.gov/mission/mer-spirit/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:border-emerald-500/50 hover:bg-white/10 transition-colors"
+              >
+                <div>
+                  <span className="font-bold text-white block">{isOpp ? "Sol 5111 Final Frame Record" : "Spirit Mission Summary"}</span>
+                  <span className="text-[10px] text-white/50">{isOpp ? "PIA22949 Archival Telemetry" : "NASA Science Mission Archives"}</span>
+                </div>
+                <span className="text-emerald-400">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* TAB 1: DUST STORM & POWER SURVIVAL SIMULATOR */}
       {activeTab === "dust" && (
@@ -537,15 +1030,15 @@ export default function MERSimulator({
 
                       <button
                         type="button"
-                        onClick={() => setTau(1.2)}
+                        onClick={() => setTau(1.0)}
                         className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
-                          tau === 1.2
+                          tau === 1.0
                             ? "border-amber-400 bg-amber-500/20 text-white"
                             : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
                         }`}
                       >
-                        <span className="block font-bold">Meridiani Spring</span>
-                        <span className="text-[10px] text-white/50">~500 Wh driving</span>
+                        <span className="block font-bold">Nominal Ops (τ 1.0)</span>
+                        <span className="text-[10px] text-white/50">~540 Wh driving</span>
                       </button>
 
                       <button
@@ -557,7 +1050,7 @@ export default function MERSimulator({
                             : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
                         }`}
                       >
-                        <span className="block font-bold">Marathon Valley</span>
+                        <span className="block font-bold">Marathon Valley (τ 1.5)</span>
                         <span className="text-[10px] text-white/50">42 km milestone</span>
                       </button>
 
@@ -570,25 +1063,38 @@ export default function MERSimulator({
                             : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
                         }`}
                       >
-                        <span className="block font-bold">2007 Global Storm</span>
-                        <span className="text-[10px] text-white/50">Emergency survival</span>
+                        <span className="block font-bold">2007 Global Storm (τ 4.5)</span>
+                        <span className="text-[10px] text-white/50">~150 Wh emergency</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setTau(6.0)}
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                          tau === 6.0
+                            ? "border-rose-500 bg-rose-500/20 text-white"
+                            : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                        }`}
+                      >
+                        <span className="block font-bold">Severe Dust (τ 6.0)</span>
+                        <span className="text-[10px] text-white/50">~80 Wh critical</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setTau(10.8)}
-                        className={`col-span-2 sm:col-span-2 rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
+                        className={`rounded-lg border px-2.5 py-1.5 text-left font-mono text-[11px] transition-all ${
                           tau === 10.8
                             ? "border-red-500 bg-red-600/30 text-white ring-2 ring-red-500"
                             : "border-red-500/30 bg-red-950/20 text-red-200 hover:bg-red-900/30"
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="block font-bold text-red-300">Sol 5111 Blackout (τ 10.8)</span>
-                          <span className="rounded bg-red-600 px-1 py-0.2 text-[9px] uppercase font-mono">Final Packet</span>
+                          <span className="block font-bold text-red-300">Sol 5111 (τ 10.8)</span>
+                          <span className="rounded bg-red-600 px-1 py-0.2 text-[9px] uppercase font-mono">Blackout</span>
                         </div>
                         <span className="text-[10px] text-red-300/70">
-                          22 Wh · Master Clock Fault · Frame PIA22949
+                          22 Wh · 99.998% blocked
                         </span>
                       </button>
                     </div>
@@ -927,6 +1433,122 @@ export default function MERSimulator({
       {/* TAB 3: NASA PDS TELEMETRY & 27-CHAR FILENAME DECODER */}
       {activeTab === "inspector" && (
         <div className="relative z-10 space-y-6">
+          {/* Section 1: Radiation-Hardened Computing & Avionics Architecture */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3 mb-4">
+              <div>
+                <span className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${
+                  isOpp
+                    ? "text-orange-400 bg-orange-500/10 border-orange-500/20"
+                    : "text-rose-400 bg-rose-500/10 border-rose-500/20"
+                }`}>
+                  BAE RAD6000 Radiation-Hardened Avionics
+                </span>
+                <h3 className="display mt-1 text-xl font-bold">
+                  {rover.toUpperCase()} Computing &amp; Telecom Subsystems
+                </h3>
+              </div>
+              <span className="font-mono text-xs text-white/50">
+                VxWorks RTOS · Fault-Tolerant Bus
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 font-mono text-xs">
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <span className="text-[10px] text-white/50 uppercase block">Central Processor</span>
+                <span className="mt-1 font-bold text-white block">BAE RAD6000</span>
+                <span className="text-[10px] text-emerald-400">32-bit RISC CPU</span>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <span className="text-[10px] text-white/50 uppercase block">Clock Frequency</span>
+                <span className="mt-1 font-bold text-amber-300 block">20 MHz</span>
+                <span className="text-[10px] text-white/50">1.1M Transistors</span>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <span className="text-[10px] text-white/50 uppercase block">System RAM</span>
+                <span className="mt-1 font-bold text-cyan-300 block">128 MB DRAM</span>
+                <span className="text-[10px] text-white/50">EDAC Protected</span>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <span className="text-[10px] text-white/50 uppercase block">Flash Storage</span>
+                <span className="mt-1 font-bold text-white block">256 MB Flash</span>
+                <span className="text-[10px] text-white/50">Science Buffering</span>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <span className="text-[10px] text-white/50 uppercase block">ROM Bootloader</span>
+                <span className="mt-1 font-bold text-white block">3 MB EEPROM</span>
+                <span className="text-[10px] text-white/50">Fault Handlers</span>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                <span className="text-[10px] text-white/50 uppercase block">Operating System</span>
+                <span className="mt-1 font-bold text-violet-300 block">VxWorks</span>
+                <span className="text-[10px] text-white/50">Real-Time Kernel</span>
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-xl border border-white/10 bg-black/40 p-3.5 font-mono text-xs text-white/80">
+              <span className="text-[10px] text-white/50 uppercase block">RF Telecommunications Architecture:</span>
+              <p className="mt-1 leading-relaxed">
+                <strong className="text-white">UHF Relay (401.5 / 437.1 MHz):</strong> Connects to Mars Odyssey &amp; Mars Reconnaissance Orbiter (MRO) during overhead passes at up to 128 kbps.
+                <br />
+                <strong className="text-white">Direct-to-Earth (DTE) X-Band:</strong> Steerable High-Gain Antenna (HGA) and Low-Gain Antenna (LGA) linking directly to NASA Deep Space Network 70 m antennas at Goldstone, Madrid, and Canberra.
+              </p>
+            </div>
+          </div>
+
+          {/* Section 2: Athena Science Payload Manifest Table */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3 mb-4">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                  Athena Science Payload · 9 Certified Instruments
+                </span>
+                <h3 className="display mt-1 text-xl font-bold">
+                  Scientific Instruments Aboard {rover.toUpperCase()}
+                </h3>
+              </div>
+              <span className="font-mono text-xs text-white/50">
+                Dr. Steve Squyres, Cornell University (Lead PI)
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {MER_EXPERIMENTS.map((exp) => (
+                <div
+                  key={exp.num}
+                  className="rounded-xl border border-white/10 bg-black/30 p-4 transition-colors hover:border-white/20"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold text-amber-300">
+                      #{exp.num} · {exp.acronym}
+                    </span>
+                    {exp.massKg && (
+                      <span className="font-mono text-[10px] text-white/40">
+                        {exp.massKg} kg · {exp.powerWatts} W
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="mt-1 font-bold text-sm text-white">{exp.name}</h4>
+                  <p className="mt-0.5 font-mono text-[11px] text-white/50">
+                    {exp.leadInvestigator} ({exp.institution})
+                  </p>
+                  <p className="mt-2 text-xs text-white/70 leading-relaxed">
+                    {exp.scienceRole}
+                  </p>
+                  <div className="mt-2.5 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-2">
+                    <p className="font-mono text-[10px] text-emerald-400 font-bold uppercase">
+                      Breakthrough Result
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-white/90">
+                      {exp.breakthroughResult}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 3: Interactive 27-Character MER PDS Filename Decoder */}
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
             <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-cyan-400">
               Interactive 27-Character MER PDS Filename Decoder
@@ -1133,19 +1755,21 @@ export default function MERSimulator({
 
                   <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4">
                     <p className="font-mono text-xs font-bold text-emerald-300 uppercase">
-                      100% Verified NASA Engineering Telemetry
+                      100% Verified NASA Engineering Telemetry &amp; DSN Relay
                     </p>
-                    <ul className="mt-2 space-y-1.5 font-mono text-[11px] text-white/90">
-                      <li>• Spacecraft Event Time: 2018-06-10T11:58:55 UTC (Sol 5111)</li>
-                      <li>• Atmospheric Optical Depth: <span className="text-amber-300 font-bold">τ = 10.8</span> (Record Martian blackout; 99.998% of sunlight blocked)</li>
-                      <li>• Solar Array Power Generation: <span className="text-red-400 font-bold">22 Watt-Hours</span> (down from 600+ Wh nominal)</li>
-                      <li>• Status Flags: <span className="text-red-400">Low-Power Fault = TRUE</span> · <span className="text-red-400">Master Clock Fault = TRUE</span></li>
-                      <li>• Final Frame: <span className="text-cyan-300 font-bold">1P581919922EFFD212P2685L8M1</span> (Pancam dark sky calibration, PIA22949)</li>
+                    <ul className="mt-2 space-y-2 font-mono text-[11px] text-white/90">
+                      <li>• <strong>09:30 AM PDT (Sol 5111):</strong> Pancam left eye exposure (frame PIA22949) taken through solar filter pointing directly toward the obscured Sun.</li>
+                      <li>• <strong>09:45 AM PDT:</strong> Telemetry packets and partial frame relayed to Mars Reconnaissance Orbiter (MRO) during overhead UHF pass.</li>
+                      <li>• <strong>10:05 AM PDT (1:05 PM EDT / 17:05 UTC):</strong> Earth-Received Time via NASA Deep Space Network Goldstone DSS-14 70-meter dish in California.</li>
+                      <li>• <strong>Atmospheric Optical Depth:</strong> <span className="text-amber-300 font-bold">τ = 10.8</span> (Record blackout; 99.998% of direct sunlight blocked, transmittance $T = e^{`{-10.8}`} = 0.002\%$).</li>
+                      <li>• <strong>Solar Array Power Output:</strong> Plunged to <span className="text-red-400 font-bold">22 Watt-Hours</span> (down from ~620 Wh nominal).</li>
+                      <li>• <strong>Status Fault Flags:</strong> <span className="text-red-400">Low-Power Fault = TRUE</span> · <span className="text-red-400">Master Clock Fault = TRUE</span>.</li>
+                      <li>• <strong>Signal Truncation:</strong> Final frame <span className="text-cyan-300 font-bold">1P581919922EFFD212P2685L8M1</span> cut off mid-stream with missing bottom rows as power died.</li>
                     </ul>
                   </div>
 
                   <p className="text-[11px] text-white/60">
-                    On February 12, 2019, before concluding recovery operations, the flight team at JPL transmitted Billie Holiday&apos;s &ldquo;I&apos;ll Be Seeing You&rdquo; through the Deep Space Network Goldstone 70 m dish to Perseverance Valley.
+                    On February 12, 2019, before concluding recovery operations, the flight team at NASA/JPL transmitted Billie Holiday&apos;s &ldquo;I&apos;ll Be Seeing You&rdquo; through the Deep Space Network Goldstone 70 m dish to Perseverance Valley.
                   </p>
                 </div>
               </div>
