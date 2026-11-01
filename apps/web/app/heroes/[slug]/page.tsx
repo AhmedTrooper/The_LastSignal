@@ -21,20 +21,68 @@ import Gallery from "@/app/components/profile/gallery";
 import TributeWall from "@/app/components/profile/tribute-wall";
 import LastSignalArt, { CAPTION } from "@/app/components/profile/last-signal";
 import SignatureBlock from "@/app/components/profile/signature";
-import RangerDive from "@/app/components/profile/ranger-dive";
-import ApolloSimulator from "@/app/components/profile/apollo-simulator";
-import MERSimulator from "@/app/components/profile/mer-simulator";
-import IngenuitySimulator from "@/app/components/profile/ingenuity-simulator";
-import InSightSimulator from "@/app/components/profile/insight-simulator";
-import VikingSimulator from "@/app/components/profile/viking-simulator";
-import MPLSimulator from "@/app/components/profile/mpl-simulator";
-import SurveyorSimulator from "@/app/components/profile/surveyor-simulator";
-import LCROSSSimulator from "@/app/components/profile/lcross-simulator";
-import GRAILSimulator from "@/app/components/profile/grail-simulator";
 import Videos from "@/app/components/profile/videos";
 import EyesEmbed from "@/app/components/profile/eyes-embed";
 import Wiki from "@/app/components/profile/wiki";
 import { HeroSchema } from "@/app/components/structured-data";
+
+const HERO_GAMES: Record<string, { href: string; title: string; desc: string }> = {
+  "ranger-7": {
+    href: "/games/ranger-7-dive",
+    title: "Ranger 7: Terminal Descent Dive",
+    desc: "Experience the final 17 minutes and 4,308 television frames before lunar impact.",
+  },
+  "apollo-11-lander": {
+    href: "/games/apollo-11-landing",
+    title: "Apollo 11: 1202 Alarm Simulator",
+    desc: "Take manual control, dodge West Crater boulders, and land before fuel runs dry.",
+  },
+  spirit: {
+    href: "/games/mer-twins",
+    title: "MER Twins: Mars Exploration Rover Simulator",
+    desc: "Navigate Gusev Crater, survive Martian dust storms, and climb Husband Hill.",
+  },
+  opportunity: {
+    href: "/games/mer-twins",
+    title: "MER Twins: Mars Exploration Rover Simulator",
+    desc: "Traverse 45 kilometers across Meridiani Planum from Eagle to Endeavour Crater.",
+  },
+  ingenuity: {
+    href: "/games/ingenuity-flight",
+    title: "Ingenuity: Martian Flight Simulator",
+    desc: "Pilot the first powered aircraft on Mars through thin 1% atmospheric density.",
+  },
+  insight: {
+    href: "/games/insight-seismology",
+    title: "InSight: Marsquake Seismology & Core Explorer",
+    desc: "Act as Mars Seismologist: triangulate quakes with P & S waves and manage power.",
+  },
+  "viking-1": {
+    href: "/games/viking-biology",
+    title: "Viking Biology: The 1976 Life Detection Lab",
+    desc: "Run the Pyrolytic Release, Labeled Release, and Gas Exchange experiments on Chryse Planitia soil.",
+  },
+  "viking-2": {
+    href: "/games/viking-biology",
+    title: "Viking Biology: The 1976 Life Detection Lab",
+    desc: "Analyze Utopia Planitia soil samples and interpret the mysterious labeled release signal.",
+  },
+  "mars-polar-lander": {
+    href: "/games/polar-lander-forensics",
+    title: "Mars Polar Lander: 40-Meter Bug Forensics",
+    desc: "Investigate the premature retrorocket shutdown transient during touchdown.",
+  },
+  lcross: {
+    href: "/games/lcross-impact",
+    title: "LCROSS: 7.2 GJ Kinetic Water Plume",
+    desc: "Simulate the Centaur impact into Cabeus Crater and detect water ice vapor.",
+  },
+  grail: {
+    href: "/games/grail-gravity",
+    title: "GRAIL: Microwave Gravity Lab",
+    desc: "Track inter-satellite microwave ranging to map the Moon's gravitational anomalies.",
+  },
+};
 
 export function generateStaticParams() {
   return HEROES.map((h) => ({ slug: h.slug }));
@@ -253,64 +301,31 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
         </section>
       ),
 
-    signature: () =>
-      (sig ||
-        hero.slug === "ranger-7" ||
-        hero.slug === "apollo-11-lander" ||
-        hero.slug === "spirit" ||
-        hero.slug === "opportunity" ||
-        hero.slug === "ingenuity" ||
-        hero.slug === "insight" ||
-        hero.slug === "viking-1" ||
-        hero.slug === "viking-2" ||
-        hero.slug === "mars-polar-lander" ||
-        hero.slug === "surveyor-1" ||
-        hero.slug === "lcross" ||
-        hero.slug === "grail") && (
-        <section
-          id="signature"
-          className={`${
-            hero.slug === "ranger-7" ||
-            hero.slug === "apollo-11-lander" ||
-            hero.slug === "spirit" ||
-            hero.slug === "opportunity" ||
-            hero.slug === "ingenuity" ||
-            hero.slug === "insight" ||
-            hero.slug === "viking-1" ||
-            hero.slug === "viking-2" ||
-            hero.slug === "mars-polar-lander" ||
-            hero.slug === "surveyor-1" ||
-            hero.slug === "lcross" ||
-            hero.slug === "grail"
-              ? "scroll-mt-24"
-              : `${card} scroll-mt-24`
-          }`}
-        >
-          {hero.slug === "ranger-7" ? (
-            <RangerDive />
-          ) : hero.slug === "apollo-11-lander" ? (
-            <ApolloSimulator />
-          ) : hero.slug === "spirit" || hero.slug === "opportunity" ? (
-            <MERSimulator rover={hero.slug as "spirit" | "opportunity"} />
-          ) : hero.slug === "ingenuity" ? (
-            <IngenuitySimulator />
-          ) : hero.slug === "insight" ? (
-            <InSightSimulator />
-          ) : hero.slug === "viking-1" || hero.slug === "viking-2" ? (
-            <VikingSimulator lander={hero.slug as "viking-1" | "viking-2"} />
-          ) : hero.slug === "mars-polar-lander" ? (
-            <MPLSimulator />
-          ) : hero.slug === "surveyor-1" ? (
-            <SurveyorSimulator />
-          ) : hero.slug === "lcross" ? (
-            <LCROSSSimulator />
-          ) : hero.slug === "grail" ? (
-            <GRAILSimulator />
-          ) : (
-            sig && <SignatureBlock sig={sig} accent={mars ? "mars" : "moon"} />
-          )}
-        </section>
-      ),
+    signature: () => {
+      const game = HERO_GAMES[hero.slug];
+      return (
+        sig && (
+          <section id="signature" className={`${card} scroll-mt-24`}>
+            <SignatureBlock sig={sig} accent={mars ? "mars" : "moon"} />
+            {game && (
+              <div className="mt-6 flex flex-col justify-between gap-4 rounded-xl border border-line bg-mist p-4 sm:flex-row sm:items-center">
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-wider text-ink-soft">Interactive Mission Simulation</p>
+                  <p className="mt-0.5 text-sm font-semibold text-ink sm:text-base">{game.title}</p>
+                  <p className="mt-0.5 text-xs text-ink-soft">{game.desc}</p>
+                </div>
+                <Link
+                  href={game.href}
+                  className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-violet px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-violet-deep"
+                >
+                  Play Simulation <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            )}
+          </section>
+        )
+      );
+    },
 
     life: () => (
       <section id="life" className="scroll-mt-24 pt-4">
