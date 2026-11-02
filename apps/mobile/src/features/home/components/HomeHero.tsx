@@ -96,6 +96,30 @@ export function HomeHero({ onMeetHeroesPress }: HomeHeroProps) {
           </View>
         </View>
 
+        {/* Book-First Featured Primary CTA */}
+        <Pressable
+          onPress={() => {
+            haptic.light();
+            router.push("/book" as any);
+          }}
+          style={({ pressed }) => [styles.bookFeatureCta, pressed && styles.btnPressed]}
+          accessibilityRole="button"
+          accessibilityLabel="Read the 58-page Living Story Book"
+        >
+          <View style={styles.bookFeatureIconWrap}>
+            <Ionicons name="book" size={18} color="#0d0f22" />
+          </View>
+          <View style={styles.bookFeatureTextWrap}>
+            <ThemedText style={styles.bookFeatureTitle}>
+              📖 The Living Story Book
+            </ThemedText>
+            <ThemedText style={styles.bookFeatureSubtitle}>
+              58 Illustrated Pages & Telemetry · Read Now
+            </ThemedText>
+          </View>
+          <Ionicons name="arrow-forward-circle" size={22} color="#f5a623" />
+        </Pressable>
+
         {/* Dual Native CTAs */}
         <View style={styles.ctaRow}>
           <Pressable
@@ -241,6 +265,40 @@ const styles = StyleSheet.create({
     width: 1,
     height: 24,
     backgroundColor: "rgba(255, 255, 255, 0.12)",
+  },
+  /* Book Feature CTA Styles */
+  bookFeatureCta: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(245, 166, 35, 0.12)",
+    borderWidth: 1.5,
+    borderColor: "rgba(245, 166, 35, 0.5)",
+    borderRadius: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginBottom: 16,
+    gap: 12,
+  },
+  bookFeatureIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#f5a623",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bookFeatureTextWrap: {
+    flex: 1,
+  },
+  bookFeatureTitle: {
+    color: "#f4ede0",
+    fontSize: 14,
+    fontWeight: "800",
+  },
+  bookFeatureSubtitle: {
+    color: "#94a3b8",
+    fontSize: 11,
+    marginTop: 1,
   },
   ctaRow: {
     flexDirection: "row",

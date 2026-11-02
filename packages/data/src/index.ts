@@ -1,5 +1,6 @@
 // Barrel export for @thelastsignal/data
 export * from "./assets";
+export * from "./book-spreads";
 export * from "./frames";
 export * from "./heroes";
 export * from "./layouts";

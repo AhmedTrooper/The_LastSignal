@@ -21,8 +21,8 @@ Since the 1960s, NASA has left hardware across the solar system—on the Moon, o
 ---
 
 ### Essential Development & Project Rules
-1. **Focus Strictly on Web (`apps/web`):**
-   - **NEVER TOUCH OR MODIFY `apps/mobile` under any circumstances.**
+1. **Web (`apps/web`) & Mobile (`apps/mobile`):**
+   - Support both web and mobile experiences, maintaining shared data consistency across `@thelastsignal/data`.
 2. **Facts Only & Verified Sources:**
    - Every date, number, coordinate, and quote must derive from authentic sources (NSSDCA, NASA Science, LPI, LROC). Never invent quotes or fictionalize telemetry.
 3. **No NASA Logo or Branding:**

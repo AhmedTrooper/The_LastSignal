@@ -112,6 +112,7 @@ function StoryCard({ hero }: { hero: Hero }) {
 }
 
 export function StoryList() {
+  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
 
   const handleRefresh = () => {
@@ -140,15 +141,78 @@ export function StoryList() {
       }
       ListHeaderComponent={
         <View style={styles.header}>
-          <ThemedText style={styles.eyebrow} type="small">
-            CINEMATIC STORIES
-          </ThemedText>
-          <ThemedText style={styles.title} type="title">
-            Their Lives, Chapter by Chapter
-          </ThemedText>
-          <ThemedText style={styles.subtitle} type="small">
-            Select a robotic explorer to experience their narrative unfolding from Earth&apos;s cleanroom to their final signal across space.
-          </ThemedText>
+          {/* Featured Primary Story Book Hero Card */}
+          <Pressable
+            onPress={() => {
+              haptic.light();
+              router.push("/book" as any);
+            }}
+            style={({ pressed }) => [styles.bookHeroCard, pressed && styles.cardPressed]}
+            accessibilityRole="button"
+            accessibilityLabel="Open The Living Story Book"
+          >
+            <View style={styles.bookBadgeRow}>
+              <View style={styles.bookAppsBadge}>
+                <Ionicons name="planet" size={12} color="#f5a623" />
+                <ThemedText style={styles.bookAppsBadgeText}>
+                  2026 NASA SPACE APPS · MASTER DOSSIER
+                </ThemedText>
+              </View>
+              <View style={styles.pageCountBadge}>
+                <Ionicons name="book" size={11} color="#4fc3f7" />
+                <ThemedText style={styles.pageCountBadgeText}>58 PAGES</ThemedText>
+              </View>
+            </View>
+
+            <ThemedText style={styles.bookHeroSuperTitle}>
+              ABANDONED BUT NOT FORGOTTEN
+            </ThemedText>
+
+            <ThemedText style={styles.bookHeroTitle}>
+              The Living Story Book
+            </ThemedText>
+
+            <ThemedText style={styles.bookHeroDesc}>
+              Read the full illustrated chronicle across 29 two-page spreads: tactile page turning, InSight seismometer audio, Ingenuity flight physics, and 100% authentic NASA telemetry.
+            </ThemedText>
+
+            {/* Quick Chapter Jump Pills */}
+            <View style={styles.quickPillsRow}>
+              {[
+                { label: "Apollo 11", page: 13 },
+                { label: "Spirit & Oppy", page: 33 },
+                { label: "InSight", page: 45 },
+                { label: "Ingenuity", page: 53 },
+              ].map((c) => (
+                <View key={c.label} style={styles.quickPill}>
+                  <ThemedText style={styles.quickPillText}>
+                    {c.label} · P.{c.page}
+                  </ThemedText>
+                </View>
+              ))}
+            </View>
+
+            {/* Big Action Button */}
+            <View style={styles.openBookBtn}>
+              <Ionicons name="book-outline" size={18} color="#0d0f22" />
+              <ThemedText style={styles.openBookBtnText}>
+                Open & Read Story Book
+              </ThemedText>
+              <Ionicons name="arrow-forward" size={16} color="#0d0f22" />
+            </View>
+          </Pressable>
+
+          <View style={styles.sectionDivider}>
+            <ThemedText style={styles.eyebrow} type="small">
+              MISSION ARCHIVE REELS
+            </ThemedText>
+            <ThemedText style={styles.title} type="title">
+              Their Lives, Chapter by Chapter
+            </ThemedText>
+            <ThemedText style={styles.subtitle} type="small">
+              Select an individual robotic explorer below to experience their dedicated cinematic timeline.
+            </ThemedText>
+          </View>
         </View>
       }
     />
@@ -312,5 +376,112 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "700",
     fontSize: 12,
+  },
+  /* Book Hero Card Styles */
+  bookHeroCard: {
+    backgroundColor: "#0d0f22",
+    borderRadius: 24,
+    padding: 20,
+    borderWidth: 2,
+    borderColor: "rgba(245, 166, 35, 0.4)",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    elevation: 8,
+    marginBottom: 24,
+  },
+  bookBadgeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 12,
+  },
+  bookAppsBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(245, 166, 35, 0.15)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    gap: 4,
+  },
+  bookAppsBadgeText: {
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#f5a623",
+    letterSpacing: 0.5,
+  },
+  pageCountBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(79, 195, 247, 0.15)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    gap: 4,
+  },
+  pageCountBadgeText: {
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#4fc3f7",
+    letterSpacing: 0.5,
+  },
+  bookHeroSuperTitle: {
+    fontSize: 11,
+    fontWeight: "800",
+    color: "#9aa0a6",
+    letterSpacing: 1.5,
+  },
+  bookHeroTitle: {
+    fontSize: 24,
+    fontWeight: "900",
+    color: "#f4ede0",
+    marginTop: 2,
+    marginBottom: 8,
+    fontFamily: "SpaceGrotesk-Bold",
+  },
+  bookHeroDesc: {
+    fontSize: 13,
+    color: "#d0d4dc",
+    lineHeight: 19,
+    marginBottom: 14,
+  },
+  quickPillsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+    marginBottom: 16,
+  },
+  quickPill: {
+    backgroundColor: "rgba(255, 255, 255, 0.06)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.08)",
+  },
+  quickPillText: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#f4ede0",
+  },
+  openBookBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f5a623",
+    paddingVertical: 12,
+    borderRadius: 14,
+    gap: 8,
+  },
+  openBookBtnText: {
+    fontSize: 14,
+    fontWeight: "800",
+    color: "#0d0f22",
+  },
+  sectionDivider: {
+    marginTop: 4,
+    gap: 6,
   },
 });

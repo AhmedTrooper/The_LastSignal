@@ -60,6 +60,7 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="book" options={{ headerShown: false }} />
           <Stack.Screen
             name="heroes/[slug]"
             options={{
