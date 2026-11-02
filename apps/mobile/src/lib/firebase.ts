@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import * as FirebaseAuth from "firebase/auth";
-import { createAsyncStorage } from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -33,9 +33,8 @@ let authInstance: FirebaseAuth.Auth;
 try {
   const getRNPersistence = (FirebaseAuth as any).getReactNativePersistence;
   if (typeof getRNPersistence === "function") {
-    const appStorage = createAsyncStorage("thelastsignal_auth");
     authInstance = (FirebaseAuth as any).initializeAuth(app, {
-      persistence: getRNPersistence(appStorage),
+      persistence: getRNPersistence(AsyncStorage),
     });
   } else {
     authInstance = FirebaseAuth.getAuth(app);
