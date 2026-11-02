@@ -6,20 +6,20 @@ import { TOC_ITEMS, type TocItem } from "@thelastsignal/data";
 
 interface ChapterDrawerProps {
   visible: boolean;
-  currentSpread: number;
-  onSelectSpread: (spreadIndex: number) => void;
+  currentPage: number;
+  onSelectPage: (pageNumber: number) => void;
   onClose: () => void;
 }
 
 export function ChapterDrawer({
   visible,
-  currentSpread,
-  onSelectSpread,
+  currentPage,
+  onSelectPage,
   onClose,
 }: ChapterDrawerProps) {
-  const handleSelect = (spread: number) => {
+  const handleSelect = (pageNumber: number) => {
     haptic.selection();
-    onSelectSpread(spread);
+    onSelectPage(pageNumber);
     onClose();
   };
 
@@ -61,11 +61,12 @@ export function ChapterDrawer({
             showsVerticalScrollIndicator={false}
           >
             {TOC_ITEMS.map((item: TocItem, idx: number) => {
-              const isSelected = item.spread === currentSpread;
+              const nextPage = TOC_ITEMS[idx + 1]?.page ?? 59;
+              const isSelected = currentPage >= item.page && currentPage < nextPage;
               return (
                 <Pressable
-                  key={`toc-${idx}-${item.spread}`}
-                  onPress={() => handleSelect(item.spread)}
+                  key={`toc-${idx}-${item.page}`}
+                  onPress={() => handleSelect(item.page)}
                   style={({ pressed }) => [
                     styles.itemRow,
                     isSelected && styles.itemRowSelected,

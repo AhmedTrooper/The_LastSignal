@@ -15,6 +15,7 @@ import { ThemedText } from "@/components/themed-text";
 import { haptic } from "@/utils/haptics";
 import {
   SPREADS,
+  TOC_ITEMS,
   type BookSpread,
   assetUrl,
 } from "@thelastsignal/data";
@@ -25,42 +26,53 @@ export function StoryBookReader() {
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
 
-  const [currentSpreadIndex, setCurrentSpreadIndex] = useState(0);
+  // 1 PAGE PER VIEW: exactly 58 pages (Page 1 to Page 58)
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [showToc, setShowToc] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [simulatedTau, setSimulatedTau] = useState(0.9); // Dust optical depth for Mars solar
+  const [paperTheme, setPaperTheme] = useState<"parchment" | "dark">("parchment");
+
+  // Dynamic interactive simulation state
+  const [simulatedTau, setSimulatedTau] = useState(0.9);
   const [marsquakeSimulating, setMarsquakeSimulating] = useState(false);
   const [activeQuakeMagnitude, setActiveQuakeMagnitude] = useState<number | null>(null);
 
-  const currentSpread: BookSpread = SPREADS[currentSpreadIndex] ?? SPREADS[0];
-  const totalSpreads = SPREADS.length;
-  const isCover = currentSpreadIndex === 0;
+  const totalPages = SPREADS.length * 2; // 29 spreads * 2 = 58 pages
+  const spreadIndex = Math.floor((currentPage - 1) / 2);
+  const isLeftPage = currentPage % 2 !== 0; // Pages 1, 3, 5, 7 ... are left; 2, 4, 6, 8 ... are right
+  const currentSpread: BookSpread = SPREADS[spreadIndex] ?? SPREADS[0];
 
-  // Page Numbers: Spread 0 is Cover (Pages 1 & 2), Spread 1 is Pages 3 & 4, etc.
-  const leftPageNum = currentSpreadIndex * 2 + 1;
-  const rightPageNum = currentSpreadIndex * 2 + 2;
+  const isCover = currentPage === 1;
+  const isToc = currentPage === 2;
+  const isParchment = paperTheme === "parchment";
 
-  const goToNextSpread = useCallback(() => {
-    if (currentSpreadIndex < totalSpreads - 1) {
+  const goToNextPage = useCallback(() => {
+    if (currentPage < totalPages) {
       haptic.light();
-      setCurrentSpreadIndex((prev) => prev + 1);
+      setCurrentPage((prev) => prev + 1);
       scrollRef.current?.scrollTo({ y: 0, animated: false });
     } else {
       haptic.success();
     }
-  }, [currentSpreadIndex, totalSpreads]);
+  }, [currentPage, totalPages]);
 
-  const goToPrevSpread = useCallback(() => {
-    if (currentSpreadIndex > 0) {
+  const goToPrevPage = useCallback(() => {
+    if (currentPage > 1) {
       haptic.light();
-      setCurrentSpreadIndex((prev) => prev - 1);
+      setCurrentPage((prev) => prev - 1);
       scrollRef.current?.scrollTo({ y: 0, animated: false });
     }
-  }, [currentSpreadIndex]);
+  }, [currentPage]);
 
-  const handleJumpToSpread = (index: number) => {
-    setCurrentSpreadIndex(index);
+  const handleJumpToPage = (pageNum: number) => {
+    const clamped = Math.max(1, Math.min(totalPages, pageNum));
+    setCurrentPage(clamped);
     scrollRef.current?.scrollTo({ y: 0, animated: false });
+  };
+
+  const togglePaperTheme = () => {
+    haptic.selection();
+    setPaperTheme((prev) => (prev === "parchment" ? "dark" : "parchment"));
   };
 
   const toggleFullscreen = () => {
@@ -72,8 +84,8 @@ export function StoryBookReader() {
     try {
       haptic.light();
       await Share.share({
-        title: "The Last Signal — Story Book",
-        message: `Reading Chapter "${currentSpread.spreadTitle}" in The Last Signal: Storytelling about NASA's Discarded Equipment on the Moon and Mars!`,
+        title: "The Last Signal — Living Story Book",
+        message: `Reading Page ${currentPage} of 58 (${currentSpread.spreadTitle}) in The Last Signal Story Book!`,
       });
     } catch {
       // ignore
@@ -98,434 +110,480 @@ export function StoryBookReader() {
   const currentWh = Math.round(nominalWh * Math.exp(-simulatedTau / 2.2));
   const powerPct = Math.round((currentWh / nominalWh) * 100);
 
+  // Dynamic styling variables based on parchment vs dark paper theme
+  const paperBg = isParchment ? "#faf6ee" : "#0d1024";
+  const paperBorder = isParchment ? "#e5dac9" : "rgba(245, 166, 35, 0.3)";
+  const textColor = isParchment ? "#231f20" : "#f4ede0";
+  const mutedTextColor = isParchment ? "#615c54" : "#9aa0a6";
+  const headingColor = isParchment ? "#1a120b" : "#ffffff";
+  const ruleColor = isParchment ? "rgba(180, 160, 130, 0.4)" : "rgba(255, 255, 255, 0.1)";
+
   return (
     <View style={styles.container}>
-      <StatusBar hidden={isFullscreen} barStyle="light-content" backgroundColor="#080914" />
+      <StatusBar hidden={isFullscreen} barStyle="light-content" backgroundColor="#070510" />
 
-      {/* Reader Top Bar (Hidden in Fullscreen mode) */}
+      {/* Reader Top Bar (Hidden in Fullscreen) */}
       {!isFullscreen && (
         <View style={[styles.topBar, { paddingTop: insets.top + 6 }]}>
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [styles.iconBtn, pressed && styles.pressed]}
-            accessibilityLabel="Go back"
+            accessibilityLabel="Exit book reader"
           >
             <Ionicons name="arrow-back" size={20} color="#f4ede0" />
           </Pressable>
 
-          {/* Chapter indicator */}
+          {/* Chapter / Machine Pill */}
           <Pressable
             onPress={() => setShowToc(true)}
             style={({ pressed }) => [styles.chapterIndicatorPill, pressed && styles.pressed]}
           >
             <ThemedText style={styles.chapterBadgeText} numberOfLines={1}>
               {isCover
-                ? "Cover & Contents"
-                : `${currentSpread.machineName} · Spread ${currentSpreadIndex + 1}/${totalSpreads}`}
+                ? "Front Cover"
+                : isToc
+                ? "Table of Contents"
+                : `${currentSpread.machineName} · Page ${currentPage}/58`}
             </ThemedText>
-            <Ionicons name="chevron-down" size={14} color="#f5a623" />
+            <Ionicons name="chevron-down" size={13} color="#f5a623" />
           </Pressable>
 
-          {/* Action buttons */}
+          {/* Top Right Tool Icons */}
           <View style={styles.topRightActions}>
+            <Pressable
+              onPress={togglePaperTheme}
+              style={({ pressed }) => [styles.iconBtn, pressed && styles.pressed]}
+              accessibilityLabel="Toggle paper theme"
+            >
+              <Ionicons
+                name={isParchment ? "moon-outline" : "sunny-outline"}
+                size={17}
+                color={isParchment ? "#f5a623" : "#4fc3f7"}
+              />
+            </Pressable>
             <Pressable
               onPress={handleShare}
               style={({ pressed }) => [styles.iconBtn, pressed && styles.pressed]}
               accessibilityLabel="Share page"
             >
-              <Ionicons name="share-outline" size={18} color="#f4ede0" />
+              <Ionicons name="share-outline" size={17} color="#f4ede0" />
             </Pressable>
             <Pressable
               onPress={toggleFullscreen}
               style={({ pressed }) => [styles.iconBtn, pressed && styles.pressed]}
-              accessibilityLabel="Toggle Fullscreen"
+              accessibilityLabel="Toggle fullscreen"
             >
-              <Ionicons name="scan-outline" size={18} color="#f4ede0" />
+              <Ionicons name="scan-outline" size={17} color="#f4ede0" />
             </Pressable>
           </View>
         </View>
       )}
 
-      {/* Main Book Scroll Area */}
-      <ScrollView
-        ref={scrollRef}
-        style={styles.scrollArea}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: isFullscreen ? 80 : 120 },
-        ]}
-        showsVerticalScrollIndicator={false}
-      >
-        {isCover ? (
-          /* ==================== COVER SPREAD ==================== */
-          <View style={styles.coverContainer}>
-            <View style={styles.coverGoldBorder}>
-              {/* NASA Space Apps Header */}
-              <View style={styles.coverHeaderBadge}>
-                <Ionicons name="planet" size={14} color="#f5a623" />
-                <ThemedText style={styles.coverHeaderBadgeText}>
-                  2026 NASA SPACE APPS CHALLENGE
-                </ThemedText>
-              </View>
-
-              <ThemedText style={styles.coverSuperTitle}>
-                ABANDONED BUT NOT FORGOTTEN
-              </ThemedText>
-
-              <ThemedText style={styles.coverMainTitle}>
-                The Living Story Book
-              </ThemedText>
-
-              <View style={styles.coverDividerGold} />
-
-              <ThemedText style={styles.coverSubtitle}>
-                Storytelling About NASA&apos;s Discarded Equipment on the Moon and Mars
-              </ThemedText>
-
-              {/* Cover Art / Hero Image */}
-              <View style={styles.coverHeroCard}>
-                <Image
-                  source={{ uri: assetUrl("images/hero-family.webp") }}
-                  style={styles.coverHeroImage}
-                  contentFit="contain"
-                  priority="high"
-                />
-              </View>
-
-              {/* Book Metadata Chips */}
-              <View style={styles.coverMetaRow}>
-                <View style={styles.coverMetaChip}>
-                  <ThemedText style={styles.coverMetaChipVal}>58</ThemedText>
-                  <ThemedText style={styles.coverMetaChipLabel}>Pages</ThemedText>
-                </View>
-                <View style={styles.coverMetaChip}>
-                  <ThemedText style={styles.coverMetaChipVal}>15</ThemedText>
-                  <ThemedText style={styles.coverMetaChipLabel}>Machines</ThemedText>
-                </View>
-                <View style={styles.coverMetaChip}>
-                  <ThemedText style={styles.coverMetaChipVal}>100%</ThemedText>
-                  <ThemedText style={styles.coverMetaChipLabel}>NASA Telemetry</ThemedText>
-                </View>
-              </View>
-
-              {/* Call to action */}
-              <Pressable
-                onPress={goToNextSpread}
-                style={({ pressed }) => [styles.startReadingBtn, pressed && styles.pressed]}
-              >
-                <Ionicons name="book" size={20} color="#0d0f22" />
-                <ThemedText style={styles.startReadingBtnText}>
-                  Begin Reading · Turn to Page 3
-                </ThemedText>
-              </Pressable>
-
-              <Pressable
-                onPress={() => setShowToc(true)}
-                style={({ pressed }) => [styles.tocQuickBtn, pressed && styles.pressed]}
-              >
-                <ThemedText style={styles.tocQuickBtnText}>
-                  Browse Table of Contents (29 Spreads)
-                </ThemedText>
-              </Pressable>
-            </View>
+      {/* Main Reading Stage */}
+      <View style={styles.bookStage}>
+        {/* PHYSICAL HARDCOVER BOOK FRAME */}
+        <View style={styles.leatherHardcoverFrame}>
+          {/* Silk Crimson Bookmark Ribbon draped from top center */}
+          <View style={styles.silkBookmarkRibbon}>
+            <View style={styles.silkBookmarkPoint} />
           </View>
-        ) : (
-          /* ==================== SPREAD CONTENT ==================== */
-          <View style={styles.spreadPageCard}>
-            {/* Top Chapter Metadata Ribbon */}
-            <View style={styles.metaRibbon}>
-              <View style={styles.metaRibbonLeft}>
-                {currentSpread.chapterNumber !== null ? (
-                  <View style={styles.chapterNumTag}>
-                    <ThemedText style={styles.chapterNumTagText}>
-                      CHAPTER {currentSpread.chapterNumber}
-                    </ThemedText>
-                  </View>
-                ) : (
-                  <View style={styles.prologueTag}>
-                    <ThemedText style={styles.prologueTagText}>SPECIAL DOSSIER</ThemedText>
-                  </View>
-                )}
-                <ThemedText style={styles.metaMachineName}>
-                  {currentSpread.machineName}
-                </ThemedText>
-              </View>
 
-              {currentSpread.cosparId && (
-                <View style={styles.cosparTag}>
-                  <ThemedText style={styles.cosparTagText}>
-                    {currentSpread.cosparId}
-                  </ThemedText>
-                </View>
-              )}
-            </View>
-
-            {/* Location & Date Sub-header */}
-            <View style={styles.locationRow}>
-              <Ionicons name="location-sharp" size={13} color="#4fc3f7" />
-              <ThemedText style={styles.locationText} numberOfLines={1}>
-                {currentSpread.dateAndLocation}
-              </ThemedText>
-            </View>
-
-            {/* Spread Titles */}
-            <ThemedText style={styles.spreadTitleText}>
-              {currentSpread.spreadTitle}
-            </ThemedText>
-            <ThemedText style={styles.spreadSubtitleText}>
-              {currentSpread.spreadSubtitle}
-            </ThemedText>
-
-            {/* Visual Frame */}
-            {currentSpread.image && (
-              <View style={styles.visualFrameWrap}>
-                <Image
-                  source={{ uri: assetUrl(currentSpread.image) }}
-                  style={styles.visualFrameImage}
-                  contentFit="cover"
-                  transition={250}
-                />
-                {currentSpread.imageCaption && (
-                  <View style={styles.captionBar}>
-                    <Ionicons name="camera-outline" size={13} color="#f5a623" />
-                    <ThemedText style={styles.captionText} numberOfLines={2}>
-                      {currentSpread.imageCaption}
-                    </ThemedText>
-                  </View>
-                )}
-              </View>
+          {/* SINGLE BOOK PAGE (EXACTLY 1 PAGE ON EACH VIEW) */}
+          <View
+            style={[
+              styles.singlePagePaper,
+              {
+                backgroundColor: paperBg,
+                borderColor: paperBorder,
+              },
+            ]}
+          >
+            {/* Gutter / Spine Shadow on the inner edge */}
+            {isLeftPage ? (
+              // Left Page: Spine crease shadow on the RIGHT edge
+              <View style={styles.spineShadowRight} />
+            ) : (
+              // Right Page: Spine crease shadow on the LEFT edge
+              <View style={styles.spineShadowLeft} />
             )}
 
-            {/* Left Page (Historical Narrative) */}
-            <View style={styles.pageContentSection}>
-              {currentSpread.leftPage.heading && (
-                <ThemedText style={styles.sectionHeading}>
-                  {currentSpread.leftPage.heading}
-                </ThemedText>
-              )}
-              {currentSpread.leftPage.subheading && (
-                <ThemedText style={styles.sectionSubheading}>
-                  {currentSpread.leftPage.subheading}
-                </ThemedText>
-              )}
-
-              {currentSpread.leftPage.paragraphs.map((p, idx) => (
-                <ThemedText key={`lp-p-${idx}`} style={styles.paragraphText}>
-                  {p}
-                </ThemedText>
-              ))}
-
-              {/* Callout Box */}
-              {currentSpread.leftPage.calloutBox && (
-                <View style={styles.calloutCard}>
-                  <View style={styles.calloutHeader}>
-                    <Ionicons name="bulb-outline" size={16} color="#f5a623" />
-                    <ThemedText style={styles.calloutTitle}>
-                      {currentSpread.leftPage.calloutBox.title}
+            {/* Scrollable Page Body */}
+            <ScrollView
+              ref={scrollRef}
+              style={styles.pageScrollView}
+              contentContainerStyle={styles.pageScrollContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {isCover ? (
+                /* ==================== PAGE 1: FRONT COVER ==================== */
+                <View style={styles.coverInner}>
+                  <View style={styles.coverSealWrap}>
+                    <Ionicons name="planet" size={16} color="#f5a623" />
+                    <ThemedText style={styles.coverSealText}>
+                      2026 NASA SPACE APPS MASTER DOSSIER
                     </ThemedText>
                   </View>
-                  <ThemedText style={styles.calloutBody}>
-                    {currentSpread.leftPage.calloutBox.text}
-                  </ThemedText>
-                </View>
-              )}
-            </View>
 
-            {/* Interactive Simulation Widgets (Tailored per machine) */}
-            {/* Spirit, Opportunity, InSight: Dust Storm Tau Slider */}
-            {(currentSpread.heroSlug === "spirit" ||
-              currentSpread.heroSlug === "opportunity" ||
-              currentSpread.heroSlug === "insight") && (
-              <View style={styles.interactiveWidgetCard}>
-                <View style={styles.widgetHeader}>
-                  <Ionicons name="sunny-outline" size={16} color="#f5a623" />
-                  <ThemedText style={styles.widgetTitle}>
-                    Martian Dust Atmospheric Extinction (Tau Simulator)
+                  <ThemedText style={styles.coverSuperTitle}>
+                    ABANDONED BUT NOT FORGOTTEN
                   </ThemedText>
-                </View>
-                <ThemedText style={styles.widgetDesc}>
-                  Slide through optical dust depth ($\tau$) to simulate atmospheric blackout and solar output drop:
-                </ThemedText>
 
-                <View style={styles.tauSliderButtons}>
-                  {[0.5, 1.5, 3.5, 7.0, 10.8].map((tVal) => (
-                    <Pressable
-                      key={`tau-${tVal}`}
-                      onPress={() => {
-                        haptic.selection();
-                        setSimulatedTau(tVal);
-                      }}
-                      style={[
-                        styles.tauBtn,
-                        simulatedTau === tVal && styles.tauBtnActive,
-                      ]}
-                    >
-                      <ThemedText
-                        style={[
-                          styles.tauBtnText,
-                          simulatedTau === tVal && styles.tauBtnTextActive,
+                  <ThemedText style={styles.coverBookTitle}>
+                    The Living Story Book
+                  </ThemedText>
+
+                  <View style={styles.coverRuleGold} />
+
+                  <ThemedText style={styles.coverSubtitle}>
+                    Storytelling About NASA&apos;s Discarded Equipment on the Moon and Mars
+                  </ThemedText>
+
+                  {/* Hero Emblem Art */}
+                  <View style={styles.coverImageWrap}>
+                    <Image
+                      source={{ uri: assetUrl("images/hero-family.webp") }}
+                      style={styles.coverImage}
+                      contentFit="contain"
+                      priority="high"
+                    />
+                  </View>
+
+                  <ThemedText style={styles.coverAudienceNote}>
+                    Written for school-age space enthusiasts (ages 10–18) and casual explorers. Backed by 100% verified NASA NSSDCA, PDS, and HiRISE telemetry.
+                  </ThemedText>
+
+                  <Pressable
+                    onPress={goToNextPage}
+                    style={({ pressed }) => [styles.turnPageCoverBtn, pressed && styles.pressed]}
+                  >
+                    <ThemedText style={styles.turnPageCoverBtnText}>
+                      Turn to Page 2 (Contents)
+                    </ThemedText>
+                    <Ionicons name="arrow-forward" size={16} color="#0d0f22" />
+                  </Pressable>
+                </View>
+              ) : isToc ? (
+                /* ==================== PAGE 2: TABLE OF CONTENTS ==================== */
+                <View style={styles.tocInner}>
+                  <ThemedText style={[styles.runningHeader, { color: mutedTextColor, borderBottomColor: ruleColor }]}>
+                    TABLE OF CONTENTS · MASTER INDEX
+                  </ThemedText>
+
+                  <ThemedText style={[styles.tocMainTitle, { color: headingColor }]}>
+                    Chronicle of Dormant Relics
+                  </ThemedText>
+                  <ThemedText style={[styles.tocSub, { color: mutedTextColor }]}>
+                    Select any chapter or turn pages sequentially:
+                  </ThemedText>
+
+                  <View style={styles.tocGridMobile}>
+                    {TOC_ITEMS.slice(1).map((item, idx) => (
+                      <Pressable
+                        key={`toc-grid-${idx}`}
+                        onPress={() => handleJumpToPage(item.page)}
+                        style={({ pressed }) => [
+                          styles.tocMobileRow,
+                          pressed && styles.pressed,
                         ]}
                       >
-                        $\tau$ {tVal}
-                      </ThemedText>
-                    </Pressable>
-                  ))}
-                </View>
+                        <ThemedText style={styles.tocMachineTag}>
+                          {item.machine}
+                        </ThemedText>
+                        <ThemedText style={[styles.tocTitleText, { color: textColor }]} numberOfLines={1}>
+                          {item.title.split(" — ")[0]}
+                        </ThemedText>
+                        <ThemedText style={styles.tocPageNum}>
+                          p. {item.page}
+                        </ThemedText>
+                      </Pressable>
+                    ))}
+                  </View>
 
-                {/* Telemetry output preview */}
-                <View style={styles.tauResultBar}>
-                  <View style={styles.tauStat}>
-                    <ThemedText style={styles.tauStatLabel}>Solar Power</ThemedText>
-                    <ThemedText style={styles.tauStatValue}>{currentWh} Wh/sol</ThemedText>
+                  <Pressable
+                    onPress={goToNextPage}
+                    style={({ pressed }) => [styles.turnPageCoverBtn, pressed && styles.pressed, { marginTop: 16 }]}
+                  >
+                    <ThemedText style={styles.turnPageCoverBtnText}>
+                      Begin Prologue · Page 3
+                    </ThemedText>
+                    <Ionicons name="arrow-forward" size={16} color="#0d0f22" />
+                  </Pressable>
+                </View>
+              ) : isLeftPage ? (
+                /* ==================== PAGES 3, 5, 7, ... 57: LEFT PAGE (NARRATIVE) ==================== */
+                <View style={styles.pageInner}>
+                  {/* Running Header */}
+                  <View style={[styles.runningHeaderRow, { borderBottomColor: ruleColor }]}>
+                    <ThemedText style={[styles.runningHeaderLeft, { color: mutedTextColor }]}>
+                      {currentSpread.chapterNumber !== null
+                        ? `CHAPTER ${currentSpread.chapterNumber} · ${currentSpread.machineName}`
+                        : currentSpread.machineName}
+                    </ThemedText>
+                    {currentSpread.cosparId && (
+                      <ThemedText style={styles.runningHeaderRight}>
+                        {currentSpread.cosparId}
+                      </ThemedText>
+                    )}
                   </View>
-                  <View style={styles.tauStat}>
-                    <ThemedText style={styles.tauStatLabel}>Relative Sun</ThemedText>
-                    <ThemedText style={styles.tauStatValue}>{powerPct}%</ThemedText>
-                  </View>
-                  <View style={styles.tauStat}>
-                    <ThemedText style={styles.tauStatLabel}>Sky Status</ThemedText>
-                    <ThemedText style={styles.tauStatValue}>
-                      {simulatedTau >= 7 ? "Global Storm" : simulatedTau >= 3 ? "Hazy" : "Clear Sky"}
+
+                  {/* Location badge */}
+                  <View style={styles.pageLocationChip}>
+                    <Ionicons name="location-sharp" size={12} color="#4fc3f7" />
+                    <ThemedText style={styles.pageLocationChipText}>
+                      {currentSpread.dateAndLocation}
                     </ThemedText>
                   </View>
-                </View>
-              </View>
-            )}
 
-            {/* InSight: Marsquake Seismometer Laboratory */}
-            {currentSpread.heroSlug === "insight" && (
-              <View style={styles.interactiveWidgetCard}>
-                <View style={styles.widgetHeader}>
-                  <Ionicons name="pulse-outline" size={16} color="#4fc3f7" />
-                  <ThemedText style={styles.widgetTitle}>
-                    SEIS Seismometer Ground Shaking Trigger
+                  {/* Chapter Titles */}
+                  <ThemedText style={[styles.chapterTitleOnPage, { color: headingColor }]}>
+                    {currentSpread.spreadTitle}
                   </ThemedText>
-                </View>
-                <ThemedText style={styles.widgetDesc}>
-                  Trigger verified Sol 1222 ($M_W 4.7$) or Sol 128 event on InSight&apos;s sensors:
-                </ThemedText>
-                <View style={styles.quakeButtonRow}>
-                  <Pressable
-                    onPress={() => triggerMarsquake(4.7)}
-                    style={[styles.quakeBtn, marsquakeSimulating && styles.quakeBtnActive]}
-                  >
-                    <ThemedText style={styles.quakeBtnText}>
-                      Sol 1222 Quake ($M_W 4.7$)
-                    </ThemedText>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => triggerMarsquake(2.3)}
-                    style={[styles.quakeBtn, marsquakeSimulating && styles.quakeBtnActive]}
-                  >
-                    <ThemedText style={styles.quakeBtnText}>
-                      Sol 128 First Tremor
-                    </ThemedText>
-                  </Pressable>
-                </View>
-                {marsquakeSimulating && (
-                  <View style={styles.quakeAlert}>
-                    <ThemedText style={styles.quakeAlertText}>
-                      ⚠️ SEIS SENSOR VIBRATION RECORDING: Magnitude {activeQuakeMagnitude}
-                    </ThemedText>
-                  </View>
-                )}
-              </View>
-            )}
+                  <ThemedText style={styles.chapterSubtitleOnPage}>
+                    {currentSpread.spreadSubtitle}
+                  </ThemedText>
 
-            {/* Right Page (Science, Telemetry & Discoveries) */}
-            <View style={styles.pageContentSection}>
-              {currentSpread.rightPage.heading && (
-                <ThemedText style={styles.sectionHeading}>
-                  {currentSpread.rightPage.heading}
-                </ThemedText>
-              )}
-              {currentSpread.rightPage.subheading && (
-                <ThemedText style={styles.sectionSubheading}>
-                  {currentSpread.rightPage.subheading}
-                </ThemedText>
-              )}
+                  {/* Left Page Heading & Subheading */}
+                  {currentSpread.leftPage.heading && (
+                    <ThemedText style={[styles.pageHeadingText, { color: headingColor }]}>
+                      {currentSpread.leftPage.heading}
+                    </ThemedText>
+                  )}
+                  {currentSpread.leftPage.subheading && (
+                    <ThemedText style={styles.pageSubheadingText}>
+                      {currentSpread.leftPage.subheading}
+                    </ThemedText>
+                  )}
 
-              {currentSpread.rightPage.paragraphs?.map((p, idx) => (
-                <ThemedText key={`rp-p-${idx}`} style={styles.paragraphText}>
-                  {p}
-                </ThemedText>
-              ))}
+                  {/* Left Page Narrative Paragraphs */}
+                  {currentSpread.leftPage.paragraphs.map((p, idx) => (
+                    <ThemedText key={`lp-${currentPage}-${idx}`} style={[styles.bookParagraph, { color: textColor }]}>
+                      {p}
+                    </ThemedText>
+                  ))}
 
-              {/* Telemetry Summary Stats */}
-              {currentSpread.telemetrySummary && (
-                <View style={styles.telemetryGrid}>
-                  {currentSpread.telemetrySummary.map((t, idx) => (
-                    <View key={`tel-${idx}`} style={styles.telemetryCard}>
-                      <ThemedText style={styles.telemetryCardVal}>
-                        {t.value}
-                      </ThemedText>
-                      <ThemedText style={styles.telemetryCardLabel}>
-                        {t.label}
+                  {/* Left Page Callout Box */}
+                  {currentSpread.leftPage.calloutBox && (
+                    <View style={styles.calloutParchment}>
+                      <View style={styles.calloutHeaderRow}>
+                        <Ionicons name="bookmark" size={14} color="#f5a623" />
+                        <ThemedText style={styles.calloutHeading}>
+                          {currentSpread.leftPage.calloutBox.title}
+                        </ThemedText>
+                      </View>
+                      <ThemedText style={styles.calloutContent}>
+                        {currentSpread.leftPage.calloutBox.text}
                       </ThemedText>
                     </View>
+                  )}
+                </View>
+              ) : (
+                /* ==================== PAGES 4, 6, 8, ... 58: RIGHT PAGE (SCIENCE & TELEMETRY) ==================== */
+                <View style={styles.pageInner}>
+                  {/* Running Header */}
+                  <View style={[styles.runningHeaderRow, { borderBottomColor: ruleColor }]}>
+                    <ThemedText style={[styles.runningHeaderLeft, { color: mutedTextColor }]}>
+                      {currentSpread.machineName} · KEY SCIENCE
+                    </ThemedText>
+                    <ThemedText style={styles.runningHeaderRight}>
+                      VERIFIED TELEMETRY
+                    </ThemedText>
+                  </View>
+
+                  {/* Right Page Heading & Subheading */}
+                  {currentSpread.rightPage.heading && (
+                    <ThemedText style={[styles.pageHeadingText, { color: headingColor }]}>
+                      {currentSpread.rightPage.heading}
+                    </ThemedText>
+                  )}
+                  {currentSpread.rightPage.subheading && (
+                    <ThemedText style={styles.pageSubheadingText}>
+                      {currentSpread.rightPage.subheading}
+                    </ThemedText>
+                  )}
+
+                  {/* Authentic NASA Photography Frame */}
+                  {currentSpread.image && (
+                    <View style={styles.nasaImageFrame}>
+                      <Image
+                        source={{ uri: assetUrl(currentSpread.image) }}
+                        style={styles.nasaImageElement}
+                        contentFit="cover"
+                        transition={200}
+                      />
+                      {currentSpread.imageCaption && (
+                        <View style={styles.nasaImageCaptionBar}>
+                          <Ionicons name="camera-outline" size={12} color="#f5a623" />
+                          <ThemedText style={styles.nasaImageCaptionText} numberOfLines={2}>
+                            {currentSpread.imageCaption}
+                          </ThemedText>
+                        </View>
+                      )}
+                    </View>
+                  )}
+
+                  {/* Telemetry Grid Summary */}
+                  {currentSpread.telemetrySummary && (
+                    <View style={styles.pageTelemetryGrid}>
+                      {currentSpread.telemetrySummary.map((t, idx) => (
+                        <View key={`tel-chip-${idx}`} style={styles.pageTelemetryChip}>
+                          <ThemedText style={styles.pageTelemetryVal}>
+                            {t.value}
+                          </ThemedText>
+                          <ThemedText style={styles.pageTelemetryLabel}>
+                            {t.label}
+                          </ThemedText>
+                        </View>
+                      ))}
+                    </View>
+                  )}
+
+                  {/* Interactive Widgets on Right Page */}
+                  {/* Dust Storm Tau Simulator (Spirit, Opportunity, InSight) */}
+                  {(currentSpread.heroSlug === "spirit" ||
+                    currentSpread.heroSlug === "opportunity" ||
+                    currentSpread.heroSlug === "insight") && (
+                    <View style={styles.pageInteractiveWidget}>
+                      <View style={styles.widgetTitleRow}>
+                        <Ionicons name="sunny" size={14} color="#f5a623" />
+                        <ThemedText style={styles.widgetHeaderLabel}>
+                          Martian Sky Dust Extinction ($\tau$)
+                        </ThemedText>
+                      </View>
+                      <View style={styles.tauBtnRow}>
+                        {[0.5, 1.5, 3.5, 7.0, 10.8].map((tVal) => (
+                          <Pressable
+                            key={`tau-btn-${tVal}`}
+                            onPress={() => {
+                              haptic.selection();
+                              setSimulatedTau(tVal);
+                            }}
+                            style={[
+                              styles.tauPill,
+                              simulatedTau === tVal && styles.tauPillActive,
+                            ]}
+                          >
+                            <ThemedText
+                              style={[
+                                styles.tauPillText,
+                                simulatedTau === tVal && styles.tauPillTextActive,
+                              ]}
+                            >
+                              $\tau$ {tVal}
+                            </ThemedText>
+                          </Pressable>
+                        ))}
+                      </View>
+                      <View style={styles.tauPowerOutputRow}>
+                        <ThemedText style={styles.tauPowerLabel}>
+                          Estimated Power: <ThemedText style={styles.tauPowerBold}>{currentWh} Wh/sol</ThemedText> ({powerPct}% sun)
+                        </ThemedText>
+                      </View>
+                    </View>
+                  )}
+
+                  {/* InSight Seismometer Vibration Laboratory */}
+                  {currentSpread.heroSlug === "insight" && (
+                    <View style={styles.pageInteractiveWidget}>
+                      <View style={styles.widgetTitleRow}>
+                        <Ionicons name="pulse" size={14} color="#4fc3f7" />
+                        <ThemedText style={styles.widgetHeaderLabel}>
+                          SEIS Marsquake Ground Sensor Trigger
+                        </ThemedText>
+                      </View>
+                      <View style={styles.quakeBtnRow}>
+                        <Pressable
+                          onPress={() => triggerMarsquake(4.7)}
+                          style={[styles.quakeOptionBtn, marsquakeSimulating && styles.quakeOptionBtnActive]}
+                        >
+                          <ThemedText style={styles.quakeOptionText}>
+                            Sol 1222 ($M_W 4.7$)
+                          </ThemedText>
+                        </Pressable>
+                        <Pressable
+                          onPress={() => triggerMarsquake(2.3)}
+                          style={[styles.quakeOptionBtn, marsquakeSimulating && styles.quakeOptionBtnActive]}
+                        >
+                          <ThemedText style={styles.quakeOptionText}>
+                            Sol 128 Tremor
+                          </ThemedText>
+                        </Pressable>
+                      </View>
+                      {marsquakeSimulating && (
+                        <View style={styles.quakeAlertBox}>
+                          <ThemedText style={styles.quakeAlertText}>
+                            ⚠️ SEIS RECORDING VIBRATIONS: Magnitude {activeQuakeMagnitude}
+                          </ThemedText>
+                        </View>
+                      )}
+                    </View>
+                  )}
+
+                  {/* Right Page Narrative Paragraphs */}
+                  {currentSpread.rightPage.paragraphs?.map((p, idx) => (
+                    <ThemedText key={`rp-${currentPage}-${idx}`} style={[styles.bookParagraph, { color: textColor }]}>
+                      {p}
+                    </ThemedText>
                   ))}
+
+                  {/* Verified Historical Quote */}
+                  {currentSpread.rightPage.quote && (
+                    <View style={styles.quoteParchment}>
+                      <ThemedText style={styles.quoteBody}>
+                        &ldquo;{currentSpread.rightPage.quote.text}&rdquo;
+                      </ThemedText>
+                      <ThemedText style={styles.quoteAuthor}>
+                        — {currentSpread.rightPage.quote.author}
+                      </ThemedText>
+                    </View>
+                  )}
+
+                  {/* Historical Takeaway */}
+                  {currentSpread.rightPage.takeaway && (
+                    <View style={styles.takeawayParchment}>
+                      <ThemedText style={styles.takeawayTag}>HISTORICAL TAKEAWAY</ThemedText>
+                      <ThemedText style={styles.takeawayBody}>
+                        {currentSpread.rightPage.takeaway}
+                      </ThemedText>
+                    </View>
+                  )}
                 </View>
               )}
 
-              {/* Historical Quote Box */}
-              {currentSpread.rightPage.quote && (
-                <View style={styles.quoteCard}>
-                  <Ionicons name="chatbubbles-outline" size={18} color="#f5a623" />
-                  <ThemedText style={styles.quoteText}>
-                    &ldquo;{currentSpread.rightPage.quote.text}&rdquo;
-                  </ThemedText>
-                  <ThemedText style={styles.quoteAuthor}>
-                    — {currentSpread.rightPage.quote.author}
-                  </ThemedText>
-                </View>
-              )}
-
-              {/* Takeaway Card */}
-              {currentSpread.rightPage.takeaway && (
-                <View style={styles.takeawayCard}>
-                  <ThemedText style={styles.takeawayLabel}>HISTORICAL TAKEAWAY</ThemedText>
-                  <ThemedText style={styles.takeawayText}>
-                    {currentSpread.rightPage.takeaway}
-                  </ThemedText>
-                </View>
-              )}
-            </View>
-
-            {/* Page Numbering Footer on Spread */}
-            <View style={styles.spreadPageFooter}>
-              <ThemedText style={styles.spreadPageNum}>Page {leftPageNum}</ThemedText>
-              <ThemedText style={styles.spreadCenterLabel}>
-                The Last Signal Archive
-              </ThemedText>
-              <ThemedText style={styles.spreadPageNum}>Page {rightPageNum}</ThemedText>
-            </View>
+              {/* Running Footer Page Number */}
+              <View style={[styles.runningFooterRow, { borderTopColor: ruleColor }]}>
+                <ThemedText style={[styles.runningFooterText, { color: mutedTextColor }]}>
+                  — {currentPage} —
+                </ThemedText>
+              </View>
+            </ScrollView>
           </View>
-        )}
-      </ScrollView>
+        </View>
+      </View>
 
       {/* Floating Bottom Navigation Controller */}
       <View style={[styles.bottomControllerBar, { paddingBottom: insets.bottom + 10 }]}>
         <Pressable
-          onPress={goToPrevSpread}
-          disabled={currentSpreadIndex === 0}
+          onPress={goToPrevPage}
+          disabled={currentPage === 1}
           style={({ pressed }) => [
             styles.navPageBtn,
-            currentSpreadIndex === 0 && styles.navBtnDisabled,
+            currentPage === 1 && styles.navBtnDisabled,
             pressed && styles.pressed,
           ]}
+          accessibilityLabel="Previous page"
         >
           <Ionicons
             name="chevron-back"
             size={18}
-            color={currentSpreadIndex === 0 ? "#5f6368" : "#f4ede0"}
+            color={currentPage === 1 ? "#5f6368" : "#f4ede0"}
           />
           <ThemedText
             style={[
               styles.navPageBtnText,
-              currentSpreadIndex === 0 && styles.navTextDisabled,
+              currentPage === 1 && styles.navTextDisabled,
             ]}
           >
-            Previous
+            Prev
           </ThemedText>
         </Pressable>
 
@@ -533,28 +591,28 @@ export function StoryBookReader() {
         <Pressable
           onPress={() => setShowToc(true)}
           style={({ pressed }) => [styles.pageSelectorPill, pressed && styles.pressed]}
+          accessibilityLabel="Open table of contents"
         >
+          <Ionicons name="book-outline" size={14} color="#f5a623" />
           <ThemedText style={styles.pageSelectorText}>
-            {isCover
-              ? "Cover · P. 1–2"
-              : `P. ${leftPageNum}–${rightPageNum} · Spread ${currentSpreadIndex + 1}/${totalSpreads}`}
+            Page {currentPage} of {totalPages}
           </ThemedText>
-          <Ionicons name="list" size={14} color="#f5a623" />
         </Pressable>
 
         <Pressable
-          onPress={goToNextSpread}
-          disabled={currentSpreadIndex === totalSpreads - 1}
+          onPress={goToNextPage}
+          disabled={currentPage === totalPages}
           style={({ pressed }) => [
             styles.navPageBtn,
-            currentSpreadIndex === totalSpreads - 1 && styles.navBtnDisabled,
+            currentPage === totalPages && styles.navBtnDisabled,
             pressed && styles.pressed,
           ]}
+          accessibilityLabel="Next page"
         >
           <ThemedText
             style={[
               styles.navPageBtnText,
-              currentSpreadIndex === totalSpreads - 1 && styles.navTextDisabled,
+              currentPage === totalPages && styles.navTextDisabled,
             ]}
           >
             Next
@@ -562,16 +620,16 @@ export function StoryBookReader() {
           <Ionicons
             name="chevron-forward"
             size={18}
-            color={currentSpreadIndex === totalSpreads - 1 ? "#5f6368" : "#f4ede0"}
+            color={currentPage === totalPages ? "#5f6368" : "#f4ede0"}
           />
         </Pressable>
       </View>
 
-      {/* Chapter Drawer Modal */}
+      {/* Table of Contents Chapter Drawer */}
       <ChapterDrawer
         visible={showToc}
-        currentSpread={currentSpreadIndex}
-        onSelectSpread={handleJumpToSpread}
+        currentPage={currentPage}
+        onSelectPage={handleJumpToPage}
         onClose={() => setShowToc(false)}
       />
     </View>
@@ -581,14 +639,14 @@ export function StoryBookReader() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#080914",
+    backgroundColor: "#070510",
   },
   topBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingBottom: 10,
+    paddingBottom: 8,
     backgroundColor: "#0d0f22",
     borderBottomWidth: 1,
     borderBottomColor: "rgba(255, 255, 255, 0.08)",
@@ -616,487 +674,533 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(245, 166, 35, 0.3)",
     gap: 6,
-    maxWidth: "55%",
+    maxWidth: "52%",
   },
   chapterBadgeText: {
     fontSize: 12,
     fontWeight: "700",
     color: "#f5a623",
   },
-  scrollArea: {
-    flex: 1,
-  },
-  scrollContent: {
-    padding: 14,
-  },
   pressed: {
     opacity: 0.7,
   },
 
-  /* Cover Styles */
-  coverContainer: {
-    paddingVertical: 10,
+  /* Physical Book Stage */
+  bookStage: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 72,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  coverGoldBorder: {
-    backgroundColor: "#0d0f22",
+  leatherHardcoverFrame: {
+    flex: 1,
+    width: "100%",
+    maxWidth: 480,
+    backgroundColor: "#170e28",
     borderRadius: 24,
-    padding: 24,
-    borderWidth: 2,
-    borderColor: "rgba(245, 166, 35, 0.4)",
+    borderWidth: 4,
+    borderColor: "#2b1f3d",
+    padding: 6,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.7,
+    shadowRadius: 20,
+    elevation: 12,
+    position: "relative",
+  },
+  silkBookmarkRibbon: {
+    position: "absolute",
+    top: -6,
+    alignSelf: "center",
+    width: 20,
+    height: 44,
+    backgroundColor: "#b91c1c",
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: "rgba(245, 166, 35, 0.5)",
+    zIndex: 40,
     alignItems: "center",
   },
-  coverHeaderBadge: {
+  silkBookmarkPoint: {
+    position: "absolute",
+    bottom: 0,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 8,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#170e28",
+  },
+  singlePagePaper: {
+    flex: 1,
+    borderRadius: 18,
+    overflow: "hidden",
+    borderWidth: 1,
+    position: "relative",
+  },
+  spineShadowLeft: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 14,
+    backgroundColor: "rgba(0, 0, 0, 0.08)",
+    zIndex: 10,
+  },
+  spineShadowRight: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 14,
+    backgroundColor: "rgba(0, 0, 0, 0.08)",
+    zIndex: 10,
+  },
+  pageScrollView: {
+    flex: 1,
+  },
+  pageScrollContent: {
+    padding: 16,
+    paddingBottom: 32,
+  },
+
+  /* Page Running Header & Footer */
+  runningHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    marginBottom: 12,
+  },
+  runningHeaderLeft: {
+    fontSize: 10,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+  },
+  runningHeaderRight: {
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#f5a623",
+    letterSpacing: 0.5,
+  },
+  runningFooterRow: {
+    alignItems: "center",
+    paddingTop: 12,
+    marginTop: 16,
+    borderTopWidth: 1,
+  },
+  runningFooterText: {
+    fontSize: 12,
+    fontWeight: "700",
+    letterSpacing: 1,
+  },
+
+  /* Cover Inner Styles */
+  coverInner: {
+    alignItems: "center",
+    paddingVertical: 12,
+  },
+  coverSealWrap: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(245, 166, 35, 0.15)",
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 14,
+    borderRadius: 12,
     gap: 6,
-    marginBottom: 16,
+    marginBottom: 14,
   },
-  coverHeaderBadgeText: {
-    fontSize: 10,
+  coverSealText: {
+    fontSize: 9,
     fontWeight: "800",
     color: "#f5a623",
     letterSpacing: 1,
   },
   coverSuperTitle: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "800",
-    color: "#9aa0a6",
+    color: "#8a7e70",
     letterSpacing: 2,
     textAlign: "center",
   },
-  coverMainTitle: {
+  coverBookTitle: {
     fontSize: 26,
     fontWeight: "900",
-    color: "#f4ede0",
+    color: "#1a120b",
     textAlign: "center",
     marginTop: 6,
     fontFamily: "SpaceGrotesk-Bold",
   },
-  coverDividerGold: {
+  coverRuleGold: {
     width: 60,
     height: 3,
     backgroundColor: "#f5a623",
     borderRadius: 2,
-    marginVertical: 14,
+    marginVertical: 12,
   },
   coverSubtitle: {
-    fontSize: 14,
-    color: "#d0d4dc",
+    fontSize: 13,
+    color: "#4a4238",
     textAlign: "center",
-    lineHeight: 20,
-    marginBottom: 20,
+    lineHeight: 19,
+    marginBottom: 16,
   },
-  coverHeroCard: {
+  coverImageWrap: {
     width: "100%",
-    height: 220,
-    borderRadius: 16,
+    height: 190,
+    borderRadius: 14,
     overflow: "hidden",
     backgroundColor: "#05060e",
-    marginBottom: 20,
+    marginBottom: 14,
   },
-  coverHeroImage: {
+  coverImage: {
     width: "100%",
     height: "100%",
   },
-  coverMetaRow: {
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 24,
-    width: "100%",
+  coverAudienceNote: {
+    fontSize: 11,
+    color: "#786f63",
+    textAlign: "center",
+    lineHeight: 16,
+    marginBottom: 18,
+    paddingHorizontal: 8,
   },
-  coverMetaChip: {
-    flex: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.04)",
-    borderRadius: 14,
-    paddingVertical: 12,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.08)",
-  },
-  coverMetaChipVal: {
-    fontSize: 18,
-    fontWeight: "800",
-    color: "#f5a623",
-  },
-  coverMetaChipLabel: {
-    fontSize: 10,
-    color: "#9aa0a6",
-    marginTop: 2,
-    textTransform: "uppercase",
-  },
-  startReadingBtn: {
+  turnPageCoverBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f5a623",
-    width: "100%",
-    paddingVertical: 14,
-    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 14,
     gap: 8,
+    width: "100%",
   },
-  startReadingBtnText: {
-    fontSize: 15,
+  turnPageCoverBtnText: {
+    fontSize: 14,
     fontWeight: "800",
     color: "#0d0f22",
   },
-  tocQuickBtn: {
-    marginTop: 14,
-    paddingVertical: 8,
-  },
-  tocQuickBtnText: {
-    fontSize: 13,
-    color: "#4fc3f7",
-    textDecorationLine: "underline",
-  },
 
-  /* Spread Card Styles */
-  spreadPageCard: {
-    backgroundColor: "#0f1228",
-    borderRadius: 24,
-    padding: 18,
-    borderWidth: 1,
-    borderColor: "rgba(245, 166, 35, 0.25)",
+  /* TOC Inner Styles */
+  tocInner: {
+    paddingVertical: 6,
   },
-  metaRibbon: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+  runningHeader: {
+    fontSize: 10,
+    fontWeight: "800",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    paddingBottom: 6,
+    borderBottomWidth: 1,
     marginBottom: 10,
   },
-  metaRibbonLeft: {
+  tocMainTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    marginBottom: 4,
+    fontFamily: "SpaceGrotesk-Bold",
+  },
+  tocSub: {
+    fontSize: 12,
+    marginBottom: 14,
+  },
+  tocGridMobile: {
+    gap: 6,
+  },
+  tocMobileRow: {
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(0, 0, 0, 0.05)",
     gap: 8,
   },
-  chapterNumTag: {
-    backgroundColor: "rgba(245, 166, 35, 0.2)",
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-  },
-  chapterNumTagText: {
+  tocMachineTag: {
     fontSize: 10,
     fontWeight: "800",
-    color: "#f5a623",
-  },
-  prologueTag: {
-    backgroundColor: "rgba(79, 195, 247, 0.2)",
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-  },
-  prologueTagText: {
-    fontSize: 10,
-    fontWeight: "800",
-    color: "#4fc3f7",
-  },
-  metaMachineName: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#f4ede0",
+    color: "#c2410c",
     textTransform: "uppercase",
+    width: 80,
   },
-  cosparTag: {
-    backgroundColor: "rgba(255, 255, 255, 0.06)",
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-  },
-  cosparTagText: {
-    fontSize: 10,
+  tocTitleText: {
+    flex: 1,
+    fontSize: 12,
     fontWeight: "600",
-    color: "#9aa0a6",
   },
-  locationRow: {
+  tocPageNum: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#8a7e70",
+  },
+
+  /* Standard Page Inner */
+  pageInner: {
+    paddingVertical: 4,
+  },
+  pageLocationChip: {
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
     marginBottom: 8,
   },
-  locationText: {
-    fontSize: 11,
-    color: "#4fc3f7",
-    fontWeight: "600",
+  pageLocationChipText: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#0284c7",
   },
-  spreadTitleText: {
+  chapterTitleOnPage: {
     fontSize: 20,
     fontWeight: "800",
-    color: "#f4ede0",
     lineHeight: 26,
     fontFamily: "SpaceGrotesk-Bold",
+    marginBottom: 2,
   },
-  spreadSubtitleText: {
-    fontSize: 13,
-    color: "#f5a623",
-    fontWeight: "600",
-    marginTop: 4,
-    marginBottom: 16,
-  },
-  visualFrameWrap: {
-    borderRadius: 16,
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "rgba(245, 166, 35, 0.3)",
-    marginBottom: 18,
-    backgroundColor: "#05060e",
-  },
-  visualFrameImage: {
-    width: "100%",
-    height: 190,
-  },
-  captionBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(13, 15, 34, 0.9)",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    gap: 6,
-  },
-  captionText: {
-    fontSize: 11,
-    color: "#d0d4dc",
-    flex: 1,
-    lineHeight: 15,
-  },
-  pageContentSection: {
-    marginBottom: 18,
-  },
-  sectionHeading: {
-    fontSize: 16,
-    fontWeight: "800",
-    color: "#f4ede0",
-    marginBottom: 4,
-  },
-  sectionSubheading: {
+  chapterSubtitleOnPage: {
     fontSize: 12,
     fontWeight: "700",
-    color: "#4fc3f7",
+    color: "#c2410c",
+    marginBottom: 14,
+  },
+  pageHeadingText: {
+    fontSize: 16,
+    fontWeight: "800",
+    marginBottom: 4,
+  },
+  pageSubheadingText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: "#0284c7",
     marginBottom: 10,
   },
-  paragraphText: {
+  bookParagraph: {
     fontSize: 14,
     lineHeight: 22,
-    color: "#d0d4dc",
     marginBottom: 10,
   },
-  calloutCard: {
-    backgroundColor: "rgba(245, 166, 35, 0.08)",
+  calloutParchment: {
+    backgroundColor: "rgba(245, 166, 35, 0.1)",
     borderLeftWidth: 3,
     borderLeftColor: "#f5a623",
-    padding: 12,
+    padding: 10,
     borderRadius: 8,
     marginVertical: 10,
   },
-  calloutHeader: {
+  calloutHeaderRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
     marginBottom: 4,
   },
-  calloutTitle: {
+  calloutHeading: {
     fontSize: 12,
     fontWeight: "800",
-    color: "#f5a623",
+    color: "#b45309",
   },
-  calloutBody: {
+  calloutContent: {
     fontSize: 12,
     lineHeight: 18,
-    color: "#f4ede0",
+    color: "#443b31",
   },
-  interactiveWidgetCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.04)",
-    borderRadius: 16,
-    padding: 14,
+
+  /* Right Page Photo Frame */
+  nasaImageFrame: {
+    borderRadius: 14,
+    overflow: "hidden",
     borderWidth: 1,
-    borderColor: "rgba(79, 195, 247, 0.25)",
-    marginBottom: 18,
+    borderColor: "rgba(0, 0, 0, 0.15)",
+    marginBottom: 14,
+    backgroundColor: "#05060e",
   },
-  widgetHeader: {
+  nasaImageElement: {
+    width: "100%",
+    height: 180,
+  },
+  nasaImageCaptionBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(15, 18, 38, 0.9)",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    gap: 6,
+  },
+  nasaImageCaptionText: {
+    fontSize: 10,
+    color: "#f4ede0",
+    flex: 1,
+    lineHeight: 14,
+  },
+
+  /* Telemetry Grid */
+  pageTelemetryGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 6,
+    marginBottom: 14,
+  },
+  pageTelemetryChip: {
+    flex: 1,
+    minWidth: "46%",
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    borderRadius: 10,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "rgba(0, 0, 0, 0.06)",
+  },
+  pageTelemetryVal: {
+    fontSize: 13,
+    fontWeight: "800",
+    color: "#0369a1",
+  },
+  pageTelemetryLabel: {
+    fontSize: 9,
+    color: "#716b60",
+    marginTop: 2,
+    textTransform: "uppercase",
+  },
+
+  /* Interactive Simulation Widgets */
+  pageInteractiveWidget: {
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    borderRadius: 12,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "rgba(245, 166, 35, 0.3)",
+    marginBottom: 12,
+  },
+  widgetTitleRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    marginBottom: 4,
+    marginBottom: 8,
   },
-  widgetTitle: {
-    fontSize: 13,
-    fontWeight: "800",
-    color: "#f4ede0",
-  },
-  widgetDesc: {
+  widgetHeaderLabel: {
     fontSize: 11,
-    color: "#9aa0a6",
-    marginBottom: 10,
+    fontWeight: "800",
+    color: "#b45309",
   },
-  tauSliderButtons: {
+  tauBtnRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 6,
   },
-  tauBtn: {
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    borderRadius: 8,
-    backgroundColor: "rgba(255, 255, 255, 0.06)",
+  tauPill: {
+    paddingHorizontal: 7,
+    paddingVertical: 4,
+    borderRadius: 6,
+    backgroundColor: "rgba(0, 0, 0, 0.06)",
   },
-  tauBtnActive: {
+  tauPillActive: {
     backgroundColor: "#f5a623",
   },
-  tauBtnText: {
-    fontSize: 11,
-    color: "#9aa0a6",
+  tauPillText: {
+    fontSize: 10,
     fontWeight: "700",
+    color: "#6b6459",
   },
-  tauBtnTextActive: {
+  tauPillTextActive: {
     color: "#0d0f22",
   },
-  tauResultBar: {
-    flexDirection: "row",
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    borderRadius: 10,
-    padding: 10,
-    justifyContent: "space-around",
+  tauPowerOutputRow: {
+    paddingTop: 4,
   },
-  tauStat: {
-    alignItems: "center",
+  tauPowerLabel: {
+    fontSize: 11,
+    color: "#443b31",
   },
-  tauStatLabel: {
-    fontSize: 10,
-    color: "#9aa0a6",
-  },
-  tauStatValue: {
-    fontSize: 13,
+  tauPowerBold: {
     fontWeight: "800",
-    color: "#4fc3f7",
-    marginTop: 2,
+    color: "#0284c7",
   },
-  quakeButtonRow: {
+  quakeBtnRow: {
     flexDirection: "row",
     gap: 8,
   },
-  quakeBtn: {
+  quakeOptionBtn: {
     flex: 1,
-    backgroundColor: "rgba(79, 195, 247, 0.15)",
+    backgroundColor: "rgba(2, 132, 199, 0.12)",
     borderWidth: 1,
-    borderColor: "rgba(79, 195, 247, 0.4)",
-    paddingVertical: 10,
-    borderRadius: 10,
+    borderColor: "rgba(2, 132, 199, 0.3)",
+    paddingVertical: 8,
+    borderRadius: 8,
     alignItems: "center",
   },
-  quakeBtnActive: {
-    backgroundColor: "rgba(245, 166, 35, 0.3)",
+  quakeOptionBtnActive: {
+    backgroundColor: "rgba(245, 166, 35, 0.25)",
     borderColor: "#f5a623",
   },
-  quakeBtnText: {
+  quakeOptionText: {
     fontSize: 11,
     fontWeight: "700",
-    color: "#f4ede0",
+    color: "#0369a1",
   },
-  quakeAlert: {
-    marginTop: 10,
+  quakeAlertBox: {
+    marginTop: 8,
     backgroundColor: "rgba(245, 166, 35, 0.2)",
-    padding: 8,
-    borderRadius: 8,
+    padding: 6,
+    borderRadius: 6,
     alignItems: "center",
   },
   quakeAlertText: {
-    fontSize: 11,
-    fontWeight: "800",
-    color: "#f5a623",
-  },
-  telemetryGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
-    marginVertical: 12,
-  },
-  telemetryCard: {
-    flex: 1,
-    minWidth: "45%",
-    backgroundColor: "rgba(255, 255, 255, 0.04)",
-    borderRadius: 12,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.06)",
-  },
-  telemetryCardVal: {
-    fontSize: 14,
-    fontWeight: "800",
-    color: "#4fc3f7",
-  },
-  telemetryCardLabel: {
     fontSize: 10,
-    color: "#9aa0a6",
-    marginTop: 2,
-  },
-  quoteCard: {
-    backgroundColor: "rgba(245, 166, 35, 0.06)",
-    borderRadius: 12,
-    padding: 14,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: "rgba(245, 166, 35, 0.2)",
-  },
-  quoteText: {
-    fontSize: 13,
-    fontStyle: "italic",
-    color: "#f4ede0",
-    lineHeight: 19,
-    marginTop: 4,
-  },
-  quoteAuthor: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: "#f5a623",
-    marginTop: 6,
-    textAlign: "right",
-  },
-  takeawayCard: {
-    backgroundColor: "rgba(79, 195, 247, 0.08)",
-    borderRadius: 12,
-    padding: 12,
-    marginVertical: 10,
-    borderLeftWidth: 3,
-    borderLeftColor: "#4fc3f7",
-  },
-  takeawayLabel: {
-    fontSize: 9,
     fontWeight: "800",
-    color: "#4fc3f7",
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  takeawayText: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: "#f4ede0",
-    fontWeight: "600",
-  },
-  spreadPageFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: "rgba(255, 255, 255, 0.08)",
-    marginTop: 10,
-  },
-  spreadPageNum: {
-    fontSize: 11,
-    fontWeight: "700",
-    color: "#9aa0a6",
-  },
-  spreadCenterLabel: {
-    fontSize: 10,
-    color: "#5f6368",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    color: "#b45309",
   },
 
-  /* Bottom Floating Controller */
+  /* Quote & Takeaway */
+  quoteParchment: {
+    backgroundColor: "rgba(245, 166, 35, 0.08)",
+    borderLeftWidth: 3,
+    borderLeftColor: "#f5a623",
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 10,
+  },
+  quoteBody: {
+    fontSize: 12,
+    fontStyle: "italic",
+    color: "#383127",
+    lineHeight: 18,
+  },
+  quoteAuthor: {
+    fontSize: 10,
+    fontWeight: "800",
+    color: "#b45309",
+    marginTop: 4,
+    textAlign: "right",
+  },
+  takeawayParchment: {
+    backgroundColor: "rgba(2, 132, 199, 0.08)",
+    borderLeftWidth: 3,
+    borderLeftColor: "#0284c7",
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 10,
+  },
+  takeawayTag: {
+    fontSize: 9,
+    fontWeight: "800",
+    color: "#0284c7",
+    letterSpacing: 1,
+    marginBottom: 2,
+  },
+  takeawayBody: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: "#1e293b",
+    lineHeight: 16,
+  },
+
+  /* Bottom Floating Controller Bar */
   bottomControllerBar: {
     position: "absolute",
     bottom: 0,
@@ -1115,14 +1219,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.08)",
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 12,
     gap: 4,
   },
   navBtnDisabled: {
     backgroundColor: "rgba(255, 255, 255, 0.02)",
-    opacity: 0.4,
+    opacity: 0.35,
   },
   navPageBtnText: {
     fontSize: 12,
@@ -1144,7 +1248,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   pageSelectorText: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "800",
     color: "#f5a623",
   },
