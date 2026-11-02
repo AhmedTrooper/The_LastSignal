@@ -8,6 +8,7 @@
  * - PDS Cartography and Imaging Sciences Node (mars2020_helicam)
  * - NASA JPL Flight Operations Log (Flights 1 to 72)
  * - University of Arizona HiRISE Operations Center
+ * - NASA/JPL NAIF SPICE Kernel Archive
  * - NASA/JPL Photojournal & SuperCam Acoustic Records
  */
 
@@ -150,7 +151,7 @@ export const INGENUITY_KEY_FLIGHTS: IngenuityFlightMilestone[] = [
     horizontalDistanceM: 215.0,
     maxSpeedMs: 4.0,
     durationSec: 139.9,
-    significance: "In-Flight Anomaly Survival: Dropped Navcam frame caused timestamp glitch and ±20° oscillations; landed safely within 5 m of target.",
+    significance: "In-Flight Anomaly Survival: Dropped Navcam frame caused timestamp mismatch and ±20° oscillations; landed safely within 5 m of target.",
   },
   {
     flightNum: 9,
@@ -241,6 +242,18 @@ export const INGENUITY_KEY_FLIGHTS: IngenuityFlightMilestone[] = [
     isKeyRecord: true,
   },
   {
+    flightNum: 70,
+    dateUtc: "2023-12-22",
+    sol: 1009,
+    airfieldDeparture: "Airfield Phi",
+    airfieldArrival: "Airfield Chi",
+    maxAltitudeM: 12.0,
+    horizontalDistanceM: 705.0,
+    maxSpeedMs: 7.0,
+    durationSec: 132.9,
+    significance: "Final long-range translation flight into Neretva Vallis.",
+  },
+  {
     flightNum: 71,
     dateUtc: "2024-01-06",
     sol: 1023,
@@ -277,6 +290,7 @@ export interface IngenuityHardwareSite {
   sol: number;
   coordinates: { lat: number; lon: number };
   photoPia: string;
+  photoUrl: string;
   description: string;
   scientificForensicValue: string;
 }
@@ -289,6 +303,7 @@ export const INGENUITY_HARDWARE_SITES: IngenuityHardwareSite[] = [
     sol: 30,
     coordinates: { lat: 18.4449, lon: 77.4510 },
     photoPia: "PIA24542",
+    photoUrl: "https://photojournal.jpl.nasa.gov/jpeg/PIA24542.jpg",
     description: "0.81 m × 0.45 m molded carbon-composite shell engineered by Lockheed Martin Space to shield Ingenuity from rock strikes during Sky Crane landing. Released via four pyrotechnic split-spool actuators.",
     scientificForensicValue: "Benchmark for pyrotechnic release behavior on volcanic regolith and long-term surface weathering in Jezero Crater.",
   },
@@ -299,6 +314,7 @@ export const INGENUITY_HARDWARE_SITES: IngenuityHardwareSite[] = [
     sol: 1035,
     coordinates: { lat: 18.4972, lon: 77.3196 },
     photoPia: "PIA26244",
+    photoUrl: "https://photojournal.jpl.nasa.gov/jpeg/PIA26244.jpg",
     description: "During Flight 72 touchdown, spinning rotors struck an inclined sand dune. A ~15 cm (6-inch) outer upper blade tip sheared clean off and was flung 15 meters west onto the ripple crest. Imaged from 300 m by Perseverance's SuperCam RMI.",
     scientificForensicValue: "First forensic physical evidence of an aerodynamic rotor impact failure on another planet.",
   },
@@ -309,8 +325,9 @@ export const INGENUITY_HARDWARE_SITES: IngenuityHardwareSite[] = [
     sol: 1035,
     coordinates: { lat: 18.4972, lon: 77.3198 },
     photoPia: "PIA26243",
-    description: "Resting upright on all four titanium legs at Airfield Chi, Neretva Vallis. Contains Snapdragon 801 Linux flight computer, Garmin LIDAR, 13MP camera, and the 1903 Wright Flyer fabric swatch.",
-    scientificForensicValue: "Humanity's first extraterrestrial airport monument and an active autonomous weather time capsule logging data until ~2044.",
+    photoUrl: "https://photojournal.jpl.nasa.gov/jpeg/PIA26243.jpg",
+    description: "Resting upright on all four titanium legs at Airfield Chi, Neretva Vallis (elevation -2,320 m). Contains Snapdragon 801 Linux flight computer, Garmin LIDAR, 13MP camera, and the 1903 Wright Flyer fabric swatch.",
+    scientificForensicValue: "Humanity's first extraterrestrial airport monument and an active autonomous weather time capsule logging data through ~2044.",
   },
 ];
 
@@ -337,6 +354,125 @@ export const INGENUITY_ARTIFACTS = [
     story: "When Perseverance drove out of radio range, JPL uploaded a firmware patch turning Ingenuity into an autonomous weather station. It wakes daily upon sunrise, checks battery voltage, logs temperature, and stores a photo into flash memory with capacity through ~2044.",
   },
 ];
+
+/**
+ * Master Verification & Deterministic Links
+ */
+export const INGENUITY_OFFICIAL_LINKS = {
+  nssdcaRecord: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=MARS2020H",
+  parentNssdcaRecord: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2020-052A",
+  jplFlightLog: "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/",
+  nasaFPrimeFramework: "https://github.com/nasa/fprime",
+  pdsHelicamPortal: "https://pds-imaging.jpl.nasa.gov/volumes/mars2020.html",
+  pdsHelicamRoot: "https://pds-imaging.jpl.nasa.gov/data/mars2020/mars2020_helicam/",
+  pdsAnalystsNotebook: "https://an.rsl.wustl.edu/m20/",
+  naifSpiceKernels: "https://naif.jpl.nasa.gov/pub/naif/MARS2020/kernels/",
+  supercamAcousticPds: "https://pds-geosciences.wustl.edu/m20/urn-nasa-pds-mars2020_supercam/",
+  flight4AcousticVideo: "https://photojournal.jpl.nasa.gov/archive/PIA24588.mp4",
+  hiriseWrightField: "https://www.uahirise.org/ESP_068393_1985",
+  hiriseSeitah: "https://www.uahirise.org/ESP_070107_1985",
+  hiriseNeretvaVallis: "https://www.uahirise.org/ESP_081909_1985",
+};
+
+/**
+ * Verified NASA Photojournal High-Res Anchor Catalog
+ */
+export const INGENUITY_PIA_GALLERY = [
+  {
+    piaId: "PIA24542",
+    sol: 30,
+    title: "Composite Debris Shield on Jezero Floor",
+    description: "Ingenuity's graphite-composite debris shield resting on the volcanic floor of Jezero Crater beneath Perseverance.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA24542.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA24542",
+  },
+  {
+    piaId: "PIA24583",
+    sol: 43,
+    title: "Ingenuity Standing Solo at Wright Brothers Field (JZRO)",
+    description: "First image of Ingenuity standing autonomously on all four landing feet after being dropped from Perseverance's belly.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA24583.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA24583",
+  },
+  {
+    piaId: "PIA24584",
+    sol: 46,
+    title: "Iconic WATSON Selfie Beside Perseverance",
+    description: "62-frame mosaic selfie captured by Perseverance's WATSON camera at 3.9 m distance prior to Flight 1.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA24584.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA24584",
+  },
+  {
+    piaId: "PIA24607",
+    sol: 58,
+    title: "Flight 1 Navcam Shadow from 3.0 m",
+    description: "First powered aircraft flight on another planet: downward Navcam looking straight at its shadow from 3 meters altitude.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA24607.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA24607",
+  },
+  {
+    piaId: "PIA24609",
+    sol: 61,
+    title: "First Color Aerial Photo on Mars",
+    description: "13 MP RTE color photograph taken from 5.2 m altitude showing Perseverance's rover tracks across the sand ripples.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA24609.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA24609",
+  },
+  {
+    piaId: "PIA24647",
+    sol: 64,
+    title: "Flight 3 Aerial View of Perseverance",
+    description: "Aerial scouting shot capturing Perseverance in the upper-left corner from 85 m away and 5.0 m altitude.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA24647.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA24647",
+  },
+  {
+    piaId: "PIA25236",
+    sol: 414,
+    title: "Aerial Forensic Inspection of Backshell and Parachute",
+    description: "Flight 26 aerial survey capturing Perseverance's shattered backshell and supersonic parachute from 8 m altitude.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA25236.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA25236",
+  },
+  {
+    piaId: "PIA26242",
+    sol: 1035,
+    title: "Flight 72 Snapped Rotor Blade Shadow",
+    description: "Post-Flight 72 Navcam shadow on sand ripples revealing the snapped rotor blade tip that grounded the helicopter.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA26242.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA26242",
+  },
+  {
+    piaId: "PIA26243",
+    sol: 1051,
+    title: "Grounded Ingenuity Sitting at Valinor Hills",
+    description: "Mastcam-Z telephoto view of Ingenuity sitting alone on a sand ripple at Valinor Hills after mission conclusion.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA26243.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA26243",
+  },
+  {
+    piaId: "PIA26244",
+    sol: 1072,
+    title: "SuperCam RMI Close-up of Sheared Blade Fragment",
+    description: "Long-range SuperCam micro-imager photo showing the sheared 15 cm rotor blade fragment lying 15 m west on a ripple crest.",
+    url: "https://photojournal.jpl.nasa.gov/jpeg/PIA26244.jpg",
+    catalog: "https://photojournal.jpl.nasa.gov/catalog/PIA26244",
+  },
+];
+
+/**
+ * Deterministic 54-Character PDS `mars2020_helicam` URL Builder
+ * Format: {INST}{FILTER}_{SOL}_{SCLK10}_{PROD}_{SITE}_{DRIVE}_{SEQ}_{CAM}{VER}.{EXT}
+ */
+export function buildPdsHelicamBrowseUrl(sol: number): string {
+  const paddedSol = sol.toString().padStart(5, "0");
+  return `https://pds-imaging.jpl.nasa.gov/data/mars2020/mars2020_helicam/browse/sol/${paddedSol}/ids/edr/heli/`;
+}
+
+export function buildPdsHelicamDataUrl(sol: number): string {
+  const paddedSol = sol.toString().padStart(5, "0");
+  return `https://pds-imaging.jpl.nasa.gov/data/mars2020/mars2020_helicam/data/sol/${paddedSol}/ids/edr/heli/`;
+}
 
 /**
  * Aerodynamic Lift & Tip Speed Calculations in 1% Martian Air

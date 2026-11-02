@@ -7,6 +7,10 @@ import {
   INGENUITY_KEY_FLIGHTS,
   INGENUITY_HARDWARE_SITES,
   INGENUITY_ARTIFACTS,
+  INGENUITY_OFFICIAL_LINKS,
+  INGENUITY_PIA_GALLERY,
+  buildPdsHelicamBrowseUrl,
+  buildPdsHelicamDataUrl,
   calculateIngenuityAerodynamics,
   type IngenuityFlightMilestone,
 } from "@/lib/ingenuity-mission";
@@ -16,7 +20,7 @@ interface IngenuitySimulatorProps {
 }
 
 export default function IngenuitySimulator({ standalone = false }: IngenuitySimulatorProps) {
-  const [activeTab, setActiveTab] = useState<"aero" | "flights" | "hardware">("aero");
+  const [activeTab, setActiveTab] = useState<"aero" | "flights" | "hardware" | "pds">("aero");
 
   // Aerodynamics Lab State
   const [density, setDensity] = useState<number>(0.015);
@@ -86,7 +90,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
       osc1.frequency.setValueAtTime(baseFreq, ctx.currentTime);
 
       osc2.type = "sine";
-      osc2.frequency.setValueAtTime(baseFreq * 2, ctx.currentTime); // 1st harmonic (169 Hz)
+      osc2.frequency.setValueAtTime(baseFreq * 2, ctx.currentTime); // 1st harmonic
 
       gain.gain.setValueAtTime(0.04, ctx.currentTime);
 
@@ -139,7 +143,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
               ICAO: {INGENUITY_SPECS.icaoDesignator} · Call Sign: {INGENUITY_SPECS.callSign}
             </span>
-            <span className="font-mono text-xs text-white/50">{INGENUITY_SPECS.cosparId}</span>
+            <span className="font-mono text-xs text-white/50">{INGENUITY_SPECS.cosparId} · {INGENUITY_SPECS.nssdcaId}</span>
           </div>
           <h2 className="display mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
             Ingenuity Mars Helicopter
@@ -153,7 +157,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
         <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-right">
           <p className="font-mono text-[10px] text-white/50 uppercase">First Extraterrestrial Airport</p>
           <p className="font-mono text-base font-bold text-cyan-300">{INGENUITY_SPECS.firstAirportCode}</p>
-          <p className="text-[10px] text-white/60">Jezero Crater, Mars</p>
+          <p className="text-[10px] text-white/60">Jezero Crater, Mars (18.4449° N, 77.4510° E)</p>
         </div>
       </div>
 
@@ -194,11 +198,11 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
 
       {/* Tabs */}
       <div className="relative z-10 mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => setActiveTab("aero")}
-            className={`rounded-xl px-4 py-2 font-mono text-xs font-semibold transition-all ${
+            className={`rounded-xl px-3.5 py-2 font-mono text-xs font-semibold transition-all ${
               activeTab === "aero"
                 ? "bg-cyan-500 text-night shadow-md shadow-cyan-500/20"
                 : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
@@ -209,7 +213,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
           <button
             type="button"
             onClick={() => setActiveTab("flights")}
-            className={`rounded-xl px-4 py-2 font-mono text-xs font-semibold transition-all ${
+            className={`rounded-xl px-3.5 py-2 font-mono text-xs font-semibold transition-all ${
               activeTab === "flights"
                 ? "bg-cyan-500 text-night shadow-md shadow-cyan-500/20"
                 : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
@@ -220,13 +224,24 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
           <button
             type="button"
             onClick={() => setActiveTab("hardware")}
-            className={`rounded-xl px-4 py-2 font-mono text-xs font-semibold transition-all ${
+            className={`rounded-xl px-3.5 py-2 font-mono text-xs font-semibold transition-all ${
               activeTab === "hardware"
                 ? "bg-cyan-500 text-night shadow-md shadow-cyan-500/20"
                 : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
             }`}
           >
             Discarded Sites &amp; 20-Yr Time Capsule
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("pds")}
+            className={`rounded-xl px-3.5 py-2 font-mono text-xs font-semibold transition-all ${
+              activeTab === "pds"
+                ? "bg-cyan-500 text-night shadow-md shadow-cyan-500/20"
+                : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            PDS Archives &amp; Direct Data Endpoints
           </button>
         </div>
 
@@ -253,7 +268,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
             <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-md">
               <div>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
-                  Mars Aerodynamic Paradox ($&lt; 1\%$ Earth Density)
+                  Mars Aerodynamic Paradox (&lt; 1% Earth Density)
                 </span>
                 <h3 className="display mt-2 text-2xl font-bold">
                   Lift vs. Martian Weight
@@ -384,7 +399,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                         setDensity(0.015);
                         setRpm(2537);
                       }}
-                      className="rounded-lg border border-white/10 bg-white/5 p-2 text-left hover:bg-white/10"
+                      className="rounded-lg border border-white/10 bg-white/5 p-2 text-left hover:bg-white/10 cursor-pointer"
                     >
                       <p className="font-mono text-[11px] font-bold text-white">Flight 1 Baseline</p>
                       <p className="text-[10px] text-white/50">0.015 kg/m³ · 2,537 RPM</p>
@@ -396,7 +411,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                         setDensity(0.0115);
                         setRpm(2800);
                       }}
-                      className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-2 text-left hover:bg-cyan-500/20"
+                      className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-2 text-left hover:bg-cyan-500/20 cursor-pointer"
                     >
                       <p className="font-mono text-[11px] font-bold text-cyan-300">Summer Thin Air</p>
                       <p className="text-[10px] text-white/50">0.0115 kg/m³ · 2,800 RPM</p>
@@ -408,7 +423,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                         setDensity(0.0115);
                         setRpm(2537);
                       }}
-                      className="rounded-lg border border-red-500/30 bg-red-500/10 p-2 text-left hover:bg-red-500/20"
+                      className="rounded-lg border border-red-500/30 bg-red-500/10 p-2 text-left hover:bg-red-500/20 cursor-pointer"
                     >
                       <p className="font-mono text-[11px] font-bold text-red-300">Summer Stall Bug</p>
                       <p className="text-[10px] text-white/50">Under-thrust condition</p>
@@ -435,24 +450,26 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
               <p className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
                 Key Milestone Flights (From 72 Total)
               </p>
-              {INGENUITY_KEY_FLIGHTS.map((f) => (
-                <button
-                  key={f.flightNum}
-                  type="button"
-                  onClick={() => setSelectedFlight(f)}
-                  className={`w-full text-left rounded-xl border p-3 transition-all ${
-                    selectedFlight.flightNum === f.flightNum
-                      ? "border-cyan-400 bg-cyan-500/20 text-white shadow-md shadow-cyan-500/20"
-                      : "border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/5 hover:text-white"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold text-white">Flight {f.flightNum} (Sol {f.sol})</span>
-                    <span className="font-mono text-[11px] text-cyan-300">{f.horizontalDistanceM} m · {f.durationSec}s</span>
-                  </div>
-                  <p className="mt-1 text-[11px] text-white/50 truncate">{f.airfieldDeparture} → {f.airfieldArrival}</p>
-                </button>
-              ))}
+              <div className="space-y-1.5 max-h-[460px] overflow-y-auto no-scrollbar pr-1">
+                {INGENUITY_KEY_FLIGHTS.map((f) => (
+                  <button
+                    key={f.flightNum}
+                    type="button"
+                    onClick={() => setSelectedFlight(f)}
+                    className={`w-full text-left rounded-xl border p-3 transition-all cursor-pointer ${
+                      selectedFlight.flightNum === f.flightNum
+                        ? "border-cyan-400 bg-cyan-500/20 text-white shadow-md shadow-cyan-500/20"
+                        : "border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/5 hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-bold text-white">Flight {f.flightNum} (Sol {f.sol})</span>
+                      <span className="font-mono text-[11px] text-cyan-300">{f.horizontalDistanceM} m · {f.durationSec}s</span>
+                    </div>
+                    <p className="mt-1 text-[11px] text-white/50 truncate">{f.airfieldDeparture} → {f.airfieldArrival}</p>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Active Flight Detailed Dossier */}
@@ -504,6 +521,39 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                   </p>
                   <p className="mt-1 text-white/90">{selectedFlight.significance}</p>
                 </div>
+
+                {/* Direct PDS Telemetry Links for this Sol */}
+                <div className="rounded-xl border border-white/10 bg-black/40 p-3.5">
+                  <p className="font-mono text-[11px] text-cyan-300 font-bold uppercase mb-2">
+                    Verified PDS Data Endpoints for Flight {selectedFlight.flightNum} (Sol {selectedFlight.sol})
+                  </p>
+                  <div className="flex flex-wrap gap-2 text-[11px] font-mono">
+                    <a
+                      href={buildPdsHelicamBrowseUrl(selectedFlight.sol)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-lg bg-cyan-900/40 hover:bg-cyan-800/60 text-cyan-300 border border-cyan-700/50 px-2.5 py-1 transition-all"
+                    >
+                      PDS Browse Images (Sol {selectedFlight.sol}) ↗
+                    </a>
+                    <a
+                      href={buildPdsHelicamDataUrl(selectedFlight.sol)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-lg bg-white/5 hover:bg-white/10 text-white/80 border border-white/10 px-2.5 py-1 transition-all"
+                    >
+                      Raw Science &amp; XML Labels ↗
+                    </a>
+                    <a
+                      href={INGENUITY_OFFICIAL_LINKS.naifSpiceKernels}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-lg bg-white/5 hover:bg-white/10 text-white/80 border border-white/10 px-2.5 py-1 transition-all"
+                    >
+                      NAIF SPICE 3D Trajectory (SPK) ↗
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -524,7 +574,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                   key={site.id}
                   type="button"
                   onClick={() => setSelectedSiteId(site.id)}
-                  className={`w-full text-left rounded-xl border p-3 transition-all ${
+                  className={`w-full text-left rounded-xl border p-3 transition-all cursor-pointer ${
                     activeSite.id === site.id
                       ? "border-cyan-400 bg-cyan-500/20 text-white shadow-md shadow-cyan-500/20"
                       : "border-white/10 bg-white/[0.02] text-white/70 hover:bg-white/5 hover:text-white"
@@ -542,7 +592,7 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                 {INGENUITY_ARTIFACTS.map((art) => (
                   <div key={art.title} className="rounded-xl border border-white/5 bg-white/[0.02] p-3 mb-2">
                     <p className="font-mono text-xs font-bold text-amber-300">{art.title}</p>
-                    <p className="mt-1 text-[11px] text-white/70">{art.story}</p>
+                    <p className="mt-1 text-[11px] text-white/70 leading-relaxed">{art.story}</p>
                   </div>
                 ))}
               </div>
@@ -572,26 +622,191 @@ export default function IngenuitySimulator({ standalone = false }: IngenuitySimu
                 <div className="mt-4">
                   <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10">
                     <Image
-                      src={`https://photojournal.jpl.nasa.gov/jpeg/${activeSite.photoPia}.jpg`}
+                      src={activeSite.photoUrl}
                       alt={activeSite.name}
                       fill
                       className="object-cover"
                       sizes="(min-width: 1024px) 500px, 100vw"
                     />
                   </div>
-                  <p className="mt-1.5 font-mono text-[10px] text-white/50">
-                    NASA/JPL Photojournal {activeSite.photoPia} ·{" "}
+                  <div className="mt-2 flex items-center justify-between font-mono text-[10px] text-white/50">
+                    <span>NASA/JPL Photojournal {activeSite.photoPia}</span>
                     <a
                       href={`https://photojournal.jpl.nasa.gov/catalog/${activeSite.photoPia}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-cyan-300 hover:underline"
                     >
-                      view full resolution archive
+                      View High-Res Archive Catalog ↗
                     </a>
-                  </p>
+                  </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: PDS ARCHIVES & DIRECT DATA ENDPOINTS */}
+      {activeTab === "pds" && (
+        <div className="relative z-10 space-y-6">
+          {/* PDS Header & 54-char Schema */}
+          <div className="rounded-2xl border border-cyan-500/30 bg-cyan-950/20 p-5 backdrop-blur-md">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold">
+              Planetary Data System (PDS) Cartography and Imaging Sciences Node
+            </span>
+            <h3 className="display mt-1 text-2xl font-bold text-white">
+              Deterministic 54-Character helicam Filename Schema
+            </h3>
+            <p className="mt-1 text-xs text-white/70 leading-relaxed">
+              Every raw photograph, calibrated RDR, and PDS4 XML telemetry record follows NASA&apos;s deterministic 54-character identifier:
+            </p>
+
+            <div className="mt-4 p-3 rounded-xl bg-black/60 border border-white/10 font-mono text-xs text-cyan-300 overflow-x-auto">
+              &#123;INST&#125;&#123;FILTER&#125;_&#123;SOL&#125;_&#123;SCLK10&#125;_&#123;PROD&#125;_&#123;SITE&#125;_&#123;DRIVE&#125;_&#123;SEQ&#125;_&#123;CAM&#125;&#123;VER&#125;.&#123;EXT&#125;
+            </div>
+
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+              <div className="rounded-lg bg-white/5 p-2.5 border border-white/10">
+                <span className="text-cyan-400 font-bold block mb-0.5">HN (Navcam Identifier):</span>
+                <span className="text-white/80 text-[11px] block">
+                  Omnivision OV7251 VGA CMOS (640 × 480, 133° × 100° FOV, 30 fps visual odometry tracker).
+                </span>
+              </div>
+              <div className="rounded-lg bg-white/5 p-2.5 border border-white/10">
+                <span className="text-cyan-400 font-bold block mb-0.5">HS (Return-to-Earth Camera):</span>
+                <span className="text-white/80 text-[11px] block">
+                  Sony IMX214 color CMOS (4208 × 3120, 13 MP, 47° × 47° FOV oblique aerial survey).
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Master Portal Link Grid */}
+          <div>
+            <h4 className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
+              Official Master Records &amp; Scientific Data Endpoints
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <a
+                href={INGENUITY_OFFICIAL_LINKS.nssdcaRecord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] p-3 transition-all group"
+              >
+                <p className="font-mono text-xs font-bold text-cyan-300 group-hover:underline">
+                  NSSDCA Record: MARS2020H ↗
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">
+                  NASA Space Science Data Coordinated Archive master spacecraft record.
+                </p>
+              </a>
+
+              <a
+                href={INGENUITY_OFFICIAL_LINKS.pdsHelicamRoot}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] p-3 transition-all group"
+              >
+                <p className="font-mono text-xs font-bold text-cyan-300 group-hover:underline">
+                  PDS helicam Archive Root ↗
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">
+                  urn:nasa:pds:mars2020_helicam root directory with unauthenticated HTTP access.
+                </p>
+              </a>
+
+              <a
+                href={INGENUITY_OFFICIAL_LINKS.naifSpiceKernels}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] p-3 transition-all group"
+              >
+                <p className="font-mono text-xs font-bold text-cyan-300 group-hover:underline">
+                  NAIF SPICE 3D Kernels ↗
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">
+                  Exact 3D flight trajectory (SPK), attitude quaternions (CK), and clock (SCLK).
+                </p>
+              </a>
+
+              <a
+                href={INGENUITY_OFFICIAL_LINKS.nasaFPrimeFramework}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] p-3 transition-all group"
+              >
+                <p className="font-mono text-xs font-bold text-cyan-300 group-hover:underline">
+                  NASA F&apos; Flight Framework (GitHub) ↗
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">
+                  The actual open-source flight software framework running on Snapdragon 801.
+                </p>
+              </a>
+
+              <a
+                href={INGENUITY_OFFICIAL_LINKS.supercamAcousticPds}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] p-3 transition-all group"
+              >
+                <p className="font-mono text-xs font-bold text-cyan-300 group-hover:underline">
+                  SuperCam Acoustic Archive (PDS) ↗
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">
+                  Raw acoustic microphone recordings of the 84.6 Hz blade hum on Mars.
+                </p>
+              </a>
+
+              <a
+                href={INGENUITY_OFFICIAL_LINKS.pdsAnalystsNotebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] p-3 transition-all group"
+              >
+                <p className="font-mono text-xs font-bold text-cyan-300 group-hover:underline">
+                  Analyst&apos;s Notebook (M20) ↗
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">
+                  Interactive Sol-by-Sol traverse maps and coordinated rover/helicopter data.
+                </p>
+              </a>
+            </div>
+          </div>
+
+          {/* Photojournal High-Res Anchor Catalog */}
+          <div className="mt-6 border-t border-white/10 pt-5">
+            <h4 className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
+              Verified NASA Photojournal (PIA) High-Res Image Catalog
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {INGENUITY_PIA_GALLERY.map((item) => (
+                <div key={item.piaId} className="rounded-xl border border-white/10 bg-black/40 p-3">
+                  <div className="relative aspect-video w-full rounded-lg overflow-hidden mb-2 bg-white/5">
+                    <Image
+                      src={item.url}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 300px, 100vw"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-[10px] font-mono mb-1">
+                    <span className="text-cyan-400 font-bold">{item.piaId}</span>
+                    <span className="text-white/50">Sol {item.sol}</span>
+                  </div>
+                  <p className="font-bold text-xs text-white truncate">{item.title}</p>
+                  <p className="text-[10px] text-white/60 mt-0.5 line-clamp-2">{item.description}</p>
+                  <a
+                    href={item.catalog}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-block font-mono text-[10px] text-cyan-300 hover:underline"
+                  >
+                    View Official JPL Catalog ↗
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
         </div>

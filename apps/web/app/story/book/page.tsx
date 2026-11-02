@@ -6,6 +6,7 @@ import Link from "next/link";
 import Header from "@/app/components/header";
 import { ArrowLeft, ArrowRight } from "@/app/components/icons";
 import { assetUrl } from "@/lib/heroes";
+import { calculateIngenuityAerodynamics } from "@/lib/ingenuity-mission";
 
 interface BookSpread {
   id: string;
@@ -1179,40 +1180,36 @@ const SPREADS: BookSpread[] = [
     machineName: "Ingenuity",
     spreadTitle: "Chapter 12: Ingenuity",
     spreadSubtitle: "Part I: First Powered Flight on Another World",
-    dateAndLocation: "April 19, 2021 · Wright Brothers Field, Jezero Crater",
-    cosparId: "2020-052A",
+    dateAndLocation: "April 19, 2021 · Wright Brothers Field (JZRO), Jezero Crater",
+    cosparId: "2020-052B / MARS2020H (ICAO: IGY)",
     heroSlug: "ingenuity",
     badge: "Wings Over Mars",
     telemetrySummary: [
-      { label: "COSPAR ID", value: "2020-052A" },
-      { label: "Mass", value: "1.8 kg (4.0 lbs)" },
-      { label: "Rotor RPM", value: "2,400–2,700 RPM" },
-      { label: "Flights Flown", value: "72 flights (5 planned)" },
+      { label: "COSPAR / NSSDCA", value: "2020-052B / MARS2020H" },
+      { label: "Mass & Weight", value: "1.80 kg (0.68 kg / 6.70 N)" },
+      { label: "Rotor Dynamics", value: "Coaxial 1.21 m, 2,400–2,900 RPM" },
+      { label: "Flight Record", value: "72 flights · 17.02 km · 128.8 min" },
     ],
     leftPage: {
       heading: "Wings Over Mars",
-      subheading: "Defying the 1% Atmospheric Density",
+      subheading: "Defying the 1% Atmospheric Density Paradox",
       paragraphs: [
-        "Aerospace textbooks once declared powered flight on Mars nearly impossible: the Martian atmosphere has an average density of just 1% of Earth's sea-level pressure—equivalent to flying at 100,000 feet on Earth.",
-        "Ingenuity arrived strapped to the belly of the Perseverance rover. With a featherweight mass of 1.8 kilograms, it spun two 1.2-meter counter-rotating carbon fiber rotors at 2,400 RPM—five times faster than an Earth helicopter.",
+        "Aerospace textbooks once declared powered flight on Mars nearly impossible: atmospheric density at Jezero Crater is only 0.014 to 0.017 kg/m³—less than 1% of Earth's sea-level density, equivalent to flying an aircraft at 30,500 meters (100,000 feet) on Earth.",
+        "Ingenuity arrived strapped horizontally under the belly of the Perseverance rover. With a featherweight mass of 1.80 kg (effective Mars weight 0.68 kg / 6.70 N), it spun two 1.21-meter counter-rotating carbon fiber rotors at 2,400 to 2,900 RPM—five times faster than an Earth helicopter.",
       ],
       calloutBox: {
-        title: "The Wright Brothers Fabric",
-        text: "Tucked beneath Ingenuity's solar panel was a tiny swatch of unbleached muslin fabric from the lower left wing of the 1903 Wright Flyer, carrying a century of aviation history to another planet.",
+        title: "The 1903 Wright Flyer Swatch",
+        text: "Tucked beneath Ingenuity's solar panel was a 1.5 cm × 1.5 cm swatch of unbleached muslin fabric from the lower left wing of Orville and Wilbur Wright's 1903 Wright Flyer, carrying a century of aviation heritage to Mars.",
+        badge: "Historic Relic",
       },
     },
     rightPage: {
-      heading: "Wright Brothers Field",
-      subheading: "April 19, 2021: 39.1 Seconds Aloft",
+      heading: "Interactive Rotor Aerodynamics & Soundboard",
+      subheading: "Drag RPM & Density to Balance 6.70 N Mars Gravity",
       paragraphs: [
-        "At 07:34 UTC, Ingenuity spun its blades, ascended 3 meters into the air, hovered for 39.1 seconds, and landed gently on Jezero Crater's floor. NASA named the strip 'Wright Brothers Field'.",
-        "Planned as a 30-day, 5-flight technology demonstration, the tiny helicopter flew for nearly three years, completing 72 flights, covering 17.0 kilometers, and scouting dune fields for Perseverance.",
+        "Ingenuity must generate at least 6.70 N of lift while keeping rotor blade tips below Mach 0.70 in cold Martian CO₂. Tweak the controls below to test seasonal flight margins and listen to authentic acoustic telemetry:",
       ],
-      quote: {
-        text: "Ingenuity has performed its first flight: the first flight of a powered aircraft on another planet!",
-        author: "MiMi Aung, Ingenuity Project Manager, April 2021",
-      },
-      takeaway: "Ingenuity unlocked the aerial dimension for future planetary exploration.",
+      takeaway: "Ingenuity proved that controlled aerodynamic flight in Mars's 1% atmosphere was fully achievable.",
     },
   },
 
@@ -1224,36 +1221,38 @@ const SPREADS: BookSpread[] = [
     chapterNumber: 12,
     machineName: "Ingenuity",
     spreadTitle: "Chapter 12: Ingenuity",
-    spreadSubtitle: "Part II: Flight 72 Rotor Damage & Neretva Airfield",
-    dateAndLocation: "Jan 18, 2024 · Valinor Hills Airfield, Jezero Crater",
-    cosparId: "2020-052A",
+    spreadSubtitle: "Part II: Discarded Monuments & The 20-Year Time Capsule",
+    dateAndLocation: "Jan 18, 2024 – Present · Valinor Hills (Airfield Chi), Neretva Vallis",
+    cosparId: "2020-052B / MARS2020H (ICAO: IGY)",
     heroSlug: "ingenuity",
     badge: "Valinor Hills",
     image: "images/card-ingenuity.webp",
-    imageCaption: "Ingenuity Mars Helicopter standing on its four carbon composite landing legs.",
+    imageCaption: "Ingenuity Mars Helicopter standing upright at Valinor Hills with damaged rotor tips.",
     leftPage: {
-      heading: "Flight 72: The Sand Dune Landing",
-      subheading: "January 18, 2024 · Featureless Terrain",
+      heading: "3 Discarded Hardware Monuments",
+      subheading: "The Physical Heritage Across Jezero Crater",
       paragraphs: [
-        "On Flight 72, Ingenuity flew a quick vertical pop-up flight over bland, featureless sand dunes that offered no surface contrast for its optical navigation tracking cameras.",
-        "During descent, the helicopter tilted, and a carbon fiber rotor blade struck the sand. On Sol 1042, its downward navigation camera photographed its own shadow, revealing 25% of one rotor tip snapped off cleanly.",
+        "Over its 17.02-kilometer odyssey, Ingenuity left behind three distinct physical monuments across Jezero Crater, from the crater floor to the ancient river delta:",
       ],
       calloutBox: {
-        title: "The Final Ground Station",
-        text: "Though grounded forever, Ingenuity's computer and sensors remain healthy. NASA uplinked a software update transforming the helicopter into a permanent stationary meteorological and avionics testbed.",
+        title: "Flight 72 Dune Strike (Sol 1035)",
+        text: "On Jan 18, 2024, featureless sand ripples in Neretva Vallis starved the downward Navcam of contrast, causing a tilted touchdown that snapped all four rotor blade tips.",
+        badge: "Mission End",
       },
     },
     rightPage: {
-      heading: "The Valinor Hills Airfield",
-      subheading: "Still Waking Up Every Martian Morning",
+      heading: "The 20-Year Autonomous Time Capsule",
+      subheading: "Sol 1121 Final Firmware Patch (April 16, 2024 – Present)",
       paragraphs: [
-        "Ingenuity continues to wake up every morning, measure temperatures and weather, and store telemetry in non-volatile flash memory, waiting for the day future astronauts arrive to download its logs.",
+        "Unlike almost every other dead rover whose electronics froze, Ingenuity is still alive on Mars right now. On April 16, 2024, before Perseverance drove out of radio range, JPL beamed a final software update turning Ingenuity into a stationary autonomous testbed.",
+        "Every single morning when sunlight hits its solar array, Ingenuity wakes up, checks its battery health, logs the daily internal and external Martian temperatures, and snaps a color image with its 13MP Sony IMX214 camera into flash memory.",
+        "With capacity to record roughly 20 years of daily Martian weather (through ~2044), it waits silently at Valinor Hills until future human astronauts walk up to retrieve the data.",
       ],
       quote: {
         text: "To the little helicopter that could: you gave us wings over another world.",
         author: "Bill Nelson, NASA Administrator, Jan 2024",
       },
-      takeaway: "Ingenuity proved that aerial exploration of Mars, Titan, and Venus is the future of deep space science.",
+      takeaway: "Directly validated the aerodynamic flight models now used for the Mars Sample Return helicopters and the Dragonfly nuclear octocopter to Titan.",
     },
   },
 
@@ -1308,6 +1307,48 @@ export default function StoryBookPage() {
   const [insightSaltationBonus, setInsightSaltationBonus] = useState<number>(0);
   const [insightSaltationSparkle, setInsightSaltationSparkle] = useState<boolean>(false);
   const [insightBlueprintPart, setInsightBlueprintPart] = useState<"larri" | "names" | "cpu" | "seis">("larri");
+
+  // Ingenuity interactive states
+  const [ingenuityRpm, setIngenuityRpm] = useState<number>(2537);
+  const [ingenuityDensity, setIngenuityDensity] = useState<number>(0.015);
+  const [ingenuityAudioPlaying, setIngenuityAudioPlaying] = useState<boolean>(false);
+  const [ingenuityHardwareId, setIngenuityHardwareId] = useState<"shield" | "blade" | "chassis">("blade");
+
+  const ingenuityAero = calculateIngenuityAerodynamics(ingenuityDensity, ingenuityRpm);
+
+  const playIngenuityHum = useCallback(() => {
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const baseFreq = (ingenuityRpm / 60) * 2;
+
+      const osc1 = ctx.createOscillator();
+      const osc2 = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc1.type = "sawtooth";
+      osc1.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+      osc2.type = "sine";
+      osc2.frequency.setValueAtTime(baseFreq * 2, ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2.2);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc1.start();
+      osc2.start();
+      osc1.stop(ctx.currentTime + 2.25);
+      osc2.stop(ctx.currentTime + 2.25);
+      setIngenuityAudioPlaying(true);
+      setTimeout(() => setIngenuityAudioPlaying(false), 2200);
+    } catch {
+      // AudioContext unavailable
+    }
+  }, [ingenuityRpm]);
 
   const totalSpreads = SPREADS.length;
   const currentSpread = SPREADS[spreadIndex];
@@ -1637,56 +1678,170 @@ export default function StoryBookPage() {
                     )}
                   </div>
 
-                  {/* Body Paragraphs */}
-                  <div className="space-y-2 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
-                    {currentSpread.leftPage.paragraphs.map((p, idx) => (
-                      <p
-                        key={idx}
-                        className={
-                          idx === 0
-                            ? "first-letter:float-left first-letter:text-3xl first-letter:font-serif first-letter:mr-2 first-letter:font-bold first-letter:text-rose-900"
-                            : ""
-                        }
-                      >
-                        {p}
+                  {/* Body Paragraphs or Custom Left Page Widgets */}
+                  {currentSpread.id === "ingenuity-part-2" ? (
+                    <div className="space-y-2.5 my-1" onClick={(e) => e.stopPropagation()}>
+                      <p className="font-serif text-xs leading-relaxed text-[#3b2d26]">
+                        {currentSpread.leftPage.paragraphs[0]}
                       </p>
-                    ))}
-                  </div>
 
-                  {/* Verified Telemetry Stamp Box */}
-                  {currentSpread.telemetrySummary && (
-                    <div className="rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-2 text-[11px] font-mono text-[#4a3b32]">
-                      <p className="text-[10px] uppercase font-bold text-rose-900 tracking-wider mb-1">
-                        Verified Mission Telemetry
-                      </p>
-                      <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
-                        {currentSpread.telemetrySummary.map((item, idx) => (
-                          <div key={idx}>
-                            <span className="text-[#8c7b70] block text-[9px]">{item.label}</span>
-                            <span className="font-bold text-[#231815] truncate block">{item.value}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Callout Box */}
-                  {currentSpread.leftPage.calloutBox && (
-                    <div className="rounded-xl border border-rose-900/20 bg-rose-950/5 p-2 text-[11px] text-[#4a3b32]">
-                      <div className="flex items-center justify-between mb-0.5">
-                        <span className="font-bold text-rose-950">
-                          {currentSpread.leftPage.calloutBox.title}
-                        </span>
-                        {currentSpread.leftPage.calloutBox.badge && (
-                          <span className="bg-rose-900/10 text-rose-900 text-[9px] font-mono px-1.5 py-0.5 rounded uppercase font-bold">
-                            {currentSpread.leftPage.calloutBox.badge}
+                      {/* 3 Hardware Monuments Selector */}
+                      <div className="rounded-xl border border-cyan-900/30 bg-[#edf5f7] p-2.5 shadow-sm text-[#1e2f33]">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="font-mono text-[10px] uppercase font-bold text-cyan-950">
+                            Hardware Monuments in Jezero
                           </span>
+                          <span className="text-[9px] font-mono text-cyan-800 font-bold">
+                            3 Sites Verified
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-1 mb-2">
+                          {[
+                            { id: "shield", label: "Debris Shield", sol: "Sol 30" },
+                            { id: "blade", label: "Sheared Blade", sol: "Sol 1035" },
+                            { id: "chassis", label: "Valinor Hills", sol: "Sol 1035+" },
+                          ].map((item) => (
+                            <button
+                              key={item.id}
+                              onClick={() => setIngenuityHardwareId(item.id as typeof ingenuityHardwareId)}
+                              className={`py-1 px-1 rounded font-mono text-[9px] font-bold cursor-pointer transition-colors text-center ${
+                                ingenuityHardwareId === item.id
+                                  ? "bg-cyan-900 text-white shadow"
+                                  : "bg-[#d8e7ea] text-[#2c3e42] hover:bg-cyan-900 hover:text-white"
+                              }`}
+                            >
+                              <span className="block truncate">{item.label}</span>
+                              <span className="text-[8px] opacity-75">{item.sol}</span>
+                            </button>
+                          ))}
+                        </div>
+
+                        {ingenuityHardwareId === "shield" && (
+                          <div className="text-[11px] font-serif leading-relaxed text-[#2c3e42] space-y-1">
+                            <div className="flex justify-between font-mono text-[9px] text-cyan-900 font-bold">
+                              <span>Coords: 18.4449° N, 77.4510° E</span>
+                              <span>PIA24542</span>
+                            </div>
+                            <p>
+                              Molded 0.81 m × 0.45 m graphite shell dropped to protect Ingenuity during Sky Crane landing. Rests upright 60 m east of Wright Brothers Field.
+                            </p>
+                            <a
+                              href="https://photojournal.jpl.nasa.gov/catalog/PIA24542"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block font-mono text-[9px] text-cyan-900 font-bold hover:underline"
+                            >
+                              View JPL Photojournal PIA24542 ↗
+                            </a>
+                          </div>
+                        )}
+
+                        {ingenuityHardwareId === "blade" && (
+                          <div className="text-[11px] font-serif leading-relaxed text-[#2c3e42] space-y-1">
+                            <div className="flex justify-between font-mono text-[9px] text-cyan-900 font-bold">
+                              <span>Coords: 18.4972° N, 77.3196° E</span>
+                              <span>PIA26244</span>
+                            </div>
+                            <p>
+                              A 15 cm outer blade tip severed during Flight 72 touchdown impact on a sand ripple, flung 15 m west of the chassis in Neretva Vallis.
+                            </p>
+                            <a
+                              href="https://photojournal.jpl.nasa.gov/catalog/PIA26244"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block font-mono text-[9px] text-cyan-900 font-bold hover:underline"
+                            >
+                              View SuperCam RMI Close-up PIA26244 ↗
+                            </a>
+                          </div>
+                        )}
+
+                        {ingenuityHardwareId === "chassis" && (
+                          <div className="text-[11px] font-serif leading-relaxed text-[#2c3e42] space-y-1">
+                            <div className="flex justify-between font-mono text-[9px] text-cyan-900 font-bold">
+                              <span>Coords: 18.4972° N, 77.3198° E</span>
+                              <span>PIA26243</span>
+                            </div>
+                            <p>
+                              Standing upright on all four titanium legs at Airfield Chi, elevation -2,320 m. Houses Snapdragon 801 CPU, Garmin LIDAR, and the 1903 Wright Flyer fabric swatch.
+                            </p>
+                            <a
+                              href="https://photojournal.jpl.nasa.gov/catalog/PIA26243"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block font-mono text-[9px] text-cyan-900 font-bold hover:underline"
+                            >
+                              View Mastcam-Z Telephoto PIA26243 ↗
+                            </a>
+                          </div>
                         )}
                       </div>
-                      <p className="font-serif italic leading-relaxed text-[#5c4a3f]">
-                        {currentSpread.leftPage.calloutBox.text}
-                      </p>
+
+                      {currentSpread.leftPage.calloutBox && (
+                        <div className="rounded-xl border border-rose-900/20 bg-rose-950/5 p-2 text-[11px] text-[#4a3b32]">
+                          <span className="font-bold text-rose-950 block text-[10px] uppercase mb-0.5">
+                            {currentSpread.leftPage.calloutBox.title}
+                          </span>
+                          <p className="font-serif italic leading-relaxed text-[#5c4a3f]">
+                            {currentSpread.leftPage.calloutBox.text}
+                          </p>
+                        </div>
+                      )}
                     </div>
+                  ) : (
+                    <>
+                      <div className="space-y-2 font-serif text-xs sm:text-sm leading-relaxed text-[#3b2d26]">
+                        {currentSpread.leftPage.paragraphs.map((p, idx) => (
+                          <p
+                            key={idx}
+                            className={
+                              idx === 0
+                                ? "first-letter:float-left first-letter:text-3xl first-letter:font-serif first-letter:mr-2 first-letter:font-bold first-letter:text-rose-900"
+                                : ""
+                            }
+                          >
+                            {p}
+                          </p>
+                        ))}
+                      </div>
+
+                      {/* Verified Telemetry Stamp Box */}
+                      {currentSpread.telemetrySummary && (
+                        <div className="rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-2 text-[11px] font-mono text-[#4a3b32]">
+                          <p className="text-[10px] uppercase font-bold text-rose-900 tracking-wider mb-1">
+                            Verified Mission Telemetry
+                          </p>
+                          <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
+                            {currentSpread.telemetrySummary.map((item, idx) => (
+                              <div key={idx}>
+                                <span className="text-[#8c7b70] block text-[9px]">{item.label}</span>
+                                <span className="font-bold text-[#231815] truncate block">{item.value}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Callout Box */}
+                      {currentSpread.leftPage.calloutBox && (
+                        <div className="rounded-xl border border-rose-900/20 bg-rose-950/5 p-2 text-[11px] text-[#4a3b32]">
+                          <div className="flex items-center justify-between mb-0.5">
+                            <span className="font-bold text-rose-950">
+                              {currentSpread.leftPage.calloutBox.title}
+                            </span>
+                            {currentSpread.leftPage.calloutBox.badge && (
+                              <span className="bg-rose-900/10 text-rose-900 text-[9px] font-mono px-1.5 py-0.5 rounded uppercase font-bold">
+                                {currentSpread.leftPage.calloutBox.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="font-serif italic leading-relaxed text-[#5c4a3f]">
+                            {currentSpread.leftPage.calloutBox.text}
+                          </p>
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {/* Spread 0 Cover CTA */}
@@ -1920,6 +2075,151 @@ export default function StoryBookPage() {
                             "BAE Systems RAD750 radiation-hardened 32-bit PowerPC running at 115.5 MHz on VxWorks, with 128 MB DRAM and 4 GB non-volatile flash memory."}
                           {insightBlueprintPart === "seis" &&
                             "Three inverted-pendulum leaf-spring sensors inside a titanium vacuum sphere evacuated to <10⁻⁵ mbar, measuring motion down to 2.5×10⁻¹⁰ meters."}
+                        </div>
+                      </div>
+                    </div>
+                  ) : currentSpread.id === "ingenuity-part-1" ? (
+                    /* DEDICATED SPREAD 26: INGENUITY PART I (ROTOR AERODYNAMICS & 84.6 HZ HUM) */
+                    <div className="space-y-2.5 my-1" onClick={(e) => e.stopPropagation()}>
+                      <p className="font-serif text-xs leading-relaxed text-[#3b2d26]">
+                        {currentSpread.rightPage.paragraphs?.[0]}
+                      </p>
+
+                      {/* Interactive Aerodynamics Cockpit */}
+                      <div className="rounded-xl border border-cyan-900/30 bg-[#edf5f7] p-2.5 shadow-sm text-[#1e2f33]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-cyan-950">
+                            ⚙️ 1% Atmosphere Aerodynamics Lab
+                          </span>
+                          <span className={`font-mono text-xs font-bold ${ingenuityAero.canFly ? "text-emerald-800" : "text-rose-800"}`}>
+                            {ingenuityAero.liftNewtons} N ({ingenuityAero.canFly ? "LIFT OFF" : "NO LIFT"})
+                          </span>
+                        </div>
+
+                        {/* Real-time Thrust & Tip Mach Readouts */}
+                        <div className="grid grid-cols-2 gap-1.5 my-1.5 font-mono text-[10px]">
+                          <div className="bg-white/60 p-1.5 rounded border border-cyan-900/10">
+                            <span className="text-[#62777c] block text-[9px]">Generated Lift</span>
+                            <span className="font-bold text-[#142327] text-xs">{ingenuityAero.liftNewtons} N</span>
+                            <span className="text-[9px] text-[#738589] block">Req: 6.70 N weight</span>
+                          </div>
+                          <div className="bg-white/60 p-1.5 rounded border border-cyan-900/10">
+                            <span className="text-[#62777c] block text-[9px]">Blade Tip Speed</span>
+                            <span className="font-bold text-[#142327] text-xs">Mach {ingenuityAero.tipMach}</span>
+                            <span className="text-[9px] text-[#738589] block">{ingenuityAero.tipSpeedMs} m/s (Max &lt;0.70)</span>
+                          </div>
+                        </div>
+
+                        {/* Dual Sliders: RPM & Density */}
+                        <div className="space-y-1.5 font-mono text-[9px]">
+                          <div>
+                            <div className="flex justify-between text-[#4d6368]">
+                              <span>Rotor Speed: <b>{ingenuityRpm} RPM</b></span>
+                              <span>2,400–2,900 RPM</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="2400"
+                              max="2900"
+                              step="25"
+                              value={ingenuityRpm}
+                              onChange={(e) => setIngenuityRpm(parseInt(e.target.value, 10))}
+                              className="w-full accent-cyan-900 h-1.5 bg-[#d4e4e7] rounded cursor-pointer"
+                            />
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between text-[#4d6368]">
+                              <span>Air Density (ρ): <b>{ingenuityDensity.toFixed(4)} kg/m³</b></span>
+                              <span>Summer 0.0115 – Winter 0.017</span>
+                            </div>
+                            <input
+                              type="range"
+                              min="0.0115"
+                              max="0.0170"
+                              step="0.0005"
+                              value={ingenuityDensity}
+                              onChange={(e) => setIngenuityDensity(parseFloat(e.target.value))}
+                              className="w-full accent-cyan-900 h-1.5 bg-[#d4e4e7] rounded cursor-pointer"
+                            />
+                          </div>
+                        </div>
+
+                        {/* 84.6 Hz Blade Hum Audio Player */}
+                        <div className="mt-2 pt-1.5 border-t border-cyan-900/15 flex items-center justify-between">
+                          <button
+                            onClick={playIngenuityHum}
+                            disabled={ingenuityAudioPlaying}
+                            className="rounded-lg bg-cyan-900 hover:bg-cyan-800 text-white font-mono text-[10px] py-1 px-2.5 font-bold transition-all shadow cursor-pointer disabled:opacity-60 flex items-center gap-1.5"
+                          >
+                            <span>{ingenuityAudioPlaying ? "🔊 Playing 84.6 Hz Hum..." : "🎧 Play 84.6 Hz Blade Hum"}</span>
+                          </button>
+                          <a
+                            href="https://pds-imaging.jpl.nasa.gov/data/mars2020/mars2020_helicam/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono text-[9px] text-cyan-900 font-bold hover:underline"
+                          >
+                            PDS helicam Archive ↗
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ) : currentSpread.id === "ingenuity-part-2" ? (
+                    /* DEDICATED SPREAD 27: INGENUITY PART II (20-YEAR TIME CAPSULE & PDS ENDPOINTS) */
+                    <div className="space-y-2.5 my-1" onClick={(e) => e.stopPropagation()}>
+                      <p className="font-serif text-xs leading-relaxed text-[#3b2d26]">
+                        {currentSpread.rightPage.paragraphs?.[0]}
+                      </p>
+
+                      {/* 20-Year Time Capsule Terminal Plate */}
+                      <div className="rounded-xl border border-cyan-900/30 bg-[#edf5f7] p-2.5 shadow-sm text-[#1e2f33]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-cyan-950">
+                            Autonomous 20-Year Time Capsule
+                          </span>
+                          <span className="text-[9px] font-mono text-emerald-800 font-bold">
+                            Active Daily Through ~2044
+                          </span>
+                        </div>
+                        <p className="font-serif text-[11px] leading-relaxed text-[#2c3e42] mb-2">
+                          Wakes every morning upon sunrise, checks battery voltage, logs daily temperatures, and stores a 13 MP Sony IMX214 photo into flash memory.
+                        </p>
+
+                        {/* Official Master Link Endpoints */}
+                        <div className="grid grid-cols-2 gap-1.5 font-mono text-[9px]">
+                          <a
+                            href="https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=MARS2020H"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1.5 bg-[#dbe8eb] hover:bg-cyan-900 hover:text-white transition-colors text-cyan-950 font-bold truncate text-center"
+                          >
+                            NSSDCA MARS2020H ↗
+                          </a>
+                          <a
+                            href="https://naif.jpl.nasa.gov/pub/naif/MARS2020/kernels/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1.5 bg-[#dbe8eb] hover:bg-cyan-900 hover:text-white transition-colors text-cyan-950 font-bold truncate text-center"
+                          >
+                            NAIF SPICE 3D Trajectory ↗
+                          </a>
+                          <a
+                            href="https://github.com/nasa/fprime"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1.5 bg-[#dbe8eb] hover:bg-cyan-900 hover:text-white transition-colors text-cyan-950 font-bold truncate text-center"
+                          >
+                            NASA F&apos; Framework ↗
+                          </a>
+                          <a
+                            href="https://an.rsl.wustl.edu/m20/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1.5 bg-[#dbe8eb] hover:bg-cyan-900 hover:text-white transition-colors text-cyan-950 font-bold truncate text-center"
+                          >
+                            Analyst&apos;s Notebook ↗
+                          </a>
                         </div>
                       </div>
                     </div>
