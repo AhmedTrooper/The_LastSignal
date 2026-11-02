@@ -55,8 +55,8 @@ export const LCROSS_SPECS: LCROSSSpecs = {
   impactTarget: {
     crater: "Cabeus Crater",
     feature: "Permanently Shadowed Region (PSR) floor near South Pole",
-    lat: -84.9,
-    lon: 315.1, // 44.9° W
+    lat: -84.729,
+    lon: -48.725, // 311.275° E
     temperatureKelvin: 40,
     temperatureCelsius: -233,
     lrocFrame: "M119827295RE",

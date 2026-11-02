@@ -1,9 +1,17 @@
 import type { WikiEntry } from "./types";
 
-const VIKING_SOURCES = [
+const VIKING_1_SOURCES = [
+  { label: "NSSDCA Master Catalog: Viking 1 Lander", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1975-075C" },
   { label: "NASA Science: Viking 1", url: "https://science.nasa.gov/mission/viking-1/" },
-  { label: "NASA Science: Viking 2", url: "https://science.nasa.gov/mission/viking-2/" },
   { label: "NASA History: 45 Years Ago, Viking 1 Touches Down on Mars", url: "https://www.nasa.gov/history/45-years-ago-viking-1-touches-down-on-mars/" },
+  { label: "HiRISE: Viking Lander 1 in Chryse Planitia (PSP_001521_2025)", url: "https://www.uahirise.org/PSP_001521_2025" },
+];
+
+const VIKING_2_SOURCES = [
+  { label: "NSSDCA Master Catalog: Viking 2 Lander", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1975-083C" },
+  { label: "NASA Science: Viking 2", url: "https://science.nasa.gov/mission/viking-2/" },
+  { label: "NASA History: 45 Years Ago, Viking 2 Touches Down on Mars", url: "https://www.nasa.gov/history/45-years-ago-viking-2-touches-down-on-mars/" },
+  { label: "HiRISE: Viking Lander 2 in Utopia Planitia (PSP_001501_2280)", url: "https://www.uahirise.org/PSP_001501_2280" },
 ];
 
 const WHY = {
@@ -60,14 +68,20 @@ export const VIKING_1: WikiEntry = {
     { date: "11 November 1982", text: "A faulty command from Earth ends contact." },
   ],
   facts: [
-    { label: "Lander mass", value: "978 kg" },
-    { label: "Launch", value: "20 August 1975" },
-    { label: "Landing", value: "20 July 1976, 11:53:06 UT" },
-    { label: "Site", value: "Chryse Planitia, 22.483° N, 47.94° W" },
-    { label: "Last contact", value: "11 November 1982" },
-    { label: "Also known as", value: "Thomas Mutch Memorial Station" },
+    { label: "Built by", value: "Martin Marietta Aerospace, under NASA Langley direction" },
+    { label: "COSPAR / NORAD", value: "1975-075C / SATCAT 08108" },
+    { label: "Launch", value: "20 August 1975 at 21:22:00 UTC (Titan IIIE-Centaur, LC-41)" },
+    { label: "Mars orbit entry", value: "19 June 1976" },
+    { label: "Touchdown", value: "20 July 1976 at 11:53:06 UT (16:13 LST)" },
+    { label: "Landing site", value: "Chryse Planitia (22.271° N, 47.951° W / 312.049° E, elev. -2.69 km)" },
+    { label: "Lander mass", value: "572 kg landed dry / 978 kg separated / 3,527 kg launch stack" },
+    { label: "Power source", value: "2 SNAP-19 RTGs (~70 W electrical output)" },
+    { label: "Operational duration", value: "2,245 Martian Sols (2,307 Earth days / 6.3 years)" },
+    { label: "Last contact", value: "11 November 1982 (lost via uplinked faulty antenna command)" },
+    { label: "Memorial station", value: "Thomas Mutch Memorial Station (named January 1982)" },
+    { label: "Orbital imaging", value: "Pinpointed on surface by HiRISE on MRO (PSP_001521_2025)" },
   ],
-  sources: VIKING_SOURCES,
+  sources: VIKING_1_SOURCES,
 };
 
 export const VIKING_2: WikiEntry = {
@@ -115,13 +129,19 @@ export const VIKING_2: WikiEntry = {
     { date: "July 2001", text: "Renamed the Gerald Soffen Memorial Station." },
   ],
   facts: [
-    { label: "Lander mass", value: "978 kg" },
-    { label: "Launch", value: "9 September 1975" },
-    { label: "Landing", value: "3 September 1976, 22:37:50 UT" },
-    { label: "Site", value: "Utopia Planitia, 47.968° N, 225.71° W" },
-    { label: "Tilt", value: "8.5° to the west" },
-    { label: "Last contact", value: "11 or 12 April 1980 (sources differ)" },
-    { label: "Also known as", value: "Gerald Soffen Memorial Station" },
+    { label: "Built by", value: "Martin Marietta Aerospace, under NASA Langley direction" },
+    { label: "COSPAR / NORAD", value: "1975-083C / SATCAT 08261" },
+    { label: "Launch", value: "9 September 1975 at 18:39:00 UTC (Titan IIIE-Centaur, LC-41)" },
+    { label: "Mars orbit entry", value: "7 August 1976" },
+    { label: "Touchdown", value: "3 September 1976 at 22:37:50 UT (09:49 LST)" },
+    { label: "Landing site", value: "Utopia Planitia (47.668° N, 134.28° E / 225.72° W, elev. -4.23 km)" },
+    { label: "Lander mass", value: "572 kg landed dry / 978 kg separated / 3,527 kg launch stack" },
+    { label: "Power source", value: "2 SNAP-19 RTGs (~70 W electrical output)" },
+    { label: "Landing tilt", value: "8.5° to the west" },
+    { label: "Operational duration", value: "1,281 Martian Sols (1,316 Earth days / 3.6 years)" },
+    { label: "Last contact", value: "11 or 12 April 1980 (batteries depleted)" },
+    { label: "Memorial station", value: "Gerald Soffen Memorial Station (named July 2001)" },
+    { label: "Orbital imaging", value: "Pinpointed on surface by HiRISE on MRO (PSP_001501_2280)" },
   ],
-  sources: VIKING_SOURCES,
+  sources: VIKING_2_SOURCES,
 };

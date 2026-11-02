@@ -80,7 +80,7 @@ export const SIGNATURES: Record<string, Signature> = {
     items: [
       { value: "6,460 km", label: "from Viking 1" },
       { value: "8.5°", label: "tilted to the west" },
-      { value: "47.97° N", label: "near the polar cap" },
+      { value: "47.67° N", label: "Utopia Planitia" },
       { value: "3", label: "soil samples tested for life" },
     ],
   },

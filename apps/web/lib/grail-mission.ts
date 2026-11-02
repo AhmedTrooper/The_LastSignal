@@ -59,13 +59,13 @@ export const GRAIL_SPECS: GRAILSpecs = {
     siteName: "Sally K. Ride Impact Site",
     feature: "2,500-meter mountain ridge between Philolaus and Mouchez craters",
     lat: 75.62,
-    lon: 333.4, // 26.6° W
+    lon: 333.37, // 26.63° W
     elevationMeters: 2500,
     lrocFrame: "M1115786064R",
   },
   spacecraftMassKg: {
-    ebbLaunchKg: 202.4,
-    flowLaunchKg: 202.4,
+    ebbLaunchKg: 307, // Fueled launch mass (202.4 kg dry + 104.6 kg propellant)
+    flowLaunchKg: 307, // Fueled launch mass (202.4 kg dry + 104.6 kg propellant)
     impactMassKg: 130, // Dry mass at empty tank impact
   },
   gravityRangingPrecision: {

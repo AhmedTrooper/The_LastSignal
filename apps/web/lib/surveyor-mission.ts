@@ -43,15 +43,15 @@ export const SURVEYOR_SPECS: SurveyorSpecs = {
   name: "Surveyor 1",
   cosparId: "1966-045A",
   nssdcaId: "1966-045A",
-  noradId: 2184,
+  noradId: 2185,
   launchDateUtc: "1966-05-30T14:41:01 UTC",
   touchdownUtc: "1966-06-02T06:17:36 UTC",
   lastContactUtc: "1967-01-07T07:44:00 UTC",
   touchdownCoordinates: {
     feature: "Inside Flamsteed P ghost crater",
     region: "Oceanus Procellarum (Ocean of Storms)",
-    lat: -2.474,
-    lon: -43.339, // 316.661° E
+    lat: -2.4745,
+    lon: -43.3399, // 316.6601° E
     lrocFrame: "M175357472R",
   },
   dimensions: {
