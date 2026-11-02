@@ -9,8 +9,12 @@ import {
   MER_EXPERIMENTS,
   OPPORTUNITY_TRAVERSE_WAYPOINTS,
   SPIRIT_TRAVERSE_WAYPOINTS,
+  OFFICIAL_SPIRIT_ENDPOINTS,
   OFFICIAL_OPPORTUNITY_ENDPOINTS,
+  PDS_MER_ENDPOINTS,
+  getNssdcaExperimentUrl,
   decodeMERFilename,
+  buildMERFilename,
   calculateDustImpact,
   type DiscardedMonument,
   type MERMemorial,
@@ -41,6 +45,8 @@ export default function MERSimulator({
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
   const [isPlayingMelody, setIsPlayingMelody] = useState<boolean>(false);
   const [showEndModal, setShowEndModal] = useState<boolean>(false);
+  const [isGrinding, setIsGrinding] = useState<boolean>(false);
+  const [grindingRock, setGrindingRock] = useState<"sulfate" | "basalt">("sulfate");
 
   // Filter monuments strictly by this rover
   const roverMonuments = DISCARDED_MONUMENTS.filter((m) => m.rover === rover);
@@ -196,6 +202,82 @@ export default function MERSimulator({
       }, (startTime - ctx.currentTime) * 1000 + 200);
     } catch {
       setIsPlayingMelody(false);
+    }
+  };
+
+  // Synthesize Honeybee Robotics Rock Abrasion Tool (RAT) grinding motor vibration
+  const playRatGrinding = (rock: "sulfate" | "basalt") => {
+    if (isGrinding) return;
+    setIsGrinding(true);
+    setGrindingRock(rock);
+
+    try {
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContextClass();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") {
+        ctx.resume();
+      }
+
+      const isBasalt = rock === "basalt";
+      const baseFreq = isBasalt ? 195 : 390;
+      const duration = 2.5;
+
+      // Primary grinding motor load tone
+      const motorOsc = ctx.createOscillator();
+      motorOsc.type = isBasalt ? "sawtooth" : "triangle";
+      motorOsc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+      // Frequency variations simulating diamond burr bite and rotational torque fluctuations
+      motorOsc.frequency.linearRampToValueAtTime(baseFreq * (isBasalt ? 0.86 : 0.94), ctx.currentTime + 0.7);
+      motorOsc.frequency.linearRampToValueAtTime(baseFreq * 1.06, ctx.currentTime + 1.5);
+      motorOsc.frequency.linearRampToValueAtTime(baseFreq, ctx.currentTime + duration);
+
+      // Diamond burr grinding friction noise
+      const bufferSize = Math.floor(ctx.sampleRate * 2.5);
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * (isBasalt ? 0.75 : 0.35);
+      }
+      const noiseSrc = ctx.createBufferSource();
+      noiseSrc.buffer = noiseBuffer;
+
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = "bandpass";
+      noiseFilter.frequency.setValueAtTime(isBasalt ? 650 : 1350, ctx.currentTime);
+      noiseFilter.Q.setValueAtTime(isBasalt ? 2.8 : 1.4, ctx.currentTime);
+
+      const motorGain = ctx.createGain();
+      motorGain.gain.setValueAtTime(0.001, ctx.currentTime);
+      motorGain.gain.exponentialRampToValueAtTime(0.09, ctx.currentTime + 0.15);
+      motorGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.001, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(isBasalt ? 0.08 : 0.035, ctx.currentTime + 0.1);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      motorOsc.connect(motorGain);
+      motorGain.connect(ctx.destination);
+
+      noiseSrc.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+
+      motorOsc.start(ctx.currentTime);
+      noiseSrc.start(ctx.currentTime);
+      motorOsc.stop(ctx.currentTime + duration);
+      noiseSrc.stop(ctx.currentTime + duration);
+
+      setTimeout(() => {
+        setIsGrinding(false);
+      }, duration * 1000 + 100);
+    } catch {
+      setIsGrinding(false);
     }
   };
 
@@ -1522,11 +1604,22 @@ export default function MERSimulator({
                     <span className="font-mono text-xs font-bold text-amber-300">
                       #{exp.num} · {exp.acronym}
                     </span>
-                    {exp.massKg && (
-                      <span className="font-mono text-[10px] text-white/40">
-                        {exp.massKg} kg · {exp.powerWatts} W
-                      </span>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {exp.massKg && (
+                        <span className="font-mono text-[10px] text-white/40">
+                          {exp.massKg} kg · {exp.powerWatts} W
+                        </span>
+                      )}
+                      <a
+                        href={getNssdcaExperimentUrl(rover, exp.num)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-[10px] text-cyan-400 hover:text-cyan-300 hover:underline"
+                        title={`Verified NASA NSSDCA record for ${exp.acronym}`}
+                      >
+                        NSSDCA ↗
+                      </a>
+                    </div>
                   </div>
                   <h4 className="mt-1 font-bold text-sm text-white">{exp.name}</h4>
                   <p className="mt-0.5 font-mono text-[11px] text-white/50">
@@ -1545,6 +1638,75 @@ export default function MERSimulator({
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Honeybee Robotics RAT Sonification Laboratory */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-3 mb-4">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                  Honeybee Robotics · RAT Acoustic &amp; Motor Torque Telemetry
+                </span>
+                <h3 className="display mt-1 text-xl font-bold">
+                  Rock Abrasion Tool (RAT) Grinding Sound Synthesizer
+                </h3>
+              </div>
+              <span className="font-mono text-xs text-white/50">
+                NSSDCA {isOpp ? "2003-032A-06" : "2003-027A-06"}
+              </span>
+            </div>
+
+            <p className="text-xs text-white/70 leading-relaxed">
+              While neither rover carried a dedicated acoustic microphone, Honeybee Robotics and JPL flight controllers converted high-frequency motor current and torque-load telemetry into audible sound. Grinding into soft sulfate sandstone produces an easy, higher-pitch hum (~390 Hz), whereas dense volcanic basalt forces the motor into a deep, labored growl (~195 Hz) under heavy diamond-burr friction.
+            </p>
+
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className={`rounded-xl border p-4 transition-all ${
+                grindingRock === "sulfate" && isGrinding
+                  ? "border-amber-400 bg-amber-500/10 shadow-lg shadow-amber-500/10"
+                  : "border-white/10 bg-black/40 hover:border-white/20"
+              }`}>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-amber-300">Meridiani Sulfate Sandstone</span>
+                  <span className="font-mono text-[10px] text-white/50">e.g. El Capitan (Eagle Crater)</span>
+                </div>
+                <p className="mt-1.5 text-xs text-white/70 leading-relaxed">
+                  Soft, layered aqueous sedimentary rock with low mechanical resistance. Motor load runs near nominal ~390 Hz with smooth burr rotation.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => playRatGrinding("sulfate")}
+                  disabled={isGrinding}
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 px-3 py-2 font-mono text-xs font-bold text-amber-300 transition-all disabled:opacity-50"
+                >
+                  <span className={`h-2 w-2 rounded-full ${isGrinding && grindingRock === "sulfate" ? "bg-amber-400 animate-ping" : "bg-amber-400"}`} />
+                  {isGrinding && grindingRock === "sulfate" ? "Grinding in progress..." : "Sonify Sulfate Grinding (~390 Hz)"}
+                </button>
+              </div>
+
+              <div className={`rounded-xl border p-4 transition-all ${
+                grindingRock === "basalt" && isGrinding
+                  ? "border-rose-400 bg-rose-500/10 shadow-lg shadow-rose-500/10"
+                  : "border-white/10 bg-black/40 hover:border-white/20"
+              }`}>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold text-rose-300">Gusev Dense Volcanic Basalt</span>
+                  <span className="font-mono text-[10px] text-white/50">e.g. Adirondack / Humphrey</span>
+                </div>
+                <p className="mt-1.5 text-xs text-white/70 leading-relaxed">
+                  Ultra-dense igneous rock with extreme hardness. Grinding head motor slows to ~195 Hz under high torque, grinding diamond teeth flush by Sol 416.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => playRatGrinding("basalt")}
+                  disabled={isGrinding}
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 px-3 py-2 font-mono text-xs font-bold text-rose-300 transition-all disabled:opacity-50"
+                >
+                  <span className={`h-2 w-2 rounded-full ${isGrinding && grindingRock === "basalt" ? "bg-rose-400 animate-ping" : "bg-rose-400"}`} />
+                  {isGrinding && grindingRock === "basalt" ? "Grinding in progress..." : "Sonify Basalt Grinding (~195 Hz)"}
+                </button>
+              </div>
             </div>
           </div>
 
@@ -1585,6 +1747,27 @@ export default function MERSimulator({
                   {s.label}
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  const generated = buildMERFilename({
+                    rover,
+                    instrument: "P",
+                    sclk: isOpp ? 581919922 : 243764821,
+                    productType: "EFF",
+                    siteCode: isOpp ? "D2" : "89",
+                    drivePos: isOpp ? "12" : "24",
+                    sequenceId: isOpp ? "P2685" : "P2420",
+                    camFilter: isOpp ? "L8" : "L7",
+                    producer: "M1",
+                  });
+                  setPdsInput(generated);
+                }}
+                className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 font-mono text-xs text-emerald-300 hover:bg-emerald-500/20 transition-colors"
+                title="Use buildMERFilename to construct a 27-character PDS identifier"
+              >
+                + Build 27-Char Schema
+              </button>
             </div>
 
             {/* Input Bar */}
@@ -1674,11 +1857,11 @@ export default function MERSimulator({
           {/* Primary Source Verification Endpoints */}
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
             <h4 className="font-mono text-xs uppercase tracking-wider text-white/50 mb-3">
-              Primary Source Archival Verification Links
+              Deterministic NASA Primary Source Archival Portals
             </h4>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4 font-mono text-xs">
               <a
-                href={isOpp ? "https://pds-imaging.jpl.nasa.gov/data/mer/opportunity/" : "https://pds-imaging.jpl.nasa.gov/data/mer/spirit/"}
+                href={isOpp ? PDS_MER_ENDPOINTS.opportunity_camera_volumes : PDS_MER_ENDPOINTS.spirit_camera_volumes}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
@@ -1687,7 +1870,7 @@ export default function MERSimulator({
                 <span>↗</span>
               </a>
               <a
-                href="https://pds-geosciences.wustl.edu/missions/mer/index.htm"
+                href={PDS_MER_ENDPOINTS.geosciences_master}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
@@ -1696,7 +1879,7 @@ export default function MERSimulator({
                 <span>↗</span>
               </a>
               <a
-                href="https://an.rsl.wustl.edu/"
+                href={PDS_MER_ENDPOINTS.analysts_notebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
@@ -1705,12 +1888,48 @@ export default function MERSimulator({
                 <span>↗</span>
               </a>
               <a
-                href={isOpp ? "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-032A" : "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-027A"}
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.nssdc_master : OFFICIAL_SPIRIT_ENDPOINTS.nssdc_master}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
               >
                 <span>NSSDCA {rover.toUpperCase()}</span>
+                <span>↗</span>
+              </a>
+              <a
+                href={PDS_MER_ENDPOINTS.spice_kernels}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
+              >
+                <span>NAIF SPICE Kernels</span>
+                <span>↗</span>
+              </a>
+              <a
+                href={PDS_MER_ENDPOINTS.cartography_portal}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
+              >
+                <span>PDS Cartography Portal</span>
+                <span>↗</span>
+              </a>
+              <a
+                href={isOpp ? OFFICIAL_OPPORTUNITY_ENDPOINTS.hirise_orbital_resting_site : OFFICIAL_SPIRIT_ENDPOINTS.hirise_orbital_resting_site}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
+              >
+                <span>HiRISE Resting Site</span>
+                <span>↗</span>
+              </a>
+              <a
+                href={OFFICIAL_OPPORTUNITY_ENDPOINTS.pds_contact_science_targets}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-2.5 hover:border-violet hover:text-violet transition-colors"
+              >
+                <span>Contact Science Targets</span>
                 <span>↗</span>
               </a>
             </div>

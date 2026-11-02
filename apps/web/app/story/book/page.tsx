@@ -7,6 +7,7 @@ import Header from "@/app/components/header";
 import { ArrowLeft, ArrowRight } from "@/app/components/icons";
 import { assetUrl } from "@/lib/heroes";
 import { calculateIngenuityAerodynamics } from "@/lib/ingenuity-mission";
+import { calculateDustImpact } from "@/lib/mer-mission";
 
 interface BookSpread {
   id: string;
@@ -768,10 +769,10 @@ const SPREADS: BookSpread[] = [
     heroSlug: "opportunity",
     badge: "Indomitable Twins",
     telemetrySummary: [
-      { label: "Design Life", value: "90 Martian Sols (each)" },
-      { label: "Spirit Duration", value: "2,210 Sols (6.1 years)" },
-      { label: "Opportunity Distance", value: "45.16 km (28.06 miles)" },
-      { label: "Opportunity Duration", value: "5,111 Sols (14.5 years)" },
+      { label: "COSPAR Identifiers", value: "Spirit: 2003-027A · Oppy: 2003-032A" },
+      { label: "Primary Touchdowns", value: "Columbia Station (Gusev) & Eagle Crater" },
+      { label: "Surface Odometers", value: "Spirit: 7,730 m · Oppy: 45,161 m (28.06 mi)" },
+      { label: "RAT Cuffs", value: "WTC Ground Zero Aluminum with US Flag" },
     ],
     leftPage: {
       heading: "The Indomitable Twins",
@@ -781,8 +782,8 @@ const SPREADS: BookSpread[] = [
         "Spirit investigated the rocky volcanic floor of Gusev Crater, while Opportunity scored an interplanetary hole-in-one, rolling to a stop inside the 22-meter Eagle Crater on the smooth plains of Meridiani Planum.",
       ],
       calloutBox: {
-        title: "Hematite 'Blueberries'",
-        text: "Within days, Opportunity discovered millimeter-sized gray spheres nicknamed 'blueberries'—hematite concretions that formed inside gentle, liquid acidic groundwater billions of years ago.",
+        title: "Hematite 'Blueberries' & Jarosite",
+        text: "Microscopic Imager and Mössbauer found 1-5 mm hematite spherules and jarosite inside Eagle Crater bedrock—the smoking-gun proof of ancient acidic liquid water.",
       },
     },
     rightPage: {
@@ -790,7 +791,7 @@ const SPREADS: BookSpread[] = [
       subheading: "Turning Mechanical Failure into Discovery",
       paragraphs: [
         "In March 2006, Spirit's right front drive wheel motor seized up. Rather than abandon the rover, engineers drove Spirit backward, dragging the jammed wheel through the red soil like a plow.",
-        "The dragging wheel churned up bright white soil with 90% pure silica content—the unmistakable chemical hallmark of ancient volcanic hot springs and steam vents!",
+        "At Gertrude Weise near Home Plate, the locked wheel churned up bright white soil with 90.1% pure amorphous silica (SiO2)—conclusive chemical proof of ancient volcanic hot springs or fumaroles!",
       ],
       quote: {
         text: "Opportunity has touched down in an ancient Martian lakebed. The evidence of water is incontrovertible.",
@@ -813,14 +814,18 @@ const SPREADS: BookSpread[] = [
     cosparId: "2003-027A / 2003-032A",
     heroSlug: "opportunity",
     badge: "Marathon Record",
-    image: "images/card-opportunity.webp",
-    imageCaption: "Mars Exploration Rover Opportunity with solar wings outstretched in Marathon Valley.",
+    telemetrySummary: [
+      { label: "Resting Coordinates", value: "Spirit: 14.5994° S, 175.5284° E · Oppy: 2.284° S, 354.652° E" },
+      { label: "HiRISE Localization", value: "ESP_021925_1650 (Troy) · ESP_056955_1775" },
+      { label: "Sol 5111 Blackout", value: "τ = 10.8 (99.998% dark), 22 Wh, Clock Fault" },
+      { label: "Final Wake-Up Uplink", value: "Goldstone DSS-14: 'I\\'ll Be Seeing You'" },
+    ],
     leftPage: {
-      heading: "The Sand Trap at Troy",
-      subheading: "Spirit's Stationary Winter (2009–2010)",
+      heading: "Forensic Inspection & The Sand Trap",
+      subheading: "Heat Shield Debris & Spirit's 11.5° South Stand",
       paragraphs: [
-        "In April 2009, Spirit broke through a brittle crust of soil and sank into a hidden sand trap of soft iron sulfate at a site named 'Troy'. With its stuck wheel, escape was impossible.",
-        "Converted into a stationary observatory, Spirit studied seasonal soil variations until the bitter Martian winter dropped solar output below 134 watt-hours. On March 22, 2010 (Sol 2210), Spirit transmitted its final words.",
+        "On Sol 330, Opportunity drove right up to its own shattered heat shield south of Endurance Crater—the first forensic engineering study of an aeroshell on another planet. Right beside it, Opportunity discovered 'Heat Shield Rock' (PIA07269), the first meteorite ever identified on another world.",
+        "Meanwhile in Gusev, Spirit became trapped in soft ferric sulfate sand at Troy on Sol 1892. Tilted 11.5° south, its panels could not catch the low northern winter sun, plunging power to 89 Wh/sol before freezing on Sol 2210.",
       ],
       calloutBox: {
         title: "The 45.16-Kilometer Martian Marathon",
@@ -828,11 +833,11 @@ const SPREADS: BookSpread[] = [
       },
     },
     rightPage: {
-      heading: "My Battery Is Low and It Is Getting Dark",
-      subheading: "The Planet-Encircling Storm of June 2018",
+      heading: "Sol 5111: Myth vs. Engineering Truth",
+      subheading: "22 Watt-Hours, Low-Power Fault & The Final Song",
       paragraphs: [
-        "On June 10, 2018, a massive global dust storm plunged Perseverance Valley into perpetual twilight. Opportunity's atmospheric opacity (tau) surged past 10.8, cutting solar power to 22 watt-hours.",
-        "Science reporter Jacob Margolis captured the emotional essence of its final telemetry: 'My battery is low and it is getting dark.' For eight months, NASA beamed thousands of songs toward Mars. On February 13, 2019, NASA declared Opportunity's mission complete.",
+        "A famous poetic paraphrase ('My battery is low and it\\'s getting dark') captured the world's heart, but Opportunity's true final telemetry was pure engineering: Low-Power and Master Clock Fault flags, solar power falling to 22 Wh in a τ=10.8 dust storm, and dark sky frame 1P581919922EFFD212P2685L8M1 (PIA22949).",
+        "On February 12, 2019, before concluding operations, NASA/JPL beamed Billie Holiday's 'I\\'ll Be Seeing You' through Goldstone's 70-meter dish across 260 million kilometers to Perseverance Valley.",
       ],
       quote: {
         text: "To the rover that turned 90 days into 15 years: thank you, Opportunity. You showed us the red planet.",
@@ -1299,6 +1304,33 @@ export default function StoryBookPage() {
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
   const [mobilePage, setMobilePage] = useState<"left" | "right">("left");
   const [showTocDrawer, setShowTocDrawer] = useState<boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  const toggleFullscreen = useCallback(async () => {
+    try {
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        }
+        setIsFullscreen(true);
+      } else {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        }
+        setIsFullscreen(false);
+      }
+    } catch {
+      setIsFullscreen((prev) => !prev);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   // InSight interactive states
   const [insightActiveAudio, setInsightActiveAudio] = useState<"wind" | "bloop" | "quake" | null>(null);
@@ -1349,6 +1381,112 @@ export default function StoryBookPage() {
       // AudioContext unavailable
     }
   }, [ingenuityRpm]);
+
+  // MER Twin interactive states
+  const [merRockType, setMerRockType] = useState<"sulfate" | "basalt">("sulfate");
+  const [merGrindingAudioPlaying, setMerGrindingAudioPlaying] = useState<boolean>(false);
+  const [merRelicTab, setMerRelicTab] = useState<"wtc" | "memorials" | "marsdial" | "lego">("wtc");
+  const [merDustTau, setMerDustTau] = useState<number>(10.8);
+  const [merBillieHolidayPlaying, setMerBillieHolidayPlaying] = useState<boolean>(false);
+
+  // Synthesize Rock Abrasion Tool (RAT) grinding motor vibration
+  const playMerRatGrinding = useCallback((rock: "sulfate" | "basalt") => {
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const isBasalt = rock === "basalt";
+      const baseFreq = isBasalt ? 195 : 390;
+      const duration = 2.2;
+
+      const osc = ctx.createOscillator();
+      osc.type = isBasalt ? "sawtooth" : "triangle";
+      osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(baseFreq * (isBasalt ? 0.86 : 0.94), ctx.currentTime + 0.6);
+      osc.frequency.linearRampToValueAtTime(baseFreq * 1.05, ctx.currentTime + 1.4);
+      osc.frequency.linearRampToValueAtTime(baseFreq, ctx.currentTime + duration);
+
+      const bufferSize = Math.floor(ctx.sampleRate * 2.2);
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * (isBasalt ? 0.7 : 0.3);
+      }
+      const noiseSrc = ctx.createBufferSource();
+      noiseSrc.buffer = noiseBuffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.setValueAtTime(isBasalt ? 650 : 1350, ctx.currentTime);
+
+      const oscGain = ctx.createGain();
+      oscGain.gain.setValueAtTime(0.001, ctx.currentTime);
+      oscGain.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.15);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.001, ctx.currentTime);
+      noiseGain.gain.exponentialRampToValueAtTime(isBasalt ? 0.07 : 0.03, ctx.currentTime + 0.1);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      noiseSrc.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+
+      osc.start();
+      noiseSrc.start();
+      osc.stop(ctx.currentTime + duration);
+      noiseSrc.stop(ctx.currentTime + duration);
+
+      setMerGrindingAudioPlaying(true);
+      setTimeout(() => setMerGrindingAudioPlaying(false), duration * 1000);
+    } catch {
+      // AudioContext unavailable
+    }
+  }, []);
+
+  // Synthesize Billie Holiday "I'll Be Seeing You" opening motif for Opportunity
+  const playMerBillieHoliday = useCallback(() => {
+    try {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+
+      const notes = [
+        { freq: 311.13, duration: 0.40 }, // Eb4
+        { freq: 392.00, duration: 0.40 }, // G4
+        { freq: 466.16, duration: 0.50 }, // Bb4
+        { freq: 523.25, duration: 0.65 }, // C5
+        { freq: 466.16, duration: 0.45 }, // Bb4
+        { freq: 392.00, duration: 0.40 }, // G4
+        { freq: 311.13, duration: 0.50 }, // Eb4
+        { freq: 349.23, duration: 0.95 }, // F4
+      ];
+
+      let startTime = ctx.currentTime + 0.05;
+      notes.forEach((n) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(n.freq, startTime);
+        gain.gain.setValueAtTime(0.0001, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.07, startTime + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + n.duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + n.duration);
+        startTime += n.duration;
+      });
+
+      setMerBillieHolidayPlaying(true);
+      setTimeout(() => setMerBillieHolidayPlaying(false), (startTime - ctx.currentTime) * 1000 + 100);
+    } catch {
+      // AudioContext unavailable
+    }
+  }, []);
 
   const totalSpreads = SPREADS.length;
   const currentSpread = SPREADS[spreadIndex];
@@ -1510,27 +1648,49 @@ export default function StoryBookPage() {
   const rightPageNumber = spreadIndex * 2 + 2;
 
   return (
-    <div className="min-h-screen bg-[#070510] text-[#f4ede0] flex flex-col selection:bg-rose-900 selection:text-white">
-      <Header />
+    <div className={`min-h-screen bg-[#070510] text-[#f4ede0] flex flex-col selection:bg-rose-900 selection:text-white ${isFullscreen ? "fixed inset-0 z-50 overflow-y-auto" : ""}`}>
+      {!isFullscreen && <Header />}
 
       {/* Main Reading Stage */}
-      <main className="flex-1 flex flex-col items-center justify-center px-2 sm:px-4 py-4 sm:py-6">
-        {/* Top Control Bar (Jump, Chapter Indicator, Mobile Switcher) */}
+      <main className={`flex-1 flex flex-col items-center justify-center px-2 sm:px-4 ${isFullscreen ? "py-2 sm:py-3" : "py-4 sm:py-6"}`}>
+        {/* Top Control Bar (Jump, Chapter Indicator, Mobile Switcher, Fullscreen Toggle) */}
         <div className="w-full max-w-5xl mb-3 flex flex-wrap items-center justify-between gap-2.5">
-          {/* Left: Back to story overview & Chapter pill */}
-          <div className="flex items-center gap-2">
-            <Link
-              href="/story"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-mono text-white/80 hover:text-white transition-colors border border-white/10"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" /> Story Hub
-            </Link>
+          {/* Left: Back to story hub, Chapter TOC, & Fullscreen */}
+          <div className="flex flex-wrap items-center gap-2">
+            {!isFullscreen && (
+              <Link
+                href="/story"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-mono text-white/80 hover:text-white transition-colors border border-white/10"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" /> Story Hub
+              </Link>
+            )}
 
             <button
               onClick={() => setShowTocDrawer(!showTocDrawer)}
               className="inline-flex items-center gap-1.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/50 px-3 py-1.5 text-xs font-mono font-bold text-rose-300 transition-colors border border-rose-800/30 cursor-pointer"
             >
               📖 Table of Contents ({TOC_ITEMS.length} Chapters)
+            </button>
+
+            {/* Fullscreen Reading Toggle Button */}
+            <button
+              onClick={toggleFullscreen}
+              className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition-all border cursor-pointer shadow-sm ${
+                isFullscreen
+                  ? "bg-rose-900/60 hover:bg-rose-800 text-rose-200 border-rose-700"
+                  : "bg-white/10 hover:bg-white/15 text-white border-white/15"
+              }`}
+              title={isFullscreen ? "Exit Fullscreen Reading Mode (Esc)" : "Enter Immersive Fullscreen Reading Mode"}
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {isFullscreen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                )}
+              </svg>
+              <span>{isFullscreen ? "Exit Fullscreen (Esc)" : "Fullscreen Mode"}</span>
             </button>
           </div>
 
@@ -2223,6 +2383,204 @@ export default function StoryBookPage() {
                         </div>
                       </div>
                     </div>
+                  ) : currentSpread.id === "mer-part-1" ? (
+                    /* DEDICATED SPREAD 16: MER TWINS PART I (RAT GRINDING ACOUSTIC LAB & 4 HUMAN RELICS) */
+                    <div className="space-y-2.5 my-1" onClick={(e) => e.stopPropagation()}>
+                      <p className="font-serif text-xs leading-relaxed text-[#3b2d26]">
+                        {currentSpread.rightPage.paragraphs?.[0]}
+                      </p>
+
+                      {/* Interactive RAT Grinding Sonifier */}
+                      <div className="rounded-xl border border-amber-900/30 bg-[#fbf6ec] p-2.5 shadow-sm text-[#3b2d26]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-amber-950">
+                            ⚙️ RAT Acoustic &amp; Motor Torque Lab
+                          </span>
+                          <span className="font-mono text-[9px] text-[#736357] font-bold">
+                            Honeybee Robotics
+                          </span>
+                        </div>
+
+                        {/* Rock selector */}
+                        <div className="grid grid-cols-2 gap-1.5 my-1.5 font-mono text-[9px]">
+                          <button
+                            type="button"
+                            onClick={() => setMerRockType("sulfate")}
+                            className={`p-1.5 rounded border text-left cursor-pointer transition-colors ${
+                              merRockType === "sulfate"
+                                ? "border-amber-900 bg-amber-900/10 font-bold text-amber-950"
+                                : "border-[#e0d6c5] bg-white/70 text-[#615248] hover:bg-white"
+                            }`}
+                          >
+                            <span className="block font-bold">Sulfate Sandstone</span>
+                            <span className="text-[8px] text-[#857467] block">Meridiani · Soft ~390 Hz</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setMerRockType("basalt")}
+                            className={`p-1.5 rounded border text-left cursor-pointer transition-colors ${
+                              merRockType === "basalt"
+                                ? "border-rose-900 bg-rose-900/10 font-bold text-rose-950"
+                                : "border-[#e0d6c5] bg-white/70 text-[#615248] hover:bg-white"
+                            }`}
+                          >
+                            <span className="block font-bold">Volcanic Basalt</span>
+                            <span className="text-[8px] text-[#857467] block">Gusev · Hard ~195 Hz</span>
+                          </button>
+                        </div>
+
+                        {/* Grinding Audio Button */}
+                        <div className="flex items-center justify-between pt-1 border-t border-amber-900/10">
+                          <button
+                            type="button"
+                            onClick={() => playMerRatGrinding(merRockType)}
+                            disabled={merGrindingAudioPlaying}
+                            className="rounded-lg bg-amber-900 hover:bg-amber-800 text-white font-mono text-[10px] py-1 px-2.5 font-bold transition-all shadow cursor-pointer disabled:opacity-60 flex items-center gap-1.5"
+                          >
+                            <span>{merGrindingAudioPlaying ? "🔊 Grinding Telemetry..." : `🎧 Sonify ${merRockType === "sulfate" ? "Sulfate" : "Basalt"} Grind`}</span>
+                          </button>
+                          <span className="font-mono text-[9px] text-[#857467]">
+                            {merRockType === "sulfate" ? "Low torque / smooth tone" : "High torque / burr bite"}
+                          </span>
+                        </div>
+
+                        {/* Relic Mini-Inspector */}
+                        <div className="mt-2 pt-2 border-t border-amber-900/15">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-mono text-[9px] uppercase font-bold text-amber-950">
+                              Hidden Relics &amp; Memorials
+                            </span>
+                            <span className="font-mono text-[8px] text-[#857467]">4 Left on Mars</span>
+                          </div>
+                          <div className="grid grid-cols-4 gap-1 mb-1.5">
+                            {[
+                              { id: "wtc", label: "WTC Cuffs" },
+                              { id: "memorials", label: "Plaques" },
+                              { id: "marsdial", label: "MarsDial" },
+                              { id: "lego", label: "LEGO DVDs" },
+                            ].map((r) => (
+                              <button
+                                key={r.id}
+                                type="button"
+                                onClick={() => setMerRelicTab(r.id as typeof merRelicTab)}
+                                className={`py-0.5 rounded font-mono text-[8px] font-bold cursor-pointer transition-colors ${
+                                  merRelicTab === r.id
+                                    ? "bg-amber-900 text-white"
+                                    : "bg-[#ded6c7] text-[#42342c] hover:bg-amber-900/20"
+                                }`}
+                              >
+                                {r.label}
+                              </button>
+                            ))}
+                          </div>
+                          <p className="font-serif text-[10px] text-[#42342c] min-h-[34px] leading-tight">
+                            {merRelicTab === "wtc" &&
+                              "WTC Ground Zero aluminum machined into cable-shield cuffs on both rovers' RATs with a laser-etched American flag."}
+                            {merRelicTab === "memorials" &&
+                              "Columbia Memorial Station (STS-107) in Gusev & Challenger Memorial Station (STS-51-L) in Eagle Crater honor fallen astronauts."}
+                            {merRelicTab === "marsdial" &&
+                              "MarsDial sundial engraved with 'TWO WORLDS, ONE SUN' in 22 languages and stick figures drawn by schoolchildren."}
+                            {merRelicTab === "lego" &&
+                              "3,553,268 names on silica-glass mini-DVDs clamped by LEGO minifigures 'Biff Starling' and 'Sandy Moondust'."}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ) : currentSpread.id === "mer-part-2" ? (
+                    /* DEDICATED SPREAD 17: MER TWINS PART II (SOL 5111 DUST STORM TAU SIMULATOR & BILLIE HOLIDAY UPLINK) */
+                    <div className="space-y-2.5 my-1" onClick={(e) => e.stopPropagation()}>
+                      <p className="font-serif text-xs leading-relaxed text-[#3b2d26]">
+                        {currentSpread.rightPage.paragraphs?.[0]}
+                      </p>
+
+                      {/* Interactive Dust Storm Tau & Power Cockpit */}
+                      <div className="rounded-xl border border-rose-900/30 bg-[#fcf6f4] p-2.5 shadow-sm text-[#3b2d26]">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-mono text-[10px] uppercase font-bold text-rose-950">
+                            🌪️ Dust Storm Opacity &amp; Power Simulator
+                          </span>
+                          <span className={`font-mono text-xs font-bold ${merDustTau >= 10 ? "text-rose-900" : merDustTau >= 5 ? "text-amber-800" : "text-emerald-800"}`}>
+                            τ = {merDustTau.toFixed(1)} ({calculateDustImpact(merDustTau).powerWh} Wh)
+                          </span>
+                        </div>
+
+                        {/* Real-time Telemetry Readout */}
+                        <div className="grid grid-cols-2 gap-1.5 my-1.5 font-mono text-[10px]">
+                          <div className="bg-white/80 p-1.5 rounded border border-rose-900/10">
+                            <span className="text-[#736357] block text-[9px]">Solar Array Output</span>
+                            <span className="font-bold text-rose-950 text-xs">{calculateDustImpact(merDustTau).powerWh} Watt-Hours</span>
+                            <span className="text-[8px] text-[#8c7b70] block">Nominal: ~620 Wh · Min: 100 Wh</span>
+                          </div>
+                          <div className="bg-white/80 p-1.5 rounded border border-rose-900/10">
+                            <span className="text-[#736357] block text-[9px]">Direct Sunlight Transmittance</span>
+                            <span className="font-bold text-rose-950 text-xs">{calculateDustImpact(merDustTau).sunVisibilityPercent}%</span>
+                            <span className="text-[8px] text-[#8c7b70] block">T = e^{`{-τ}`} (99.998% blocked at 10.8)</span>
+                          </div>
+                        </div>
+
+                        {/* Tau Scrubber Slider */}
+                        <div className="space-y-1 font-mono text-[9px]">
+                          <div className="flex justify-between text-[#615248]">
+                            <span>Optical Depth: <b>τ = {merDustTau.toFixed(1)}</b></span>
+                            <span>Clear 0.5 → Blackout 10.8</span>
+                          </div>
+                          <input
+                            type="range"
+                            min="0.5"
+                            max="10.8"
+                            step="0.1"
+                            value={merDustTau}
+                            onChange={(e) => setMerDustTau(parseFloat(e.target.value))}
+                            className="w-full accent-rose-900 h-1.5 bg-[#ecdcd6] rounded cursor-pointer"
+                          />
+                          <div className="flex justify-between text-[8px] text-[#8c7b70]">
+                            <span>Clear Sky (620 Wh)</span>
+                            <button
+                              type="button"
+                              onClick={() => setMerDustTau(10.8)}
+                              className="text-rose-900 font-bold underline cursor-pointer"
+                            >
+                              Jump to Sol 5111 (22 Wh)
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Status Flags & Billie Holiday Uplink Button */}
+                        <div className="mt-2 pt-1.5 border-t border-rose-900/15 flex items-center justify-between">
+                          <button
+                            type="button"
+                            onClick={playMerBillieHoliday}
+                            disabled={merBillieHolidayPlaying}
+                            className="rounded-lg bg-rose-900 hover:bg-rose-800 text-white font-mono text-[10px] py-1 px-2.5 font-bold transition-all shadow cursor-pointer disabled:opacity-60 flex items-center gap-1.5"
+                          >
+                            <span>{merBillieHolidayPlaying ? "📡 Uplinking Jazz..." : "🎶 Play Final Song Uplink"}</span>
+                          </button>
+                          <span className="font-mono text-[9px] text-[#8c7b70] font-bold">
+                            Billie Holiday · Feb 12, 2019
+                          </span>
+                        </div>
+
+                        {/* Archival Links */}
+                        <div className="mt-2 pt-1.5 border-t border-rose-900/15 grid grid-cols-2 gap-1 font-mono text-[9px]">
+                          <a
+                            href="https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-032A"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1 bg-[#f0e4df] hover:bg-rose-900 hover:text-white transition-colors text-rose-950 font-bold truncate text-center"
+                          >
+                            NSSDCA 2003-032A ↗
+                          </a>
+                          <a
+                            href="https://www.uahirise.org/ESP_056955_1775"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded p-1 bg-[#f0e4df] hover:bg-rose-900 hover:text-white transition-colors text-rose-950 font-bold truncate text-center"
+                          >
+                            HiRISE ESP_056955_1775 ↗
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   ) : currentSpread.image ? (
                     /* General Machine Image Plate */
                     <div className="my-2 rounded-xl overflow-hidden border border-[#e5dcce] bg-[#efe9dc] p-1.5 shadow-sm">
@@ -2304,7 +2662,9 @@ export default function StoryBookPage() {
           </button>
 
           <span className="text-center text-[11px] text-white/40">
-            Use Left / Right arrow keys or tap pages to flip
+            {isFullscreen
+              ? "Immersive Fullscreen Reading Mode · Press Esc or click Exit to return"
+              : "Use Left / Right arrow keys or tap pages to flip · Fullscreen option available"}
           </span>
 
           <button

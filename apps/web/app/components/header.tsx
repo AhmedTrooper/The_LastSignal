@@ -106,13 +106,13 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md text-ink">
         <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-6 px-4 sm:px-8 lg:h-[76px]">
           <Link href="/" aria-label="The Last Signal home" className="shrink-0 text-ink">
             <Logo />
           </Link>
 
-          <nav className="hidden items-center gap-5 text-[15px] font-medium lg:flex xl:gap-7">
+          <nav className="hidden items-center gap-5 text-[15px] font-medium text-ink lg:flex xl:gap-7">
             {LINKS.map((l) => {
               const active = isActive(pathname, l.href);
               return (
@@ -120,7 +120,7 @@ export default function Header() {
                   key={l.href}
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative py-1 transition-colors hover:text-violet ${active ? "text-violet after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:rounded after:bg-violet" : ""}`}
+                  className={`relative py-1 transition-colors hover:text-violet ${active ? "text-violet after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:rounded after:bg-violet" : "text-ink"}`}
                 >
                   {l.label}
                 </Link>
@@ -134,7 +134,7 @@ export default function Header() {
           </div>
 
           <button
-            className="-mr-2 p-2 lg:hidden"
+            className="-mr-2 p-2 text-ink lg:hidden"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}

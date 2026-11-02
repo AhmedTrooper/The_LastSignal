@@ -475,14 +475,54 @@ export const SPIRIT_TRAVERSE_WAYPOINTS: MERTraverseWaypoint[] = [
   },
 ];
 
+export const OFFICIAL_SPIRIT_ENDPOINTS = {
+  nssdc_master: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-027A",
+  pds_analysts_notebook: "https://an.rsl.wustl.edu/mera/AN/an3.aspx",
+  pds_rmc_traverse_coords: "https://pds-geosciences.wustl.edu/mer/mer2-m-eng-6-rmc-ops-v1/mer2rm_0xxx/data/",
+  pds_contact_science_targets: "https://pds-geosciences.wustl.edu/missions/mer/mer_cs_targets.htm",
+  hirise_columbia_station: "https://www.uahirise.org/PSP_001513_1655",
+  hirise_orbital_resting_site: "https://www.uahirise.org/ESP_021925_1650",
+  first_pancam_image: "https://photojournal.jpl.nasa.gov/catalog/PIA05014",
+};
+
 export const OFFICIAL_OPPORTUNITY_ENDPOINTS = {
   nssdc_master: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2003-032A",
   pds_analysts_notebook: "https://an.rsl.wustl.edu/merb/AN/an3.aspx",
   pds_rmc_traverse_coords: "https://pds-geosciences.wustl.edu/mer/mer1-m-eng-6-rmc-ops-v1/mer1rm_0xxx/data/",
   pds_contact_science_targets: "https://pds-geosciences.wustl.edu/missions/mer/mer_cs_targets.htm",
+  hirise_challenger_station: "https://www.uahirise.org/PSP_001414_1780",
+  hirise_victoria_crater: "https://www.uahirise.org/PSP_004289_1780",
   hirise_orbital_resting_site: "https://www.uahirise.org/ESP_056955_1775",
-  final_pancam_image: "https://science.nasa.gov/photojournal/opportunitys-last-message/",
+  final_pancam_image: "https://photojournal.jpl.nasa.gov/catalog/PIA22949",
 };
+
+export const PDS_MER_ENDPOINTS = {
+  geosciences_master: "https://pds-geosciences.wustl.edu/missions/mer/index.htm",
+  geosciences_datasets: "https://pds-geosciences.wustl.edu/missions/mer/geo_mer_datasets.htm",
+  analysts_notebook: "https://an.rsl.wustl.edu/",
+  analysts_notebook_mer_help: "https://an.rsl.wustl.edu/help/Content/About%20the%20mission/MER/MER%20mission.htm",
+  cartography_portal: "https://pds-imaging.jpl.nasa.gov/portal/mer_mission.html",
+  opportunity_camera_volumes: "https://pds-imaging.jpl.nasa.gov/data/mer/opportunity/",
+  spirit_camera_volumes: "https://pds-imaging.jpl.nasa.gov/data/mer/spirit/",
+  spice_kernels: "https://naif.jpl.nasa.gov/pub/naif/MER/kernels/",
+};
+
+export function getNssdcaExperimentUrl(rover: "spirit" | "opportunity", expNum: string): string {
+  const cospar = rover === "spirit" ? "2003-027A" : "2003-032A";
+  const num = expNum.padStart(2, "0");
+  return `https://nssdc.gsfc.nasa.gov/nmc/experiment/display.action?id=${cospar}-${num}`;
+}
+
+export function getHiRiseUrl(obsId: string): string {
+  return `https://www.uahirise.org/${obsId.trim().toUpperCase()}`;
+}
+
+export function getPhotojournalUrl(piaId: string, format: "catalog" | "jpeg" | "tiff" = "catalog"): string {
+  const cleanId = piaId.trim().toUpperCase();
+  if (format === "jpeg") return `https://photojournal.jpl.nasa.gov/jpeg/${cleanId}.jpg`;
+  if (format === "tiff") return `https://photojournal.jpl.nasa.gov/tiff/${cleanId}.tif`;
+  return `https://photojournal.jpl.nasa.gov/catalog/${cleanId}`;
+}
 
 /**
  * Discarded Hardware Monuments Manifest
@@ -642,6 +682,30 @@ export const DISCARDED_MONUMENTS: DiscardedMonument[] = [
     hiriseObsId: "ESP_056955_1775",
     description: "Resting on the rim of 22 km Endeavour Crater after driving 45.16 km (marathon+). Transmitted final Sol 5111 telemetry before planet-encircling dust storm.",
     scientificValue: "End point of humanity's longest extraterrestrial drive; monument to the exploration of aqueous Mars.",
+  },
+  {
+    id: "oppy-cruise-stage",
+    rover: "opportunity",
+    name: "Opportunity Cruise Stage Debris Field",
+    category: "cruise-stage",
+    massKg: 193,
+    coordinates: { lat: -1.85, lon: 355.20 },
+    siteName: "Atmospheric entry corridor east of Meridiani Planum",
+    condition: "Fragmented impact debris from high-velocity atmospheric burn-up",
+    description: "Jettisoned 15 minutes before atmospheric entry on January 25, 2004; followed a ballistic entry trajectory and disintegrated in the upper atmosphere.",
+    scientificValue: "Hypervelocity entry trajectory validation and debris footprint data for interplanetary entry vehicles.",
+  },
+  {
+    id: "oppy-rat-diamond-teeth",
+    rover: "opportunity",
+    name: "Opportunity RAT Expendable Diamond Grinding Burrs",
+    category: "expended-tool",
+    massKg: 0.05,
+    coordinates: { lat: -2.284, lon: 354.652 },
+    siteName: "Endeavour Crater Rim traverse",
+    condition: "Diamond abrasive grains worn flush across dozens of rock grindings",
+    description: "After grinding through layered sulfate bedrocks in Eagle, Endurance, Victoria, and Endeavour craters, the resin-bonded diamond grinding teeth were gradually expended into Martian rock powder.",
+    scientificValue: "Direct long-term wear metrics on robotic grinding tools operating on sulfate sandstones vs. terrestrial testing.",
   },
 ];
 
@@ -910,6 +974,31 @@ export function decodeMERFilename(filename: string): DecodedPDSFilename {
     cameraFilter: camFilter,
     description: `${spacecraft} · ${instrument} · SCLK ${sclkTimestamp} · Product ${prodStr}`,
   };
+}
+
+export interface BuildMERFilenameOptions {
+  rover: "spirit" | "opportunity";
+  instrument: "P" | "N" | "F" | "R" | "M" | "E";
+  sclk: number | string;
+  productType?: "EFF" | "ESF" | "EDN" | "MRD" | "RAD";
+  siteCode?: string;
+  drivePos?: string;
+  sequenceId?: string;
+  camFilter?: string;
+  producer?: string;
+}
+
+export function buildMERFilename(opts: BuildMERFilenameOptions): string {
+  const sc = opts.rover === "opportunity" ? "1" : "2";
+  const inst = opts.instrument;
+  const sclk = String(opts.sclk).padStart(9, "0").slice(0, 9);
+  const prod = (opts.productType ?? "EFF").padEnd(3, "F").slice(0, 3);
+  const site = (opts.siteCode ?? "D2").padEnd(2, "0").slice(0, 2);
+  const pos = (opts.drivePos ?? "12").padEnd(2, "0").slice(0, 2);
+  const seq = (opts.sequenceId ?? "P2685").padEnd(5, "0").slice(0, 5);
+  const cam = (opts.camFilter ?? "L8").padEnd(2, "1").slice(0, 2);
+  const auth = (opts.producer ?? "M1").padEnd(2, "1").slice(0, 2);
+  return `${sc}${inst}${sclk}${prod}${site}${pos}${seq}${cam}${auth}`;
 }
 
 /**
