@@ -67,8 +67,12 @@ export function BottomNavBar() {
   const insets = useSafeAreaInsets();
   const bottomInset = insets.bottom > 0 ? insets.bottom : 8;
 
-  // Hide on full-screen cinematic story player so touch controls are unobstructed
-  if (pathname.includes('/heroes/') && pathname.endsWith('/story')) {
+  // Hide on the book reader (which has its own full-screen page navigation controls)
+  // and on full-screen cinematic story player so touch controls are unobstructed
+  if (
+    pathname.includes('/book') ||
+    (pathname.includes('/heroes/') && pathname.endsWith('/story'))
+  ) {
     return null;
   }
 

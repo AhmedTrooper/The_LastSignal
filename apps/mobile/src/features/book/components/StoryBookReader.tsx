@@ -123,8 +123,8 @@ export function StoryBookReader() {
       <StatusBar hidden={isFullscreen} barStyle="light-content" backgroundColor="#070510" />
 
       {/* Reader Top Bar (Hidden in Fullscreen) */}
-      {!isFullscreen && (
-        <View style={[styles.topBar, { paddingTop: insets.top + 6 }]}>
+      {!isFullscreen ? (
+        <View style={[styles.topBar, { paddingTop: insets.top + 4 }]}>
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [styles.iconBtn, pressed && styles.pressed]}
@@ -143,7 +143,7 @@ export function StoryBookReader() {
                 ? "Front Cover"
                 : isToc
                 ? "Table of Contents"
-                : `${currentSpread.machineName} · Page ${currentPage}/58`}
+                : `${currentSpread.machineName} · P. ${currentPage}/58`}
             </ThemedText>
             <Ionicons name="chevron-down" size={13} color="#f5a623" />
           </Pressable>
@@ -177,10 +177,30 @@ export function StoryBookReader() {
             </Pressable>
           </View>
         </View>
+      ) : (
+        /* Floating Exit Fullscreen Pill Button */
+        <Pressable
+          onPress={toggleFullscreen}
+          style={[styles.floatingExitBtn, { top: Math.max(insets.top, 10) }]}
+          accessibilityLabel="Exit fullscreen mode"
+        >
+          <Ionicons name="contract-outline" size={15} color="#f5a623" />
+          <ThemedText style={styles.floatingExitText}>Exit</ThemedText>
+        </Pressable>
       )}
 
       {/* Main Reading Stage */}
-      <View style={styles.bookStage}>
+      <View
+        style={[
+          styles.bookStage,
+          {
+            paddingTop: isFullscreen ? Math.max(insets.top, 10) : 6,
+            paddingBottom: isFullscreen
+              ? Math.max(insets.bottom, 12) + 50
+              : 52 + Math.max(insets.bottom, 10) + 6,
+          },
+        ]}
+      >
         {/* PHYSICAL HARDCOVER BOOK FRAME */}
         <View style={styles.leatherHardcoverFrame}>
           {/* Silk Crimson Bookmark Ribbon draped from top center */}
@@ -446,7 +466,7 @@ export function StoryBookReader() {
                       <View style={styles.widgetTitleRow}>
                         <Ionicons name="sunny" size={14} color="#f5a623" />
                         <ThemedText style={styles.widgetHeaderLabel}>
-                          Martian Sky Dust Extinction ($\tau$)
+                          Martian Sky Dust Extinction (τ)
                         </ThemedText>
                       </View>
                       <View style={styles.tauBtnRow}>
@@ -468,7 +488,7 @@ export function StoryBookReader() {
                                 simulatedTau === tVal && styles.tauPillTextActive,
                               ]}
                             >
-                              $\tau$ {tVal}
+                              τ {tVal}
                             </ThemedText>
                           </Pressable>
                         ))}
@@ -561,69 +581,134 @@ export function StoryBookReader() {
       </View>
 
       {/* Floating Bottom Navigation Controller */}
-      <View style={[styles.bottomControllerBar, { paddingBottom: insets.bottom + 10 }]}>
-        <Pressable
-          onPress={goToPrevPage}
-          disabled={currentPage === 1}
-          style={({ pressed }) => [
-            styles.navPageBtn,
-            currentPage === 1 && styles.navBtnDisabled,
-            pressed && styles.pressed,
-          ]}
-          accessibilityLabel="Previous page"
-        >
-          <Ionicons
-            name="chevron-back"
-            size={18}
-            color={currentPage === 1 ? "#5f6368" : "#f4ede0"}
-          />
-          <ThemedText
-            style={[
-              styles.navPageBtnText,
-              currentPage === 1 && styles.navTextDisabled,
+      {isFullscreen ? (
+        <View style={[styles.floatingFullscreenCapsule, { bottom: Math.max(insets.bottom, 12) }]}>
+          <Pressable
+            onPress={goToPrevPage}
+            disabled={currentPage === 1}
+            style={({ pressed }) => [
+              styles.fsNavBtn,
+              currentPage === 1 && styles.fsNavDisabled,
+              pressed && styles.pressed,
             ]}
+            accessibilityLabel="Previous page"
           >
-            Prev
-          </ThemedText>
-        </Pressable>
+            <Ionicons
+              name="chevron-back"
+              size={16}
+              color={currentPage === 1 ? "#5f6368" : "#f4ede0"}
+            />
+            <ThemedText
+              style={[
+                styles.fsNavText,
+                currentPage === 1 && styles.fsNavTextDisabled,
+              ]}
+            >
+              Prev
+            </ThemedText>
+          </Pressable>
 
-        {/* Center Page Picker Pill */}
-        <Pressable
-          onPress={() => setShowToc(true)}
-          style={({ pressed }) => [styles.pageSelectorPill, pressed && styles.pressed]}
-          accessibilityLabel="Open table of contents"
-        >
-          <Ionicons name="book-outline" size={14} color="#f5a623" />
-          <ThemedText style={styles.pageSelectorText}>
-            Page {currentPage} of {totalPages}
-          </ThemedText>
-        </Pressable>
+          <Pressable
+            onPress={() => setShowToc(true)}
+            style={({ pressed }) => [styles.fsPagePill, pressed && styles.pressed]}
+            accessibilityLabel="Open table of contents"
+          >
+            <Ionicons name="book-outline" size={13} color="#f5a623" />
+            <ThemedText style={styles.fsPageText}>
+              {currentPage} / {totalPages}
+            </ThemedText>
+          </Pressable>
 
-        <Pressable
-          onPress={goToNextPage}
-          disabled={currentPage === totalPages}
-          style={({ pressed }) => [
-            styles.navPageBtn,
-            currentPage === totalPages && styles.navBtnDisabled,
-            pressed && styles.pressed,
-          ]}
-          accessibilityLabel="Next page"
-        >
-          <ThemedText
-            style={[
-              styles.navPageBtnText,
-              currentPage === totalPages && styles.navTextDisabled,
+          <Pressable
+            onPress={goToNextPage}
+            disabled={currentPage === totalPages}
+            style={({ pressed }) => [
+              styles.fsNavBtn,
+              currentPage === totalPages && styles.fsNavDisabled,
+              pressed && styles.pressed,
             ]}
+            accessibilityLabel="Next page"
           >
-            Next
-          </ThemedText>
-          <Ionicons
-            name="chevron-forward"
-            size={18}
-            color={currentPage === totalPages ? "#5f6368" : "#f4ede0"}
-          />
-        </Pressable>
-      </View>
+            <ThemedText
+              style={[
+                styles.fsNavText,
+                currentPage === totalPages && styles.fsNavTextDisabled,
+              ]}
+            >
+              Next
+            </ThemedText>
+            <Ionicons
+              name="chevron-forward"
+              size={16}
+              color={currentPage === totalPages ? "#5f6368" : "#f4ede0"}
+            />
+          </Pressable>
+        </View>
+      ) : (
+        <View style={[styles.bottomControllerBar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
+          <Pressable
+            onPress={goToPrevPage}
+            disabled={currentPage === 1}
+            style={({ pressed }) => [
+              styles.navPageBtn,
+              currentPage === 1 && styles.navBtnDisabled,
+              pressed && styles.pressed,
+            ]}
+            accessibilityLabel="Previous page"
+          >
+            <Ionicons
+              name="chevron-back"
+              size={18}
+              color={currentPage === 1 ? "#5f6368" : "#f4ede0"}
+            />
+            <ThemedText
+              style={[
+                styles.navPageBtnText,
+                currentPage === 1 && styles.navTextDisabled,
+              ]}
+            >
+              Prev
+            </ThemedText>
+          </Pressable>
+
+          {/* Center Page Picker Pill */}
+          <Pressable
+            onPress={() => setShowToc(true)}
+            style={({ pressed }) => [styles.pageSelectorPill, pressed && styles.pressed]}
+            accessibilityLabel="Open table of contents"
+          >
+            <Ionicons name="book-outline" size={14} color="#f5a623" />
+            <ThemedText style={styles.pageSelectorText}>
+              Page {currentPage} of {totalPages}
+            </ThemedText>
+          </Pressable>
+
+          <Pressable
+            onPress={goToNextPage}
+            disabled={currentPage === totalPages}
+            style={({ pressed }) => [
+              styles.navPageBtn,
+              currentPage === totalPages && styles.navBtnDisabled,
+              pressed && styles.pressed,
+            ]}
+            accessibilityLabel="Next page"
+          >
+            <ThemedText
+              style={[
+                styles.navPageBtnText,
+                currentPage === totalPages && styles.navTextDisabled,
+              ]}
+            >
+              Next
+            </ThemedText>
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color={currentPage === totalPages ? "#5f6368" : "#f4ede0"}
+            />
+          </Pressable>
+        </View>
+      )}
 
       {/* Table of Contents Chapter Drawer */}
       <ChapterDrawer
@@ -640,21 +725,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#070510",
+    overflow: "hidden",
   },
   topBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingBottom: 8,
+    paddingHorizontal: 12,
+    paddingBottom: 6,
     backgroundColor: "#0d0f22",
     borderBottomWidth: 1,
     borderBottomColor: "rgba(255, 255, 255, 0.08)",
   },
+  floatingExitBtn: {
+    position: "absolute",
+    right: 14,
+    zIndex: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(13, 15, 34, 0.88)",
+    borderWidth: 1,
+    borderColor: "rgba(245, 166, 35, 0.45)",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 16,
+    gap: 4,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 6,
+  },
+  floatingExitText: {
+    fontSize: 11,
+    fontWeight: "800",
+    color: "#f5a623",
+  },
   iconBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     backgroundColor: "rgba(255, 255, 255, 0.06)",
     alignItems: "center",
     justifyContent: "center",
@@ -662,22 +772,22 @@ const styles = StyleSheet.create({
   topRightActions: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 6,
   },
   chapterIndicatorPill: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(245, 166, 35, 0.12)",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "rgba(245, 166, 35, 0.3)",
-    gap: 6,
-    maxWidth: "52%",
+    gap: 5,
+    maxWidth: "48%",
   },
   chapterBadgeText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "700",
     color: "#f5a623",
   },
@@ -688,27 +798,29 @@ const styles = StyleSheet.create({
   /* Physical Book Stage */
   bookStage: {
     flex: 1,
-    paddingHorizontal: 12,
-    paddingTop: 8,
-    paddingBottom: 72,
+    width: "100%",
+    paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   leatherHardcoverFrame: {
     flex: 1,
     width: "100%",
-    maxWidth: 480,
+    maxWidth: 520,
+    maxHeight: "100%",
     backgroundColor: "#170e28",
-    borderRadius: 24,
-    borderWidth: 4,
+    borderRadius: 20,
+    borderWidth: 3,
     borderColor: "#2b1f3d",
-    padding: 6,
+    padding: 5,
     shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 12 },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.7,
-    shadowRadius: 20,
-    elevation: 12,
+    shadowRadius: 18,
+    elevation: 10,
     position: "relative",
+    overflow: "hidden",
   },
   silkBookmarkRibbon: {
     position: "absolute",
@@ -737,7 +849,9 @@ const styles = StyleSheet.create({
   },
   singlePagePaper: {
     flex: 1,
-    borderRadius: 18,
+    width: "100%",
+    maxHeight: "100%",
+    borderRadius: 16,
     overflow: "hidden",
     borderWidth: 1,
     position: "relative",
@@ -1090,13 +1204,16 @@ const styles = StyleSheet.create({
   },
   tauBtnRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    gap: 5,
     marginBottom: 6,
   },
   tauPill: {
-    paddingHorizontal: 7,
-    paddingVertical: 4,
-    borderRadius: 6,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 2,
+    borderRadius: 8,
     backgroundColor: "rgba(0, 0, 0, 0.06)",
   },
   tauPillActive: {
@@ -1212,15 +1329,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingTop: 10,
+    paddingHorizontal: 12,
+    paddingTop: 8,
   },
   navPageBtn: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.08)",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
     borderRadius: 12,
     gap: 4,
   },
@@ -1240,15 +1357,72 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(245, 166, 35, 0.15)",
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: "rgba(245, 166, 35, 0.35)",
-    gap: 6,
+    gap: 5,
   },
   pageSelectorText: {
     fontSize: 12,
+    fontWeight: "800",
+    color: "#f5a623",
+  },
+
+  /* Fullscreen Floating Navigation Capsule */
+  floatingFullscreenCapsule: {
+    position: "absolute",
+    left: 16,
+    right: 16,
+    backgroundColor: "rgba(13, 15, 34, 0.92)",
+    borderWidth: 1,
+    borderColor: "rgba(245, 166, 35, 0.35)",
+    borderRadius: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
+    elevation: 8,
+    zIndex: 50,
+  },
+  fsNavBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 12,
+    gap: 3,
+  },
+  fsNavDisabled: {
+    opacity: 0.35,
+  },
+  fsNavText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: "#f4ede0",
+  },
+  fsNavTextDisabled: {
+    color: "#555555",
+  },
+  fsPagePill: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(245, 166, 35, 0.15)",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(245, 166, 35, 0.35)",
+    gap: 4,
+  },
+  fsPageText: {
+    fontSize: 11,
     fontWeight: "800",
     color: "#f5a623",
   },

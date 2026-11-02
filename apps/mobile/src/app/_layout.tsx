@@ -61,15 +61,9 @@ export default function RootLayout() {
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="book" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="heroes/[slug]"
-            options={{
-              headerShown: true,
-              headerTitle: '',
-              headerBackTitle: 'Back',
-              headerTintColor: appbar.tintColor,
-            }}
-          />
+          <Stack.Screen name="story/book" options={{ headerShown: false }} />
+          <Stack.Screen name="heroes/[slug]/story" options={{ headerShown: false }} />
+          <Stack.Screen name="heroes/[slug]" options={{ headerShown: false }} />
           <Stack.Screen
             name="favorites"
             options={{

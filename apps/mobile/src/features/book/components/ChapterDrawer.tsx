@@ -1,4 +1,5 @@
 import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { ThemedText } from "@/components/themed-text";
 import { haptic } from "@/utils/haptics";
@@ -17,6 +18,8 @@ export function ChapterDrawer({
   onSelectPage,
   onClose,
 }: ChapterDrawerProps) {
+  const insets = useSafeAreaInsets();
+
   const handleSelect = (pageNumber: number) => {
     haptic.selection();
     onSelectPage(pageNumber);
@@ -32,7 +35,7 @@ export function ChapterDrawer({
     >
       <View style={styles.backdrop}>
         <Pressable style={styles.dismissOverlay} onPress={onClose} />
-        <View style={styles.sheetContainer}>
+        <View style={[styles.sheetContainer, { paddingBottom: Math.max(insets.bottom, 20) }]}>
           {/* Header */}
           <View style={styles.sheetHeader}>
             <View style={styles.dragIndicator} />
