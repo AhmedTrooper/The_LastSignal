@@ -49,7 +49,7 @@ export type ConsoleBank = {
 };
 
 export type ConsoleAction = {
-  id: "story" | "archive";
+  id: "story" | "movie" | "archive";
   label: string;
   line: string;
   meta: string;
@@ -561,6 +561,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
     banks,
     actions: [
       { id: "story", label: "My story", line: "Eight chapters, from undocking to now. Opens in a second tab.", meta: "8 chapters" },
+      { id: "movie", label: "Watch the movie", line: "The old cinematic cut: nine scenes, about two minutes.", meta: "Movie" },
       { id: "archive", label: "The full record", line: "The long read, the mission clock and the sources.", meta: "Archive" },
     ],
     beats,

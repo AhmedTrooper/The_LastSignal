@@ -102,6 +102,11 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
     goToBeat("story_opened");
   };
 
+  // The movie is a standalone cinematic cut. It does not report back, so the console stays put.
+  const openMovie = () => {
+    window.open(`/heroes/${slug}/movie`, "_blank", "noopener,noreferrer");
+  };
+
   const openArchive = () => {
     window.dispatchEvent(new Event("tls:open-archive"));
     requestAnimationFrame(() => document.getElementById("archive")?.scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -362,7 +367,7 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
             {data.actions.map((action) => (
               <button
                 key={action.id}
-                onClick={action.id === "story" ? openStory : openArchive}
+                onClick={action.id === "story" ? openStory : action.id === "movie" ? openMovie : openArchive}
                 className="group flex items-start gap-4 rounded-xl border border-dashed border-violet-bright/40 px-4 py-3.5 text-left transition-colors hover:border-violet-bright hover:bg-violet/[0.12]"
               >
                 <span className="mt-0.5 font-mono text-[10px] text-violet-bright">↗</span>

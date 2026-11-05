@@ -22,8 +22,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: `/heroes/${h.slug}`, priority: 0.8 },
     { path: `/heroes/${h.slug}/story`, priority: 0.6 },
   ]);
+  const movieRoutes = [{ path: "/heroes/apollo-11-lander/movie", priority: 0.6 }];
 
-  return [...staticRoutes, ...heroRoutes].map((route) => ({
+  return [...staticRoutes, ...heroRoutes, ...movieRoutes].map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
