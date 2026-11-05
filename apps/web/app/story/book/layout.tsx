@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { generateSEO } from "@/lib/seo";
 
 export const metadata: Metadata = generateSEO({
-  title: "RoverVilla: Storybook of Discarded Machines | Master Edition",
+  title: "Monuments in the Dust: RoverVilla’s space comic",
   description:
-    "An interactive, real-feel storybook chronicling the 12 legendary NASA machines left on the Moon and Mars from Ranger 7 (1964) to Ingenuity (2024).",
+    "Meet the machines left on the Moon and Mars through an illustrated comic: original SVG panels, imagined machine voices, mission stories, and optional science field notes.",
   path: "/story/book",
 });
 

@@ -1,46 +1,80 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "@/app/components/header";
-import { ArrowLeft, ArrowRight } from "@/app/components/icons";
-import { assetUrl } from "@/lib/heroes";
+import { useReducedMotion } from "motion/react";
+import { ArrowLeft, ArrowRight, BookIcon } from "@/app/components/icons";
+import { SignalMark } from "@/app/components/logo";
+import { useEagleFullscreen } from "@/app/components/profile/use-eagle-fullscreen";
+import BookCover from "@/app/components/story/book-cover";
+import BookContents from "@/app/components/story/book-contents";
+import ComicPage from "@/app/components/story/comic-page";
+import { BOOKMARK_KEY, readBookPosition, turnBookPage, chapterTitle } from "@/lib/book-reader";
+import { assetUrl, getHero } from "@/lib/heroes";
+import { photo } from "@/lib/photos";
+import { BOOK_SPREADS as SPREADS } from "@/lib/book-spreads";
 import { calculateIngenuityAerodynamics } from "@/lib/ingenuity-mission";
 import { calculateDustImpact } from "@/lib/mer-mission";
 
-import { SPREADS, TOC_ITEMS, type BookSpread } from "@thelastsignal/data";
+import { TOC_ITEMS } from "@thelastsignal/data";
+import "./book.css";
 export default function StoryBookPage() {
   const [spreadIndex, setSpreadIndex] = useState<number>(0);
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
   const [mobilePage, setMobilePage] = useState<"left" | "right">("left");
   const [showTocDrawer, setShowTocDrawer] = useState<boolean>(false);
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const { ref: reader, fullscreen: isFullscreen, toggle: toggleFullscreen } = useEagleFullscreen();
+  const reduced = useReducedMotion();
+  const [singlePage, setSinglePage] = useState(false);
+  const [restored, setRestored] = useState(false);
+  const [fontScale, setFontScale] = useState(1);
+  const [pageSound, setPageSound] = useState(false);
+  const [readingMode, setReadingMode] = useState<"comic" | "notes">("comic");
+  const flipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const position = useRef({ spread: 0, side: "left" as "left" | "right" });
+  const audioContexts = useRef<Set<AudioContext>>(new Set());
+  const content = useRef<HTMLDivElement>(null);
+  const focusAfterTurn = useRef(false);
 
-  const toggleFullscreen = useCallback(async () => {
-    try {
-      if (!document.fullscreenElement) {
-        if (document.documentElement.requestFullscreen) {
-          await document.documentElement.requestFullscreen();
-        }
-        setIsFullscreen(true);
-      } else {
-        if (document.exitFullscreen) {
-          await document.exitFullscreen();
-        }
-        setIsFullscreen(false);
-      }
-    } catch {
-      setIsFullscreen((prev) => !prev);
-    }
+  useEffect(() => {
+    const contexts = audioContexts.current;
+    const query = window.matchMedia("(max-width: 767px)");
+    const resize = () => setSinglePage(query.matches);
+    resize(); query.addEventListener("change", resize);
+    let saved = { spread: 0, side: "left" as "left" | "right" };
+    try { saved = readBookPosition(localStorage.getItem(BOOKMARK_KEY), SPREADS.length); } catch { /* Optional bookmark. */ }
+    position.current = saved;
+    const frame = requestAnimationFrame(() => { setSpreadIndex(saved.spread); setMobilePage(saved.side); setRestored(true); });
+    return () => { cancelAnimationFrame(frame); query.removeEventListener("change", resize); if (flipTimer.current) clearTimeout(flipTimer.current); contexts.forEach(ctx => { void ctx.close().catch(() => {}); }); };
   }, []);
 
   useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    if (!restored) return;
+    try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify({ spread: spreadIndex, side: mobilePage })); } catch { /* Reading works without persistence. */ }
+    if (focusAfterTurn.current) {
+      const page = content.current?.querySelector<HTMLElement>(`.book-page-${mobilePage} [data-book-heading]`);
+      page?.focus({ preventScroll: true });
+      reader.current?.scrollTo({ top: 0, behavior: "instant" });
+      if (!isFullscreen) window.scrollTo({ top: 0, behavior: "instant" });
+      focusAfterTurn.current = false;
+    }
+  }, [spreadIndex, mobilePage, restored, isFullscreen, reader]);
+
+  const makeAudio = useCallback(() => {
+    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AudioCtx) return null;
+    const ctx = new AudioCtx();
+    audioContexts.current.add(ctx);
+    return ctx;
+  }, []);
+
+  const closeAudio = useCallback((ctx: AudioContext, seconds: number) => {
+    setTimeout(() => { audioContexts.current.delete(ctx); void ctx.close().catch(() => {}); }, seconds * 1000 + 150);
+  }, []);
+  const stopAudio = useCallback(() => {
+    audioContexts.current.forEach(ctx => { void ctx.close().catch(() => {}); });
+    audioContexts.current.clear();
   }, []);
 
   // InSight interactive states
@@ -63,7 +97,8 @@ export default function StoryBookPage() {
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = makeAudio();
+      if (!ctx) return;
       const baseFreq = (ingenuityRpm / 60) * 2;
 
       const osc1 = ctx.createOscillator();
@@ -86,12 +121,13 @@ export default function StoryBookPage() {
       osc2.start();
       osc1.stop(ctx.currentTime + 2.25);
       osc2.stop(ctx.currentTime + 2.25);
+      closeAudio(ctx, 2.25);
       setIngenuityAudioPlaying(true);
       setTimeout(() => setIngenuityAudioPlaying(false), 2200);
     } catch {
       // AudioContext unavailable
     }
-  }, [ingenuityRpm]);
+  }, [ingenuityRpm, makeAudio, closeAudio]);
 
   // MER Twin interactive states
   const [merRockType, setMerRockType] = useState<"sulfate" | "basalt">("sulfate");
@@ -105,7 +141,8 @@ export default function StoryBookPage() {
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = makeAudio();
+      if (!ctx) return;
       const isBasalt = rock === "basalt";
       const baseFreq = isBasalt ? 195 : 390;
       const duration = 2.2;
@@ -150,20 +187,22 @@ export default function StoryBookPage() {
       noiseSrc.start();
       osc.stop(ctx.currentTime + duration);
       noiseSrc.stop(ctx.currentTime + duration);
+      closeAudio(ctx, duration);
 
       setMerGrindingAudioPlaying(true);
       setTimeout(() => setMerGrindingAudioPlaying(false), duration * 1000);
     } catch {
       // AudioContext unavailable
     }
-  }, []);
+  }, [makeAudio, closeAudio]);
 
   // Synthesize Billie Holiday "I'll Be Seeing You" opening motif for Opportunity
   const playMerBillieHoliday = useCallback(() => {
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = makeAudio();
+      if (!ctx) return;
 
       const notes = [
         { freq: 311.13, duration: 0.40 }, // Eb4
@@ -193,14 +232,17 @@ export default function StoryBookPage() {
       });
 
       setMerBillieHolidayPlaying(true);
+      closeAudio(ctx, startTime - ctx.currentTime);
       setTimeout(() => setMerBillieHolidayPlaying(false), (startTime - ctx.currentTime) * 1000 + 100);
     } catch {
       // AudioContext unavailable
     }
-  }, []);
+  }, [makeAudio, closeAudio]);
 
   const totalSpreads = SPREADS.length;
   const currentSpread = SPREADS[spreadIndex];
+  const machine = currentSpread.heroSlug ? getHero(currentSpread.heroSlug) : undefined;
+  const imagePlate = machine?.gallery[0] ? photo(machine.gallery[0]) : undefined;
 
   // Calculated distance for P-to-S wave triangulation
   const calculatedQuakeDistanceKm = Math.round(insightDeltaT * 9.35);
@@ -208,10 +250,12 @@ export default function StoryBookPage() {
 
   // Synthesize realistic sound effects via Web Audio API
   const playPageTurnSound = useCallback(() => {
+    if (!pageSound) return;
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = makeAudio();
+      if (!ctx) return;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const filter = ctx.createBiquadFilter();
@@ -233,17 +277,20 @@ export default function StoryBookPage() {
 
       osc.start();
       osc.stop(ctx.currentTime + 0.13);
+      closeAudio(ctx, 0.13);
     } catch {
       // AudioContext not allowed or unsupported
     }
-  }, []);
+  }, [pageSound, makeAudio, closeAudio]);
 
   const playInSightSound = (type: "wind" | "bloop" | "quake") => {
     setInsightActiveAudio(type);
     try {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = makeAudio();
+      if (!ctx) return;
+      closeAudio(ctx, 2.1);
 
       if (type === "wind") {
         const bufferSize = ctx.sampleRate * 2.0;
@@ -318,220 +365,121 @@ export default function StoryBookPage() {
     }, 1200);
   };
 
-  const goToNextSpread = useCallback(() => {
-    if (spreadIndex < totalSpreads - 1) {
-      setIsFlipping(true);
-      playPageTurnSound();
-      setTimeout(() => {
-        setSpreadIndex((prev) => prev + 1);
-        setMobilePage("left");
-        setIsFlipping(false);
-      }, 150);
-    }
-  }, [spreadIndex, totalSpreads, playPageTurnSound]);
-
-  const goToPrevSpread = useCallback(() => {
-    if (spreadIndex > 0) {
-      setIsFlipping(true);
-      playPageTurnSound();
-      setTimeout(() => {
-        setSpreadIndex((prev) => prev - 1);
-        setMobilePage("left");
-        setIsFlipping(false);
-      }, 150);
-    }
-  }, [spreadIndex, playPageTurnSound]);
+  const turn = useCallback((direction: -1 | 1) => {
+    const next = turnBookPage(position.current, direction, singlePage, totalSpreads);
+    position.current = next;
+    setSpreadIndex(next.spread); setMobilePage(next.side);
+    focusAfterTurn.current = true;
+    stopAudio();
+    playPageTurnSound();
+    if (flipTimer.current) clearTimeout(flipTimer.current);
+    setIsFlipping(!reduced);
+    flipTimer.current = setTimeout(() => setIsFlipping(false), reduced ? 0 : 180);
+  }, [singlePage, totalSpreads, playPageTurnSound, reduced, stopAudio]);
+  const goToNextSpread = useCallback(() => turn(1), [turn]);
+  const goToPrevSpread = useCallback(() => turn(-1), [turn]);
+  const jump = (spread: number) => {
+    stopAudio();
+    position.current = { spread, side: "left" };
+    setSpreadIndex(spread); setMobilePage("left"); setShowTocDrawer(false);
+    focusAfterTurn.current = true;
+    playPageTurnSound();
+  };
 
   // Keyboard arrow navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (showTocDrawer || target.closest('input, textarea, select, [contenteditable="true"], [role="slider"], [role="tablist"]')) return;
       if (e.key === "ArrowRight" || e.key === "PageDown") {
+        e.preventDefault();
         goToNextSpread();
       } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
         goToPrevSpread();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [goToNextSpread, goToPrevSpread]);
+  }, [goToNextSpread, goToPrevSpread, showTocDrawer]);
 
   const leftPageNumber = spreadIndex * 2 + 1;
   const rightPageNumber = spreadIndex * 2 + 2;
+  const totalPages = totalSpreads * 2;
+  const chapter = [...TOC_ITEMS].reverse().find(item => item.spread <= spreadIndex)!;
+  const atBeginning = spreadIndex === 0 && (!singlePage || mobilePage === "left");
+  const atEnd = spreadIndex === totalSpreads - 1 && (!singlePage || mobilePage === "right");
 
   return (
-    <div className={`min-h-screen bg-[#070510] text-[#f4ede0] flex flex-col selection:bg-rose-900 selection:text-white ${isFullscreen ? "fixed inset-0 z-50 overflow-y-auto" : ""}`}>
-      {!isFullscreen && <Header />}
+    <div ref={reader} className={`storybook-reader min-h-dvh ${isFullscreen ? "book-reader-fullscreen" : ""}`} style={{ "--book-font-scale": fontScale } as CSSProperties}>
+      <header className="book-reader-header">
+        <Link href="/story" className="flex items-center gap-3"><SignalMark className="h-7 w-7 text-[#bcad8b]" /><span className="font-mono text-[10px] uppercase tracking-[0.2em]">RoverVilla<span className="mt-1 block text-[9px] tracking-[0.12em] text-white/45">A comic of forgotten explorers</span></span></Link>
+        <div className="flex items-center gap-2"><button type="button" onClick={() => setShowTocDrawer(true)} className="book-reader-button"><BookIcon className="h-4 w-4" /><span>Chapters</span></button><button type="button" data-fullscreen-toggle onClick={toggleFullscreen} aria-pressed={isFullscreen} className="book-reader-button">{isFullscreen ? "Exit focus" : "Focus mode"}</button></div>
+      </header>
 
       {/* Main Reading Stage */}
-      <main className={`flex-1 flex flex-col items-center justify-center px-2 sm:px-4 ${isFullscreen ? "py-2 sm:py-3" : "py-4 sm:py-6"}`}>
+      <main className="book-reading-stage">
         {/* Top Control Bar (Jump, Chapter Indicator, Mobile Switcher, Fullscreen Toggle) */}
-        <div className="w-full max-w-5xl mb-3 flex flex-wrap items-center justify-between gap-2.5">
-          {/* Left: Back to story hub, Chapter TOC, & Fullscreen */}
-          <div className="flex flex-wrap items-center gap-2">
-            {!isFullscreen && (
-              <Link
-                href="/story"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-mono text-white/80 hover:text-white transition-colors border border-white/10"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" /> Story Hub
-              </Link>
-            )}
-
-            <button
-              onClick={() => setShowTocDrawer(!showTocDrawer)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/50 px-3 py-1.5 text-xs font-mono font-bold text-rose-300 transition-colors border border-rose-800/30 cursor-pointer"
-            >
-              📖 Table of Contents ({TOC_ITEMS.length} Chapters)
-            </button>
-
-            {/* Fullscreen Reading Toggle Button */}
-            <button
-              onClick={toggleFullscreen}
-              className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-mono font-bold transition-all border cursor-pointer shadow-sm ${
-                isFullscreen
-                  ? "bg-rose-900/60 hover:bg-rose-800 text-rose-200 border-rose-700"
-                  : "bg-white/10 hover:bg-white/15 text-white border-white/15"
-              }`}
-              title={isFullscreen ? "Exit Fullscreen Reading Mode (Esc)" : "Enter Immersive Fullscreen Reading Mode"}
-            >
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isFullscreen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                )}
-              </svg>
-              <span>{isFullscreen ? "Exit Fullscreen (Esc)" : "Fullscreen Mode"}</span>
-            </button>
-          </div>
-
-          {/* Center / Right: Progress & Mobile Page Switcher */}
-          <div className="flex items-center gap-2">
-            {/* Mobile Left/Right Page Toggle (Visible only on < md screens) */}
-            <div className="flex md:hidden items-center rounded-xl bg-white/10 p-0.5 border border-white/15">
-              <button
-                onClick={() => setMobilePage("left")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
-                  mobilePage === "left" ? "bg-rose-700 text-white shadow" : "text-white/60 hover:text-white"
-                }`}
-              >
-                Left (Pg {leftPageNumber})
-              </button>
-              <button
-                onClick={() => setMobilePage("right")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
-                  mobilePage === "right" ? "bg-rose-700 text-white shadow" : "text-white/60 hover:text-white"
-                }`}
-              >
-                Right (Pg {rightPageNumber})
-              </button>
-            </div>
-
-            {/* Desktop Spread Indicator */}
-            <span className="hidden md:inline font-mono text-xs text-white/60 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10">
-              Spread {spreadIndex + 1} of {totalSpreads} · Pages {leftPageNumber}–{rightPageNumber} of 58
-            </span>
-          </div>
+        <div className="book-reading-toolbar">
+          <div><p className="book-kicker text-[#b8a989]!">{currentSpread.chapterNumber ? `Chapter ${currentSpread.chapterNumber}` : currentSpread.machineName}</p><h1 className="mt-1 text-sm font-medium text-[#e7dfd0]">{spreadIndex === 0 ? "Monuments in the Dust" : chapterTitle(chapter.title)}</h1></div>
+          <div className="flex flex-wrap items-center gap-2"><div role="group" aria-label="Reading format" className="flex items-center rounded-lg border border-white/12"><button type="button" aria-pressed={readingMode === "comic"} onClick={() => setReadingMode("comic")} className={`book-reader-button border-0! ${readingMode === "comic" ? "bg-white/10!" : ""}`}>Comic</button><button type="button" aria-pressed={readingMode === "notes"} onClick={() => setReadingMode("notes")} className={`book-reader-button border-0! ${readingMode === "notes" ? "bg-white/10!" : ""}`}>Field notes</button></div><div role="group" aria-label="Reading text size" className="flex items-center rounded-lg border border-white/12"><button type="button" aria-label="Decrease text size" disabled={fontScale <= 1} onClick={() => setFontScale(value => Math.max(1, value - 0.1))} className="book-reader-button border-0! disabled:opacity-30">A−</button><button type="button" aria-label="Increase text size" disabled={fontScale >= 1.3} onClick={() => setFontScale(value => Math.min(1.3, value + 0.1))} className="book-reader-button border-0! disabled:opacity-30">A+</button></div><button type="button" onClick={() => setPageSound(value => !value)} aria-pressed={pageSound} className="book-reader-button">Sound {pageSound ? "on" : "off"}</button></div>
         </div>
 
         {/* Quick Drawer: Table of Contents */}
-        {showTocDrawer && (
-          <div className="w-full max-w-5xl mb-4 rounded-2xl border border-rose-900/40 bg-[#120b20] p-4 shadow-2xl z-30">
-            <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-rose-400 font-bold">
-                Jump Directly to Any Chapter
-              </span>
-              <button
-                onClick={() => setShowTocDrawer(false)}
-                className="text-xs font-mono text-white/60 hover:text-white cursor-pointer px-2 py-0.5 rounded bg-white/10"
-              >
-                ✕ Close
-              </button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-64 overflow-y-auto no-scrollbar">
-              {TOC_ITEMS.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setSpreadIndex(item.spread);
-                    setMobilePage("left");
-                    setShowTocDrawer(false);
-                    playPageTurnSound();
-                  }}
-                  className={`text-left p-2 rounded-xl text-xs font-mono transition-all border ${
-                    spreadIndex === item.spread
-                      ? "bg-rose-900/40 text-rose-200 border-rose-700 font-bold shadow"
-                      : "bg-white/5 text-white/80 hover:bg-white/10 hover:text-white border-white/5"
-                  }`}
-                >
-                  <div className="text-[10px] text-rose-400 uppercase">{item.machine}</div>
-                  <div className="truncate font-sans font-medium">{item.title}</div>
-                  <div className="text-[9px] text-white/50">Page {item.page}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {showTocDrawer && <BookContents current={chapter.spread} onSelect={jump} onClose={() => setShowTocDrawer(false)} />}
 
         {/* ========================================================================= */}
-        {/* THE PHYSICAL BOOK CONTAINER (STRICT FIXED DIMENSIONS)                      */}
+        {/* The book keeps a page-shaped minimum, but grows with its content. */}
         {/* ========================================================================= */}
-        <div className="relative w-full max-w-5xl mx-auto select-none">
+        <div ref={content} className="book-binding relative w-full mx-auto" aria-label="Open storybook">
           {/* Floating Outer Turn Arrows (Desktop) */}
           <button
             onClick={goToPrevSpread}
-            disabled={spreadIndex === 0}
-            className="hidden lg:flex absolute -left-12 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/20 shadow-xl transition-all disabled:opacity-0 disabled:pointer-events-none hover:scale-105 active:scale-95 cursor-pointer z-40"
-            title="Turn backward"
+            disabled={atBeginning}
+            className="book-outer-arrow book-outer-arrow-left"
+            aria-label="Previous pages"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
 
           <button
             onClick={goToNextSpread}
-            disabled={spreadIndex === totalSpreads - 1}
-            className="hidden lg:flex absolute -right-12 top-1/2 -translate-y-1/2 h-11 w-11 items-center justify-center rounded-full bg-rose-600 hover:bg-rose-500 text-white shadow-xl shadow-rose-600/40 transition-all disabled:opacity-0 disabled:pointer-events-none hover:scale-105 active:scale-95 cursor-pointer z-40"
-            title="Turn forward"
+            disabled={atEnd}
+            className="book-outer-arrow book-outer-arrow-right"
+            aria-label="Next pages"
           >
             <ArrowRight className="h-5 w-5" />
           </button>
 
           {/* Silk Bookmark Ribbon hanging from top center */}
-          <div className="absolute left-1/2 -top-3 -translate-x-1/2 w-4 sm:w-5 h-14 sm:h-16 bg-gradient-to-b from-rose-700 via-rose-600 to-rose-800 rounded-b shadow-lg z-30 pointer-events-none border-x border-rose-900/40">
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-[#070510] [clip-path:polygon(0_100%,50%_0,100%_100%)]" />
-          </div>
+          <div className="book-ribbon" aria-hidden="true" />
 
           {/* Hardcover Outer Cosmic Leather Binding */}
-          <div className="relative rounded-3xl border-4 border-[#2b1f3d] bg-gradient-to-r from-[#170e28] via-[#201538] to-[#170e28] p-2.5 sm:p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(244,63,94,0.15)]">
-            {/* Dual Page Spread: EXACT FIXED HEIGHT ON ALL SPREADS */}
+          <div className="book-hardcover">
+            {/* Two pages on desktop, sequential single pages on narrow screens. */}
             <div
-              className={`relative grid grid-cols-1 md:grid-cols-2 rounded-2xl bg-[#faf6ee] shadow-inner overflow-hidden transition-all duration-200 h-[640px] sm:h-[680px] md:h-[700px] min-h-[640px] md:min-h-[700px] max-h-[640px] md:max-h-[700px] ${
-                isFlipping ? "scale-[0.998] opacity-95" : "scale-100 opacity-100"
-              }`}
+              className={`book-paper-spread ${isFlipping ? "book-turning" : ""}`}
             >
               {/* Spine Crease / Center Gutter Shadow on Desktop */}
-              <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-10 bg-gradient-to-r from-black/15 via-black/5 to-black/15 pointer-events-none z-20 shadow-inner" />
+              <div className="book-gutter" aria-hidden="true" />
 
               {/* ----------------------------------------------------------------- */}
               {/* LEFT PAGE (PAGES: 1, 3, 5, 7, 9 ... 57)                           */}
               {/* ----------------------------------------------------------------- */}
               <div
-                onClick={() => {
-                  if (spreadIndex > 0) goToPrevSpread();
-                }}
-                className={`relative p-5 sm:p-6 md:p-7 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#e3dac9] h-full cursor-pointer group overflow-hidden ${
+                className={`book-paper-page book-page-left ${spreadIndex === 0 ? "book-cover-page" : readingMode === "comic" ? "book-comic-paper" : ""} ${
                   mobilePage === "left" ? "flex" : "hidden md:flex"
                 }`}
-                title="Click to turn backward"
               >
+                {spreadIndex === 0 ? <BookCover onOpen={() => jump(1)} /> : readingMode === "comic" ? <ComicPage spread={currentSpread} side="left" page={leftPageNumber} onNotes={() => setReadingMode("notes")} /> : <>
                 {/* Running Header */}
                 <div className="flex items-center justify-between border-b border-[#e5dcce] pb-1.5 text-[10px] font-mono uppercase tracking-widest text-[#8c7b70]">
                   <span>RoverVilla</span>
                   <span className="font-bold text-rose-900">{currentSpread.machineName}</span>
                 </div>
 
-                {/* Left Page Scrollable Content */}
-                <div className="flex-1 overflow-y-auto no-scrollbar py-2 space-y-2.5 pr-1">
+                {/* Readable page content: no hidden inner scrolling. */}
+                <div className="book-page-content">
                   {/* Chapter / Machine Identifier */}
                   <div>
                     {currentSpread.chapterNumber !== null && (
@@ -539,7 +487,7 @@ export default function StoryBookPage() {
                         {currentSpread.chapterNumber === 0 ? "Introduction" : `Chapter ${currentSpread.chapterNumber}`}
                       </span>
                     )}
-                    <h2 className="display text-xl sm:text-2xl font-bold text-[#231815] leading-snug">
+                    <h2 data-book-heading tabIndex={-1} className="book-page-heading outline-none">
                       {currentSpread.leftPage.heading || currentSpread.spreadTitle}
                     </h2>
                     {currentSpread.leftPage.subheading && (
@@ -679,19 +627,17 @@ export default function StoryBookPage() {
 
                       {/* Verified Telemetry Stamp Box */}
                       {currentSpread.telemetrySummary && (
-                        <div className="rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-2 text-[11px] font-mono text-[#4a3b32]">
-                          <p className="text-[10px] uppercase font-bold text-rose-900 tracking-wider mb-1">
-                            Verified Mission Telemetry
-                          </p>
-                          <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
+                        <details className="rounded-xl border border-[#dcd1be] bg-[#f2ecde] p-3 text-[11px] font-mono text-[#4a3b32]">
+                          <summary className="cursor-pointer py-1 text-[10px] uppercase font-bold text-rose-900 tracking-wider">Inspect the mission record</summary>
+                          <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2">
                             {currentSpread.telemetrySummary.map((item, idx) => (
                               <div key={idx}>
                                 <span className="text-[#8c7b70] block text-[9px]">{item.label}</span>
-                                <span className="font-bold text-[#231815] truncate block">{item.value}</span>
+                                <span className="font-bold text-[#231815] break-words block">{item.value}</span>
                               </div>
                             ))}
                           </div>
-                        </div>
+                        </details>
                       )}
 
                       {/* Callout Box */}
@@ -715,59 +661,41 @@ export default function StoryBookPage() {
                     </>
                   )}
 
-                  {/* Spread 0 Cover CTA */}
-                  {spreadIndex === 0 && (
-                    <div className="pt-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          goToNextSpread();
-                        }}
-                        className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-900 px-4 py-2.5 font-mono text-xs font-bold text-white shadow-lg shadow-rose-950/30 transition-all hover:bg-rose-800 cursor-pointer"
-                      >
-                        Open Book &amp; Start Reading 📖 <ArrowRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  )}
                 </div>
 
                 {/* Left Page Footer (Page Number Even) */}
                 <div className="border-t border-[#e5dcce] pt-1.5 flex justify-between items-center text-[10px] font-mono text-[#8c7b70]">
                   <span>Page {leftPageNumber}</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    ◂ Turn Previous
-                  </span>
+                  <span>RoverVilla field notes</span>
                 </div>
+                </>}
               </div>
 
               {/* ----------------------------------------------------------------- */}
               {/* RIGHT PAGE (PAGES: 2, 4, 6, 8, 10 ... 58)                          */}
               {/* ----------------------------------------------------------------- */}
               <div
-                onClick={() => {
-                  if (spreadIndex < totalSpreads - 1) goToNextSpread();
-                }}
-                className={`relative p-5 sm:p-6 md:p-7 flex flex-col justify-between h-full cursor-pointer group overflow-hidden ${
+                className={`book-paper-page book-page-right ${readingMode === "comic" && spreadIndex > 0 ? "book-comic-paper" : ""} ${
                   mobilePage === "right" ? "flex" : "hidden md:flex"
                 }`}
-                title="Click to turn forward"
               >
+                {readingMode === "comic" && spreadIndex > 0 ? <ComicPage spread={currentSpread} side="right" page={rightPageNumber} onNotes={() => setReadingMode("notes")} /> : <>
                 {/* Running Header */}
                 <div className="flex items-center justify-between border-b border-[#e5dcce] pb-1.5 text-[10px] font-mono uppercase tracking-widest text-[#8c7b70]">
-                  <span>{currentSpread.spreadTitle}</span>
+                  <span>{spreadIndex === 0 ? "RoverVilla" : currentSpread.machineName}</span>
                   <span>{currentSpread.cosparId || "Master Chronology"}</span>
                 </div>
 
                 {/* Right Page Scrollable Content */}
-                <div className="flex-1 overflow-y-auto no-scrollbar py-2 space-y-2.5 pr-1">
+                <div className="book-page-content">
                   {/* Right Page Header */}
                   <div>
-                    <h3 className="display text-lg sm:text-xl font-bold text-[#231815]">
-                      {currentSpread.rightPage.heading || currentSpread.spreadSubtitle}
+                    <h3 data-book-heading tabIndex={-1} className="book-page-heading outline-none">
+                      {spreadIndex === 0 ? "A world on every page." : currentSpread.rightPage.heading || currentSpread.spreadSubtitle}
                     </h3>
                     {currentSpread.rightPage.subheading && (
                       <p className="font-serif italic text-xs sm:text-sm text-[#736357] mt-0.5">
-                        {currentSpread.rightPage.subheading}
+                        {spreadIndex === 0 ? "A collection of machines, memories, and discoveries." : currentSpread.rightPage.subheading}
                       </p>
                     )}
                   </div>
@@ -775,22 +703,18 @@ export default function StoryBookPage() {
                   {/* SPREAD 0: MASTER TABLE OF CONTENTS */}
                   {spreadIndex === 0 ? (
                     <div className="space-y-1 my-1" onClick={(e) => e.stopPropagation()}>
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-rose-900 font-bold mb-1">
-                        Select a chapter to jump directly:
-                      </p>
-                      <div className="space-y-1 max-h-[380px] overflow-y-auto no-scrollbar pr-1">
+                      <p className="mb-4 font-serif text-sm leading-relaxed text-[#746857]">Meet the machines, follow their journeys, and discover what their hardware made possible. Start at the beginning, or choose a story.</p>
+                      <div className="book-cover-contents">
                         {TOC_ITEMS.slice(1).map((item, idx) => (
                           <button
                             key={idx}
                             onClick={() => {
-                              setSpreadIndex(item.spread);
-                              setMobilePage("left");
-                              playPageTurnSound();
+                              jump(item.spread);
                             }}
-                            className="w-full text-left rounded-lg p-1.5 font-serif text-xs text-[#3b2d26] hover:bg-rose-900/10 hover:text-rose-900 transition-all flex items-center justify-between border border-transparent hover:border-rose-900/20 group cursor-pointer"
+                            className="book-cover-chapter"
                           >
                             <span className="font-medium group-hover:translate-x-0.5 transition-transform truncate mr-2">
-                              {item.title}
+                              {item.machine}
                             </span>
                             <span className="font-mono text-[10px] text-rose-800 font-bold shrink-0">
                               p. {item.page}
@@ -1297,18 +1221,20 @@ export default function StoryBookPage() {
                     <div className="my-2 rounded-xl overflow-hidden border border-[#e5dcce] bg-[#efe9dc] p-1.5 shadow-sm">
                       <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden bg-[#ded6c7]">
                         <Image
-                          src={assetUrl(currentSpread.image)}
-                          alt={currentSpread.spreadTitle}
+                          src={imagePlate?.src ?? assetUrl(currentSpread.image)}
+                          alt={imagePlate?.alt ?? currentSpread.spreadTitle}
                           fill
                           sizes="(min-width:768px) 400px, 100vw"
                           className="object-cover"
                         />
+                        {(!imagePlate || imagePlate.ai) && <span className="absolute bottom-2 left-2 rounded bg-black/75 px-2 py-1 font-mono text-[9px] text-white">AI-generated placeholder</span>}
                       </div>
-                      {currentSpread.imageCaption && (
+                      {(imagePlate || currentSpread.imageCaption) && (
                         <p className="mt-1 text-[10px] font-mono text-[#736357] text-center italic">
-                          {currentSpread.imageCaption}
+                          {imagePlate ? <a href={imagePlate.source} target="_blank" rel="noopener noreferrer" className="hover:underline">{imagePlate.title} · {imagePlate.credit} ↗</a> : currentSpread.imageCaption}
                         </p>
                       )}
+                      {currentSpread.rightPage.paragraphs?.map(paragraph => <p key={paragraph} className="mt-4 font-serif text-[#3b2d26]">{paragraph}</p>)}
                     </div>
                   ) : (
                     /* Default Paragraphs */
@@ -1330,7 +1256,7 @@ export default function StoryBookPage() {
                   )}
 
                   {/* Core Takeaway */}
-                  {currentSpread.rightPage.takeaway && (
+                  {spreadIndex !== 0 && currentSpread.rightPage.takeaway && (
                     <div className="mt-2 rounded-xl border border-[#dcd1be] bg-[#f0e8d8] p-2 text-xs font-mono text-[#42342c]">
                       <span className="font-bold text-rose-900 block mb-0.5">Core Discovery:</span>
                       {currentSpread.rightPage.takeaway}
@@ -1344,7 +1270,7 @@ export default function StoryBookPage() {
                         href={`/heroes/${currentSpread.heroSlug}`}
                         className="font-mono text-xs text-rose-900 hover:text-rose-700 font-bold hover:underline inline-flex items-center gap-1"
                       >
-                        Inspect Full Telemetry Dossier ➔
+                        Meet {currentSpread.machineName} <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
                   )}
@@ -1352,40 +1278,36 @@ export default function StoryBookPage() {
 
                 {/* Right Page Footer (Page Number Odd) */}
                 <div className="border-t border-[#e5dcce] pt-1.5 flex justify-between items-center text-[10px] font-mono text-[#8c7b70]">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    Turn Next ▸
-                  </span>
+                  <span>{spreadIndex === 0 ? `${SPREADS.filter(spread => spread.chapterNumber && spread.id.endsWith("part-1")).length} chapters to explore` : "Their mission ended. Their story didn’t."}</span>
                   <span>Page {rightPageNumber}</span>
                 </div>
+                </>}
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Navigation Ribbon */}
-        <div className="w-full max-w-5xl mt-3 flex items-center justify-between text-xs font-mono text-white/50">
+        <nav aria-label="Book pages" className="book-bottom-navigation">
           <button
             onClick={goToPrevSpread}
-            disabled={spreadIndex === 0}
-            className="inline-flex items-center gap-1 hover:text-white disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed"
+            disabled={atBeginning}
+            className="book-reader-button"
           >
-            <ArrowLeft className="h-3.5 w-3.5" /> Previous Spread
+            <ArrowLeft className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Previous</span>
           </button>
 
-          <span className="text-center text-[11px] text-white/40">
-            {isFullscreen
-              ? "Immersive Fullscreen Reading Mode · Press Esc or click Exit to return"
-              : "Use Left / Right arrow keys or tap pages to flip · Fullscreen option available"}
-          </span>
+          <div className="min-w-0 flex-1 text-center"><span role="status" className="font-mono text-[10px] text-[#d0c5b1]">{singlePage ? `Page ${mobilePage === "left" ? leftPageNumber : rightPageNumber}` : `Pages ${leftPageNumber}–${rightPageNumber}`} <span className="text-white/35">/ {totalPages}</span></span><div className="mx-auto mt-2 h-0.5 max-w-48 overflow-hidden rounded bg-white/10" aria-hidden="true"><div className="h-full bg-[#b9a67b] transition-[width] duration-200" style={{ width: `${(singlePage ? mobilePage === "left" ? leftPageNumber : rightPageNumber : rightPageNumber) / totalPages * 100}%` }} /></div></div>
 
           <button
             onClick={goToNextSpread}
-            disabled={spreadIndex === totalSpreads - 1}
-            className="inline-flex items-center gap-1 hover:text-white disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed"
+            disabled={atEnd}
+            className="book-reader-button book-reader-button-primary"
           >
-            Next Spread <ArrowRight className="h-3.5 w-3.5" />
+            <span>Next</span> <ArrowRight className="h-3.5 w-3.5" />
           </button>
-        </div>
+        </nav>
+        <p className="book-reading-note">Original SVG comic art and imagined machine voices, inspired by mission history—not original transmissions. Your place is saved on this device. Illustrative sounds are synthesized.</p>
       </main>
     </div>
   );
