@@ -1,5 +1,6 @@
 /**
- * Strictly Verified Master Dossier & Telemetry for Apollo 11 Lunar Module Eagle (LM-5)
+ * Legacy Apollo notebook. Not used by the current comic, journey, film, or landing lesson.
+ * These sample keyframes and readings need source-context review before reuse as historical data.
  * COSPAR / NSSDCA ID: 1969-059C · NORAD SATCAT: 04041
  * Sources: NASA NSSDCA, LPI Apollo 11 Catalog, NASA ALSJ (MSC-00171 / NASA SP-238), LROC ASU (M175124932R)
  */

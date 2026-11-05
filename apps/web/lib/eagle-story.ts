@@ -1,8 +1,9 @@
 import data from "./eagleStoryData.json";
 import { photo, type Photo } from "./photos";
+import { EAGLE_LESSONS, type EagleLesson } from "./eagle-lessons";
 
 export type EagleTrigger = "undock" | "alarm" | "land" | "camera" | "laser" | "breaker" | "ascent" | "return";
-export type EagleMemory = Omit<(typeof data.scenes)[number], "trigger"> & { trigger: EagleTrigger; photo?: Photo; photos: Photo[] };
+export type EagleMemory = Omit<(typeof data.scenes)[number], "trigger"> & { trigger: EagleTrigger; photo?: Photo; photos: Photo[]; lesson: EagleLesson };
 export const EAGLE_STORY_SOURCES = [
   { label: "Apollo Flight Journal · Undocking", url: "https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html" },
   { label: "ALSJ · Landing & program alarms", url: "https://apollojournals.org/alsj/a11/a11.landing.html" },
@@ -30,6 +31,7 @@ function archivePhoto(image: string): Photo {
 export const EAGLE_MEMORIES: EagleMemory[] = data.scenes.map(scene => ({
   ...scene,
   trigger: scene.trigger as EagleTrigger,
+  lesson: EAGLE_LESSONS[scene.id],
   photo: scene.photoId ? apolloPhoto(scene.photoId, scene.photoCaption!) : scene.image ? archivePhoto(scene.image) : undefined,
   photos: [
     ...(scene.photoId ? [apolloPhoto(scene.photoId, scene.photoCaption!)] : scene.image ? [archivePhoto(scene.image)] : []),

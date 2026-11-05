@@ -1,0 +1,33 @@
+.eagle-story.eagle-kid-journey { background: #fff9ef; color-scheme: light; }
+.eagle-kid-journey > header { background: #fff9ef; border-color: #e2d1dc; }
+.eagle-kid-journey > header :is(span, p) { color: #786183; }
+.eagle-kid-journey .eagle-utility { background: #fffaf3; border-color: #d8c4df; color: #78548c; }
+.eagle-kid-journey .eagle-utility:hover { background: #f0e3f7; }
+.eagle-kid-journey .eagle-scene-tab { color: #85718e; }
+.eagle-kid-journey .eagle-scene-tab.is-current { color: #76508c; border-color: #9971b3; }
+.eagle-kid-journey .eagle-scene-tab.is-past { color: #6e537b; }
+.eagle-kid-journey .eagle-scene-tab:disabled { color: #a792aa; }
+.eagle-kid-journey .eagle-media-tab { color: #7a6187; }
+.eagle-kid-journey .eagle-media-tab-active { color: #714488; background: #ebddf4; border-color: #bea1ce; }
+.eagle-kid-journey .eagle-journey-dialogue p { color: #74617d; }
+.eagle-kid-journey .eagle-journey-dialogue .eagle-eyebrow { color: #76518c !important; }
+.eagle-kid-journey > div > details { border-color: #dfcbe3; background: #f5ecfa; }
+.eagle-kid-journey > div > details > summary, .eagle-kid-journey > div > details > summary span { color: #77548a; }
+.eagle-kid-journey .order-3 > div > button, .eagle-kid-journey .order-3 > div > span { color: #796480; }
+.eagle-kid-journey .eagle-journey-dialogue > div > p { color: #75518a; }
+.eagle-kid-journey .eagle-story-choice { background: #fffdf7; border-color: #decbdf; color: #745083; }
+.eagle-kid-journey .eagle-story-choice.is-selected { background: #eddef6; border-color: #ac84bd; }
+.eagle-kid-journey .eagle-engineering { background: #fffdf7; border-color: #dfcce5; color: #76518a; }
+.eagle-kid-journey .eagle-engineering h2 { color: #75528b; }
+.eagle-kid-journey .eagle-engineering a { color: #79568a; }
+.eagle-kid-journey .eagle-reply { color: white; background: #785399; }
+.eagle-kid-journey footer { color: #796680; border-color: #e2d0df; }
+.eagle-kid-journey footer a { color: #76518a; }
+.eagle-kid-journey .eagle-hud { color: white; background: #1c1932; }
+.eagle-journey-illustration { overflow: hidden; border: 2px solid #453451; border-radius: 15px; background: #f4e5d7; }
+.eagle-journey-illustration figcaption { padding: 13px 17px; color: #77657e; font-size: 10px; line-height: 1.8; }
+.eagle-kid-journey .eagle-film-originals > div > div > p { color: #785f83; }
+.eagle-kid-journey .eagle-film-originals > div > div > p.eagle-eyebrow { color: #755188 !important; }
+.eagle-kid-journey .eagle-film-originals .eagle-memory { color: #644278; border-color: #d9c1e4; background: #fffaf1; }
+.eagle-kid-journey .eagle-film-originals .eagle-memory span { color: #785b8a; }
+.eagle-kid-journey .eagle-film-controls :is(span,a) { color: #785d86; }

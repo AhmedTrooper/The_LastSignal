@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { EAGLE_KID_PARTS } from "@/lib/eagle-kid-parts";
+import "./eagle-kids.css";
 
 export default function EagleCharacter({ interactive = false, greeting = false }: { interactive?: boolean; greeting?: boolean }) {
   const [selected, setSelected] = useState<string | null>(null);
@@ -37,7 +38,7 @@ export default function EagleCharacter({ interactive = false, greeting = false }
       </div>
       <div className="eagle-character-note">{interactive ? "Choose a numbered part, or a name below." : "A storybook view of the whole lunar module. The descent stage is the part left behind."}</div>
       {interactive && <div className="eagle-part-buttons" role="group" aria-label="Eagle’s parts">{EAGLE_KID_PARTS.map(item => <button type="button" key={item.id} aria-pressed={selected === item.id} onClick={() => setSelected(item.id)} className={selected === item.id ? "is-selected" : ""}>{item.label}</button>)}</div>}
-      <div aria-live="polite">{part && <div className="eagle-part-discovery"><p className="text-sm font-bold">{part.label}</p><p className="mt-2 text-sm leading-relaxed">{part.line}</p><p className="mt-3 rounded-lg bg-[#ede4f4] p-3 text-xs leading-relaxed"><strong>Why it mattered: </strong>{part.why}</p></div>}</div>
+      <div aria-live="polite">{part && <div className="eagle-part-discovery"><p className="text-sm font-bold">{part.label}</p><p className="mt-2 text-sm leading-relaxed">{part.line}</p><p className="mt-3 rounded-lg bg-[#ede4f4] p-3 text-xs leading-relaxed"><strong>Why it mattered: </strong>{part.why}</p><a href={part.source} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[10px] underline underline-offset-4">Read this part&apos;s historical source ↗</a></div>}</div>
       <p className="eagle-art-credit">AI-assisted character illustration · Not a spacecraft reconstruction</p>
     </section>
   );

@@ -10,6 +10,7 @@ export default function EagleVideoPlayer({ src, title, onPlay, pauseSignal = 0 }
   const [playing, setPlaying] = useState(false);
   const [playError, setPlayError] = useState(false);
   useEffect(() => { video.current?.pause(); }, [pauseSignal]);
+  useEffect(() => { const element = video.current; return () => element?.pause(); }, []);
   useEffect(() => {
     const hide = () => { if (document.hidden) video.current?.pause(); };
     document.addEventListener("visibilitychange", hide);

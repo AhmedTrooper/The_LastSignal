@@ -88,7 +88,7 @@ export function AuthButton() {
 export default function Header() {
   const pathname = usePathname();
   const home = pathname === "/";
-  const kidFriendly = home || pathname === "/heroes/apollo-11-lander";
+  const kidFriendly = home || pathname.startsWith("/heroes/apollo-11-lander") || pathname === "/games/apollo-11-landing";
   const navigation = kidFriendly ? [
     { href: "/heroes", label: "Meet the machines" },
     { href: "/story/book", label: "Comic book" },

@@ -1,9 +1,12 @@
-export type EagleComicScene = "quiet" | "body" | "thermal" | "alarm" | "priorities" | "boulders" | "unpack" | "seismic" | "mirror" | "broken" | "pen" | "goodbye";
+import type { EagleComponentId } from "./eagle-components";
+
+export type EagleComicScene = "quiet" | "body" | "thermal" | "alarm" | "priorities" | "boulders" | "unpack" | "camera" | "seismic" | "mirror" | "broken" | "pen" | "goodbye";
 export type EagleComicPanel = { title: string; bubble: string; narration: string; scene: EagleComicScene };
 export type EagleComicIssue = {
   id: string; title: string; subtitle: string; challenge: string;
   panels: EagleComicPanel[];
   steps: string[];
+  components: EagleComponentId[];
   discovery: { title: string; hardware: string; knowledge: string; legacy: string };
   source: string;
 };
@@ -18,6 +21,7 @@ export const EAGLE_COMIC_ISSUES: EagleComicIssue[] = [
       { title: "A blanket and clever knees", scene: "thermal", bubble: "My shiny layers helped manage heat. Crushable metal inside my legs helped soften the landing.", narration: "Gold-coloured multilayer insulation was not a wrapper made of solid gold. Aluminium honeycomb in the landing gear was designed to absorb energy by crushing." },
     ],
     steps: ["blanket", "legs"],
+    components: ["ascent", "descent", "insulation", "honeycomb", "legs"],
     discovery: { title: "One machine. Two endings.", hardware: "Insulation protected equipment; landing gear absorbed landing loads.", knowledge: "A stable landing gave the crew and their instruments a place to work.", legacy: "A separate ascent stage could depart without carrying the landing engine and legs back to orbit." },
     source: "https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf",
   },
@@ -29,6 +33,7 @@ export const EAGLE_COMIC_ISSUES: EagleComicIssue[] = [
       { title: "A place for my feet", scene: "boulders", bubble: "Boulders ahead! Neil took partial manual control and guided me toward clearer ground.", narration: "Armstrong steered beyond rough terrain during the final approach. Post-flight analysis put usable fuel at about 45 seconds, including the abort allowance—not a live percentage in this comic." },
     ],
     steps: ["guidance", "landing"],
+    components: ["guidance", "rcs", "engine", "legs"],
     discovery: { title: "Warnings need understanding, not panic.", hardware: "Restart protection preserved essential guidance; the crew could control the final approach.", knowledge: "Software, engineering measurements, and human judgment worked together to make the landing possible.", legacy: "Safety-critical systems still depend on carefully managing essential work. This is a shared engineering principle, not a claim that every modern device uses Eagle’s exact software." },
     source: "https://apollojournals.org/alsj/a11/a11.landing.html",
   },
@@ -40,6 +45,7 @@ export const EAGLE_COMIC_ISSUES: EagleComicIssue[] = [
       { title: "A reply made of light", scene: "mirror", bubble: "A hundred corner cubes. No battery! Send light toward them, and they return it toward its source.", narration: "Repeated observations of the lunar reflector arrays measure the Moon’s motion and provide evidence about its interior, including a fluid core. The reflector is passive; it is not transmitting radio messages." },
     ],
     steps: ["seismic", "laser"],
+    components: ["seismometer", "reflector", "solarWind", "dust"],
     discovery: { title: "The equipment stayed. The knowledge came home.", hardware: "A seismic instrument sensed ground motion; corner cubes returned incoming laser light.", knowledge: "Seismic and laser-ranging observations opened different ways to investigate the Moon. Long-term ranging measures its recession at about 3.8 centimetres per year.", legacy: "A passive reflector needs no electrical power. The animation shows the method, not a live measurement or an actual laser sent from this app." },
     source: "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/",
   },
@@ -51,6 +57,7 @@ export const EAGLE_COMIC_ISSUES: EagleComicIssue[] = [
       { title: "My last job was to stay", scene: "goodbye", bubble: "My cabin carried Neil and Buzz back toward Columbia. My landing stage stayed. Thank you for remembering that part of the journey.", narration: "The descent stage served as the launch platform for the ascent stage. A plaque and other equipment remained at the site, which was later photographed from lunar orbit." },
     ],
     steps: ["breaker", "ascent", "beacon"],
+    components: ["breaker", "ascent", "descent", "plaque"],
     discovery: { title: "Abandoned, but not forgotten.", hardware: "The damaged breaker could still be pushed in; the descent stage became the launch platform.", knowledge: "Problem-solving and a two-stage design helped the crew return. Later mission records and orbital images let us study what remained.", legacy: "Your thank-you beacon is symbolic and saved only on this device. It does not contact Eagle or light a real plaque on the Moon." },
     source: "https://apollojournals.org/alsj/a11/a11.launch.html#1232043",
   },

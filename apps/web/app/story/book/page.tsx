@@ -44,6 +44,9 @@ export default function StoryBookPage() {
     resize(); query.addEventListener("change", resize);
     let saved = { spread: 0, side: "left" as "left" | "right" };
     try { saved = readBookPosition(localStorage.getItem(BOOKMARK_KEY), SPREADS.length); } catch { /* Optional bookmark. */ }
+    const machine = new URLSearchParams(window.location.search).get("machine");
+    const chapter = machine ? SPREADS.findIndex(spread => spread.heroSlug === machine) : -1;
+    if (chapter >= 0) saved = { spread: chapter, side: "left" };
     position.current = saved;
     const frame = requestAnimationFrame(() => { setSpreadIndex(saved.spread); setMobilePage(saved.side); setRestored(true); });
     return () => { cancelAnimationFrame(frame); query.removeEventListener("change", resize); if (flipTimer.current) clearTimeout(flipTimer.current); contexts.forEach(ctx => { void ctx.close().catch(() => {}); }); };

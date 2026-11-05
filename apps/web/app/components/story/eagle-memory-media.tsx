@@ -7,8 +7,9 @@ import { EAGLE_MEDIA } from "@/lib/eagle-media";
 import { ArrowLeft, ArrowRight } from "@/app/components/icons";
 import EagleMediaPlayer from "@/app/components/profile/eagle-media-player";
 
-export default function EagleMemoryMedia({ memory, onPlay, pauseSignal = 0, view, onViewChange, mechanism, game, initialPhoto = 0 }: { memory: EagleMemory; onPlay: () => void; pauseSignal?: number; view: string; onViewChange: (view: string) => void; mechanism?: ReactNode; game?: ReactNode; initialPhoto?: number }) {
+export default function EagleMemoryMedia({ memory, onPlay, pauseSignal = 0, view, onViewChange, mechanism, game, illustration, initialPhoto = 0 }: { memory: EagleMemory; onPlay: () => void; pauseSignal?: number; view: string; onViewChange: (view: string) => void; mechanism?: ReactNode; game?: ReactNode; illustration?: ReactNode; initialPhoto?: number }) {
   const choices = [
+    ...(illustration ? [{ id: "illustration", label: "Illustrated memory" }] : []),
     ...(memory.photos.length ? [{ id: "photo", label: memory.photos.length > 1 ? "Photographs" : "Photograph" }] : []),
     ...memory.media.map(id => ({ id, label: id === "flight-director" ? "Mission Control" : EAGLE_MEDIA[id].kind === "video" ? "Onboard film" : "Original audio" })),
     ...(mechanism ? [{ id: "mechanism", label: "Hands on" }] : []),
@@ -33,7 +34,7 @@ export default function EagleMemoryMedia({ memory, onPlay, pauseSignal = 0, view
         {choices.map((choice, index) => <button key={choice.id} id={`${id}-tab-${choice.id}`} type="button" role="tab" aria-selected={view === choice.id} aria-controls={`${id}-panel`} tabIndex={view === choice.id ? 0 : -1} onKeyDown={event => keyboard(event, index)} onClick={() => select(choice.id)} className={`eagle-media-tab ${view === choice.id ? "eagle-media-tab-active" : ""}`}>{choice.label}</button>)}
       </div>
       <div id={`${id}-panel`} role="tabpanel" tabIndex={0} aria-labelledby={`${id}-tab-${view}`} className="outline-offset-4">
-        {view === "game" ? game : view === "mechanism" ? mechanism : view === "photo" && picture ? (
+        {view === "illustration" ? illustration : view === "game" ? game : view === "mechanism" ? mechanism : view === "photo" && picture ? (
           <figure className="overflow-hidden rounded-xl border border-white/15 bg-black">
             <div className="relative aspect-[16/10]">
               <Image key={picture.src} src={picture.src} alt={picture.alt} fill sizes="(min-width:1024px) 52vw, 100vw" className="object-contain" loading={memory.id === "undocking" ? "eager" : "lazy"} />

@@ -37,8 +37,8 @@ const HERO_GAMES: Record<string, { href: string; title: string; desc: string }> 
   },
   "apollo-11-lander": {
     href: "/games/apollo-11-landing",
-    title: "Apollo 11: 1202 Alarm Simulator",
-    desc: "Take manual control, dodge West Crater boulders, and land before fuel runs dry.",
+    title: "Eagle's landing challenge",
+    desc: "Try a simplified approach, then learn what the real descent engine and landing gear made possible.",
   },
   spirit: {
     href: "/games/mer-twins",
