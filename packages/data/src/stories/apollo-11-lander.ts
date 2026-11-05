@@ -107,7 +107,7 @@ export const APOLLO_11_LANDER: Story = {
   ],
   sources: [
     { label: "NASA NSSDCA Master Spacecraft Record (1969-059C)", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-059C" },
-    { label: "NASA NSSDCA Laser Ranging Retroreflector (1969-059C-02)", url: "https://nssdc.gsfc.nasa.gov/nmc/experiment/display.action?id=1969-059C-02" },
+    { label: "NASA NSSDCA Laser Ranging Retroreflector (1969-059C-04)", url: "https://nssdc.gsfc.nasa.gov/nmc/experiment/display.action?id=1969-059C-04" },
     { label: "LPI Apollo 11 Mission Hub & 70mm Magazine Catalog", url: "https://www.lpi.usra.edu/lunar/missions/apollo/apollo_11/" },
     { label: "Apollo Lunar Surface Journal (ALSJ) Master Records", url: "https://www.nasa.gov/history/alsj/a11/a11.html" },
     { label: "LROC High-Resolution Overhead Imagery of Tranquility Base (M175124932R)", url: "https://www.lroc.asu.edu/images/482" },

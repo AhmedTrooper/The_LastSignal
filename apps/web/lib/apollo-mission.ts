@@ -199,7 +199,7 @@ export const APOLLO_KEYFRAMES: ApolloKeyframe[] = [
     utc: "1969-07-21T04:32:00Z",
     title: "Laser Reflector (Active Today)",
     description: "Close-up of the 100 fused-silica corner-cube prisms of the Laser Ranging Retroreflector. Still ranged by observatories on Earth in 2026.",
-    hardware: "LRRR (1969-059C-02)",
+    hardware: "LRRR (1969-059C-04)",
     browseUrl: getLpiApolloBrowseUrl("40", "5952"),
     printUrl: getLpiApolloPrintUrl("40", "5952"),
     metaUrl: getLpiApolloMetaUrl("40", "5952"),
@@ -257,7 +257,7 @@ export const DISCARDED_ARTIFACTS: DiscardedArtifact[] = [
   {
     id: "lrrr",
     name: "Laser Ranging Retroreflector (LRRR)",
-    nssdcaId: "1969-059C-02",
+    nssdcaId: "1969-059C-04",
     category: "science",
     status: "active",
     coordsDelta: { x: -6, y: -19 },

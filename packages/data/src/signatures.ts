@@ -44,7 +44,7 @@ export const SIGNATURES: Record<string, Signature> = {
     events: [
       { t: "100:12", text: "Eagle undocks from Columbia." },
       { t: "102:33", text: "Powered descent begins; the engine fires for 756.3 seconds." },
-      { t: "4:17 p.m.", text: "Eagle lands in the Sea of Tranquility (EDT). NASA's account says 30 seconds of fuel remained.", big: true },
+      { t: "4:17 p.m.", text: "Eagle lands in the Sea of Tranquility (EDT). Post-flight analysis put usable propellant at about 45 seconds.", big: true },
       { t: "109:42", text: "Armstrong steps onto the Moon. Aldrin follows about 20 minutes later." },
       { t: "21 h 36 m", text: "Total time on the surface." },
       { t: "124:22", text: "The ascent engine fires. The descent stage stays behind as the launch pad.", big: true },

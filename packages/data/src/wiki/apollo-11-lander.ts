@@ -22,7 +22,7 @@ export const APOLLO_11_LANDER: WikiEntry = {
       title: "The landing",
       paras: [
         "Apollo 11 launched from Cape Kennedy at 9:32 a.m. EDT on 16 July 1969. On 20 July, Eagle undocked from Columbia and began its powered descent, the engine firing for 756.3 seconds. Near the bottom, Armstrong took partial manual control and steered past an area littered with boulders.",
-        "Eagle landed in the Sea of Tranquility at 4:17 p.m. EDT, at 0°41′15″ N, 23°26′ E, about four miles downrange of the planned point and almost a minute and a half early. NASA's account says only 30 seconds of fuel remained. Armstrong radioed: \"Houston, Tranquility Base here. The Eagle has landed.\"",
+        "Eagle landed in the Sea of Tranquility at 4:17 p.m. EDT, at 0°41′15″ N, 23°26′ E, about four miles downrange of the planned point and almost a minute and a half early. Post-flight analysis in the Apollo 11 Mission Report put usable propellant at about 45 seconds. Armstrong radioed: \"Houston, Tranquility Base here. The Eagle has landed.\"",
       ],
     },
     {
@@ -63,11 +63,11 @@ export const APOLLO_11_LANDER: WikiEntry = {
     { label: "Ascent Stage Mass", value: "2,180 kg dry / 2,376 kg propellant" },
     { label: "Time on surface", value: "21 h 36 m 21 s (EVA duration 2 h 31 m 40 s)" },
     { label: "Left on the Moon", value: "Descent Stage, LRRR, PSEP, TV camera, 100+ discarded tools & plaques" },
-    { label: "Active Experiment", value: "LRRR (1969-059C-02) laser array still active in 2026" },
+    { label: "Active Experiment", value: "LRRR (1969-059C-04) laser array still active in 2026" },
   ],
   sources: [
     { label: "NASA NSSDCA Master Spacecraft Record (1969-059C)", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1969-059C" },
-    { label: "NASA NSSDCA Laser Ranging Retroreflector (1969-059C-02)", url: "https://nssdc.gsfc.nasa.gov/nmc/experiment/display.action?id=1969-059C-02" },
+    { label: "NASA NSSDCA Laser Ranging Retroreflector (1969-059C-04)", url: "https://nssdc.gsfc.nasa.gov/nmc/experiment/display.action?id=1969-059C-04" },
     { label: "Apollo Lunar Surface Journal (ALSJ) Master Index", url: "https://www.nasa.gov/history/alsj/a11/a11.html" },
     { label: "LPI Apollo 11 Mission Hub & 70mm Magazine Catalog", url: "https://www.lpi.usra.edu/lunar/missions/apollo/apollo_11/" },
     { label: "LROC High-Resolution Overhead Imagery (M175124932R)", url: "https://www.lroc.asu.edu/images/482" },
