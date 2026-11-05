@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { EAGLE_RECORD_URL, type ConsoleData, type ConsoleStage } from "@/lib/console";
-import { connectEagle } from "@/lib/eagle-link";
+import { connectEagle, readEagleStatus } from "@/lib/eagle-link";
 import { useAuth } from "@/lib/auth-context";
 import { ArrowLeft, ArrowRight, BookIcon, ClockIcon, MapIcon, Play, SparkIcon } from "@/app/components/icons";
 import ModelStudio, { type StudioPart, type StudioSource } from "./model-studio";
 import EagleMediaPlayer from "./eagle-media-player";
+import EagleMissionPanel from "./eagle-mission-panel";
 import { useEagleVoice } from "./use-eagle-voice";
 import { useEagleFullscreen } from "./use-eagle-fullscreen";
 
@@ -30,6 +31,7 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
   const [part, setPart] = useState<StudioPart | null>(null);
   const [story, setStory] = useState<{ scene: number; total: number; title: string } | null>(null);
   const [storyClosed, setStoryClosed] = useState(false);
+  const [pauseMedia, setPauseMedia] = useState(0);
   const session = useRef("");
   const heading = useRef<HTMLHeadingElement>(null);
   const shouldFocus = useRef(false);
@@ -75,16 +77,22 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
     try { session.current = sessionStorage.getItem("tls:eagle:story-session") ?? ""; } catch { /* Optional continuity. */ }
     const link = connectEagle(message => {
       if (!session.current || message.session !== session.current) return;
-      if (message.type === "SCENE_PROGRESS") { setStory({ scene: message.scene!, total: message.total!, title: message.title! }); setStoryClosed(false); }
+      if (message.type === "SCENE_PROGRESS") {
+        setStory({ scene: message.scene!, total: message.total!, title: message.title! }); setStoryClosed(false);
+        link.send({ type: "CONSOLE_READY", session: message.session, machineId: "apollo-11-lander" });
+      }
       if (message.type === "STORY_CLOSED") { setStory(null); setStoryClosed(true); }
-      if (message.type === "STORY_COMPLETED") { setStory(null); setStoryClosed(false); goToBeat("story_returned"); }
+      if (message.type === "STORY_COMPLETED") {
+        setStory(null); setStoryClosed(false); goToBeat("story_returned");
+        link.send({ type: "STORY_ACK", session: message.session, machineId: "apollo-11-lander" });
+      }
     });
     const requestStatus = () => {
       if (session.current) link.send({ type: "STATUS_REQUEST", session: session.current, machineId: "apollo-11-lander" });
     };
     const query = new URLSearchParams(window.location.search);
     let restoreFrame: number | undefined;
-    if (query.get("storyCompleted") === "true") {
+    if (query.get("storyCompleted") === "true" || readEagleStatus(session.current)?.type === "STORY_COMPLETED") {
       restoreFrame = requestAnimationFrame(() => goToBeat("story_returned"));
       query.delete("storyCompleted");
       const search = query.toString();
@@ -116,7 +124,8 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 px-5 py-4 text-xs text-white/60"><span>Full lunar module · before separation</span><span>Descent stage remains on the Moon</span></div>
       </div>
     );
-    if (stage.kind === "media") return <EagleMediaPlayer key={beatId} media={stage.media} onPlay={voice.stop} />;
+    if (stage.kind === "media") return <EagleMediaPlayer key={beatId} media={stage.media} onPlay={voice.stop} pauseSignal={pauseMedia} />;
+    if (stage.kind === "mission") return <EagleMissionPanel key={beatId} mission={stage.mission} />;
     if (stage.kind === "photo") return <figure className="overflow-hidden rounded-2xl border border-white/15 bg-black/30"><div className="relative aspect-[4/3]"><Image src={stage.photo.src} alt={stage.photo.alt} fill sizes="(min-width:1024px) 50vw, 100vw" className="object-contain" /></div><figcaption className="flex items-start justify-between gap-4 border-t border-white/10 p-4 text-xs leading-relaxed text-white/65"><span>{stage.photo.ai ? "AI-generated placeholder" : `${stage.photo.title} · ${stage.photo.credit}`}</span>{!stage.photo.ai && <a href={stage.photo.source} target="_blank" rel="noopener noreferrer" className="shrink-0 text-[#c1b4ff] underline underline-offset-4">Source ↗</a>}</figcaption></figure>;
     if (stage.kind === "video") return <ArchiveVideo key={beatId} video={stage.video} onPlay={voice.stop} />;
     if (stage.kind === "specs") return <div className="rounded-2xl border border-white/15 bg-white/[0.025] p-5 sm:p-7"><p className="eagle-eyebrow">Inside the mission record</p><h3 className="display mt-3 text-3xl">{beat?.hint ?? "The details I kept."}</h3><dl className="mt-6 divide-y divide-white/10">{stage.rows.map(row => <div key={row.label} className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-4 py-4"><dt className="text-xs leading-relaxed text-white/60">{row.label}</dt><dd className="text-sm leading-relaxed text-white/90">{row.value}</dd></div>)}</dl><a href={EAGLE_RECORD_URL} target="_blank" rel="noopener noreferrer" className="mt-5 inline-block text-xs text-[#c1b4ff] underline underline-offset-4">Explore the Apollo Lunar Surface Journal ↗</a></div>;
@@ -133,7 +142,7 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
           <div className="flex items-center gap-2"><span className="hidden font-mono text-[10px] text-white/55 sm:block">PERSONAL ENCOUNTER</span><button type="button" onClick={toggle} data-fullscreen-toggle aria-pressed={fullscreen} className="eagle-utility"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4" aria-hidden="true"><path d={fullscreen ? "M8 3v5H3m13-5v5h5M3 16h5v5m13-5h-5v5" : "M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"} /></svg>{fullscreen ? "Exit fullscreen" : "Fullscreen"}</button></div>
         </header>
 
-        {story && <p role="status" className="mt-4 rounded-lg border border-[#b4a0ff]/25 bg-violet/10 px-4 py-3 text-sm text-[#d1c6ff]">Your other tab · memory {story.scene}/{story.total} — {story.title}</p>}
+        {story && <div role="status" className="mt-4 overflow-hidden rounded-lg border border-[#b4a0ff]/25 bg-violet/10"><p className="px-4 py-3 text-sm text-[#d1c6ff]">Your other tab · memory {story.scene}/{story.total} — {story.title}</p><div className="h-0.5 bg-white/10" aria-hidden="true"><div className="h-full bg-[#bdaaff] transition-[width] duration-300" style={{ width: `${story.scene / story.total * 100}%` }} /></div></div>}
 
         <div className={`grid flex-1 items-center gap-8 py-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14 ${atHub ? "lg:py-8" : "lg:py-12"}`}>
           <div className="order-2 min-w-0 lg:order-1">
@@ -147,7 +156,7 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
           <div className="order-1 min-w-0 lg:order-2">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <span className="eagle-eyebrow text-[#c1b4ff]!">{greeting ? `Getting to know each other · 0${["arrival", "introduction", "connection"].indexOf(beatId) + 1}` : activeBank ? `${activeBank.label} · ${recordIndex + 1} / ${records.length}` : atHub ? "My memories, shared with you" : "Back at Tranquility Base"}</span>
-              {voice.available && <button type="button" className="eagle-utility" aria-pressed={voice.speaking} onClick={() => voice.speaking ? voice.stop() : voice.start(`${title} ${speech.join(" ")}`)}><SignalWave className="h-4 w-4" />{voice.speaking ? "Stop voice" : "Hear Eagle"}</button>}
+              {voice.available && <button type="button" className="eagle-utility" aria-pressed={voice.speaking} onClick={() => { if (voice.speaking) voice.stop(); else { setPauseMedia(n => n + 1); voice.start(`${title} ${speech.join(" ")}`); } }}><SignalWave className="h-4 w-4" />{voice.speaking ? "Stop voice" : "Hear Eagle"}</button>}
             </div>
             <motion.div key={beatId} initial={reduced ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: [0.2, 0.7, 0.2, 1] }}>
               {reply && <p className="mb-5 border-l-2 border-[#baaaff]/40 pl-3 text-xs italic leading-relaxed text-white/50">You · {reply}</p>}

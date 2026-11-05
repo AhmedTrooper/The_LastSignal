@@ -3,7 +3,7 @@ export const EAGLE_CHANNEL = "eagle_mission_link";
 const STORAGE_KEY = "tls:eagle:message";
 
 export type EagleMessage = {
-  type: "SCENE_PROGRESS" | "STORY_COMPLETED" | "STORY_CLOSED" | "STATUS_REQUEST";
+  type: "SCENE_PROGRESS" | "STORY_COMPLETED" | "STORY_CLOSED" | "STATUS_REQUEST" | "CONSOLE_READY" | "STORY_ACK";
   session: string;
   machineId: "apollo-11-lander";
   scene?: number;
@@ -15,7 +15,7 @@ export function isEagleMessage(value: unknown): value is EagleMessage {
   if (!value || typeof value !== "object") return false;
   const m = value as Record<string, unknown>;
   if (m.machineId !== "apollo-11-lander" || typeof m.session !== "string") return false;
-  if (!["SCENE_PROGRESS", "STORY_COMPLETED", "STORY_CLOSED", "STATUS_REQUEST"].includes(String(m.type))) return false;
+  if (!["SCENE_PROGRESS", "STORY_COMPLETED", "STORY_CLOSED", "STATUS_REQUEST", "CONSOLE_READY", "STORY_ACK"].includes(String(m.type))) return false;
   return m.type !== "SCENE_PROGRESS" || (
     Number.isInteger(m.scene) && Number.isInteger(m.total) &&
     Number(m.scene) >= 1 && Number(m.scene) <= Number(m.total) && Number(m.total) <= 100 &&
@@ -47,8 +47,19 @@ export function connectEagle(onMessage: (message: EagleMessage) => void) {
     send(message: EagleMessage) {
       const payload = { ...message, messageId: crypto.randomUUID() };
       channel?.postMessage(payload);
+      if (message.session && ["SCENE_PROGRESS", "STORY_COMPLETED"].includes(message.type)) {
+        try { localStorage.setItem(`tls:eagle:status:${message.session}`, JSON.stringify(payload)); } catch { /* The channel still works without storage. */ }
+      }
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch { /* A direct return link also works without storage. */ }
     },
     close() { channel?.close(); window.removeEventListener("storage", storage); },
   };
+}
+
+export function readEagleStatus(session: string): EagleMessage | null {
+  if (!session) return null;
+  try {
+    const value: unknown = JSON.parse(localStorage.getItem(`tls:eagle:status:${session}`) ?? "null");
+    return isEagleMessage(value) && value.session === session && ["SCENE_PROGRESS", "STORY_COMPLETED"].includes(value.type) ? value : null;
+  } catch { return null; }
 }

@@ -12,7 +12,7 @@ function timeLabel(seconds: number) {
 }
 
 /** Amplitude manages the recording. All visible audio controls belong to the exhibit. */
-export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia; onPlay?: () => void }) {
+export default function EagleMediaPlayer({ media, onPlay, compact = false, pauseSignal = 0 }: { media: EagleMedia; onPlay?: () => void; compact?: boolean; pauseSignal?: number }) {
   const video = media.kind === "video";
   const player = useRef<HTMLMediaElement | null>(null);
   const amplitude = useRef<typeof Amplitude | null>(null);
@@ -26,6 +26,8 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(70);
   const progress = duration > 0 ? Math.min(100, elapsed / duration * 100) : 0;
+
+  useEffect(() => { player.current?.pause(); }, [pauseSignal]);
 
   useEffect(() => {
     if (video) return;
@@ -55,10 +57,13 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
       const volume = () => setVolume(Math.round(audio.volume * 100));
       const events = { play, playing, pause, ended: pause, error, timeupdate: time, loadedmetadata: time, durationchange: time, volumechange: volume };
       for (const [event, listener] of Object.entries(events)) audio.addEventListener(event, listener);
+      const hide = () => { if (document.hidden) audio.pause(); };
+      document.addEventListener("visibilitychange", hide);
       setReady(true);
       cleanup = () => {
         attempt.current += 1;
         for (const [event, listener] of Object.entries(events)) audio.removeEventListener(event, listener);
+        document.removeEventListener("visibilitychange", hide);
         if (engine.getAudio() === audio) engine.stop();
         else audio.pause();
         audio.removeAttribute("src");
@@ -87,11 +92,13 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
     attempt.current += 1;
     if (!video && amplitude.current) amplitude.current.pause();
     else player.current?.pause();
+    setPlaying(false);
     setLoading(false);
   };
   const stop = () => {
     attempt.current += 1;
     amplitude.current?.stop();
+    setPlaying(false);
     setElapsed(0);
     setLoading(false);
   };
@@ -111,7 +118,7 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
   return (
     <div className="overflow-hidden rounded-2xl border border-white/15 bg-[#100e20]" data-audio-state={loading ? "loading" : playing ? "playing" : "paused"}>
       {video ? (
-        <EagleVideoPlayer key={media.src} src={media.src} title={media.title} onPlay={onPlay} />
+        <EagleVideoPlayer key={media.src} src={media.src} title={media.title} onPlay={onPlay} pauseSignal={pauseSignal} />
       ) : (
         <div className="relative border-b border-white/10 bg-[radial-gradient(ellipse_at_50%_100%,#302044_0%,transparent_75%)] px-5 pt-5 sm:px-7">
           <div className="flex items-center justify-between gap-3">
@@ -121,7 +128,7 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
               {loading ? "Loading" : playing ? "Playing" : elapsed > 0 ? "Paused" : "Ready"}
             </span>
           </div>
-          <div className="eagle-audio-art relative flex h-36 items-center justify-center gap-1.5 sm:h-44" aria-hidden="true" data-playing={playing && !loading}>
+          <div className={`eagle-audio-art relative flex items-center justify-center gap-1.5 ${compact ? "h-20 sm:h-24" : "h-36 sm:h-44"}`} aria-hidden="true" data-playing={playing && !loading}>
             <span className="absolute inset-x-0 top-1/2 h-px bg-white/10" />
             {Array.from({ length: 49 }, (_, i) => (
               <span key={i} style={{ height: `${10 + ((i * 37) % 55)}%`, animationDelay: `${i * -0.09}s` }} className="relative w-1 rounded-full bg-[#baaaff]/75 sm:w-1.5" />
@@ -130,11 +137,11 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
         </div>
       )}
 
-      <div className="p-5 sm:p-7">
+      <div className={compact ? "p-4 sm:p-5" : "p-5 sm:p-7"}>
         {video && <p className="eagle-eyebrow">Archival film</p>}
-        <h3 className="text-xl font-semibold sm:text-2xl">{media.title}</h3>
+        <h3 className={compact ? "text-lg font-semibold" : "text-xl font-semibold sm:text-2xl"}>{media.title}</h3>
+        {media.perspective && <p className="mt-1 font-mono text-[10px] text-[#c1b4ff]">{media.perspective}</p>}
         <p className="mt-2 text-sm leading-relaxed text-white/65">{media.description}</p>
-        {video && <p className="mt-5 border-t border-white/10 pt-5 text-sm leading-relaxed text-white/60">If the player cannot load this archive film, open the source below.</p>}
 
         {!video && (
           <div className="mt-6">
@@ -172,6 +179,7 @@ export default function EagleMediaPlayer({ media, onPlay }: { media: EagleMedia;
         </div>
 
         {error && <p role="status" className="mt-4 text-sm leading-relaxed text-amber-200">This recording couldn’t load. {ready && "Try Start again, or "}open the archive source below.</p>}
+        {media.transcript && <details className="mt-4 rounded-lg border border-white/10 px-3 text-xs text-white/65"><summary className="cursor-pointer py-3">Words to listen for · transcript highlights</summary><div className="space-y-3 pb-3">{media.transcript.map(line => <blockquote key={line.get}><p className="font-mono text-[10px] text-[#c1b4ff]">{line.get} GET · {line.who}</p><p className="mt-1 leading-relaxed text-white/85">“{line.text}”</p></blockquote>)}</div></details>}
         <div className="mt-5 flex flex-wrap items-start justify-between gap-3 border-t border-white/10 pt-4">
           <p className="max-w-[34ch] font-mono text-[10px] leading-relaxed text-white/55">{media.credit}</p>
           <a href={media.source} target="_blank" rel="noopener noreferrer" className="py-2 text-xs text-[#c1b4ff] underline underline-offset-4">Transcript &amp; source ↗</a>

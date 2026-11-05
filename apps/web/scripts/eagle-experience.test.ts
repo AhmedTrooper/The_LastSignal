@@ -3,7 +3,10 @@ import { test } from "node:test";
 import { buildEagleConsole as sharedConsole, type ConsolePhoto } from "@thelastsignal/data";
 import { buildEagleConsole } from "../lib/console";
 import { isEagleMessage } from "../lib/eagle-link";
-import { EAGLE_AUDIO } from "../lib/eagle-media";
+import { EAGLE_FILMS, EAGLE_MEDIA } from "../lib/eagle-media";
+import { EMPTY_EAGLE_PROGRESS, readEagleProgress } from "../lib/eagle-progress";
+import { EAGLE_INVITATIONS } from "../lib/eagle-perspectives";
+import { LANDING_ZONE, initialLanding, stepLanding } from "../lib/eagle-landing";
 import story from "../lib/eagleStoryData.json";
 
 const photos: ConsolePhoto[] = ["as11-40-5927", "as11-40-5902", "as11-40-5899", "S69-39961", "as11-44-6642", "PIA12909", "jsc2007e034221"].map(id => ({
@@ -52,8 +55,80 @@ test("the story has eight chronological memories and one return action", () => {
   for (const scene of story.scenes) {
     assert.ok(scene.source.startsWith("https://"));
     assert.equal(scene.telemetry.length, 4);
-    if (scene.audio !== undefined) assert.equal(EAGLE_AUDIO[scene.audio].kind, "audio");
+    for (const id of scene.media) assert.ok(EAGLE_MEDIA[id], `Missing media ${id}`);
   }
+});
+
+test("all three original film reels are distinct and available in the console", () => {
+  const data = buildEagleConsole({ photos: [], videos: [] });
+  const films = Object.values(data.beats).filter(beat => beat.id.startsWith("film_"));
+  assert.equal(films.length, 3);
+  assert.equal(new Set(EAGLE_FILMS.map(film => film.src)).size, 3);
+  assert.ok(EAGLE_MEDIA["descent-film"].src.includes("Lunar_Landing"));
+  assert.ok(EAGLE_MEDIA["undocking-film"].src.includes("mag-c"));
+  assert.deepEqual(story.scenes.find(scene => scene.id === "liftoff")?.media, ["ascent-film", "ascent-audio"]);
+});
+
+test("story restoration rejects invalid indices and malformed saved state", () => {
+  const saved = { index: 3, furthest: 4, acted: [0, 1, 2, 2] };
+  assert.deepEqual(readEagleProgress(JSON.stringify(saved), 8), { ...saved, acted: [0, 1, 2] });
+  for (const bad of [null, "broken", "null", JSON.stringify({ ...saved, index: 8 }), JSON.stringify({ ...saved, furthest: -1 }), JSON.stringify({ ...saved, index: 5 }), JSON.stringify({ ...saved, acted: ["1"] })]) {
+    assert.deepEqual(readEagleProgress(bad, 8), EMPTY_EAGLE_PROGRESS);
+  }
+});
+
+test("the handshake requires a matching machine and well-formed session", () => {
+  for (const type of ["CONSOLE_READY", "STORY_ACK"]) {
+    assert.equal(isEagleMessage({ type, session: "visit-1", machineId: "apollo-11-lander" }), true);
+    assert.equal(isEagleMessage({ type, session: null, machineId: "apollo-11-lander" }), false);
+    assert.equal(isEagleMessage({ type, session: "visit-1", machineId: "other" }), false);
+  }
+});
+
+test("every story choice opens a supported viewpoint without rewriting history", () => {
+  for (const scene of story.scenes) {
+    const invitation = EAGLE_INVITATIONS[scene.id];
+    assert.ok(invitation.line.length < 220, `${scene.id} should keep its opening short`);
+    if (scene.id === "monument") assert.equal(invitation.choices.length, 0);
+    else assert.equal(invitation.choices.length, 2);
+    for (const choice of invitation.choices) {
+      assert.ok(["photo", "mechanism", "game", ...scene.media].includes(choice.view), `${scene.id} → ${choice.view}`);
+      if (choice.view === "game") assert.equal(scene.id, "touchdown");
+      if (choice.photoIndex) assert.ok(scene.gallery.length >= choice.photoIndex);
+    }
+  }
+});
+
+test("landing gameplay rewards a gentle landing on clear ground", () => {
+  const landing = { ...initialLanding(), status: "flying" as const, x: LANDING_ZONE.x, y: 0.01, vx: 0.1, vy: -0.5 };
+  assert.equal(stepLanding(landing, 0, 0, 0.05).status, "landed");
+  assert.equal(stepLanding({ ...landing, x: -6 }, 0, 0, 0.05).status, "retry");
+  assert.equal(stepLanding({ ...landing, vy: -4 }, 0, 0, 0.05).status, "retry");
+  assert.equal(stepLanding({ ...landing, vx: 3 }, 0, 0, 0.05).status, "retry");
+});
+
+test("landing gameplay is bounded, fuel-limited, and idle until started", () => {
+  const ready = initialLanding();
+  assert.deepEqual(stepLanding(ready, 100, 1, 10), ready);
+  const flying = { ...ready, status: "flying" as const, fuel: 0 };
+  const next = stepLanding(flying, 100, 1, 10);
+  assert.equal(next.fuel, 0);
+  assert.ok(next.vy < flying.vy);
+  assert.equal(next.vx, stepLanding(flying, 0, 0, 10).vx);
+  assert.deepEqual(stepLanding(flying, 50, 0, 0.05), stepLanding(flying, 50, 0, 10));
+});
+
+test("landing challenge can be completed with gentle closed-loop corrections", () => {
+  let state = { ...initialLanding(), status: "flying" as const } as ReturnType<typeof initialLanding>;
+  for (let i = 0; i < 4000 && state.status === "flying"; i++) {
+    const descent = -Math.min(1, Math.max(0.35, state.y / 7));
+    const throttle = Math.max(0, Math.min(100, (0.8 + (descent - state.vy) * 0.9) / 1.5 * 100));
+    const drift = Math.max(-1.5, Math.min(1.5, (LANDING_ZONE.x - state.x) * 0.18));
+    const steer = Math.max(-1, Math.min(1, (drift - state.vx) * 1.3));
+    state = stepLanding(state, throttle, steer, 0.05);
+  }
+  assert.equal(state.status, "landed");
+  assert.ok(state.fuel > 0);
 });
 
 test("cross-tab protocol rejects foreign and malformed progress events", () => {

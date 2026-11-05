@@ -3,6 +3,7 @@ import Link from "next/link";
 import { generateSEO } from "@/lib/seo";
 import Header from "@/app/components/header";
 import ApolloSimulator from "@/app/components/profile/apollo-simulator";
+import EagleLandingGame from "@/app/components/story/eagle-landing-game";
 import { ArrowLeft } from "@/app/components/icons";
 
 export const metadata: Metadata = generateSEO({
@@ -34,7 +35,8 @@ export default function ApolloLandingGamePage() {
             </Link>
           </div>
 
-          <ApolloSimulator standalone />
+          <div className="eagle-story text-white"><p className="eagle-eyebrow text-[#c1b4ff]!">RoverVilla / Eagle’s landing challenge</p><h1 className="display mt-3 text-4xl sm:text-5xl">Find a place for my feet.</h1><p className="mb-6 mt-4 max-w-xl text-sm leading-relaxed text-white/65">Take the controls in a simplified Three.js approach. Guide Eagle beyond the boulders and touch down gently. Learn the idea, then compare it with the original mission record.</p><EagleLandingGame /><Link href="/heroes/apollo-11-lander/story" className="eagle-utility mt-5">Explore Eagle’s interactive story ↗</Link></div>
+          <details className="mt-10 text-white/65"><summary className="cursor-pointer py-3 font-mono text-xs">Open the existing cockpit and artifact exhibit</summary><div className="mt-4"><ApolloSimulator standalone /></div></details>
         </div>
       </main>
     </>

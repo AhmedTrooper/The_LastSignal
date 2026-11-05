@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import { getHero, img, portrait } from "@/lib/heroes";
 import { generateSEO } from "@/lib/seo";
 import { STORIES } from "@/lib/stories";
-import { photo } from "@/lib/photos";
-import CinematicStory from "@/app/components/story/cinematic-story";
+import { EAGLE_MEMORIES } from "@/lib/eagle-story";
+import EagleFilm from "@/app/components/story/eagle-film";
 
-/** The movie is the old cinematic cut, kept for Apollo 11 alongside the interactive story. */
+/** Apollo's photographic film and original mission reels share the story's archive record. */
 export function generateStaticParams() {
   return [{ slug: "apollo-11-lander" }];
 }
@@ -31,15 +31,7 @@ export default async function MoviePage({ params }: { params: Promise<{ slug: st
 
   return (
     <main>
-      <CinematicStory
-        slug={hero.slug}
-        name={hero.name}
-        scenes={film.scenes.map((scene) => ({
-          ...scene,
-          photo: scene.image ? photo(scene.image, scene.title) : undefined,
-        }))}
-        sources={film.sources}
-      />
+      <EagleFilm memories={EAGLE_MEMORIES} />
     </main>
   );
 }

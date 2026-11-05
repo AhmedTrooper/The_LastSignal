@@ -6,7 +6,7 @@ import Header from "@/app/components/header";
 import StoryView from "@/app/components/story/story-view";
 import CinematicStory from "@/app/components/story/cinematic-story";
 import { STORIES } from "@/lib/stories";
-import { EAGLE_MEMORIES } from "@/lib/eagle-story";
+import { EAGLE_MEMORIES, EAGLE_STORY_SOURCES } from "@/lib/eagle-story";
 import { photo } from "@/lib/photos";
 import EagleStory from "@/app/components/story/eagle-story";
 
@@ -41,7 +41,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
           slug={hero.slug}
           name={hero.name}
           chapters={EAGLE_MEMORIES}
-          sources={film?.sources ?? hero.sources}
+          sources={EAGLE_STORY_SOURCES}
         />
       </main>
     );

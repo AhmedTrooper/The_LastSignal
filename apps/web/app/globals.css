@@ -259,9 +259,63 @@ body {
 .eagle-audio-range::-moz-range-progress { height: 3px; border-radius: 999px; background: #c4b1ff; }
 .eagle-audio-range::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #e4dbff; }
 .eagle-video-player { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; border: 1px solid rgb(255 255 255 / 18%); }
+
+/* Apollo 11 black-box playback: archival imagery and a quiet instrument panel. */
+.eagle-blackbox {
+  color-scheme: dark;
+  background:
+    radial-gradient(ellipse at 8% 25%, rgb(100 74 147 / 10%), transparent 45%),
+    #0b0b13;
+}
+.eagle-scene-tab {
+  position: relative;
+  display: flex;
+  min-height: 58px;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px 16px;
+  text-align: left;
+  color: rgb(255 255 255 / 48%);
+  border-bottom: 2px solid transparent;
+  transition: color 180ms, border-color 180ms, background 180ms;
+}
+.eagle-scene-tab:not(:disabled):hover { color: #e2d9ff; background: rgb(189 170 255 / 5%); }
+.eagle-scene-tab.is-current { color: #d4c4ff; border-bottom-color: #bdaaff; }
+.eagle-scene-tab.is-past { color: rgb(255 255 255 / 70%); border-bottom-color: rgb(189 170 255 / 25%); }
+.eagle-scene-tab:disabled { color: rgb(255 255 255 / 30%); cursor: default; }
+.eagle-hud {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 13%);
+  border-radius: 12px;
+  background: linear-gradient(110deg, rgb(155 127 209 / 6%), rgb(255 255 255 / 2%));
+}
+.eagle-media-tab {
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: rgb(255 255 255 / 60%);
+  font-size: 11px;
+  transition: color 160ms, background 160ms, border-color 160ms;
+}
+.eagle-media-tab:hover { background: rgb(255 255 255 / 6%); color: white; }
+.eagle-media-tab-active { color: #e0d4ff; border-color: rgb(189 170 255 / 25%); background: rgb(189 170 255 / 10%); }
+.eagle-mechanism { overflow: hidden; border: 1px solid rgb(255 255 255 / 13%); border-radius: 12px; background: #10101b; }
+.eagle-engineering { overflow: hidden; border: 1px solid rgb(255 255 255 / 12%); border-radius: 10px; background: rgb(255 255 255 / 2%); }
+.eagle-story-choice { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; padding: 16px; text-align: left; font-size: 12px; line-height: 1.6; border: 1px solid rgb(255 255 255 / 18%); border-radius: 12px; color: rgb(255 255 255 / 85%); background: rgb(255 255 255 / 3%); transition: border-color 160ms, background 160ms; }
+.eagle-story-choice:hover, .eagle-story-choice.is-selected { border-color: #bdaaff; background: rgb(189 170 255 / 12%); }
+.eagle-story :is([role="tab"], [role="tabpanel"], [role="slider"]):focus-visible { outline: 2px solid #d3c6ff; outline-offset: 3px; }
+.eagle-film-image { animation: eagle-film-drift 20s linear both; animation-play-state: paused; }
+.eagle-film[data-playing="true"] .eagle-film-image { animation-play-state: running; }
+@keyframes eagle-film-drift { from { transform: scale(1); } to { transform: scale(1.06); } }
+@media (max-width: 1023px) {
+  .eagle-scene-tab { justify-content: center; padding-inline: 2px; }
+}
 @keyframes eagle-voice { to { transform: scaleY(0.22); opacity: 0.4; } }
 @media (prefers-reduced-motion: reduce) {
   .eagle-audio-art span { animation: none !important; }
+  .eagle-film-image { animation: none; }
   .eagle-experience *, .eagle-story * { scroll-behavior: auto !important; }
 }
 
