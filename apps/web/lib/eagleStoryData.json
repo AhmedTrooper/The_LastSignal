@@ -1,0 +1,74 @@
+{
+  "storyId": "apollo-11-lander-story",
+  "machineId": "apollo-11-lander",
+  "callSign": "Eagle",
+  "broadcastChannelName": "eagle_mission_link",
+  "totalScenes": 8,
+  "recordNote": "Historical playback. Times are event references, not synchronized measurements of every system. Unverified scene-specific readings are omitted.",
+  "scenes": [
+    {
+      "id": "undocking", "title": "The Eagle has wings.", "date": "20 July 1969", "phase": "Lunar orbit", "get": "100:12:00", "utc": "17:44 UTC",
+      "speech": ["Thank you for coming with me. Let’s go back to the moment my journey down to the Moon began.", "Michael Collins stayed aboard Columbia. Neil and Buzz were inside me. When we undocked, the spacecraft that would bring them home remained in orbit—and I began the journey to the surface.", "Come with me. We’ll take it one memory at a time."],
+      "image": "nasa/as11-44-6581", "photoId": "AS11-44-6581", "photoCaption": "Eagle in lunar orbit, photographed from Columbia.",
+      "telemetry": [{"label": "Mission clock", "value": "100:12:00 GET"}, {"label": "Location", "value": "Lunar orbit"}, {"label": "Crew aboard", "value": "Armstrong / Aldrin"}, {"label": "Configuration", "value": "Two stages joined"}],
+      "trigger": "undock", "action": "Release the docking connection", "result": "Eagle and Columbia separate. The landing journey begins.", "next": "I’m with you. Take me down.",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf"
+    },
+    {
+      "id": "alarm", "title": "A warning. Not the end.", "date": "20 July 1969", "phase": "Powered descent", "get": "102:38:22", "utc": "20:10 UTC",
+      "speech": ["We were descending when my guidance computer reported an overload. The code was 1202.", "My software could set aside lower-priority work and keep essential guidance running. On Earth, the controllers assessed the alarm. Houston told the crew they were GO.", "Listen to the actual recording. Behind every short call was a decision that mattered."],
+      "image": null, "photoId": null, "photoCaption": null,
+      "telemetry": [{"label": "Mission clock", "value": "102:38:22 GET"}, {"label": "Program alarm", "value": "1202"}, {"label": "Guidance", "value": "Still running"}, {"label": "Ground decision", "value": "GO"}],
+      "audio": 0, "trigger": "alarm", "action": "Acknowledge Houston’s GO", "result": "The overloaded computer preserves essential guidance. The crew continues the descent.", "next": "You held together. What happened next?",
+      "source": "https://apollojournals.org/alsj/a11/a11.landing.html"
+    },
+    {
+      "id": "touchdown", "title": "A place to put my feet.", "date": "20 July 1969", "phase": "Tranquility Base", "get": "102:45:40", "utc": "20:17:40 UTC",
+      "speech": ["The planned landing area was strewn with boulders. Neil took partial manual control and steered us toward clearer ground.", "Then a contact probe touched the surface. My landing legs settled onto the Moon. Post-flight analysis put usable fuel remaining at about 45 seconds, including the abort allowance.", "The view in this film came from the camera inside me. This was the ground we had come so far to reach."],
+      "image": "nasa/as11-40-5927", "photoId": null, "photoCaption": null,
+      "telemetry": [{"label": "Contact call", "value": "102:45:40 GET"}, {"label": "Landing site", "value": "Tranquility Base"}, {"label": "Control", "value": "P66 approach"}, {"label": "Fuel estimate", "value": "≈45 s · post-flight"}],
+      "film": true, "trigger": "land", "action": "Bring Eagle to the surface", "result": "Contact light. The landing stage becomes the foundation for everything that follows.", "next": "We made it. Let’s open the hatch.",
+      "source": "https://apollojournals.org/alsj/a11/a11.landing.html"
+    },
+    {
+      "id": "first-step", "title": "The step beside me.", "date": "21 July 1969", "phase": "First steps", "get": "109:24:15", "utc": "02:56:15 UTC",
+      "speech": ["Neil climbed down my ladder toward a world nobody had walked on before.", "A lanyard deployed the equipment bay that held our television camera. People on Earth could watch as he stepped off my footpad and onto the surface.", "My part in that moment was simple: get them there, give them a way down, and help send the pictures home."],
+      "image": "nasa/as11-40-5902", "photoId": null, "photoCaption": null,
+      "telemetry": [{"label": "Initial contact", "value": "109:24:15 GET"}, {"label": "UTC reference", "value": "02:56:15"}, {"label": "Camera", "value": "Surface television"}, {"label": "Hardware", "value": "Ladder / MESA"}],
+      "audio": 1, "trigger": "camera", "action": "Deploy the camera equipment bay", "result": "The MESA unfolds. The camera provides a view of the first steps.", "next": "You gave them a way down. What did they discover?",
+      "source": "https://apollojournals.org/alsj/a11/a11.step.html"
+    },
+    {
+      "id": "science", "title": "Left behind. Still useful.", "date": "21 July 1969", "phase": "Surface science", "get": null, "utc": "During the moonwalk",
+      "speech": ["The crew carried experiments out from my equipment bay. A seismometer listened for movement. A foil collector caught particles from the solar wind.", "And a reflector with 100 corner cubes gave scientists a way to bounce laser light back to Earth. It needs no battery.", "Timing the return helps measure the Earth–Moon distance. The equipment stayed behind, but the discoveries could come home."],
+      "image": "nasa/as11-40-5952", "photoId": "AS11-40-5952", "photoCaption": "Apollo 11’s laser ranging retroreflector on the lunar surface.",
+      "telemetry": [{"label": "Mission phase", "value": "Surface science"}, {"label": "Reflector", "value": "100 corner cubes"}, {"label": "Power needed", "value": "None · passive"}, {"label": "Measurement", "value": "Earth–Moon distance"}],
+      "trigger": "laser", "action": "Send an illustrative laser pulse", "result": "The corner cubes return light toward its source. The animation illustrates the method; it is not a live measurement.", "next": "Part of the mission never ended. And the crew?",
+      "source": "https://www.lpi.usra.edu/lunar/missions/apollo/apollo_11/experiments/lrr/"
+    },
+    {
+      "id": "breaker", "title": "A pen. A way home.", "date": "21 July 1969", "phase": "Preparing for ascent", "get": null, "utc": "Before lunar liftoff",
+      "speech": ["Inside the cabin, Buzz found the engine-arm circuit breaker’s knob had broken off. The little control mattered to the engine that would lift them back to orbit.", "He used a felt-tip pen to push the breaker in. A simple tool helped solve a very unusual problem.", "The crew had collected their samples. Now my upper half was ready for its last job. My lower half would be the launch pad."],
+      "image": "nasa/as11-40-5899", "photoId": null, "photoCaption": null,
+      "telemetry": [{"label": "Mission phase", "value": "Ascent preparation"}, {"label": "Control", "value": "Engine-arm breaker"}, {"label": "Tool", "value": "Felt-tip pen"}, {"label": "Descent stage", "value": "Launch platform"}],
+      "trigger": "breaker", "action": "Close the breaker with the pen", "result": "The pen pushes the breaker in. The ascent preparation can continue.", "next": "They have a way home. I’m ready.",
+      "source": "https://apollojournals.org/alsj/a11/a11.launch.html"
+    },
+    {
+      "id": "liftoff", "title": "My last job was to stay.", "date": "21 July 1969", "phase": "Lunar ascent", "get": "124:22:00", "utc": "17:54 UTC",
+      "speech": ["The connections between my two stages separated. My ascent engine fired, and the cabin lifted away with Neil and Buzz inside.", "They were heading back to Michael Collins aboard Columbia. My descent stage stayed exactly where we had landed.", "Getting them home was always the plan. Staying behind was how I helped. Listen to the voices leaving the surface. For the people inside, it was the beginning of the journey home."],
+      "image": "nasa/as11-44-6642", "photoId": null, "photoCaption": null,
+      "telemetry": [{"label": "Mission clock", "value": "124:22 GET"}, {"label": "Upper stage", "value": "Returning to orbit"}, {"label": "Lower stage", "value": "Left on the surface"}, {"label": "Destination", "value": "Columbia"}],
+      "audio": 3, "trigger": "ascent", "action": "Separate the stages for liftoff", "result": "The ascent stage lifts away. Eagle’s descent stage remains at Tranquility Base.", "next": "And you, Eagle? What happened to you?",
+      "source": "https://apollojournals.org/alsj/a11/a11.launch.html"
+    },
+    {
+      "id": "monument", "title": "And now, you’re here.", "date": "The legacy", "phase": "Tranquility Base", "get": null, "utc": "An archived view from orbit",
+      "speech": ["Years later, a camera in lunar orbit found my descent stage again. A little shape. A long shadow. Still where they left me.", "You know the people who came here. Now you know something of the machine that helped them leave, too.", "The next time you look up at the Moon, perhaps you’ll remember there’s a ladder there that nobody climbed back down. And a little launch pad that did its job.", "Thank you for spending this moment with me. My mission ended. My story didn’t."],
+      "image": "nasa/PIA12909", "photoId": null, "photoCaption": null,
+      "telemetry": [{"label": "Latitude", "value": "0.67416° N"}, {"label": "Longitude", "value": "23.47314° E"}, {"label": "Descent stage", "value": "At Tranquility Base"}, {"label": "Radio telemetry", "value": "Offline"}],
+      "trigger": "return", "action": null, "result": null, "next": "I’ll remember you, Eagle. Let’s go back.",
+      "source": "https://science.nasa.gov/resource/apollo-11-second-look/"
+    }
+  ]
+}

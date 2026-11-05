@@ -162,6 +162,109 @@ body {
   .eagle-drift, .eagle-twinkle { animation: none; }
 }
 
+/* The Eagle encounter: quiet instrument chrome around a personal conversation. */
+.eagle-experience {
+  background: #0b0a16;
+  color-scheme: dark;
+}
+.eagle-atmosphere {
+  background:
+    radial-gradient(ellipse at 15% 42%, rgb(92 64 160 / 14%), transparent 48%),
+    radial-gradient(ellipse at 90% 10%, rgb(91 46 255 / 6%), transparent 40%);
+}
+.eagle-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.65;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 62%);
+}
+.eagle-utility {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  color: rgb(255 255 255 / 80%);
+  font-size: 11px;
+  line-height: 1.4;
+  transition: background-color 180ms, border-color 180ms;
+}
+.eagle-utility:hover:not(:disabled) { background: rgb(255 255 255 / 7%); border-color: #baaaff; }
+.eagle-machine {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgb(127 101 179 / 18%), transparent 66%),
+    linear-gradient(145deg, rgb(255 255 255 / 3%), transparent);
+}
+.eagle-memory {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 16px;
+  text-align: left;
+  background: rgb(255 255 255 / 2%);
+  transition: border-color 180ms, background-color 180ms;
+}
+.eagle-memory:hover { border-color: #baaaff; background: rgb(122 87 255 / 9%); }
+.eagle-reply { box-shadow: 0 8px 36px rgb(91 46 255 / 14%); }
+.eagle-experience :is(button, a, input, summary, video, audio):focus-visible,
+.eagle-story :is(button, a, input, summary, video, audio):focus-visible {
+  outline: 2px solid #d3c6ff;
+  outline-offset: 5px;
+}
+.eagle-experience :is(button, a), .eagle-story :is(button, a) { -webkit-tap-highlight-color: transparent; }
+.eagle-experience button:not(:disabled), .eagle-story button:not(:disabled) { cursor: pointer; }
+.eagle-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.eagle-audio-art { background: radial-gradient(ellipse at center, rgb(91 46 255 / 15%), transparent 75%); }
+.eagle-audio-art[data-playing="true"] span { animation: eagle-voice 850ms ease-in-out infinite alternate; }
+.eagle-audio-range {
+  appearance: none;
+  height: 32px;
+  background: transparent;
+  cursor: pointer;
+}
+.eagle-audio-range::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #c4b1ff var(--audio-progress, 0%), #ffffff24 var(--audio-progress, 0%));
+}
+.eagle-audio-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: #e4dbff;
+  box-shadow: 0 0 0 4px #baaaff15;
+}
+.eagle-audio-range::-moz-range-track { height: 3px; border-radius: 999px; background: #ffffff24; }
+.eagle-audio-range::-moz-range-progress { height: 3px; border-radius: 999px; background: #c4b1ff; }
+.eagle-audio-range::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #e4dbff; }
+.eagle-video-player { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #000; border: 1px solid rgb(255 255 255 / 18%); }
+@keyframes eagle-voice { to { transform: scaleY(0.22); opacity: 0.4; } }
+@media (prefers-reduced-motion: reduce) {
+  .eagle-audio-art span { animation: none !important; }
+  .eagle-experience *, .eagle-story * { scroll-behavior: auto !important; }
+}
+
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 

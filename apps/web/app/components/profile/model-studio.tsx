@@ -30,6 +30,9 @@ type Props = {
   stage?: "dark" | "light";
   /** Just the model and its controls, without the parts list and downloads (home page). */
   compact?: boolean;
+  immersive?: boolean;
+  showMarkers?: boolean;
+  onPartSelect?: (part: StudioPart) => void;
 };
 
 type Live = {
@@ -49,7 +52,7 @@ type Live = {
  * the rest are built in code (lib/models/procedural.ts). Pick a part to isolate it and fly to it,
  * pull the slider to explode the parts apart, and download the model as GLB or STL.
  */
-export default function ModelStudio({ name, model, parts, poster, posterAlt, downloads = [], stage = "dark", compact = false }: Props) {
+export default function ModelStudio({ name, model, parts, poster, posterAlt, downloads = [], stage = "dark", compact = false, immersive = false, showMarkers = true, onPartSelect }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const live = useRef<Live | null>(null);
   const markerEls = useRef<Map<string, HTMLButtonElement>>(new Map());
@@ -401,14 +404,14 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
       <div>
         <div
           ref={host}
-          className={`relative aspect-[4/3] overflow-hidden rounded-xl sm:aspect-[16/10] ${
-            stage === "light" ? "bg-[radial-gradient(ellipse_at_50%_40%,#ffffff_0%,#ebe6ff_75%)]" : "bg-[radial-gradient(ellipse_at_50%_35%,#2a2457_0%,#0c0a22_70%)]"
+          className={`relative aspect-[4/3] overflow-hidden rounded-xl ${immersive ? "sm:aspect-[4/3]" : "sm:aspect-[16/10]"} ${
+            immersive ? "bg-transparent" : stage === "light" ? "bg-[radial-gradient(ellipse_at_50%_40%,#ffffff_0%,#ebe6ff_75%)]" : "bg-[radial-gradient(ellipse_at_50%_35%,#2a2457_0%,#0c0a22_70%)]"
           }`}
-          role="img"
+          role="group"
           aria-label={`Interactive 3D model of ${name}`}
         >
           {state !== "ready" && <Image src={poster} alt={posterAlt} fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover opacity-80" />}
-          {state === "ready" &&
+          {state === "ready" && showMarkers &&
             parts.map((p, i) => (
               <button
                 key={p.id}
@@ -416,10 +419,10 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
                   if (b) markerEls.current.set(p.id, b);
                   else markerEls.current.delete(p.id);
                 }}
-                onClick={() => pick(p.id)}
+                onClick={() => { pick(p.id); onPartSelect?.(p); }}
                 aria-label={p.label}
                 title={p.label}
-                className={`absolute top-0 left-0 flex h-6 w-6 items-center justify-center rounded-full border font-mono text-[10px] font-semibold transition-colors ${
+                  className={`absolute top-0 left-0 flex ${immersive ? "h-10 w-10" : "h-6 w-6"} items-center justify-center rounded-full border font-mono text-[10px] font-semibold transition-colors ${
                   sel === p.id ? "z-10 border-white bg-violet text-white shadow-[0_0_0_5px_rgba(122,87,255,0.35)]" : "border-white/70 bg-black/45 text-white backdrop-blur hover:bg-violet"
                 }`}
               >
@@ -435,7 +438,7 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
             </div>
           )}
         </div>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
+        <div className={`mt-3 flex flex-wrap items-center gap-2 ${immersive ? "px-5 pb-5" : ""}`}>
           <button
             suppressHydrationWarning
             onClick={() => setSpin(!spin)}

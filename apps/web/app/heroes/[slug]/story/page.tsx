@@ -6,7 +6,7 @@ import Header from "@/app/components/header";
 import StoryView from "@/app/components/story/story-view";
 import CinematicStory from "@/app/components/story/cinematic-story";
 import { STORIES } from "@/lib/stories";
-import { EAGLE_CHAPTERS } from "@/lib/console";
+import { EAGLE_MEMORIES } from "@/lib/eagle-story";
 import { photo } from "@/lib/photos";
 import EagleStory from "@/app/components/story/eagle-story";
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const hero = getHero((await params).slug);
   if (!hero) return {};
   const eagle = hero.slug === "apollo-11-lander";
-  const count = eagle ? EAGLE_CHAPTERS.length : (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
+  const count = eagle ? EAGLE_MEMORIES.length : (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
     title: `${hero.name}, a story in ${count} ${eagle || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
     description: hero.summary,
@@ -40,10 +40,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         <EagleStory
           slug={hero.slug}
           name={hero.name}
-          chapters={EAGLE_CHAPTERS.map((chapter) => ({
-            ...chapter,
-            photo: chapter.image ? photo(chapter.image, chapter.title) : undefined,
-          }))}
+          chapters={EAGLE_MEMORIES}
           sources={film?.sources ?? hero.sources}
         />
       </main>
