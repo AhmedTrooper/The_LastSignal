@@ -301,30 +301,29 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-bright opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-violet-bright" />
             </span>
-            <span className="truncate">{status}</span>
+            <span key={status} className="console-fade-in truncate">{status}</span>
           </span>
         </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-10">
         {/* The machine, or whatever it is showing you. */}
-        <div className="order-3 min-w-0 lg:order-1">{renderStage()}</div>
+        <div key={stage && stage.kind !== "model" ? beatId : "model"} className="console-stage-in order-3 min-w-0 lg:order-1">
+          {renderStage()}
+        </div>
 
         {/* The voice. */}
         <div className="order-1 flex min-w-0 flex-col lg:order-2 lg:justify-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
-            {atHub ? "Memory core" : inGreeting ? "Incoming transmission" : "Eagle"}
+            {atHub ? "Memories" : inGreeting ? "Incoming transmission" : "Eagle"}
           </p>
 
-          <div key={beatId} className="rise mt-4 space-y-4">
+          <div key={`speech-${beatId}`} className="mt-4 space-y-4">
             {speech.map((line, i) => (
               <p
                 key={i}
-                className={
-                  i === 0
-                    ? "text-[20px] leading-[1.45] text-white sm:text-[23px]"
-                    : "text-[16px] leading-relaxed text-white/65 sm:text-[17px]"
-                }
+                className={`${i === 0 ? "text-[20px] leading-[1.45] text-white sm:text-[23px]" : "text-[16px] leading-relaxed text-white/65 sm:text-[17px]"} rise`}
+                style={{ animationDelay: `${i * 70}ms` }}
               >
                 {line}
               </p>
@@ -335,8 +334,9 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
 
           {cta && ctaReady && (
             <button
+              key={`cta-${beatId}`}
               onClick={() => go(cta)}
-              className="group mt-7 inline-flex w-full items-center justify-between gap-4 rounded-full bg-violet px-6 py-4 text-left text-sm font-semibold text-white transition-colors hover:bg-violet-deep"
+              className="console-fade-in group mt-7 inline-flex w-full items-center justify-between gap-4 rounded-full bg-violet px-6 py-4 text-left text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-violet-deep active:scale-[0.99]"
             >
               <span>{cta.label}</span>
               <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
@@ -349,12 +349,13 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
 
         {/* The memory core: seven banks, one story, one archive. On phones it comes before the model. */}
         {atHub && (
-          <div className="order-2 grid gap-2 border-t border-white/10 pt-6 sm:grid-cols-2 lg:order-3 lg:col-span-2 lg:mt-2 lg:pt-8">
+          <div className="console-fade-in order-2 grid gap-2 border-t border-white/10 pt-6 sm:grid-cols-2 lg:order-3 lg:col-span-2 lg:mt-2 lg:pt-8">
             {data.banks.map((bank, i) => (
               <button
                 key={bank.id}
                 onClick={() => goToBeat(bank.first)}
-                className="group flex items-start gap-4 rounded-xl border border-white/12 px-4 py-3.5 text-left transition-colors hover:border-violet-bright/60 hover:bg-white/[0.04]"
+                style={{ animationDelay: `${i * 45}ms` }}
+                className="console-card-in group flex items-start gap-4 rounded-xl border border-white/12 px-4 py-3.5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-bright/60 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.995]"
               >
                 <span className="mt-0.5 font-mono text-[10px] text-white/30">{String(i + 1).padStart(2, "0")}</span>
                 <span className="min-w-0 flex-1">
@@ -364,11 +365,12 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
                 <span className="mt-0.5 shrink-0 font-mono text-[10px] text-white/30">{bank.meta}</span>
               </button>
             ))}
-            {data.actions.map((action) => (
+            {data.actions.map((action, i) => (
               <button
                 key={action.id}
                 onClick={action.id === "story" ? openStory : action.id === "movie" ? openMovie : openArchive}
-                className="group flex items-start gap-4 rounded-xl border border-dashed border-violet-bright/40 px-4 py-3.5 text-left transition-colors hover:border-violet-bright hover:bg-violet/[0.12]"
+                style={{ animationDelay: `${(data.banks.length + i) * 45}ms` }}
+                className="console-card-in group flex items-start gap-4 rounded-xl border border-dashed border-violet-bright/40 px-4 py-3.5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-bright hover:bg-violet/[0.12] active:translate-y-0 active:scale-[0.995]"
               >
                 <span className="mt-0.5 font-mono text-[10px] text-violet-bright">↗</span>
                 <span className="min-w-0 flex-1">
@@ -384,7 +386,7 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
 
       {/* In a branch: a quiet way back. */}
       {!atHub && !inGreeting && (
-        <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-white/10 pt-5">
+        <div className="console-fade-in mt-8 flex flex-wrap items-center gap-2 border-t border-white/10 pt-5">
           {data.banks.map((bank) => (
             <button
               key={bank.id}
@@ -401,7 +403,7 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
             onClick={() => goToBeat("hub")}
             className="ml-auto rounded-full px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-white/35 hover:text-white"
           >
-            Memory core
+            All memories
           </button>
         </div>
       )}

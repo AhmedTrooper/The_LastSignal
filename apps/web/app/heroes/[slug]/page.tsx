@@ -579,8 +579,9 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
         <HeroSchema hero={hero} />
         <Header />
         <main>
-          <section className="bg-night text-white">
-            <div className="mx-auto max-w-[1320px] px-4 py-6 sm:px-8 lg:py-10">
+          {/* The console owns the first screen: header + this section = one viewport. */}
+          <section className="flex min-h-[calc(100dvh-65px)] flex-col bg-night text-white lg:min-h-[calc(100dvh-77px)]">
+            <div className="mx-auto w-full max-w-[1320px] px-4 py-6 sm:px-8 lg:py-10">
               <EagleConsole
                 data={eagle}
                 slug={hero.slug}

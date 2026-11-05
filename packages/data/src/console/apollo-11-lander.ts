@@ -229,7 +229,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
       "The plaque is bolted to the ladder strut on the front leg. I will show you that later.",
     ],
     stage: { kind: "model" },
-    cta: { label: "Back to the memory core.", next: "hub" },
+    cta: { label: "Back to the memories.", next: "hub" },
   };
 
   // 2. What I did.
@@ -282,7 +282,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
     ],
     note: "NSSDCA 1969-059C-05 · Lunar Dust Detector",
     stage: { kind: "specs", rows: INSTRUMENT_SPECS.dust },
-    cta: { label: "Back to the memory core.", next: "hub" },
+    cta: { label: "Back to the memories.", next: "hub" },
   };
 
   // 3. Voices on the radio.
@@ -348,7 +348,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
         },
       ],
     },
-    cta: { label: "Back to the memory core.", next: "hub" },
+    cta: { label: "Back to the memories.", next: "hub" },
   };
 
   // 4. Archive film.
@@ -361,7 +361,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
         "The first film is the landing.",
       ],
       stage: { kind: "video", video: videos[0] },
-      cta: videos[1] ? { label: "Show me the moonwalk.", next: "film_2" } : { label: "Back to the memory core.", next: "hub" },
+      cta: videos[1] ? { label: "Show me the moonwalk.", next: "film_2" } : { label: "Back to the memories.", next: "hub" },
     };
   }
   if (videos[1]) {
@@ -370,7 +370,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
       status: "ARCHIVE FILM · 2 OF 2",
       speech: ["The second is the moonwalk: two men working around my legs, in a place with no air."],
       stage: { kind: "video", video: videos[1] },
-      cta: { label: "Back to the memory core.", next: "hub" },
+      cta: { label: "Back to the memories.", next: "hub" },
     };
   }
 
@@ -384,7 +384,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
       speech: shot.speech,
       stage: { kind: "photo", photo: shot.photo },
       cta: last
-        ? { label: "Back to the memory core.", next: "hub" }
+        ? { label: "Back to the memories.", next: "hub" }
         : { label: "Next photograph.", next: `photo_${i + 2}` },
     };
   });
@@ -434,7 +434,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
         { label: "Flag", value: "Knocked flat at ascent" },
       ],
     },
-    cta: { label: "Back to the memory core.", next: "hub" },
+    cta: { label: "Back to the memories.", next: "hub" },
   };
 
   // 7. Flight controller test.
@@ -513,7 +513,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
         },
       ],
     },
-    cta: { label: "Back to the memory core.", next: "hub" },
+    cta: { label: "Back to the memories.", next: "hub" },
   };
 
   // The story handoff. The component opens the second tab, then moves to these beats.
@@ -525,7 +525,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
       "Go and read it. I will keep this channel open — when you finish, I will know.",
       "Come back when you are ready.",
     ],
-    cta: { label: "I am back. Show me the memory core.", next: "hub" },
+    cta: { label: "I am back. Show me the memories.", next: "hub" },
   };
 
   beats.story_returned = {
@@ -536,7 +536,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
       "Not many people stay to the end. Thank you for that.",
       "Is there anything else you want to see?",
     ],
-    cta: { label: "Show me the memory core.", next: "hub" },
+    cta: { label: "Show me the memories.", next: "hub" },
   };
 
   const banks: ConsoleBank[] = [
@@ -552,7 +552,7 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
   return {
     start: "arrival",
     hub: {
-      status: `MEMORY CORE · ${banks.length} BANKS`,
+      status: `MEMORIES · ${banks.length} BANKS`,
       speech: [
         "I have kept everything. Take it in any order — I am not going anywhere.",
         "When you are finished, the full record is underneath: the long read, the timeline, the sources.",
