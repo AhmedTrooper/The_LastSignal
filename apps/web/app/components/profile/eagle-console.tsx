@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
 import type { ConsoleBeat, ConsoleCta, ConsoleData, ConsoleStage } from "@/lib/console";
 import { ArrowRight } from "@/app/components/icons";
 import ModelStudio, { type StudioPart, type StudioSource } from "./model-studio";
@@ -33,8 +34,36 @@ function bankFor(id: string) {
   return null;
 }
 
+const STAGE_BEATS = new Set(["photo", "video", "transcript", "specs", "quiz"]);
+
+const stageMotion = {
+  initial: { opacity: 0, y: 14, scale: 0.985 },
+  enter: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -8, scale: 0.99 },
+};
+
+const speechListMotion = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.075 } },
+};
+
+const speechLineMotion = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.2, 0.7, 0.2, 1] as const } },
+};
+
+const hubListMotion = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.045, delayChildren: 0.06 } },
+};
+
+const hubCardMotion = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.2, 0.7, 0.2, 1] as const } },
+};
+
 /**
- * Eagle's console. One voice, one button at a time, and the real record underneath.
+ * Eagle's console. One voice, and the real record underneath.
  * The dialogue is an interpretation; every number and quoted line comes from the mission record.
  */
 export default function EagleConsole({ data, slug, name, model, parts, poster, posterAlt }: Props) {
@@ -44,6 +73,10 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
   const [speaking, setSpeaking] = useState(false);
   const [playing, setPlaying] = useState<string | null>(null);
   const [story, setStory] = useState<{ scene: number; total: number } | null>(null);
+  const [visited, setVisited] = useState<Set<string>>(() => new Set());
+
+  const reduceMotion = useReducedMotion();
+  const instant = reduceMotion === true;
 
   const atHub = beatId === "hub";
   const beat: ConsoleBeat | null = atHub ? null : (data.beats[beatId] ?? data.beats[data.start] ?? null);
@@ -51,13 +84,37 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
   const activeBank = bankFor(beatId);
   const inGreeting = beatId === "arrival" || beatId === "introduction" || beatId === "connection";
   const speech = beat ? beat.speech : data.hub.speech;
-  const status = beat ? beat.status : data.hub.status;
   const cta = beat?.cta ?? null;
   const ctaReady = stage?.kind !== "quiz" || correct;
+  const isMediaBeat = !!stage && STAGE_BEATS.has(stage.kind);
+  const stageKey = stage && stage.kind !== "model" ? beatId : "model";
 
-  // Every beat change is a new scene: drop the quiz answer, stop the film, stop the voice.
+  const allVisited = visited.size >= data.banks.length;
+  const hubStatus = allVisited ? `All ${data.banks.length} banks visited` : `Memories · ${visited.size}/${data.banks.length} visited`;
+  const statusText = atHub ? hubStatus : beat ? beat.status : data.hub.status;
+
+  const progressSegments = useMemo(
+    () =>
+      data.banks.map((bank) => ({
+        id: bank.id,
+        visited: visited.has(bank.id),
+        active: activeBank === bank.id,
+      })),
+    [data.banks, visited, activeBank],
+  );
+
+  // Every beat change is a new scene: drop the quiz answer, stop the film, stop the voice, mark the bank visited.
   const goToBeat = useCallback((id: string) => {
     setBeatId(id);
+    const bank = bankFor(id);
+    if (bank) {
+      setVisited((previous) => {
+        if (previous.has(bank)) return previous;
+        const next = new Set(previous);
+        next.add(bank);
+        return next;
+      });
+    }
     setPicked(null);
     setCorrect(false);
     setPlaying(null);
@@ -91,11 +148,32 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
     (next: ConsoleCta) => {
       if ("next" in next) {
         goToBeat(next.next);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: instant ? "auto" : "smooth" });
       }
     },
-    [goToBeat],
+    [goToBeat, instant],
   );
+
+  // Enter or Space advances the scene; Escape returns to the memories. Ignored inside interactive controls.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && typeof target.closest === "function" && target.closest("button, a, input, textarea, select, [contenteditable='true']")) return;
+      if (event.key === "Enter" || event.key === " ") {
+        if (cta && ctaReady) {
+          event.preventDefault();
+          go(cta);
+        }
+        return;
+      }
+      if (event.key === "Escape" && !atHub) {
+        event.preventDefault();
+        goToBeat("hub");
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [cta, ctaReady, atHub, go, goToBeat]);
 
   const openStory = () => {
     window.open(`/heroes/${slug}/story`, "_blank", "noopener,noreferrer");
@@ -279,134 +357,231 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
     );
   };
 
-  return (
-    <section aria-label="Eagle, the Apollo 11 lunar module" className="relative">
-      {/* Registry line and live status. */}
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-white/10 pb-4">
-        <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em]">
-          <span className="text-white">Eagle</span>
-          <span className="text-white/20">/</span>
-          <span className="text-white/50">LM-5</span>
-          <span className="text-white/20">/</span>
-          <span className="text-white/50">1969-059C</span>
-        </div>
-        <div className="flex min-w-0 items-center gap-4 font-mono text-[10px] uppercase tracking-[0.14em]">
-          {story && (
-            <span className="shrink-0 text-violet-bright">
-              Other tab · scene {story.scene}/{story.total}
-            </span>
-          )}
-          <span className="flex min-w-0 items-center gap-2 text-white/40">
-            <span className="relative flex h-1.5 w-1.5 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-bright opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-violet-bright" />
-            </span>
-            <span key={status} className="console-fade-in truncate">{status}</span>
+  // CTA placement is contextual: continue next to the evidence, not only under the speech.
+  const renderCta = (placement: "stage" | "speech") => {
+    if (!cta || !ctaReady) return null;
+    const sharedProps = {
+      layoutId: instant ? undefined : "eagle-console-cta",
+      onClick: () => go(cta),
+      transition: { type: "spring", stiffness: 420, damping: 34 } as const,
+    };
+    if (placement === "stage") {
+      return (
+        <motion.button
+          key={`cta-stage-${beatId}`}
+          {...sharedProps}
+          className="group mt-4 inline-flex w-full items-center justify-between gap-3 rounded-xl border border-violet-bright/35 bg-violet/[0.12] px-4 py-3 text-left text-sm font-semibold text-white transition-colors hover:border-violet-bright/70 hover:bg-violet/[0.18]"
+        >
+          <span className="min-w-0">
+            <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-violet-bright/80">Continue</span>
+            <span className="mt-0.5 block leading-snug">{cta.label}</span>
           </span>
+          <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
+        </motion.button>
+      );
+    }
+    return (
+      <motion.button
+        key={`cta-speech-${beatId}`}
+        {...sharedProps}
+        className="group mt-7 inline-flex w-full items-center justify-between gap-4 rounded-full bg-violet px-6 py-4 text-left text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-violet-deep active:scale-[0.99]"
+      >
+        <span>{cta.label}</span>
+        <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
+      </motion.button>
+    );
+  };
+
+  return (
+    <LayoutGroup>
+      <section aria-label="Eagle, the Apollo 11 lunar module" className="relative">
+        {/* Registry line and live status. */}
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-white/10 pb-4">
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em]">
+            <span className="text-white">Eagle</span>
+            <span className="text-white/20">/</span>
+            <span className="text-white/50">LM-5</span>
+            <span className="text-white/20">/</span>
+            <span className="text-white/50">1969-059C</span>
+          </div>
+          <div className="flex min-w-0 items-center gap-4 font-mono text-[10px] uppercase tracking-[0.14em]">
+            {story && (
+              <span className="shrink-0 text-violet-bright">
+                Other tab · scene {story.scene}/{story.total}
+              </span>
+            )}
+            <span className="flex min-w-0 items-center gap-2 text-white/40">
+              <span className="relative flex h-1.5 w-1.5 shrink-0">
+                {!instant && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-bright opacity-75" />}
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-violet-bright" />
+              </span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={statusText}
+                  initial={instant ? false : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={instant ? undefined : { opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="truncate"
+                >
+                  {statusText}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-10">
-        {/* The machine, or whatever it is showing you. */}
-        <div key={stage && stage.kind !== "model" ? beatId : "model"} className="console-stage-in order-3 min-w-0 lg:order-1">
-          {renderStage()}
-        </div>
-
-        {/* The voice. */}
-        <div className="order-1 flex min-w-0 flex-col lg:order-2 lg:justify-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
-            {atHub ? "Memories" : inGreeting ? "Incoming transmission" : "Eagle"}
-          </p>
-
-          <div key={`speech-${beatId}`} className="mt-4 space-y-4">
-            {speech.map((line, i) => (
-              <p
-                key={i}
-                className={`${i === 0 ? "text-[20px] leading-[1.45] text-white sm:text-[23px]" : "text-[16px] leading-relaxed text-white/65 sm:text-[17px]"} rise`}
-                style={{ animationDelay: `${i * 70}ms` }}
-              >
-                {line}
-              </p>
+        {/* Seven-bank progress strip, under the registry line. */}
+        <div aria-label="Memories visited" className="mt-3 flex items-center gap-2">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Progress</span>
+          <div className="flex flex-1 gap-1">
+            {progressSegments.map((segment) => (
+              <span
+                key={segment.id}
+                aria-hidden
+                className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                  segment.visited ? "bg-violet-bright" : segment.active ? "bg-violet-bright/45" : "bg-white/12"
+                }`}
+              />
             ))}
           </div>
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">{visited.size}/{data.banks.length}</span>
+        </div>
 
-          {beat?.note && <p className="mt-5 font-mono text-[10px] leading-relaxed text-white/35">{beat.note}</p>}
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:mt-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-10">
+          {/* The machine, or whatever it is showing you. */}
+          <div key={stageKey} className="order-3 min-w-0 lg:order-1">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={stageKey}
+                variants={stageMotion}
+                initial={instant ? false : "initial"}
+                animate="enter"
+                exit={instant ? undefined : "exit"}
+                transition={{ duration: 0.32, ease: [0.2, 0.7, 0.2, 1] }}
+              >
+                {renderStage()}
+              </motion.div>
+            </AnimatePresence>
+            {isMediaBeat && renderCta("stage")}
+          </div>
 
-          {cta && ctaReady && (
-            <button
-              key={`cta-${beatId}`}
-              onClick={() => go(cta)}
-              className="console-fade-in group mt-7 inline-flex w-full items-center justify-between gap-4 rounded-full bg-violet px-6 py-4 text-left text-sm font-semibold text-white transition-[background-color,transform] duration-200 hover:bg-violet-deep active:scale-[0.99]"
+          {/* The voice. */}
+          <div className="order-1 flex min-w-0 flex-col lg:order-2 lg:justify-center">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
+              {atHub ? "Memories" : inGreeting ? "Incoming transmission" : "Eagle"}
+            </p>
+
+            <motion.div
+              key={`speech-${beatId}`}
+              variants={speechListMotion}
+              initial={instant ? false : "hidden"}
+              animate="show"
+              className="mt-4 space-y-4"
             >
-              <span>{cta.label}</span>
-              <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" />
-            </button>
-          )}
-          {stage?.kind === "quiz" && !correct && (
-            <p className="mt-7 font-mono text-[10px] uppercase tracking-[0.14em] text-white/30">Choose an answer to continue</p>
+              {speech.map((line, i) => (
+                <motion.p
+                  key={i}
+                  variants={speechLineMotion}
+                  className={i === 0 ? "text-[20px] leading-[1.45] text-white sm:text-[23px]" : "text-[16px] leading-relaxed text-white/65 sm:text-[17px]"}
+                >
+                  {line}
+                </motion.p>
+              ))}
+            </motion.div>
+
+            {beat?.note && <p className="mt-5 font-mono text-[10px] leading-relaxed text-white/35">{beat.note}</p>}
+
+            {!isMediaBeat && renderCta("speech")}
+            {stage?.kind === "quiz" && !correct && (
+              <p className="mt-7 font-mono text-[10px] uppercase tracking-[0.14em] text-white/30">Choose an answer to continue</p>
+            )}
+          </div>
+
+          {/* The memories: seven banks, one story, one archive. On phones it comes before the model. */}
+          {atHub && (
+            <motion.div
+              variants={hubListMotion}
+              initial={instant ? false : "hidden"}
+              animate="show"
+              className="order-2 grid gap-2 border-t border-white/10 pt-6 sm:grid-cols-2 lg:order-3 lg:col-span-2 lg:mt-2 lg:pt-8"
+            >
+              {data.banks.map((bank, i) => {
+                const bankVisited = visited.has(bank.id);
+                return (
+                  <motion.button
+                    key={bank.id}
+                    variants={hubCardMotion}
+                    onClick={() => goToBeat(bank.first)}
+                    whileHover={instant ? undefined : { y: -3 }}
+                    whileTap={instant ? undefined : { scale: 0.995 }}
+                    className={`group flex items-start gap-4 rounded-xl border px-4 py-3.5 text-left transition-colors ${
+                      bankVisited ? "border-violet-bright/40 bg-violet/[0.08]" : "border-white/12 hover:border-violet-bright/60 hover:bg-white/[0.04]"
+                    }`}
+                  >
+                    <span className={`mt-0.5 font-mono text-[10px] ${bankVisited ? "text-violet-bright" : "text-white/30"}`}>
+                      {bankVisited ? (
+                        <svg viewBox="0 0 12 12" className="mt-0.5 h-3.5 w-3.5" fill="none" aria-hidden>
+                          <path d="M2.5 6.5 5 9l4.5-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      ) : (
+                        String(i + 1).padStart(2, "0")
+                      )}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[15px] font-semibold text-white">{bank.label}</span>
+                      <span className="mt-0.5 block text-xs leading-relaxed text-white/45">{bank.line}</span>
+                    </span>
+                    <span className="mt-0.5 shrink-0 font-mono text-[10px] text-white/30">{bankVisited ? "visited" : bank.meta}</span>
+                  </motion.button>
+                );
+              })}
+              {data.actions.map((action) => (
+                <motion.button
+                  key={action.id}
+                  variants={hubCardMotion}
+                  onClick={action.id === "story" ? openStory : action.id === "movie" ? openMovie : openArchive}
+                  whileHover={instant ? undefined : { y: -3 }}
+                  whileTap={instant ? undefined : { scale: 0.995 }}
+                  className="group flex items-start gap-4 rounded-xl border border-dashed border-violet-bright/40 px-4 py-3.5 text-left transition-colors hover:border-violet-bright hover:bg-violet/[0.12]"
+                >
+                  <span className="mt-0.5 font-mono text-[10px] text-violet-bright">↗</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[15px] font-semibold text-white">{action.label}</span>
+                    <span className="mt-0.5 block text-xs leading-relaxed text-white/45">{action.line}</span>
+                  </span>
+                  <span className="mt-0.5 shrink-0 font-mono text-[10px] text-white/30">{action.meta}</span>
+                </motion.button>
+              ))}
+            </motion.div>
           )}
         </div>
 
-        {/* The memory core: seven banks, one story, one archive. On phones it comes before the model. */}
-        {atHub && (
-          <div className="console-fade-in order-2 grid gap-2 border-t border-white/10 pt-6 sm:grid-cols-2 lg:order-3 lg:col-span-2 lg:mt-2 lg:pt-8">
-            {data.banks.map((bank, i) => (
+        {/* In a branch: a quiet way back. Escape does the same. */}
+        {!atHub && !inGreeting && (
+          <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-white/10 pt-5">
+            {data.banks.map((bank) => (
               <button
                 key={bank.id}
                 onClick={() => goToBeat(bank.first)}
-                style={{ animationDelay: `${i * 45}ms` }}
-                className="console-card-in group flex items-start gap-4 rounded-xl border border-white/12 px-4 py-3.5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-bright/60 hover:bg-white/[0.04] active:translate-y-0 active:scale-[0.995]"
+                aria-current={activeBank === bank.id ? "true" : undefined}
+                className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                  activeBank === bank.id ? "bg-white text-ink" : "border border-white/15 text-white/55 hover:border-white/40 hover:text-white"
+                }`}
               >
-                <span className="mt-0.5 font-mono text-[10px] text-white/30">{String(i + 1).padStart(2, "0")}</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[15px] font-semibold text-white">{bank.label}</span>
-                  <span className="mt-0.5 block text-xs leading-relaxed text-white/45">{bank.line}</span>
-                </span>
-                <span className="mt-0.5 shrink-0 font-mono text-[10px] text-white/30">{bank.meta}</span>
+                {bank.label}
               </button>
             ))}
-            {data.actions.map((action, i) => (
-              <button
-                key={action.id}
-                onClick={action.id === "story" ? openStory : action.id === "movie" ? openMovie : openArchive}
-                style={{ animationDelay: `${(data.banks.length + i) * 45}ms` }}
-                className="console-card-in group flex items-start gap-4 rounded-xl border border-dashed border-violet-bright/40 px-4 py-3.5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-bright hover:bg-violet/[0.12] active:translate-y-0 active:scale-[0.995]"
-              >
-                <span className="mt-0.5 font-mono text-[10px] text-violet-bright">↗</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[15px] font-semibold text-white">{action.label}</span>
-                  <span className="mt-0.5 block text-xs leading-relaxed text-white/45">{action.line}</span>
-                </span>
-                <span className="mt-0.5 shrink-0 font-mono text-[10px] text-white/30">{action.meta}</span>
-              </button>
-            ))}
+            <button
+              onClick={() => goToBeat("hub")}
+              title="Escape"
+              className="ml-auto rounded-full px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-white/35 hover:text-white"
+            >
+              All memories <span aria-hidden>· Esc</span>
+            </button>
           </div>
         )}
-      </div>
-
-      {/* In a branch: a quiet way back. */}
-      {!atHub && !inGreeting && (
-        <div className="console-fade-in mt-8 flex flex-wrap items-center gap-2 border-t border-white/10 pt-5">
-          {data.banks.map((bank) => (
-            <button
-              key={bank.id}
-              onClick={() => goToBeat(bank.first)}
-              aria-current={activeBank === bank.id ? "true" : undefined}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
-                activeBank === bank.id ? "bg-white text-ink" : "border border-white/15 text-white/55 hover:border-white/40 hover:text-white"
-              }`}
-            >
-              {bank.label}
-            </button>
-          ))}
-          <button
-            onClick={() => goToBeat("hub")}
-            className="ml-auto rounded-full px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-white/35 hover:text-white"
-          >
-            All memories
-          </button>
-        </div>
-      )}
-    </section>
+      </section>
+    </LayoutGroup>
   );
 }

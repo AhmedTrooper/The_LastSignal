@@ -61,31 +61,6 @@ body {
   to { opacity: 1; transform: none; }
 }
 
-/* Eagle console: every beat is a new scene. */
-.console-stage-in {
-  animation: console-stage-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-@keyframes console-stage-in {
-  from { opacity: 0; transform: scale(0.985); }
-  to { opacity: 1; transform: none; }
-}
-
-.console-card-in {
-  animation: console-card-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
-}
-@keyframes console-card-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: none; }
-}
-
-.console-fade-in {
-  animation: console-fade-in 0.4s ease-out both;
-}
-@keyframes console-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 /* Waveform bars breathe while a signal is "live". */
 .wave-live rect {
   transform-box: fill-box;
@@ -124,7 +99,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise, .console-stage-in, .console-card-in, .console-fade-in, .wave-live rect, .ticker, .pulse-ring, .planet { animation: none; }
+  .rise, .wave-live rect, .ticker, .pulse-ring, .planet { animation: none; }
 }
 
 /* Last-signal art (app/components/profile/last-signal.tsx): one loop per way a machine was lost. */

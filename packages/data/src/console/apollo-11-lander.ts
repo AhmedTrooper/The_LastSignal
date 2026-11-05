@@ -38,6 +38,10 @@ export type ConsoleBeat = {
   note?: string;
   stage?: ConsoleStage;
   cta: ConsoleCta;
+  /** Dialogue id within a bank. The console uses it for progress and visited state. */
+  order?: number;
+  /** One-line label for the progress strip, without spoiling the beat. */
+  hint?: string;
 };
 
 export type ConsoleBank = {
@@ -383,6 +387,8 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
       status: `${shot.status} · ${i + 1} OF ${shots.length}`,
       speech: shot.speech,
       stage: { kind: "photo", photo: shot.photo },
+      order: i + 1,
+      hint: `Frame ${i + 1} of ${shots.length}`,
       cta: last
         ? { label: "Back to the memories.", next: "hub" }
         : { label: "Next photograph.", next: `photo_${i + 2}` },
@@ -538,6 +544,36 @@ export function buildEagleConsole({ photos, videos }: Input): ConsoleData {
     ],
     cta: { label: "Show me the memories.", next: "hub" },
   };
+
+  const bankOrder: Record<string, Partial<{ order: number; hint: string }>> = {
+    body_1: { order: 1, hint: "The descent stage" },
+    body_2: { order: 2, hint: "Seven parts marked" },
+    work_1: { order: 1, hint: "The retroreflector" },
+    work_2: { order: 2, hint: "EASEP" },
+    work_3: { order: 3, hint: "The solar wind foil" },
+    work_4: { order: 4, hint: "The dust detector" },
+    voices_1: { order: 1, hint: "Contact light" },
+    voices_2: { order: 2, hint: "The first step" },
+    voices_3: { order: 3, hint: "Magnificent desolation" },
+    voices_4: { order: 4, hint: "The plaque" },
+    film_1: { order: 1, hint: "The landing film" },
+    film_2: { order: 2, hint: "The moonwalk film" },
+    rest_1: { order: 1, hint: "Where I am" },
+    rest_2: { order: 2, hint: "What was left" },
+    test_1: { order: 1, hint: "Program alarm" },
+    test_2: { order: 2, hint: "The circuit breaker" },
+    test_3: { order: 3, hint: "Still working" },
+  };
+
+  for (const [beatId, entry] of Object.entries(bankOrder)) {
+    const beat = beats[beatId];
+    if (!beat) continue;
+    if (entry && entry.order) {
+      beat.order = entry.order;
+      beat.hint = entry.hint;
+    }
+  }
+
 
   const banks: ConsoleBank[] = [
     { id: "body", label: "This body", line: "The descent stage, part by part.", meta: "2 records", first: "body_1" },
