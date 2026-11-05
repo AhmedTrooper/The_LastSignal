@@ -32,12 +32,15 @@ jobs:
       - name: Lint & Typecheck
         run: |
           bun run lint:web
-          bun run typecheck
+          cd packages/data && bun x tsc --noEmit
+          cd ../../apps/web && bun x tsc --noEmit
 
       - name: Build Web Application
         env:
           NEXT_PUBLIC_ASSET_URL: ${{ secrets.NEXT_PUBLIC_ASSET_URL || vars.NEXT_PUBLIC_ASSET_URL }}
-        run: bun run web:build
+        run: |
+          cd apps/web
+          bun x opennextjs-cloudflare build
 
       - name: Deploy to Cloudflare
         if: env.CLOUDFLARE_API_TOKEN != ''
