@@ -392,7 +392,7 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
               <Link href={`/heroes/${slug}`} className="flex items-center gap-2.5 text-white/90 hover:text-white">
                 <SignalMark className="h-7 w-7" />
                 <span className="font-mono text-xs tracking-[0.12em] uppercase">
-                  The Last Signal <span className="text-white/50">/ {name}</span>
+                  RoverVilla <span className="text-white/50">/ {name}</span>
                 </span>
               </Link>
               <div className="flex items-center gap-2">

@@ -15,7 +15,7 @@ export function Logo({ className = "", compact = false }: { className?: string; 
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <SignalMark className={compact ? "h-8 w-8" : "h-9 w-9 lg:h-10 lg:w-10"} />
       <span className={`font-display font-bold uppercase tracking-[-0.01em] ${compact ? "text-[13px]" : "text-[15px] lg:text-[17px]"}`}>
-        The Last Signal
+        RoverVilla
       </span>
     </span>
   );

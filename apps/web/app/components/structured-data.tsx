@@ -11,7 +11,7 @@ export function WebSiteSchema() {
       data={{
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "The Last Signal",
+        name: "RoverVilla",
         url: BASE_URL,
         description: "A memorial for the machines we left behind on Mars and the Moon.",
       }}

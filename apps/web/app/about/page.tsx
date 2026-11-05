@@ -14,7 +14,7 @@ export const metadata = generateSEO({
 const RULES = [
   { title: "Facts only", text: "Every date, number and last word comes from a real mission record, and each hero lists its sources. We never invent quotes." },
   { title: "Real imagery", text: "We use public-domain mission photos and videos, credited. The images you see today are AI placeholders and are labelled as such." },
-  { title: "Independent", text: "The Last Signal is not affiliated with or endorsed by any space agency, and carries no agency branding." },
+  { title: "Independent", text: "RoverVilla is not affiliated with or endorsed by any space agency, and carries no agency branding." },
   { title: "AI is labelled", text: "Narration or video made with AI is always marked as AI-made, and is built only from the real record." },
 ];
 

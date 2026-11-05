@@ -1,6 +1,6 @@
-# The Last Signal
+# RoverVilla
 
-**thelastsignal.org** — a memorial for the machines we left behind on Mars and the Moon.
+**RoverVilla** — meet the machines we left behind on Mars and the Moon through stories, visual art, and hands-on exploration.
 
 > Their mission ended. Their story didn't.
 

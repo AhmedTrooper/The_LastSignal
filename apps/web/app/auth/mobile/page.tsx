@@ -112,7 +112,7 @@ function MobileAuthBridgeContent() {
           </svg>
         </div>
 
-        <h1 className="text-xl font-bold">The Last Signal</h1>
+        <h1 className="text-xl font-bold">RoverVilla</h1>
         <p className="mt-1 text-xs text-white/60">
           Choose your Google Account to authenticate the mobile app
         </p>
@@ -120,7 +120,7 @@ function MobileAuthBridgeContent() {
         {status === "success" ? (
           <div className="mt-6 space-y-4">
             <div className="rounded-xl bg-emerald-500/20 p-4 text-xs font-semibold text-emerald-300">
-              ✓ Authenticated! Returning to The Last Signal app…
+              ✓ Authenticated! Returning to the app…
             </div>
             {appRedirectUrl ? (
               <a

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-line bg-white">
       <div className="mx-auto grid grid-cols-1 max-w-[1440px] gap-8 px-4 py-12 sm:px-8 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-12">
-        <Link href="/" className="text-ink" aria-label="The Last Signal home">
+        <Link href="/" className="text-ink" aria-label="RoverVilla home">
           <Logo />
         </Link>
         <p className="text-lg leading-snug md:border-l md:border-line md:pl-12">
@@ -15,7 +15,7 @@ export default function Footer() {
         </p>
         <div className="space-y-2 font-mono text-sm text-ink-soft md:text-right">
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 md:justify-end">
-            <span>thelastsignal.mtas.fi</span>
+            <span>RoverVilla</span>
             <span>·</span>
             <Link href="/privacy" className="underline hover:text-violet">
               Privacy

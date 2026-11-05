@@ -25,7 +25,7 @@ export default function StoryIndex() {
               Master Digital Storybook Edition
             </span>
             <h2 className="display mt-2 text-2xl font-bold sm:text-3xl">
-              The Last Signal: Monuments in the Dust
+              RoverVilla: Monuments in the Dust
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-white/75">
               Experience the complete chronological story in a real two-page digital book reader. Flip through 12 pioneer machines, from Ranger 7&apos;s blind lunar plunge in 1964 to Ingenuity&apos;s historic flights on Mars.

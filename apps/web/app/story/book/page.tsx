@@ -526,7 +526,7 @@ export default function StoryBookPage() {
               >
                 {/* Running Header */}
                 <div className="flex items-center justify-between border-b border-[#e5dcce] pb-1.5 text-[10px] font-mono uppercase tracking-widest text-[#8c7b70]">
-                  <span>The Last Signal</span>
+                  <span>RoverVilla</span>
                   <span className="font-bold text-rose-900">{currentSpread.machineName}</span>
                 </div>
 

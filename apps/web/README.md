@@ -1,4 +1,4 @@
-# The Last Signal
+# RoverVilla
 
 A memorial for the machines we left behind on Mars and the Moon. See `CONCEPT.md` for the idea and `final-design /` for the approved designs.
 

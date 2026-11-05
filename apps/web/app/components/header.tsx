@@ -108,7 +108,7 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md text-ink">
         <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-6 px-4 sm:px-8 lg:h-[76px]">
-          <Link href="/" aria-label="The Last Signal home" className="shrink-0 text-ink">
+          <Link href="/" aria-label="RoverVilla home" className="shrink-0 text-ink">
             <Logo />
           </Link>
 

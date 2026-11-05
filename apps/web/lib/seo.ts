@@ -5,7 +5,7 @@ export const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://thelastsignal.mtas.fi";
 
 const SITE_KEYWORDS = [
-  "The Last Signal",
+  "RoverVilla",
   "Mars rovers memorial",
   "Moon landers",
   "Opportunity rover",
@@ -32,6 +32,7 @@ export function generateSEO({
   ogImage = assetUrl("images/hero-opportunity.jpg"),
   keywords = [],
 }: SEOConfig): Metadata {
+  title = title.replaceAll("The Last Signal", "RoverVilla");
   const url = `${BASE_URL}${path}`;
   const imageUrl = ogImage.startsWith("http") ? ogImage : `${BASE_URL}${ogImage}`;
   const allKeywords = [...new Set([...keywords, ...SITE_KEYWORDS])];
@@ -53,7 +54,7 @@ export function generateSEO({
       type: "website",
       locale: "en_US",
       url,
-      siteName: "The Last Signal",
+      siteName: "RoverVilla",
       title,
       description,
       images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
@@ -70,7 +71,7 @@ export function generateSEO({
 }
 
 export const defaultSEO: Metadata = generateSEO({
-  title: "The Last Signal: a memorial for the machines we left on Mars and the Moon",
+  title: "RoverVilla: meet the machines we left on Mars and the Moon",
   description:
     "Their mission ended. Their story didn't. The life stories of the rovers, landers and probes that went where we couldn't and never came back.",
 });

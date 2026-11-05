@@ -189,7 +189,7 @@ const GAMES: Game[] = [
 /** Games: a simple store grid of icons. */
 export default function GamesPage() {
   return (
-    <SitePage eyebrow="The Last Signal" title="Games">
+    <SitePage eyebrow="RoverVilla" title="Games">
       <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
         {GAMES.map((g) => {
           const body = (
