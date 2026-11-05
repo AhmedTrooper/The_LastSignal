@@ -3,6 +3,9 @@ node_modules/
 .pnp
 .pnp.js
 
+# Local agent skills
+.agents/
+
 # Environment files
 .env
 .env.local
