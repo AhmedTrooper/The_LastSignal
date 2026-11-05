@@ -16,6 +16,7 @@ import EagleCharacter from "./eagle-character";
 import "./eagle-kids.css";
 
 type Props = { data: ConsoleData; slug: string; name: string; model: StudioSource; parts: StudioPart[]; poster: string; posterAlt: string };
+export type EagleConsoleProps = Props;
 const BANK_PREFIX: [string, string][] = [["body_", "body"], ["work_", "work"], ["voices_", "voices"], ["film_", "film"], ["photo_", "photos"], ["rest_", "rest"], ["test_", "test"]];
 const bankFor = (id: string) => BANK_PREFIX.find(([prefix]) => id.startsWith(prefix))?.[1];
 const BANK_ICONS = { body: SparkIcon, work: SparkIcon, voices: SignalWave, film: Play, photos: BookIcon, rest: MapIcon, test: ClockIcon };

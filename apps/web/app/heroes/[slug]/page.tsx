@@ -25,7 +25,7 @@ import SignatureBlock from "@/app/components/profile/signature";
 import Videos from "@/app/components/profile/videos";
 import EyesEmbed from "@/app/components/profile/eyes-embed";
 import Wiki from "@/app/components/profile/wiki";
-import EagleConsole from "@/app/components/profile/eagle-console";
+import EagleComicAdventure from "@/app/components/profile/eagle-comic-adventure";
 import Archive from "@/app/components/profile/archive";
 import { HeroSchema } from "@/app/components/structured-data";
 
@@ -582,7 +582,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
           {/* The console owns the first screen: header + this section = one viewport. */}
           <section className="bg-[#fff9ef]">
             <div>
-              <EagleConsole
+              <EagleComicAdventure
                 data={eagle}
                 slug={hero.slug}
                 name={hero.name}
