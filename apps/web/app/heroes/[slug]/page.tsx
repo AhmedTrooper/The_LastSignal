@@ -11,6 +11,7 @@ import { PARTS, DOWNLOADS } from "@/lib/parts";
 import { VIDEOS, NEWS, EYES, eyesUrl } from "@/lib/media";
 import { LAYOUTS, SECTION_LABEL, type SectionId } from "@/lib/layouts";
 import { STORIES } from "@/lib/stories";
+import { buildEagleConsole } from "@/lib/console";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import { ArrowRight, Pin, STAT_ICONS } from "@/app/components/icons";
@@ -24,6 +25,8 @@ import SignatureBlock from "@/app/components/profile/signature";
 import Videos from "@/app/components/profile/videos";
 import EyesEmbed from "@/app/components/profile/eyes-embed";
 import Wiki from "@/app/components/profile/wiki";
+import EagleConsole from "@/app/components/profile/eagle-console";
+import Archive from "@/app/components/profile/archive";
 import { HeroSchema } from "@/app/components/structured-data";
 
 const HERO_GAMES: Record<string, { href: string; title: string; desc: string }> = {
@@ -123,6 +126,27 @@ function Heading({ children, sub }: { children: React.ReactNode; sub?: string })
 
 function storyLabel(hero: Hero) {
   return STORIES[hero.slug] ? "Watch the film" : "Read the story";
+}
+
+/** The credit block that closes every hero page. */
+function Sources({ hero }: { hero: Hero }) {
+  return (
+    <section className="border-t border-line pt-6 pb-4">
+      <h2 className="font-mono text-xs tracking-[0.12em] uppercase">Sources</h2>
+      <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        {hero.sources.map((s) => (
+          <li key={s.url}>
+            <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-violet hover:underline">
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-3 text-xs leading-relaxed text-ink-soft">
+        Resting on {bodyName(hero.body)}. Photos are from NASA&apos;s public archives and credited individually; anything marked AI-generated is not a real photo. The 3D model {hero.model ? "is NASA's own" : "is a simplified model made for this site"}. Videos play from their publishers&apos; YouTube channels. NASA does not endorse this site.
+      </p>
+    </section>
+  );
 }
 
 function Sidebar({ hero, nav }: { hero: Hero; nav: { id: string; label: string }[] }) {
@@ -544,6 +568,49 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     ),
   };
 
+  // Apollo 11 gets the console: a first-person room at the top of the page, with the verified
+  // record folded away underneath for anyone who wants to inspect it.
+  if (hero.slug === "apollo-11-lander") {
+    const eagle = buildEagleConsole({ photos: gallery, videos });
+    const archiveOrder = order.filter((id) => id !== "model" && id !== "film");
+
+    return (
+      <>
+        <HeroSchema hero={hero} />
+        <Header />
+        <main>
+          <section className="bg-night text-white">
+            <div className="mx-auto max-w-[1320px] px-4 py-6 sm:px-8 lg:py-10">
+              <EagleConsole
+                data={eagle}
+                slug={hero.slug}
+                name={hero.name}
+                model={model}
+                parts={PARTS[hero.slug] ?? []}
+                poster={pics.portrait.src}
+                posterAlt={pics.portrait.alt}
+              />
+            </div>
+          </section>
+
+          <section className="bg-[#f6f7fa]">
+            <div className="mx-auto max-w-[1320px] px-4 py-10 sm:px-8">
+              <Archive count={archiveOrder.length}>
+                <div className="space-y-4">
+                  {archiveOrder.map((id) => (
+                    <div key={id}>{sections[id]()}</div>
+                  ))}
+                </div>
+              </Archive>
+              <Sources hero={hero} />
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <HeroSchema hero={hero} />
@@ -561,21 +628,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
               <div key={id}>{sections[id]()}</div>
             ))}
 
-            <section className="border-t border-line pt-6 pb-4">
-              <h2 className="font-mono text-xs tracking-[0.12em] uppercase">Sources</h2>
-              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                {hero.sources.map((s) => (
-                  <li key={s.url}>
-                    <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-violet hover:underline">
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-3 text-xs leading-relaxed text-ink-soft">
-                Resting on {bodyName(hero.body)}. Photos are from NASA&apos;s public archives and credited individually; anything marked AI-generated is not a real photo. The 3D model {hero.model ? "is NASA's own" : "is a simplified model made for this site"}. Videos play from their publishers&apos; YouTube channels. NASA does not endorse this site.
-              </p>
-            </section>
+            <Sources hero={hero} />
           </div>
         </div>
       </main>

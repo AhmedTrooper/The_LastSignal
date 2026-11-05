@@ -148,6 +148,20 @@ body {
   .film-dust, .film-ring, .film-hint { animation: none; }
 }
 
+/* Eagle's console and story (app/components/profile/eagle-console.tsx, app/components/story/eagle-story.tsx). */
+.eagle-drift { animation: eagle-drift 26s ease-out both; }
+@keyframes eagle-drift { from { transform: scale(1.02); } to { transform: scale(1.08); } }
+
+.eagle-twinkle { animation: eagle-twinkle 5s ease-in-out infinite; }
+@keyframes eagle-twinkle {
+  0%, 100% { opacity: calc(var(--o, 0.5) * 0.45); }
+  50% { opacity: var(--o, 0.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eagle-drift, .eagle-twinkle { animation: none; }
+}
+
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 

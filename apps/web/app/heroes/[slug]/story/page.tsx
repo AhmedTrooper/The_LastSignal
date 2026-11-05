@@ -6,7 +6,9 @@ import Header from "@/app/components/header";
 import StoryView from "@/app/components/story/story-view";
 import CinematicStory from "@/app/components/story/cinematic-story";
 import { STORIES } from "@/lib/stories";
+import { EAGLE_CHAPTERS } from "@/lib/console";
 import { photo } from "@/lib/photos";
+import EagleStory from "@/app/components/story/eagle-story";
 
 export function generateStaticParams() {
   return HEROES.map((h) => ({ slug: h.slug }));
@@ -15,8 +17,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const hero = getHero((await params).slug);
   if (!hero) return {};
+  const eagle = hero.slug === "apollo-11-lander";
+  const count = eagle ? EAGLE_CHAPTERS.length : (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
-    title: `${hero.name}, a story in ${STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length} ${STORIES[hero.slug] ? "scenes" : "chapters"} | The Last Signal`,
+    title: `${hero.name}, a story in ${count} ${eagle || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
     description: hero.summary,
     path: `/heroes/${hero.slug}/story`,
     ogImage: img(portrait(hero)),
@@ -28,6 +32,23 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   if (!hero) notFound();
   const next = nextHero(hero);
   const film = STORIES[hero.slug];
+
+  // Apollo 11 tells its own story: eight chapters, one action each, and a channel back to the console.
+  if (hero.slug === "apollo-11-lander") {
+    return (
+      <main>
+        <EagleStory
+          slug={hero.slug}
+          name={hero.name}
+          chapters={EAGLE_CHAPTERS.map((chapter) => ({
+            ...chapter,
+            photo: chapter.image ? photo(chapter.image, chapter.title) : undefined,
+          }))}
+          sources={film?.sources ?? hero.sources}
+        />
+      </main>
+    );
+  }
 
   if (film) {
     return (

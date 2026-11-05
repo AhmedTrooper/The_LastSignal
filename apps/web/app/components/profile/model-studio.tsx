@@ -392,6 +392,9 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
   };
 
   const current = parts.find((p) => p.id === sel);
+  // The studio is also used inside the dark console, so its chrome has to follow the stage.
+  const chromeBorder = stage === "dark" ? "border-white/20" : "border-line";
+  const chromeText = stage === "dark" ? "text-white/45" : "text-ink-soft";
 
   return (
     <div className={compact ? "" : "grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]"}>
@@ -438,15 +441,15 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
             onClick={() => setSpin(!spin)}
             aria-pressed={spin}
             disabled={state !== "ready"}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors disabled:opacity-40 ${spin ? "bg-violet text-white" : "border border-line hover:border-violet"}`}
+            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors disabled:opacity-40 ${spin ? "bg-violet text-white" : `${chromeBorder} border hover:border-violet`}`}
           >
             {spin ? "Pause" : "Rotate"}
           </button>
-          <button suppressHydrationWarning onClick={reset} disabled={state !== "ready"} className="rounded-full border border-line px-4 py-2 text-sm font-semibold hover:border-violet disabled:opacity-40">
+          <button suppressHydrationWarning onClick={reset} disabled={state !== "ready"} className={`rounded-full border px-4 py-2 text-sm font-semibold hover:border-violet disabled:opacity-40 ${chromeBorder}`}>
             Reset view
           </button>
           {canExplode && (
-            <label className="flex items-center gap-2 rounded-full border border-line px-4 py-1.5 text-sm font-semibold">
+            <label className={`flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-semibold ${chromeBorder}`}>
               Explode
               <input
                 suppressHydrationWarning
@@ -466,9 +469,9 @@ export default function ModelStudio({ name, model, parts, poster, posterAlt, dow
               />
             </label>
           )}
-          <span className="font-mono text-xs text-ink-soft">Drag to turn · pinch or scroll to zoom</span>
+          <span className={`font-mono text-xs ${chromeText}`}>Drag to turn · pinch or scroll to zoom</span>
           {compact && model.kind === "glb" && (
-            <a href={model.source} target="_blank" rel="noopener noreferrer" className="ml-auto font-mono text-[11px] text-ink-soft hover:text-violet">
+            <a href={model.source} target="_blank" rel="noopener noreferrer" className={`ml-auto font-mono text-[11px] hover:text-violet ${chromeText}`}>
               Model: {model.credit} ↗
             </a>
           )}
