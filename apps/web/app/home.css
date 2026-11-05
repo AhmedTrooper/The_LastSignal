@@ -1,0 +1,126 @@
+.explorer-home { --rv-navy: #111b39; --rv-orange: #ff9a25; --rv-purple: #7553a5; color: var(--rv-navy); background: #fffaf0; }
+.rv-hero { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 64px; max-width: 1380px; margin: 0 auto; padding: 55px 48px 62px; }
+.rv-kicker { font-family: var(--font-mono); font-size: 10px; font-weight: 500; line-height: 1.6; letter-spacing: 0.1em; text-transform: uppercase; color: #775898; }
+.rv-hero .rv-kicker { display: inline-flex; align-items: center; gap: 9px; padding: 8px 13px; border: 1px solid #e8daca; border-radius: 999px; background: #fff4dc; }
+.rv-hero h1 { margin-top: 22px; font-size: clamp(42px, 4.4vw, 64px); line-height: 1.04; letter-spacing: -0.035em; }
+.rv-hero h1 > span { color: #74529d; }
+.rv-hero-lede { max-width: 470px; margin-top: 22px; color: #615873; font-size: 16px; line-height: 1.8; }
+.rv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 26px; }
+.rv-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 13px 19px; border: 1px solid transparent; border-radius: 15px; font-size: 13px; font-weight: 700; line-height: 1.6; transition: background 160ms, border-color 160ms, box-shadow 160ms; }
+.rv-button-orange { color: #18203b; border-color: #e88a1e; background: var(--rv-orange); box-shadow: 0 4px 0 #d27b18; }
+.rv-button-orange:hover { background: #ffac4a; }
+.rv-button-outline { color: #66517f; border-color: #dcd0e4; background: #fffaf0; }
+.rv-button-outline:hover { background: #f2e9fa; border-color: #ac90c5; }
+.rv-reassurance { margin-top: 17px; color: #71627b; font-size: 11px; }
+.rv-preview-link { display: flex; gap: 11px; align-items: center; margin-top: 28px; }
+.rv-preview-link:hover { color: #725394; }
+.rv-preview-icon { display: flex; width: 37px; height: 37px; align-items: center; justify-content: center; border: 1px solid #decde7; border-radius: 50%; color: #71518f; background: #f3e8ff; }
+.rv-logo-stage { position: relative; padding: 70px 24px 24px; border: 2px solid #141b33; border-radius: 38px 38px 38px 10px; background: radial-gradient(ellipse at 20% 30%, #192956, #07112b 65%); box-shadow: 10px 12px 0 #e9dbc4; transform: rotate(2deg); }
+.rv-hero-logo { position: relative; display: block; width: 100%; max-width: 365px; height: auto; margin: 0 auto; }
+.rv-mascot-bubble { position: absolute; z-index: 1; top: 17px; left: -22px; padding: 15px 22px; border: 2px solid #171e36; border-radius: 22px 22px 22px 5px; color: #19203b; background: #fff4d5; font-size: 14px; font-weight: 650; box-shadow: 3px 4px 0 #0002; transform: rotate(-5deg); }
+.rv-mascot-bubble > span { position: absolute; left: 38px; bottom: -16px; width: 24px; height: 18px; background: #fff4d5; clip-path: polygon(0 0,100% 0,0 100%); }
+.rv-stars { position: absolute; inset: 15px; overflow: hidden; pointer-events: none; }
+.rv-stars > span { position: absolute; color: #f5d498; opacity: 0.55; }
+.rv-logo-caption { position: relative; display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 20px; color: #bfc6da; font-size: 10px; }
+.rv-curiosity-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 60px; padding: 20px 24px; border-top: 1px solid #ebdfcb; border-bottom: 1px solid #ebdfcb; background: #f5ecd9; }
+.rv-curiosity-strip > span { display: inline-flex; align-items: center; gap: 9px; color: #6f6278; font-size: 12px; font-weight: 600; }
+.rv-explorers, .rv-adventure-loop { max-width: 1380px; margin: 0 auto; padding: 62px 48px; scroll-margin-top: 100px; }
+.rv-section-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.rv-section-heading h2 { margin-top: 12px; font-size: clamp(30px, 3.2vw, 45px); line-height: 1.12; }
+.rv-section-heading p:not(.rv-kicker) { margin-top: 12px; font-size: 14px; line-height: 1.8; color: #71667c; }
+.rv-world-toggle { display: flex; padding: 5px; border: 1px solid #ddcfba; border-radius: 999px; background: #f1e7d7; }
+.rv-world-toggle button { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 43px; min-width: 120px; padding: 9px 16px; border-radius: 999px; color: #786b79; font-size: 12px; font-weight: 700; cursor: pointer; }
+.rv-world-toggle button.is-active { background: #fffdf7; color: #25304b; box-shadow: 0 3px 8px #503e2720; }
+.rv-world-dot { width: 15px; height: 15px; display: block; border-radius: 50%; }
+.rv-world-moon { background: #aba4b8; box-shadow: inset -3px -2px 0 #7e768e; }
+.rv-world-mars { background: #e68e62; box-shadow: inset -3px -2px 0 #b06351; }
+.rv-story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 30px; }
+.rv-story-card { overflow: hidden; border: 1px solid #ded3c7; border-radius: 22px; background: #fffdfa; box-shadow: 0 6px 0 #efe5d4; }
+.rv-story-art { display: block; position: relative; overflow: hidden; border-bottom: 1px solid #ded3c7; }
+.rv-story-art > svg { display: block; width: 100%; height: auto; }
+.rv-story-tag { position: absolute; top: 12px; left: 12px; padding: 6px 10px; border: 1px solid #293046; border-radius: 8px; background: #fff3ce; color: #352c44; font-size: 9px; font-weight: 650; }
+.rv-story-copy { padding: 23px; }
+.rv-story-copy h3 { margin-top: 12px; font-size: 27px; line-height: 1.12; }
+.rv-story-dialogue { margin-top: 15px; min-height: 66px; color: #76677d; font-size: 13px; line-height: 1.8; }
+.rv-science-bridge { display: flex; align-items: flex-start; gap: 9px; margin-top: 18px; padding: 12px; border-radius: 10px; color: #735084; background: #f4ecfa; font-size: 11px; line-height: 1.7; }
+.rv-card-actions { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+.rv-button-small { justify-content: space-between; min-height: 44px; flex: 1; padding: 10px 13px; border: 1px solid #d9c9df; border-radius: 11px; color: #705282; background: #fffaf0; font-size: 11px; }
+.rv-button-small:hover { background: #f1e5f7; }
+.rv-listen-button { display: flex; flex-shrink: 0; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid #d9c9df; border-radius: 50%; color: #705282; cursor: pointer; }
+.rv-gallery-footnote { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 23px; color: #74637d; font-size: 10px; line-height: 1.7; }
+.rv-gallery-footnote a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; color: #735386; font-weight: 650; }
+.rv-adventure-loop { padding-top: 20px; }
+.rv-step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.rv-step-grid > div { position: relative; border: 1px dashed #d9c5d9; border-radius: 18px; padding: 28px; background: #faf1fc; }
+.rv-step-grid > div:nth-child(2) { background: #fff0df; border-color: #e6c7a6; }
+.rv-step-grid > div:nth-child(3) { background: #eaf3ed; border-color: #b9d3c4; }
+.rv-step-number { position: absolute; top: 24px; right: 24px; font-family: var(--font-mono); font-size: 20px; color: #b0a2af; }
+.rv-step-grid h3 { margin-top: 18px; font-size: 25px; }
+.rv-step-grid p { margin-top: 12px; color: #726a77; font-size: 13px; line-height: 1.8; }
+.rv-comic-feature { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 65px; max-width: 1284px; margin: 20px auto 65px; padding: 34px; border-radius: 30px; background: #f3e7ff; }
+.rv-comic-preview { position: relative; overflow: hidden; border: 3px solid #352447; background: #a88cbb; box-shadow: 6px 7px 0 #d4bedf; transform: rotate(-2deg); }
+.rv-comic-preview > svg { display: block; width: 100%; }
+.rv-comic-speech { position: absolute; top: 18px; left: 18px; width: 80%; padding: 13px 17px; border: 2px solid #352447; border-radius: 22px 22px 22px 3px; background: #fff9e9; color: #352447; font-size: 15px; font-weight: 650; line-height: 1.6; }
+.rv-comic-sticker { position: absolute; bottom: 10px; right: 10px; transform: rotate(5deg); padding: 8px 12px; border: 2px solid #352447; color: #352447; background: #f7c575; font-size: 10px; font-weight: 700; }
+.rv-comic-feature h2 { margin-top: 14px; font-size: clamp(32px, 3.7vw, 49px); line-height: 1.12; }
+.rv-comic-feature p:not(.rv-kicker) { max-width: 390px; margin: 18px 0 23px; color: #736280; font-size: 14px; line-height: 1.9; }
+.rv-launchpad { max-width: 1284px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 30px; padding: 40px; border-radius: 26px; color: #fff6e7; background: #141e3d; }
+.rv-launchpad .rv-kicker { color: #d3b68b; }
+.rv-launchpad h2 { margin-top: 12px; font-size: 35px; }
+.rv-launchpad p:not(.rv-kicker) { margin-top: 12px; color: #b8bfd1; font-size: 13px; line-height: 1.8; }
+.rv-launchpad .rv-actions { margin-top: 0; }
+.rv-button-light { border-color: #5c6380; color: #eee5f9; background: #ffffff05; }
+.rv-button-light:hover { background: #ffffff12; }
+.rv-grownup-note { max-width: 760px; margin: 0 auto; padding: 42px 20px 50px; text-align: center; color: #75647c; font-size: 11px; line-height: 1.8; }
+.rv-grownup-note strong { color: #71627c; }
+.rv-grownup-note p { margin-top: 8px; }
+.explorer-home :is(a, button):focus-visible { outline: 3px solid #8c61b3; outline-offset: 5px; }
+.rv-reels-section { max-width: 1380px; margin: 0 auto; padding: 50px 48px 0; }
+.rv-reels-rail { display: flex; gap: 18px; margin-top: 25px; padding: 4px 0 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #c8b4cf #eee3d7; }
+.rv-reel-card { flex: 0 0 235px; min-width: 0; overflow: hidden; scroll-snap-align: start; border: 1px solid #decedc; border-radius: 20px; background: #fffcf6; text-align: left; color: #2a2544; cursor: pointer; transition: border-color 160ms, box-shadow 160ms; }
+.rv-reel-card:hover { border-color: #a87fc0; box-shadow: 0 5px 16px #69508215; }
+.rv-reel-poster { position: relative; display: block; aspect-ratio: 9 / 14; overflow: hidden; background: #1a1633; }
+.rv-reel-poster::after { position: absolute; inset: 0; content: ""; background: linear-gradient(0deg,#12091b80,transparent 35%); }
+.rv-reel-play { position: absolute; z-index: 1; top: 50%; left: 50%; display: flex; width: 50px; height: 50px; align-items: center; justify-content: center; transform: translate(-50%,-50%); border: 1px solid #fff8; border-radius: 50%; background: #15102a85; color: #fff6e8; backdrop-filter: blur(3px); }
+.rv-reel-duration { position: absolute; z-index: 1; bottom: 12px; right: 12px; padding: 3px 6px; border-radius: 5px; background: #0b071ee6; color: white; font-family: var(--font-mono); font-size: 9px; }
+.rv-reel-type { position: absolute; z-index: 1; top: 10px; left: 10px; padding: 5px 7px; border: 1px solid #ffffff50; border-radius: 8px; background: #1c1233d9; color: #fff6e7; font-size: 8px; }
+.rv-reel-info { display: block; min-height: 95px; padding: 15px; }
+.rv-reel-info .rv-kicker { font-size: 8px; }
+.rv-reel-dialog { width: min(460px,calc(100vw - 20px)); max-height: 94dvh; overflow-y: auto; padding: 0; border: 1px solid #59516c; border-radius: 22px; background: #151025; color: #fff7e9; box-shadow: 0 30px 100px #0009; }
+.rv-reel-dialog::backdrop { background: #060515d9; backdrop-filter: blur(5px); }
+.rv-reel-dialog-inner { padding: 16px; }
+.rv-reel-close, .rv-reel-arrow { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #ffffff26; border-radius: 50%; color: #e7dbf8; cursor: pointer; }
+.rv-reel-arrow:disabled { opacity: 0.3; cursor: default; }
+.rv-reel-dialog :is(button,a):focus-visible { outline: 2px solid #f6c37d; outline-offset: 3px; }
+.rv-reel-video { width: min(100%,320px); aspect-ratio: 9 / 16; max-height: 65dvh; margin: 0 auto; border-radius: 12px; background: black; }
+@media (max-width: 1100px) { .rv-hero { gap: 35px; padding-inline: 30px; } .rv-explorers, .rv-adventure-loop { padding-inline: 30px; } .rv-story-grid { gap: 16px; } .rv-story-copy { padding: 18px; } .rv-comic-feature, .rv-launchpad { margin-inline: 30px; } }
+@media (max-width: 767px) {
+  .rv-hero { grid-template-columns: 1fr; gap: 38px; padding: 30px 22px 38px; }
+  .rv-reels-section { padding: 38px 22px 0; }
+  .rv-reel-card { flex-basis: 180px; }
+  .rv-hero h1 { font-size: clamp(36px, 8.4vw, 56px); }
+  .rv-hero-lede { font-size: 14px; }
+  .rv-hero .rv-actions { gap: 10px; }
+  .rv-button { padding: 12px 16px; font-size: 12px; }
+  .rv-logo-stage { width: min(370px, calc(100% - 16px)); margin: 0 auto; padding: 67px 25px 20px; }
+  .rv-hero-logo { max-width: 280px; }
+  .rv-mascot-bubble { left: -12px; top: 14px; padding: 12px 16px; font-size: 12px; }
+  .rv-curiosity-strip { justify-content: flex-start; gap: 14px 25px; padding: 20px 24px; }
+  .rv-curiosity-strip > span { font-size: 10px; }
+  .rv-explorers, .rv-adventure-loop { padding: 40px 22px; }
+  .rv-section-heading { gap: 20px; }
+  .rv-section-heading h2 { font-size: 33px; }
+  .rv-section-heading p:not(.rv-kicker) { font-size: 13px; }
+  .rv-story-grid, .rv-step-grid { grid-template-columns: 1fr; gap: 23px; }
+  .rv-story-art > svg { max-height: 260px; }
+  .rv-story-copy { padding: 24px; }
+  .rv-story-dialogue { min-height: 0; }
+  .rv-comic-feature { grid-template-columns: 1fr; gap: 32px; padding: 22px; margin: 0 22px 40px; border-radius: 22px; }
+  .rv-comic-feature h2 { font-size: 35px; }
+  .rv-comic-speech { padding: 10px 12px; font-size: 12px; }
+  .rv-launchpad { margin: 0 22px; padding: 30px 24px; gap: 24px; }
+  .rv-launchpad h2 { font-size: 30px; }
+  .rv-launchpad .rv-actions { width: 100%; }
+  .rv-launchpad .rv-button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .explorer-home * { transition: none !important; scroll-behavior: auto !important; } }

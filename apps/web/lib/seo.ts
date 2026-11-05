@@ -65,13 +65,13 @@ export function generateSEO({
       description,
       images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
     },
-    icons: { icon: [{ url: "/favicon.svg", type: "image/svg+xml" }] },
+    icons: { icon: [{ url: "/branding/rovervilla-icon.png", type: "image/png" }] },
     other: { "format-detection": "telephone=no" },
   };
 }
 
 export const defaultSEO: Metadata = generateSEO({
-  title: "RoverVilla: meet the machines we left on Mars and the Moon",
+  title: "RoverVilla: big adventures with the space machines we left behind",
   description:
-    "Their mission ended. Their story didn't. The life stories of the rovers, landers and probes that went where we couldn't and never came back.",
+    "Meet a space machine, read its comic, and try a mission. Explore the Moon and Mars through playful stories, original illustrations, and the real science behind the adventure.",
 });

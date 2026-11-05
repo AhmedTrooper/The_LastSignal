@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /** The broadcast mark: a dot inside three pairs of arcs, like a beacon still calling. */
 export function SignalMark({ className = "h-9 w-9" }: { className?: string }) {
   return (
@@ -13,8 +15,8 @@ export function SignalMark({ className = "h-9 w-9" }: { className?: string }) {
 export function Logo({ className = "", compact = false }: { className?: string; compact?: boolean }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <SignalMark className={compact ? "h-8 w-8" : "h-9 w-9 lg:h-10 lg:w-10"} />
-      <span className={`font-display font-bold uppercase tracking-[-0.01em] ${compact ? "text-[13px]" : "text-[15px] lg:text-[17px]"}`}>
+      <Image src="/branding/rovervilla-logo.webp" alt="" width={600} height={625} className={`${compact ? "h-10 w-10" : "h-12 w-12"} rounded-xl bg-[#07112b] object-contain p-0.5`} />
+      <span className={`font-display font-bold tracking-[-0.025em] ${compact ? "text-lg" : "text-xl lg:text-[23px]"}`}>
         RoverVilla
       </span>
     </span>

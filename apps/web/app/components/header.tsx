@@ -87,6 +87,13 @@ export function AuthButton() {
 
 export default function Header() {
   const pathname = usePathname();
+  const home = pathname === "/";
+  const navigation = home ? [
+    { href: "/heroes", label: "Meet the machines" },
+    { href: "/story/book", label: "Comic book" },
+    { href: "/games", label: "Play a mission" },
+    { href: "/where-they-rest", label: "Space map" },
+  ] : LINKS;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -106,14 +113,14 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md text-ink">
+      <header className={`sticky top-0 z-50 border-b border-line/80 backdrop-blur-md text-ink ${home ? "bg-[#fffaf0]/95" : "bg-white/90"}`}>
         <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-6 px-4 sm:px-8 lg:h-[76px]">
           <Link href="/" aria-label="RoverVilla home" className="shrink-0 text-ink">
             <Logo />
           </Link>
 
           <nav className="hidden items-center gap-5 text-[15px] font-medium text-ink lg:flex xl:gap-7">
-            {LINKS.map((l) => {
+            {navigation.map((l) => {
               const active = isActive(pathname, l.href);
               return (
                 <Link
@@ -129,8 +136,7 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
-            <TributeButton />
-            <AuthButton />
+            {home ? <Link href="#meet-machines" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#ff9a25] px-5 text-sm font-bold text-[#17203c] hover:bg-[#ffad4e]">Start exploring <ArrowRight className="h-4 w-4" /></Link> : <><TributeButton /><AuthButton /></>}
           </div>
 
           <button
@@ -158,21 +164,21 @@ export default function Header() {
         }`}
       >
         {/* Account / Sign-in section placed at the top of the scrollable menu */}
-        <div className="flex items-center justify-between border-b border-line bg-mist/60 px-6 py-4 shrink-0">
+        {!home && <div className="flex items-center justify-between border-b border-line bg-mist/60 px-6 py-4 shrink-0">
           <span className="text-xs font-mono uppercase tracking-wider text-ink-soft">Account</span>
           <AuthButton />
-        </div>
+        </div>}
         <nav className="flex flex-col gap-1 px-6 pt-2">
-          {[...LINKS, { href: "/tributes", label: "Tributes" }].map((l) => (
+          {[...navigation, ...(home ? [{ href: "/about", label: "About RoverVilla" }] : [{ href: "/tributes", label: "Tributes" }])].map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="display border-b border-line py-3.5 text-2xl text-ink">
               {l.label}
             </Link>
           ))}
         </nav>
         <div className="p-6 pt-4 pb-4 shrink-0">
-          <div onClick={() => setOpen(false)}>
+          {home ? <Link href="/#meet-machines" onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#ff9a25] px-5 text-sm font-bold text-[#17203c]">Meet your first explorer <ArrowRight className="h-4 w-4" /></Link> : <div onClick={() => setOpen(false)}>
             <TributeButton className="w-full justify-center py-4 text-base" />
-          </div>
+          </div>}
         </div>
         <div className="flex flex-col gap-2 border-t border-line bg-mist/40 px-6 py-4 mb-20 text-xs font-mono text-ink-soft shrink-0">
           <div className="flex items-center justify-between">

@@ -33,7 +33,7 @@ export default function Footer() {
             </Link>
           </p>
           <p className="max-w-xs text-xs leading-relaxed">
-            An independent memorial, not affiliated with or endorsed by any space agency. Images marked AI are placeholders, and the home page illustration is AI-generated.
+            An independent project, not endorsed by any space agency. Mission media is credited; illustrations and imagined dialogue are separate from the historical record.
           </p>
         </div>
       </div>
