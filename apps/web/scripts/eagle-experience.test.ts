@@ -7,6 +7,8 @@ import { EAGLE_FILMS, EAGLE_MEDIA } from "../lib/eagle-media";
 import { EMPTY_EAGLE_PROGRESS, readEagleProgress } from "../lib/eagle-progress";
 import { EAGLE_INVITATIONS } from "../lib/eagle-perspectives";
 import { LANDING_ZONE, initialLanding, stepLanding } from "../lib/eagle-landing";
+import { EAGLE_KID_PARTS } from "../lib/eagle-kid-parts";
+import { PARTS } from "@thelastsignal/data";
 import story from "../lib/eagleStoryData.json";
 
 const photos: ConsolePhoto[] = ["as11-40-5927", "as11-40-5902", "as11-40-5899", "S69-39961", "as11-44-6642", "PIA12909", "jsc2007e034221"].map(id => ({
@@ -20,6 +22,19 @@ test("every greeting has one forward reply and no media gate", () => {
     assert.equal("next" in data.beats[id].cta && data.beats[id].cta.next, next);
     assert.equal(data.beats[id].stage, undefined);
     assert.ok(data.beats[id].title);
+    assert.ok(data.beats[id].speech.length <= 2);
+    assert.ok(data.beats[id].speech.every(line => line.length < 200));
+  }
+});
+
+test("kid-friendly part explanations map to real Eagle hardware", () => {
+  const hardware = new Set(PARTS["apollo-11-lander"].map(part => part.id));
+  assert.equal(new Set(EAGLE_KID_PARTS.map(part => part.id)).size, EAGLE_KID_PARTS.length);
+  for (const part of EAGLE_KID_PARTS) {
+    assert.ok(hardware.has(part.id), part.id);
+    assert.ok(part.line.length < 190);
+    assert.ok(part.why.length < 190);
+    assert.ok(part.x > 0 && part.x < 100 && part.y > 0 && part.y < 100);
   }
 });
 

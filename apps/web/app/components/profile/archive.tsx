@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
  * The verified record, folded away under the console. It is still server-rendered and still in the
  * HTML for search engines and for anyone who follows a #tributes or #wiki- link; it only opens.
  */
-export default function Archive({ children, count }: { children: React.ReactNode; count: number }) {
+export default function Archive({ children, count, friendly = false }: { children: React.ReactNode; count: number; friendly?: boolean }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -30,10 +30,9 @@ export default function Archive({ children, count }: { children: React.ReactNode
       <div className="flex flex-col justify-between gap-4 border-b border-line pb-5 sm:flex-row sm:items-end">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-soft">The verified record</p>
-          <h2 className="display mt-1 text-[30px] sm:text-[36px]">Everything, in full</h2>
+          <h2 className="display mt-1 text-[30px] sm:text-[36px]">{friendly ? "Curious about the real details?" : "Everything, in full"}</h2>
           <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-ink-soft">
-            The long read, the mission clock, the launch and landing, every photograph and the sources they came from.
-            Nothing here is summarised for you.
+            {friendly ? "The photographs, hardware facts, and historical sources are here when you want to look closer. You don’t have to read it all to enjoy the story." : "The long read, the mission clock, the launch and landing, every photograph and the sources they came from. Nothing here is summarised for you."}
           </p>
         </div>
         <button

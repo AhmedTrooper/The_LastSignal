@@ -580,7 +580,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
         <Header />
         <main>
           {/* The console owns the first screen: header + this section = one viewport. */}
-          <section className="bg-night text-white">
+          <section className="bg-[#fff9ef]">
             <div>
               <EagleConsole
                 data={eagle}
@@ -594,9 +594,9 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
             </div>
           </section>
 
-          <section className="bg-[#f6f7fa]">
+          <section className="bg-[#f7f1e6]">
             <div className="mx-auto max-w-[1320px] px-4 py-10 sm:px-8">
-              <Archive count={archiveOrder.length}>
+              <Archive count={archiveOrder.length} friendly>
                 <div className="space-y-4">
                   {archiveOrder.map((id) => (
                     <div key={id}>{sections[id]()}</div>

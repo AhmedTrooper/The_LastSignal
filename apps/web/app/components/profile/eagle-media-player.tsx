@@ -116,7 +116,7 @@ export default function EagleMediaPlayer({ media, onPlay, compact = false, pause
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/15 bg-[#100e20]" data-audio-state={loading ? "loading" : playing ? "playing" : "paused"}>
+    <div className="overflow-hidden rounded-2xl border border-white/15 bg-[#100e20] text-white" data-audio-state={loading ? "loading" : playing ? "playing" : "paused"}>
       {video ? (
         <EagleVideoPlayer key={media.src} src={media.src} title={media.title} onPlay={onPlay} pauseSignal={pauseSignal} />
       ) : (

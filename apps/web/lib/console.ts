@@ -24,21 +24,21 @@ export function buildEagleConsole(input: Parameters<typeof buildSharedConsole>[0
 
   update("arrival", {
     title: "Hi. I’m Eagle.", status: "A visitor at Tranquility Base",
-    speech: ["You came all this way to meet me. I’m so glad you’re here.", "You might know the names of the people I carried. But do you know the machine they left behind? I have a story I’d love to share with you."],
+    speech: ["You found me! I’m the Moon lander that carried Neil and Buzz.", "They went home. The part of me telling this story stayed on the Moon. I’m glad you stopped to say hello."],
     cta: { label: "Yes, of course. Introduce yourself.", next: "introduction" },
   });
   update("introduction", {
     title: "I brought them here.",
-    speech: ["Grumman built me on Earth. On 20 July 1969, I carried Neil Armstrong and Buzz Aldrin down to the Moon’s Sea of Tranquility.", "My upper half took them back to lunar orbit. My lower half—the descent stage telling you this story—became their launch pad. That part of me is still here.", "Would you like to get to know me a little better?"],
+    speech: ["I had two halves, with two very different jobs.", "My lower half landed us. My upper half carried the crew back to orbit. Helping them leave was the last big job of the part that stayed."],
     cta: { label: "Yes, I would. Let’s go.", next: "connection" },
   });
   update("connection", {
-    title: "And you remembered.", status: "Born on Earth. Resting among the stars.",
-    speech: ["When you picture the first footprint, I’m the machine standing just beside it. The people in that photograph went home. My descent stage didn’t.", "I wonder whether you noticed me before today. It’s good to be more than something in the background, just for a moment.", "Come closer. There are voices, photographs, and little pieces of Earth I’d like you to know."],
+    title: "I kept a few memories.", status: "Born on Earth. Resting among the stars.",
+    speech: ["A ladder. A camera. Voices from Earth. There’s more to my story than a famous footprint.", "Come closer. Pick a memory, and I’ll show you why these little things mattered."],
     cta: { label: "Yes. Show me your memories.", next: "hub" },
   });
-  update("body_1", { title: "Two halves. One journey.", speech: ["Come a little closer. The model shows both halves of me together, as I was before the crew returned to orbit.", "My lower half held the landing engine and legs. My upper half was their cabin, with its own engine for the trip back up.", "Turn me around. Want me to explain the parts?"], cta: { label: "Yes. Show me what each part did.", next: "body_2" } });
-  update("body_2", { title: "Every part had a purpose.", speech: ["Pick a numbered part and I’ll tell you what it did. Even my ladder had a second job: it carried a message from Earth.", "When you’re ready, I have more memories to share."], cta: { label: "Yes. Let’s explore another memory.", next: "hub" } });
+  update("body_1", { title: "What made me Eagle?", speech: ["Tap a part. Each one had a job, from slowing the landing to helping the crew get home.", "The drawing is my storybook self. You can also turn the real 3D model around."], cta: { label: "Show me a little more.", next: "body_2" } });
+  update("body_2", { title: "Small parts. Big jobs.", speech: ["My ladder helped people reach the surface. My antenna helped their voices reach Earth.", "Which part would you like to explore?"], cta: { label: "Let’s explore another memory.", next: "hub" } });
 
   EAGLE_MISSIONS.forEach((mission, i) => update(`work_${i + 1}`, {
     title: mission.name,
@@ -62,7 +62,7 @@ export function buildEagleConsole(input: Parameters<typeof buildSharedConsole>[0
   update("rest_1", { title: "Here. In the Sea of Tranquility.", cta: { label: "Yes. Tell me what stayed with you.", next: "rest_2" } });
   update("rest_2", { title: "They left more than a machine.", speech: ["A plaque on my ladder. A disc with messages from around the world. Scientific instruments, camera equipment, and the things the crew could leave behind to lighten their return.", "Some objects were practical. Others were a way of saying who had come here, and why. Would you like to explore another memory?"], cta: { label: "Yes. There’s more I want to know.", next: "hub" } });
   update("story_opened", { title: "I’ll be right here.", status: "Story opened in another tab", speech: ["I’ve opened my story in a new tab for you. Eight memories, from lunar orbit to the part of me that stayed behind.", "Take your time. When you finish, come back here—we’ll still have more to talk about."], cta: { label: "I’m back. Show me your memories.", next: "hub" } });
-  update("story_returned", { title: "You stayed to the end.", status: "Story complete · welcome back", speech: ["You saw the journey. The landing, the science, and the moment my two halves went their separate ways. Thank you for listening.", "Want to put yourself in Mission Control’s place? I have a few questions about the story we just shared."], cta: { label: "Yes. Let’s try your mission challenge.", next: "test_1" } });
+  update("story_returned", { title: "You stayed to the end.", status: "Story complete · welcome back", speech: ["You saw why one half of me stayed, and what the equipment helped us learn. Thank you for listening.", "Want to try a few decisions with me? No timer. We’ll work them out together."], cta: { label: "Let’s try it together.", next: "test_1" } });
   beats.movie_opened = {
     id: "movie_opened", title: "See the journey through my eyes.", status: "Cinematic story opened in another tab",
     speech: ["My cinematic story is open in a new tab. The photographs carry you through the journey, from the machine on Earth to the part that stayed on the Moon.", "When the film ends, come back. There are little details we can explore together that a film can only glimpse."],
@@ -117,7 +117,7 @@ export function buildEagleConsole(input: Parameters<typeof buildSharedConsole>[0
   if (!banks.some(bank => bank.id === "photos")) banks.push({ id: "photos", first: "photo_1", label: "Photographs", line: "Six frames. Six ways to see the hardware.", meta: "6 photographs" });
   return {
     ...shared, beats,
-    hub: { status: "Eagle’s memory bank", speech: ["There’s so much I want to show you.", "Choose a memory. I’ll walk you through it, one piece at a time."] },
+    hub: { status: "Eagle’s memory bank", speech: ["Where shall we go first? Pick something you’re curious about. I’ll be right here with you."] },
     banks,
     actions: shared.actions.map(action => action.id === "story" ? { ...action, label: "Open my short story", line: "Eight memories. A new tab. I’ll wait here." } : action),
   };

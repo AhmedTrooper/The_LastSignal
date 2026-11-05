@@ -1,0 +1,40 @@
+.eagle-experience.eagle-kids { color-scheme: light; color: #25213b; background: radial-gradient(ellipse at 10% 15%, #f5e8f1, transparent 50%), #fff9ef; }
+.eagle-kids .eagle-atmosphere { background: radial-gradient(ellipse at 80% 10%, #f6e9d660, transparent 55%); }
+.eagle-kid-eyebrow { font-family: var(--font-mono); font-size: 10px; line-height: 1.6; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #79548e; }
+.eagle-kids .eagle-utility { border-color: #dccddd; color: #70517f; background: #fffcf8; }
+.eagle-kids .eagle-utility:hover:not(:disabled) { background: #efe2f5; border-color: #a881b6; }
+.eagle-kids .eagle-reply { color: white; background: #76539b; box-shadow: 0 4px 0 #5c3c7d; }
+.eagle-kids .eagle-reply:hover:not(:disabled) { background: #654189; }
+.eagle-kids .eagle-reply:disabled { background: #e4dbe8; color: #776b80; box-shadow: none; }
+.eagle-kids .eagle-dialogue h1 { line-height: 1.03; }
+.eagle-kids .eagle-memory { border-color: #e1d2db; background: #fffefa; padding: 21px; color: #3b2b4c; box-shadow: 0 4px 0 #ecdfcf; }
+.eagle-kids .eagle-memory:hover { border-color: #ab86bd; background: #faf0ff; }
+.eagle-kids .eagle-story-memory { background: #f2e5ff; border-color: #c9a7df; }
+.eagle-kids .eagle-film-memory { background: #fff0d9; border-color: #e7cda7; }
+.eagle-kids :is(a,button,input,summary):focus-visible { outline-color: #9465b0; }
+.eagle-visual-board { min-width: 0; }
+.eagle-visual-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+.eagle-visual-tabs button { min-height: 43px; padding: 10px 16px; border: 1px solid #ddcedf; border-radius: 999px; color: #735582; font-size: 11px; background: #fffaf4; }
+.eagle-visual-tabs button[aria-pressed="true"] { background: #ece0f4; border-color: #bb97cf; color: #65417e; font-weight: 650; }
+.eagle-character-card { overflow: hidden; border: 2px solid #38324f; border-radius: 24px 24px 24px 8px; background: #fffaf0; box-shadow: 8px 9px 0 #e6d6bd; }
+.eagle-character-caption { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 16px 20px; color: #ebe1f8; background: #24203e; font-size: 12px; font-weight: 650; }
+.eagle-character-caption > span:last-child { color: #d4bddf; font-family: var(--font-mono); font-size: 9px; }
+.eagle-character-scene { position: relative; overflow: hidden; }
+.eagle-character-note { padding: 13px 18px; color: #74667d; font-size: 11px; line-height: 1.7; border-top: 1px solid #e4d7c3; }
+.eagle-art-credit { padding: 0 18px 14px; color: #7b6a83; font-size: 9px; line-height: 1.6; }
+.eagle-part-dot { position: absolute; transform: translate(-50%,-50%); width: 44px; height: 44px; border-radius: 50%; border: 2px solid #fff5db; background: #776096; box-shadow: 0 3px 8px #17203e55; color: white; font-family: var(--font-mono); font-size: 12px; font-weight: 650; }
+.eagle-part-dot:hover, .eagle-part-dot.is-selected { background: #f0bd62; color: #372341; border-color: #3c264a; }
+.eagle-part-buttons { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 16px 12px; }
+.eagle-part-buttons button { min-height: 40px; padding: 9px 12px; border: 1px solid #decce3; border-radius: 10px; background: #fffefa; color: #725084; font-size: 10px; }
+.eagle-part-buttons button.is-selected { background: #eadef2; border-color: #b38ac5; }
+.eagle-part-discovery { padding: 16px 20px; margin: 0 16px 12px; border: 1px solid #d9c5e2; border-radius: 15px; color: #68516f; background: #fffdf8; }
+.eagle-real-model { border: 1px solid #d9c7e4; border-radius: 20px; background: #f3eaf9; overflow: hidden; }
+.eagle-play-invitation { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 24px; border: 1px dashed #c7aacb; border-radius: 18px; background: #f2e5f7; }
+@media (max-width: 767px) {
+  .eagle-kids .eagle-memory { padding: 16px; }
+  .eagle-kids .eagle-memory > span:first-of-type { font-size: 13px; }
+  .eagle-kids .eagle-memory > span:last-child { font-size: 11px; }
+  .eagle-character-caption { padding: 13px 16px; font-size: 11px; }
+  .eagle-part-dot { width: 44px; height: 44px; font-size: 11px; }
+  .eagle-kids .eagle-dialogue h1 { font-size: 40px; }
+}
