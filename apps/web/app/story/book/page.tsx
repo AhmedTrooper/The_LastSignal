@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, type CSSProperties } from "react";
+import { Suspense, useState, useEffect, useCallback, useRef, type CSSProperties } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useReducedMotion } from "motion/react";
@@ -16,10 +17,30 @@ import { photo } from "@/lib/photos";
 import { BOOK_SPREADS as SPREADS } from "@/lib/book-spreads";
 import { calculateIngenuityAerodynamics } from "@/lib/ingenuity-mission";
 import { calculateDustImpact } from "@/lib/mer-mission";
+import { machineBookUrl } from "@/lib/machine-books";
 
 import { TOC_ITEMS } from "@thelastsignal/data";
 import "./book.css";
 export default function StoryBookPage() {
+  return <Suspense fallback={<main className="storybook-reader min-h-dvh p-8">Opening the book…</main>}><BookRoute /></Suspense>;
+}
+
+function BookRoute() {
+  const query = useSearchParams();
+  if (query.get("machine") === "apollo-11-lander") {
+    const format = query.get("format");
+    return <EagleBookRedirect href={machineBookUrl("apollo-11-lander", query.get("chapter") ?? undefined, format === "book" || format === "comic" ? format : undefined)} />;
+  }
+  return <LegacyStoryBookReader />;
+}
+
+function EagleBookRedirect({ href }: { href: string }) {
+  const router = useRouter();
+  useEffect(() => { router.replace(href); }, [href, router]);
+  return <main className="storybook-reader min-h-dvh p-8" aria-busy="true">Opening Eagle’s event chapters…</main>;
+}
+
+function LegacyStoryBookReader() {
   const [spreadIndex, setSpreadIndex] = useState<number>(0);
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
   const [mobilePage, setMobilePage] = useState<"left" | "right">("left");

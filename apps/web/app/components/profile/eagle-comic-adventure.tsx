@@ -14,6 +14,7 @@ import { useEagleVoice } from "./use-eagle-voice";
 import "./eagle-comic.css";
 import EagleJourneyNav from "./eagle-journey-nav";
 import { EagleComponentList } from "./eagle-learning-lens";
+import { APOLLO_BOOK } from "@/lib/machine-books/apollo";
 
 export default function EagleComicAdventure(props: EagleConsoleProps) {
   const [progress, setProgress] = useState(EMPTY_EAGLE_COMIC);
@@ -99,7 +100,7 @@ export default function EagleComicAdventure(props: EagleConsoleProps) {
       <nav className="eagle-issue-library" aria-label="Eagle comic issues">
         {EAGLE_COMIC_ISSUES.map((item, i) => <button type="button" key={item.id} disabled={i > progress.collected.length} aria-current={i === progress.issue ? "step" : undefined} onClick={() => changeIssue(i)} className={i === progress.issue ? "is-active" : ""}><span className="eagle-issue-number">{String(i + 1).padStart(2, "0")}</span><span className="eagle-issue-title">{item.title}</span><span className="eagle-issue-state">{progress.collected.includes(item.id) ? "Memory kept ✓" : i > progress.collected.length ? "Recover the previous memory first" : "Ready to explore"}</span></button>)}
       </nav>
-      <Link href="/story/book?machine=apollo-11-lander" className="mx-auto mt-4 block max-w-[1320px] text-xs text-[#795589] hover:underline">Read Eagle&apos;s chapter in the illustrated collection ↗</Link>
+      <Link href="/heroes/apollo-11-lander/book" className="mx-auto my-6 flex max-w-[1320px] flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#c9acd6] bg-[#f0e1f7] p-6 text-[#583566] hover:bg-[#e9d6f2]"><span><span className="block text-lg font-bold">The Chronicles of Eagle</span><span className="mt-2 block text-sm leading-relaxed">One book. {APOLLO_BOOK.chapters.length} standalone true-event chapters. Read each as a comic or a storybook, with narration.</span></span><span className="flex items-center gap-2 text-sm font-semibold">Open my Book &amp; Comic Nook <ArrowRight className="h-4 w-4" /></span></Link>
 
       <article id="eagle-comic-reader" className="eagle-comic-reader" aria-labelledby="eagle-issue-title">
         <div className="eagle-issue-heading"><div><p className="eagle-comic-kicker">Issue {progress.issue + 1} / {EAGLE_COMIC_ISSUES.length}</p><h2 ref={heading} id="eagle-issue-title" tabIndex={-1} className="display outline-none">{done ? "You remembered the part that stayed." : issue.title}</h2><p>{issue.subtitle}</p></div>{voice.available && !done && <button type="button" className="eagle-comic-control" aria-pressed={voice.speaking} onClick={() => { if (voice.speaking) voice.stop(); else { setPauseRecording(value => value + 1); voice.start(progress.panel < 3 ? panel.bubble : progress.panel === 3 ? "Try the hardware in this illustrative scene. The actions help explain how my equipment worked." : `${issue.discovery.title} ${issue.discovery.knowledge}`); } }}>{voice.speaking ? "Stop Eagle’s voice" : "Hear imagined Eagle"}</button>}</div>

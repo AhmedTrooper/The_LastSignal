@@ -6,7 +6,8 @@ import { Logo } from "@/app/components/logo";
 import "./eagle-learning.css";
 
 const LINKS = [
-  { href: "/heroes/apollo-11-lander", label: "Read my comic" },
+  { href: "/heroes/apollo-11-lander", label: "Explore my hardware" },
+  { href: "/heroes/apollo-11-lander/book", label: "Book & Comic Nook" },
   { href: "/heroes/apollo-11-lander/story", label: "Explore my journey" },
   { href: "/heroes/apollo-11-lander/movie", label: "Watch my memories" },
   { href: "/games/apollo-11-landing", label: "Try the landing" },
