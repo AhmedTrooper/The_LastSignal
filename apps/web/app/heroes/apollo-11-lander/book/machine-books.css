@@ -18,7 +18,8 @@
 .nook-book-heading .nook-eyebrow { color: #c4afd7; margin-bottom: 8px; }
 .nook-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
 .nook-format { display: flex; padding: 4px; border: 1px solid #6e5e80; border-radius: 12px; background: #ffffff06; }
-.nook-format button { min-height: 44px; padding: 10px 20px; border-radius: 8px; color: #e2d6ec; font-size: 14px; cursor: pointer; }
+.nook-format :is(button,a) { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 20px; border-radius: 8px; color: #e2d6ec; font-size: 14px; cursor: pointer; }
+.nook-format a:hover { background: #ffffff0c; }
 .nook-format button[aria-pressed="true"] { color: #2c203a; background: #e1cbee; font-weight: 650; }
 .nook-voice-note { margin: 14px 0 20px; color: #bfb0cc; font-size: 11px; line-height: 1.7; }
 .nook-chapter { overflow: hidden; border: 6px solid #645270; border-radius: 8px 16px 16px 8px; color: #30233b; background: #fbf5e9; box-shadow: 0 18px 55px #0005, 0 4px 0 #bdac97; }
@@ -66,6 +67,7 @@
 .nook-reader-footer a:hover { text-decoration: underline; }
 .nook-reader .book-contents-dialog { position: fixed; inset: 0; margin: auto; }
 @media (max-width: 639px) {
+  .nook-format :is(button,a) { padding-inline: 12px; font-size: 13px; }
   .nook-shelf-toolbar { align-items: stretch; flex-direction: column; gap: 16px; }
   .nook-shelf-toolbar input, .nook-shelf-toolbar label { width: 100%; }
   .nook-reader .book-reader-header { flex-wrap: wrap; gap: 16px; }

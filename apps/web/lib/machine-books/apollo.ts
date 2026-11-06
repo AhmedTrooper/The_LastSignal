@@ -66,12 +66,12 @@ export const APOLLO_BOOK: MachineBook = {
       ], discovery: "A simple passive instrument can support long-term science when its observations are repeated and compared.", question: "Why would a single laser return be insufficient to measure a yearly change?",
     },
     {
-      id: "solar-wind", title: "The foil that caught the Sun", event: "Exposing and recovering the solar-wind collector", hardware: "Aluminium collector foil and supporting staff", memory: "science", source: `${SCIENCE}#1112011`,
+      id: "solar-wind", title: "The foil that caught the Sun", event: "Recovering the solar-wind collector near the end of the moonwalk", hardware: "Aluminium collector foil and supporting staff", memory: "science", source: `${SCIENCE}#1112011`,
       relatedSources: [{ label: "NASA · How the solar-wind collector worked", url: "https://www.nasa.gov/history/50-years-ago-on-the-way-to-the-moon-lunar-science-announced/" }],
       beats: [
-        { line: "My crew unrolled a foil sheet on the Moon. It had a surprising job.", detail: "They were deploying the solar-wind composition experiment. Particles streaming from the Sun could be caught in the exposed aluminium.", art: "unpack" },
-        { line: "The collector waited while the astronauts worked nearby.", detail: "It did not need to chase the particles. Exposing the foil let material from the solar wind become trapped for later study.", art: "unpack" },
-        { line: "Then the foil was rolled up for the journey back to Earth.", detail: "Unlike the reflector, this experiment depended on returning its collector. Laboratories would analyse the trapped material.", art: "unpack" },
+        { line: "Before the moonwalk ended, one experiment needed a ride home.", detail: "Buzz returned to the solar-wind collector he had set up earlier. Its aluminium foil had been catching particles streaming from the Sun.", art: "unpack" },
+        { line: "While the crew worked, the foil had been doing a job of its own.", detail: "Solar-wind particles became trapped in the exposed metal. The next part of this experiment would happen in a laboratory on Earth.", art: "unpack" },
+        { line: "Buzz rolled the foil up and packed it for the return flight.", detail: "The collector went into a protective bag and then a sample container. Unlike the reflector, this experiment depended on bringing its evidence home.", art: "unpack" },
         { line: "The foil came home. Its supporting staff stayed behind.", detail: "Scientists studied solar-wind material, including helium, neon, and argon. Different pieces of one experiment had different endings.", art: "quiet" },
       ], discovery: "Some instruments send measurements home; others bring back samples that laboratories can examine.", question: "Why did this collector need to return when the reflector could stay?",
     },

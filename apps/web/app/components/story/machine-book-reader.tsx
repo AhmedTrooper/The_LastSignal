@@ -8,6 +8,7 @@ import { useEagleFullscreen } from "@/app/components/profile/use-eagle-fullscree
 import { useEagleVoice } from "@/app/components/profile/use-eagle-voice";
 import { chapterParagraphs, MACHINE_BOOKMARK_KEY, machineBookUrl, readMachineBookmarks, resolveMachineReading, type MachineBook, type MachineBookmark, type ReadingFormat } from "@/lib/machine-books";
 import { EAGLE_MEMORIES, type EagleTrigger } from "@/lib/eagle-story";
+import { eagleScrollUrl } from "@/lib/eagle-scroll";
 import BookContents from "./event-book-contents";
 import ComicPage from "./event-comic-page";
 import EagleMechanism from "./eagle-mechanism";
@@ -93,7 +94,7 @@ export default function MachineBookReader({ book, requestedChapter, requestedFor
     <main className="nook-reading-stage">
       <div className="nook-book-heading"><p className="nook-eyebrow">{book.name} / One life, {book.chapters.length} event chapters</p><p className="display text-2xl sm:text-3xl">{book.title}</p></div>
       <div className="nook-toolbar">
-        <div role="group" aria-label="Reading format" className="nook-format">{(["comic", "book"] as const).map(mode => <button type="button" key={mode} aria-pressed={format === mode} onClick={() => { if (format !== mode) navigate(index, mode); }}>{mode === "comic" ? "Comic book" : "Storybook"}</button>)}</div>
+        <div role="group" aria-label="Reading format" className="nook-format">{(["comic", "book"] as const).map(mode => <button type="button" key={mode} aria-pressed={format === mode} onClick={() => { if (format !== mode) navigate(index, mode); }}>{mode === "comic" ? "Comic book" : "Storybook"}</button>)}<Link href={eagleScrollUrl(chapter.id)}>Scroll story</Link></div>
         <div className="flex flex-wrap items-center gap-2"><div role="group" aria-label="Reading text size" className="flex"><button type="button" className="book-reader-button" aria-label="Decrease text size" disabled={fontScale <= 1} onClick={() => setFontScale(value => Math.max(1, value - 0.1))}>A−</button><button type="button" className="book-reader-button" aria-label="Increase text size" disabled={fontScale >= 1.4} onClick={() => setFontScale(value => Math.min(1.4, value + 0.1))}>A+</button></div><button type="button" className="book-reader-button" disabled={!voice.available} aria-pressed={voice.speaking} onClick={() => voice.speaking ? voice.stop() : voice.start(`${chapter.title}. ${paragraphs.join(" ")}`)}>{voice.speaking ? "Stop narration" : "Read aloud"}</button></div>
       </div>
       <p className="nook-voice-note">Imagined machine voice · {voice.available ? "Synthetic English narration" : "Read-aloud is unavailable in this browser"} · AI-assisted illustrations</p>

@@ -6,9 +6,9 @@ import Header from "@/app/components/header";
 import StoryView from "@/app/components/story/story-view";
 import CinematicStory from "@/app/components/story/cinematic-story";
 import { STORIES } from "@/lib/stories";
-import { EAGLE_MEMORIES, EAGLE_STORY_SOURCES } from "@/lib/eagle-story";
+import { APOLLO_BOOK } from "@/lib/machine-books/apollo";
 import { photo } from "@/lib/photos";
-import EagleStory from "@/app/components/story/eagle-story";
+import EagleScrollStory from "@/app/components/story/eagle-scroll-story";
 
 export function generateStaticParams() {
   return HEROES.map((h) => ({ slug: h.slug }));
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const hero = getHero((await params).slug);
   if (!hero) return {};
   const eagle = hero.slug === "apollo-11-lander";
-  const count = eagle ? EAGLE_MEMORIES.length : (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
+  const count = eagle ? APOLLO_BOOK.chapters.length : (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
     title: `${hero.name}, a story in ${count} ${eagle || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
     description: hero.summary,
@@ -33,16 +33,11 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   const next = nextHero(hero);
   const film = STORIES[hero.slug];
 
-  // Apollo 11 tells its own story: eight chapters, one action each, and a channel back to the console.
+  // Eagle's event chapters share their text with the book and comic editions.
   if (hero.slug === "apollo-11-lander") {
     return (
       <main>
-        <EagleStory
-          slug={hero.slug}
-          name={hero.name}
-          chapters={EAGLE_MEMORIES}
-          sources={EAGLE_STORY_SOURCES}
-        />
+        <EagleScrollStory />
       </main>
     );
   }
