@@ -1,6 +1,6 @@
 # Next storytelling phase: scroll-driven thought clouds
 
-**Implementation started for Opportunity after the UI redesign was committed as `725457a`.** The user selected `/heroes/opportunity/story` for the first cloud edition. Eagle’s existing reader remains unchanged.
+**Implemented first for Opportunity after the UI redesign was committed as `725457a`.** Opportunity's cloud edition was committed as `6b1e5b3`. The user then requested the same presentation for Eagle; its forty moments now use the shared reader engine without changing the original chapter text.
 
 ## The idea
 
@@ -69,4 +69,6 @@ This example describes the proposed schema. It does not create an audio asset or
 - `/api/stories/opportunity/narration` downloads the production manifest, including stable IDs, display serials, narration text, revisions, fingerprints and suggested audio filenames.
 - `lib/opportunity-narration.ts` is the registry for actual produced audio. No clips or invented timings are attached yet.
 - Optional browser voice preview uses synthetic English narration. It does not claim to be a produced or archival recording.
-- Review the cloud padding, placement, movement and reading pace before extending this presentation to Eagle or producing a full set of recorded narration.
+- Eagle now has forty authored moments across its ten chapters, using the same padded cloud layout.
+- `/api/stories/apollo-11-lander/narration` and `lib/eagle-narration.ts` provide Eagle's independent production manifest and clip registry.
+- Review both readers' placement and pacing before producing a full set of recorded narration. No actual audio clips or fabricated durations have been added.

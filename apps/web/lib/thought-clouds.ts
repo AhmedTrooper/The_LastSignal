@@ -1,4 +1,5 @@
 import type { MachineBook } from "./machine-books/types";
+import type { ScrollEdition } from "./machine-scroll";
 
 export type CloudPlacement = "upper-left" | "upper-right" | "lower-left" | "lower-right";
 export type ThoughtDirection = { key: string; placement: CloudPlacement; textRevision: number };
@@ -39,6 +40,21 @@ export type ThoughtMoment = {
     durationMs: number | null;
   };
 };
+export type ThoughtEdition = ScrollEdition & { moments: ThoughtMoment[]; manifestUrl: string };
+
+export function buildNarrationManifest(book: MachineBook, moments: ThoughtMoment[]) {
+  return {
+    schemaVersion: 1, machineId: book.slug,
+    title: `The Chronicles of ${book.name} — narration production manifest`, language: "en",
+    voiceRole: "imagined-machine-thought",
+    note: "Narration text includes the short cloud and its full factual context. Null audio fields mean no recording is attached. Durations are populated only from actual clips. Reject mismatched beat IDs, language, text revisions or fingerprints.",
+    totalMoments: moments.length,
+    readyClips: moments.filter(moment => moment.audio.status === "ready").length,
+    missingClips: moments.filter(moment => moment.audio.status === "missing").length,
+    staleClips: moments.filter(moment => moment.audio.status === "stale").length,
+    moments,
+  };
+}
 
 /** Deterministic change detector, not a security hash. Includes every spoken character. */
 export function narrationFingerprint(text: string) {

@@ -1,6 +1,6 @@
 import { OPPORTUNITY_BOOK } from "./machine-books/opportunity";
 import { OPPORTUNITY_NARRATION } from "./opportunity-narration";
-import { buildThoughtMoments, type ThoughtDirection } from "./thought-clouds";
+import { buildThoughtMoments, buildNarrationManifest, type ThoughtDirection } from "./thought-clouds";
 
 /** Keys belong to the moment, not its display order. Keep existing keys when adding moments. */
 export const OPPORTUNITY_CLOUD_DIRECTION: Record<string, ThoughtDirection[]> = {
@@ -37,16 +37,4 @@ export const OPPORTUNITY_CLOUD_DIRECTION: Record<string, ThoughtDirection[]> = {
 };
 
 export const OPPORTUNITY_THOUGHTS = buildThoughtMoments(OPPORTUNITY_BOOK, OPPORTUNITY_CLOUD_DIRECTION, OPPORTUNITY_NARRATION);
-export const OPPORTUNITY_AUDIO_MANIFEST = {
-  schemaVersion: 1,
-  machineId: OPPORTUNITY_BOOK.slug,
-  title: "The Chronicles of Opportunity — narration production manifest",
-  language: "en",
-  voiceRole: "imagined-machine-thought",
-  note: "Narration text includes the short cloud and its full factual context. Null audio fields mean no recording is attached. Durations are populated only from actual clips. Reject mismatched beat IDs, language, text revisions or fingerprints.",
-  totalMoments: OPPORTUNITY_THOUGHTS.length,
-  readyClips: OPPORTUNITY_THOUGHTS.filter(moment => moment.audio.status === "ready").length,
-  missingClips: OPPORTUNITY_THOUGHTS.filter(moment => moment.audio.status === "missing").length,
-  staleClips: OPPORTUNITY_THOUGHTS.filter(moment => moment.audio.status === "stale").length,
-  moments: OPPORTUNITY_THOUGHTS,
-};
+export const OPPORTUNITY_AUDIO_MANIFEST = buildNarrationManifest(OPPORTUNITY_BOOK, OPPORTUNITY_THOUGHTS);

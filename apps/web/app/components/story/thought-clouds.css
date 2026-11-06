@@ -1,4 +1,11 @@
-.opportunity-thoughts { --tc-header: 64px; --tc-step: 72svh; --tc-stage: calc(100svh - var(--tc-header)); color: #f6ede0; background: #201a19; }
+.thought-story { --tc-header: 64px; --tc-step: 72svh; --tc-stage: calc(100svh - var(--tc-header)); color: #f6ede0; background: #201a19; }
+.eagle-thoughts { background: #211e2d; }
+.eagle-thoughts .tc-tone-paper { --tc-bg: #e9e1ec; --tc-ink: #383044; --tc-muted: #766482; --tc-ground: #d3c8d8; }
+.eagle-thoughts .tc-tone-night { --tc-bg: #272332; --tc-ink: #f0e9f3; --tc-muted: #c2b4cc; --tc-ground: #45384d; }
+.eagle-thoughts .tc-topbar { background: #211e2df2; }
+.eagle-thoughts .tc-topbar-serial { color: #cab1df; }
+.eagle-thoughts .tc-total-progress { background: #bca0d6; }
+.eagle-thoughts .tc-stage { --es-ink: var(--tc-ink); }
 .tc-topbar { position: fixed; top: 0; inset-inline: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; gap: 20px; height: var(--tc-header); padding-inline: clamp(18px,4vw,64px); border-bottom: 1px solid #ffffff1f; background: #201a19f2; backdrop-filter: blur(10px); }
 .tc-topbar > a { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; }
 .tc-topbar-description { color: #bbab9f; }
@@ -84,7 +91,7 @@
 .tc-production-footer { margin-top: 60px; color: #c6adbf; }
 .tc-production-footer summary { padding-block: 15px; font-size: 12px; cursor: pointer; }
 .tc-production-footer p { margin-top: 15px; max-width: 80ch; font-size: 12px; line-height: 1.9; }
-.opportunity-thoughts :is(a,button,summary):focus-visible { outline: 2px solid #b489ba; outline-offset: 5px; }
+.thought-story :is(a,button,summary):focus-visible { outline: 2px solid #b489ba; outline-offset: 5px; }
 .tc-cloud:focus-visible { outline: 2px solid #91609a; outline-offset: 26px; border-radius: 30px; }
 @media (min-width:1400px) { .tc-cloud { left: 9%; } .tc-stage[data-placement="lower-left"] .tc-cloud { left: 9%; } .tc-stage[data-placement$="right"] .tc-cloud { left: 62%; } }
 @media (max-width:899px) {
@@ -161,5 +168,5 @@
   .tc-narration > p { display: none; }
   .tc-thought-dot { display: none; }
 }
-@media (prefers-reduced-motion:reduce) { .opportunity-thoughts *, .tc-dialog * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion:reduce) { .thought-story *, .tc-dialog * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media print { .tc-topbar,.tc-stage,.tc-opening,.tc-production-footer { display: none; } .tc-story-track { height: auto; color: #111; background: white; } .tc-marker { position: static; width: auto; height: auto; } .tc-marker .sr-only { position: static; width: auto; height: auto; clip: auto; white-space: normal; margin: 30px; } }

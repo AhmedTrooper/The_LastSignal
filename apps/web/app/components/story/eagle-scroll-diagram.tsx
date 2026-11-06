@@ -16,12 +16,12 @@ function Lander({ raised = false, camera = false }: { raised?: boolean; camera?:
 }
 
 /** Scroll-driven explanatory diagrams, never scene-matched telemetry. */
-export default function EagleScrollDiagram({ kind, beat }: { kind: EagleScrollDiagram; beat: number }) {
+export default function EagleScrollDiagram({ kind, beat, stage = false }: { kind: EagleScrollDiagram; beat: number; stage?: boolean }) {
   const id = useId().replaceAll(":", "");
   const late = beat >= 2;
   return <svg viewBox="0 0 720 520" className={`es-diagram es-diagram-${kind}`} role="img" aria-label={`Illustrated ${kind.replaceAll("-", " ")} mechanism, stage ${beat + 1} of the chapter`}>
     <defs><pattern id={`${id}-grid`} width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" stroke="currentColor" opacity=".08" fill="none" /></pattern></defs>
-    <path d="M0 0h720v520H0z" fill={`url(#${id}-grid)`} />
+    {!stage && <path d="M0 0h720v520H0z" fill={`url(#${id}-grid)`} />}
     {kind === "guidance" ? <>
       <text x="55" y="95" className="es-diagram-label">APOLLO GUIDANCE COMPUTER</text>
       <text x="47" y="248" className="es-alarm-number">1202</text>

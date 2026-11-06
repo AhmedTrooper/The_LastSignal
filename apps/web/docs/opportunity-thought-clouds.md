@@ -4,7 +4,7 @@
 
 Open `/heroes/opportunity/story`. The existing 20 story beats are shown one at a time in thought clouds. Scroll or use Previous/Next; arrow keys work when the cloud itself has keyboard focus. Chapter links and the old `#chapter-beat-N` anchors remain available.
 
-The small cloud is not the entire factual record. **More to this moment** preserves its full explanation, discovery, hardware context and sources. The complete prose book and comic remain linked. Eagle's scroll reader is not replaced by this implementation.
+The small cloud is not the entire factual record. **More to this moment** preserves its full explanation, discovery, hardware context and sources. The complete prose book and comic remain linked. Eagle now uses the same reader engine with its own forty thoughts, sources, bookmarks and audio manifest; Opportunity's twenty authored moments are unchanged.
 
 ## Stable IDs versus serial numbers
 
