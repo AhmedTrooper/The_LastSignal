@@ -86,7 +86,8 @@
 .rv-reel-type { position: absolute; z-index: 1; top: 10px; left: 10px; padding: 5px 7px; border: 1px solid #ffffff50; border-radius: 8px; background: #1c1233d9; color: #fff6e7; font-size: 8px; }
 .rv-reel-info { display: block; min-height: 95px; padding: 15px; }
 .rv-reel-info .rv-kicker { font-size: 8px; }
-.rv-reel-dialog { width: min(460px,calc(100vw - 20px)); max-height: 94dvh; overflow-y: auto; padding: 0; border: 1px solid #59516c; border-radius: 22px; background: #151025; color: #fff7e9; box-shadow: 0 30px 100px #0009; }
+/* Restore dialog centering after the global margin reset. */
+.rv-reel-dialog { position: fixed; inset: 0; margin: auto; width: min(460px,calc(100vw - 20px)); max-height: 94dvh; overflow-y: auto; padding: 0; border: 1px solid #59516c; border-radius: 22px; background: #151025; color: #fff7e9; box-shadow: 0 30px 100px #0009; }
 .rv-reel-dialog::backdrop { background: #060515d9; backdrop-filter: blur(5px); }
 .rv-reel-dialog-inner { padding: 16px; }
 .rv-reel-close, .rv-reel-arrow { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #ffffff26; border-radius: 50%; color: #e7dbf8; cursor: pointer; }
