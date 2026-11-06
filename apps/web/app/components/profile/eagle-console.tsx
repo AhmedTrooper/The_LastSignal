@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { EAGLE_RECORD_URL, type ConsoleData, type ConsoleStage } from "@/lib/console";
 import { connectEagle, readEagleStatus } from "@/lib/eagle-link";
 import { useAuth } from "@/lib/auth-context";
-import { ArrowLeft, ArrowRight, BookIcon, ClockIcon, MapIcon, Play, SparkIcon } from "@/app/components/icons";
+import { ArrowLeft, ArrowRight, BookIcon, ClockIcon, MapIcon, Play, RoverIcon, RouteIcon } from "@/app/components/icons";
 import ModelStudio, { type StudioPart, type StudioSource } from "./model-studio";
 import EagleMediaPlayer from "./eagle-media-player";
 import EagleMissionPanel from "./eagle-mission-panel";
@@ -19,7 +19,7 @@ type Props = { data: ConsoleData; slug: string; name: string; model: StudioSourc
 export type EagleConsoleProps = Props;
 const BANK_PREFIX: [string, string][] = [["body_", "body"], ["work_", "work"], ["voices_", "voices"], ["film_", "film"], ["photo_", "photos"], ["rest_", "rest"], ["test_", "test"]];
 const bankFor = (id: string) => BANK_PREFIX.find(([prefix]) => id.startsWith(prefix))?.[1];
-const BANK_ICONS = { body: SparkIcon, work: SparkIcon, voices: SignalWave, film: Play, photos: BookIcon, rest: MapIcon, test: ClockIcon };
+const BANK_ICONS = { body: RoverIcon, work: RouteIcon, voices: SignalWave, film: Play, photos: BookIcon, rest: MapIcon, test: ClockIcon };
 const MEMORY_LABELS: Record<string, { title: string; line: string }> = {
   body: { title: "Explore my parts", line: "Tap a part. Find out what it did." },
   work: { title: "What did we discover?", line: "A mirror, a listener, and a little science." },

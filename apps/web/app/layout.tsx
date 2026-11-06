@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Jost, IBM_Plex_Mono, Caveat } from "next/font/google";
 import "./globals.css";
+import "./clubhouse.css";
 import { defaultSEO } from "@/lib/seo";
 import { WebSiteSchema } from "@/app/components/structured-data";
 import TabBar from "@/app/components/tab-bar";

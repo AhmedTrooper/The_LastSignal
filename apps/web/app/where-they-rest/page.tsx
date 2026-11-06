@@ -15,7 +15,7 @@ export default function WhereTheyRestPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white">
+      <main id="club-main" className="club-map-page min-h-screen">
         <RestView heroes={HEROES} />
       </main>
       <Footer />

@@ -11,7 +11,7 @@ export const metadata = generateSEO({
 
 export default function TermsOfServicePage() {
   return (
-    <SitePage eyebrow="Legal &amp; Usage" title="Terms of Service for The Last Signal">
+    <SitePage eyebrow="Legal & Usage" title="Terms of Service for The Last Signal" scene="about">
       <div className="mx-auto max-w-4xl space-y-10 text-ink" data-reveal>
         {/* Header Metadata */}
         <div className="rounded-2xl border border-line bg-mist p-6 text-sm text-ink-soft">

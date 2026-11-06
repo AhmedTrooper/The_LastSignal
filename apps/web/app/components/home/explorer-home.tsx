@@ -3,11 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, BookIcon, Play, SparkIcon, MapIcon } from "@/app/components/icons";
+import { ArrowRight, BookIcon, Play, LightbulbIcon, RoverIcon, MapIcon } from "@/app/components/icons";
 import ComicScene from "@/app/components/story/comic-scene";
 import { useEagleVoice } from "@/app/components/profile/use-eagle-voice";
 import { HOME_REELS, reelPoster } from "@/lib/home-reels";
 import ReelViewer from "./reel-viewer";
+import EagleIssueArt from "@/app/components/profile/eagle-issue-art";
+import OpportunityIllustration from "@/app/components/story/opportunity-illustration";
+import { MACHINE_BOOKS, machineBookUrl, machineStoryUrl } from "@/lib/machine-books";
+import WorldIllustration from "@/app/components/clubhouse/world-illustration";
 
 const EXPLORERS = {
   moon: [
@@ -33,22 +37,22 @@ export default function ExplorerHome() {
     <div className="explorer-home">
       <section className="rv-hero">
         <div className="rv-hero-copy">
-          <p className="rv-kicker"><span aria-hidden="true">✦</span> Hello, future explorer.</p>
-          <h1 className="display">Little machines.<br /><span>Out-of-this-world</span><br />stories.</h1>
+          <p className="rv-kicker">Hello, future explorer.</p>
+          <h1 className="display">Their mission ended.<br /><span>Their story <em>didn’t.</em></span></h1>
           <p className="rv-hero-lede">They went to the Moon and Mars. They couldn’t come home.<br className="hidden sm:block" /> But their adventures? Those are waiting for <strong>you.</strong></p>
-          <div className="rv-actions"><Link href="/heroes/apollo-11-lander" className="rv-button rv-button-orange">Meet your first explorer <ArrowRight className="h-4 w-4" /></Link><Link href="/story/book" className="rv-button rv-button-outline"><BookIcon className="h-4 w-4" />Open the comic book</Link></div>
+          <div className="rv-actions"><Link href="/heroes/apollo-11-lander" className="club-button club-button-primary">Meet your first explorer <ArrowRight className="h-4 w-4" /></Link><Link href="/story" className="club-button club-button-secondary"><BookIcon className="h-4 w-4" />Step into the story room</Link></div>
           <p className="rv-reassurance">No download. No sign-in. Just bring your curiosity.</p>
           <button type="button" onClick={() => openReel(0)} className="rv-preview-link text-left"><span className="rv-preview-icon"><Play className="h-4 w-4" /></span><span><span className="block text-xs font-semibold">Let Oppy show you around.</span><span className="text-xs text-[#625777]">Watch the RoverVilla tour · {HOME_REELS[0].duration}</span></span></button>
         </div>
         <figure className="rv-logo-stage">
-          <div className="rv-stars" aria-hidden="true">{Array.from({ length: 23 }, (_, i) => <span key={i} style={{ left: `${(i * 37.1) % 97}%`, top: `${(i * 29.7) % 95}%`, fontSize: i % 3 ? 8 : 17 }}>✦</span>)}</div>
           <div className="rv-mascot-bubble">Hey! I saved you a seat.<span aria-hidden="true" /></div>
-          <Image src="/branding/rovervilla-logo.webp" alt="RoverVilla’s friendly orange-and-white rover logo" width={600} height={625} priority className="rv-hero-logo" sizes="(min-width:1024px) 400px, 75vw" />
-          <figcaption className="rv-logo-caption"><span>Stories from space. Curiosity from you.</span><SparkIcon className="h-4 w-4" /></figcaption>
+          <WorldIllustration scene="explorers" className="rv-hero-guide" />
         </figure>
       </section>
 
-      <div className="rv-curiosity-strip" aria-label="Ways to explore"><span><BookIcon className="h-4 w-4" /> Read a comic</span><span><Play className="h-4 w-4" /> Hear a memory</span><span><SparkIcon className="h-4 w-4" /> Try the controls</span><span><MapIcon className="h-4 w-4" /> Discover a world</span></div>
+      <div className="rv-curiosity-strip" aria-label="Ways to explore"><span><BookIcon className="h-4 w-4" /> Read a comic</span><span><Play className="h-4 w-4" /> Hear a memory</span><span><RoverIcon className="h-4 w-4" /> Try the controls</span><span><MapIcon className="h-4 w-4" /> Discover a world</span></div>
+
+      <section className="rv-true-stories" aria-labelledby="true-stories-title"><div className="rv-section-heading"><div><p className="rv-kicker">Real adventures. A favourite way to read.</p><h2 id="true-stories-title" className="display">A little closer to a faraway friend.</h2><p>Let the story unfold as you scroll, turn the book’s pages, or follow the comic panels.</p></div><Link href="/story" className="club-button club-button-secondary">Visit the story room <ArrowRight className="h-4 w-4" /></Link></div><div className="club-featured-stories mt-8">{MACHINE_BOOKS.map(book => <article key={book.slug} className="club-book-feature"><div className="club-book-feature-art">{book.slug === "apollo-11-lander" ? <EagleIssueArt scene="body" /> : <OpportunityIllustration scene="rollout" />}<span className="club-art-label">AI-assisted story art</span></div><div className="club-book-feature-copy"><p className="club-kicker">{book.name} / {book.chapters.length} true-event chapters</p><h2 className="display">{book.title}</h2><p>{book.introduction}</p><div><Link href={machineStoryUrl(book.slug)} className="club-button club-button-primary">Come into my story <ArrowRight className="h-4 w-4" /></Link><Link href={machineBookUrl(book.slug, undefined, "comic")}>Read my comic ↗</Link><Link href={machineBookUrl(book.slug, undefined, "book")}>Open my book ↗</Link></div></div></article>)}</div></section>
 
       <section className="rv-reels-section" aria-labelledby="home-reels-title">
         <div className="rv-section-heading"><div><p className="rv-kicker">A little story. A big adventure.</p><h2 id="home-reels-title" className="display">Welcome to the rover clubhouse.</h2><p>Meet Oppy and friends in short animated stories. Pick one and press play.</p></div><span className="font-mono text-[10px] text-[#83748d]">SWIPE TO EXPLORE →</span></div>
@@ -61,7 +65,7 @@ export default function ExplorerHome() {
         <div className="rv-story-grid">
           {EXPLORERS[world].map((explorer, i) => <article key={explorer.slug} className={`rv-story-card rv-story-card-${i}`}>
             <Link href={`/heroes/${explorer.slug}`} className="rv-story-art" aria-label={`Meet ${explorer.name}`}><ComicScene machine={explorer.art} stage={explorer.phase} moon={world === "moon"} /><span className="rv-story-tag">{explorer.tag}</span></Link>
-            <div className="rv-story-copy"><p className="rv-kicker">{explorer.name} <span className="text-[#75677f]">/ {world === "moon" ? "Moon" : "Mars"}</span></p><h3 className="display">{explorer.title}</h3><p className="rv-story-dialogue">{explorer.line}</p><div className="rv-science-bridge"><SparkIcon className="h-4 w-4 shrink-0" /><span>{explorer.lesson}</span></div><div className="rv-card-actions"><Link href={`/heroes/${explorer.slug}`} className="rv-button rv-button-small">Meet {explorer.name}<ArrowRight className="h-3.5 w-3.5" /></Link>{voice.available && <button type="button" onClick={() => { if (voice.speaking && preview === explorer.slug) { voice.stop(); setPreview(null); } else { setPreview(explorer.slug); voice.start(`${explorer.name}. ${explorer.line}`); } }} aria-pressed={voice.speaking && preview === explorer.slug} aria-label={voice.speaking && preview === explorer.slug ? `Stop ${explorer.name}’s synthetic preview` : `Hear a synthetic preview of ${explorer.name}`} className="rv-listen-button">{voice.speaking && preview === explorer.slug ? <span aria-hidden="true">Ⅱ</span> : <Play className="h-4 w-4" />}</button>}</div></div>
+            <div className="rv-story-copy"><p className="rv-kicker">{explorer.name} <span className="text-[#75677f]">/ {world === "moon" ? "Moon" : "Mars"}</span></p><h3 className="display">{explorer.title}</h3><p className="rv-story-dialogue">{explorer.line}</p><div className="rv-science-bridge"><span>{explorer.lesson}</span></div><div className="rv-card-actions"><Link href={`/heroes/${explorer.slug}`} className="rv-button rv-button-small">Meet {explorer.name}<ArrowRight className="h-3.5 w-3.5" /></Link>{voice.available && <button type="button" onClick={() => { if (voice.speaking && preview === explorer.slug) { voice.stop(); setPreview(null); } else { setPreview(explorer.slug); voice.start(`${explorer.name}. ${explorer.line}`); } }} aria-pressed={voice.speaking && preview === explorer.slug} aria-label={voice.speaking && preview === explorer.slug ? `Stop ${explorer.name}’s synthetic preview` : `Hear a synthetic preview of ${explorer.name}`} className="rv-listen-button">{voice.speaking && preview === explorer.slug ? <span aria-hidden="true">Ⅱ</span> : <Play className="h-4 w-4" />}</button>}</div></div>
           </article>)}
         </div>
         <div className="rv-gallery-footnote"><p>AI-assisted SVG illustrations and imagined machine voices—not mission photographs or original transmissions.</p><Link href="/heroes">Meet all the explorers <ArrowRight className="h-3.5 w-3.5" /></Link></div>
@@ -72,13 +76,13 @@ export default function ExplorerHome() {
         <div className="rv-step-grid">
           <div><span className="rv-step-number">01</span><BookIcon className="h-8 w-8 text-[#7654a7]" /><h3 className="display">Hear my story.</h3><p>A landing. A surprise. A little machine with a big job to do.</p></div>
           <div><span className="rv-step-number">02</span><Play className="h-8 w-8 text-[#b95b22]" /><h3 className="display">Try what I did.</h3><p>Guide a landing, explore a part, or follow a pulse of light.</p></div>
-          <div><span className="rv-step-number">03</span><SparkIcon className="h-8 w-8 text-[#3e7c76]" /><h3 className="display">Find the “aha!”</h3><p>See how a piece of engineering helped us learn something new.</p></div>
+          <div><span className="rv-step-number">03</span><LightbulbIcon className="h-8 w-8 text-[#3e7c76]" /><h3 className="display">Find the “aha!”</h3><p>See how a piece of engineering helped us learn something new.</p></div>
         </div>
       </section>
 
       <section className="rv-comic-feature">
         <div className="rv-comic-preview" aria-hidden="true"><ComicScene machine="mer-part-1" stage="hardware" moon={false} /><span className="rv-comic-speech">A broken wheel?<br />There was a discovery hiding underneath.</span><span className="rv-comic-sticker">Turn the page →</span></div>
-        <div><p className="rv-kicker">For the “one more page” explorers</p><h2 className="display">A whole universe<br />between the panels.</h2><p>Meet the machines through colourful comics. Short dialogue, big pictures, and field notes when you want to look closer.</p><Link href="/story/book" className="rv-button rv-button-orange">Read Monuments in the Dust <BookIcon className="h-4 w-4" /></Link></div>
+        <div><p className="rv-kicker">For the “one more page” explorers</p><h2 className="display">A whole universe<br />between the panels.</h2><p>Meet the machines through colourful comics. Short dialogue, big pictures, and field notes when you want to look closer.</p><Link href="/story" className="club-button club-button-primary">Find my next comic <BookIcon className="h-4 w-4" /></Link></div>
       </section>
 
       <section className="rv-launchpad">

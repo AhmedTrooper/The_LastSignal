@@ -13,21 +13,22 @@ export const metadata: Metadata = generateSEO({
 export default function LCROSSImpactGamePage() {
   return (
     <SitePage
-      eyebrow="Kinetic Impact Simulator"
-      title="The 7.2 GJ Plume That Found Water on the Moon"
-      lede="Calculate the kinetic energy of a 2,305 kg rocket impacting at 9,000 km/h, fly through the 10-km dust plume, and inspect the infrared spectra that confirmed pure water ice in permanent lunar shadow."
+      eyebrow="LCROSS / Clues in the shadows"
+      title="What was hiding in that crater?"
+      lede="A planned impact lifted material into view. Explore the plume, then see why scientists study more than just a photograph."
+      scene="map"
     >
       <div className="space-y-12">
         <LCROSSSimulator standalone />
 
-        <div className="mt-8 rounded-2xl border border-line bg-mist p-6">
+        <details className="club-note mt-8"><summary className="cursor-pointer py-2 font-semibold">Look deeper: mission background</summary>
           <h3 className="display text-xl font-bold text-ink">
             Authentic NASA Mission Context: LCROSS in Cabeus Crater
           </h3>
           <p className="mt-2 text-sm text-ink-soft leading-relaxed">
             On October 9, 2009, NASA sent the LCROSS Centaur upper stage hurtling into the permanently shadowed floor of Cabeus crater near the lunar south pole. The collision excavated a 20-meter crater and launched 350 tons of regolith into the sunlight. Trailing four minutes behind, the shepherding spacecraft flew through the plume, using near-infrared spectrometers to detect the distinctive absorption signatures of water ice at 1.4 µm and 1.9 µm. The mission proved that polar craters on the Moon harbor volatile reservoirs essential for future lunar exploration.
           </p>
-        </div>
+        </details>
       </div>
     </SitePage>
   );

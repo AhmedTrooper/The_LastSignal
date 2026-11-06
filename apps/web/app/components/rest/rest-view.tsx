@@ -41,12 +41,13 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
   };
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-8 lg:py-10">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,330px)_minmax(0,1fr)_minmax(0,400px)] lg:items-start">
+    <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:py-12">
+      <header className="club-section-heading mb-10"><div><p className="club-kicker">The space map</p><h1 className="display mt-4 text-5xl lg:text-6xl">Resting among the stars.</h1><p>Turn a world. Choose a pin. Meet the little explorer that made it all the way there.</p></div><Link href="/heroes" className="club-button club-button-secondary">Meet all the explorers <ArrowRight className="h-4 w-4" /></Link></header>
+      <div className="club-map-layout grid grid-cols-1 gap-7 lg:grid-cols-[minmax(0,270px)_minmax(0,1fr)_minmax(0,340px)] lg:items-start">
         {/* Left: title, toggles, counts */}
         <div>
-          <p className="font-mono text-sm tracking-[0.12em] text-violet uppercase">Where they rest</p>
-          <h1 className="display mt-3 text-5xl lg:text-[72px]">Resting among the stars.</h1>
+          <p className="club-kicker">Where shall we go?</p>
+          <h2 className="display mt-3 text-3xl">Pick a world.</h2>
           <div className="mt-8 inline-flex rounded-full bg-mist p-1" role="group" aria-label="World">
             {(["mars", "moon"] as Body[]).map((b) => (
               <button
@@ -67,7 +68,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
                   key={f.id}
                   onClick={() => setCats(on ? cats.filter((c) => c !== f.id) : [...cats, f.id])}
                   aria-pressed={on}
-                  className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${on ? "border-violet bg-violet-soft text-violet" : "border-transparent bg-mist hover:border-line"}`}
+                    className={`min-h-11 rounded-full border px-3 py-2 text-sm transition-colors ${on ? "border-violet bg-violet-soft text-violet" : "border-line bg-white hover:border-violet"}`}
                 >
                   {f.label}
                 </button>
@@ -85,7 +86,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
         </div>
 
         {/* Centre: the planet */}
-        <div className="relative mx-auto w-full max-w-[640px]">
+        <div className="club-map-world relative mx-auto w-full max-w-[640px]">
           <Globe
             body={body}
             sites={shown.map((h) => ({ id: h.slug, name: h.name, lat: h.coords.lat, lon: h.coords.lon }))}
@@ -103,7 +104,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
 
         {/* Right: the selected machine */}
         {sel && (
-          <article className="rounded-2xl border border-line bg-white p-6 shadow-[0_20px_50px_-30px_rgba(13,11,38,0.35)]">
+          <article className="club-map-selected rounded-2xl border border-line bg-white p-6">
             <div className="flex items-center justify-between">
               <p className="font-mono">{catNo(sel.no)}</p>
               <span className="rounded-md bg-violet-soft px-2.5 py-1 font-mono text-xs tracking-[0.1em] text-violet uppercase">{BADGE[sel.category]}</span>
@@ -127,7 +128,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
               href={`/heroes/${sel.slug}`}
               className="mt-6 flex items-center justify-between rounded-full bg-violet px-7 py-4 font-semibold text-white transition-colors hover:bg-violet-deep"
             >
-              Read their story <ArrowRight className="h-5 w-5" />
+              Meet {sel.name} <ArrowRight className="h-5 w-5" />
             </Link>
           </article>
         )}

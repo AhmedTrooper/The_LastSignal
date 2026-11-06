@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="bg-[#fffaf0] text-ink">
+      <main id="club-main" className="bg-[#fcf9f2] text-ink">
         <ExplorerHome />
       </main>
       <Footer />

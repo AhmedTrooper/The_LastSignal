@@ -4,6 +4,7 @@ import { generateSEO } from "@/lib/seo";
 import Header from "@/app/components/header";
 import MERSimulator from "@/app/components/profile/mer-simulator";
 import { ArrowLeft } from "@/app/components/icons";
+import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
   title: "Mars Exploration Rovers: Dust Storm & Power Survival | The Last Signal",
@@ -16,7 +17,7 @@ export default function MERTwinsGamePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#070611] px-4 py-8 sm:px-6 lg:px-8">
+      <main id="club-main" className="club-game-page min-h-screen px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex items-center justify-between">
             <Link
@@ -31,18 +32,18 @@ export default function MERTwinsGamePage() {
                 href="/heroes/opportunity"
                 className="text-orange-400 transition hover:underline"
               >
-                Opportunity Dossier ↗
+                Meet Opportunity ↗
               </Link>
               <Link
                 href="/heroes/spirit"
                 className="text-rose-400 transition hover:underline"
               >
-                Spirit Dossier ↗
+                Meet Spirit ↗
               </Link>
             </div>
           </div>
 
-          <MERSimulator standalone rover="opportunity" />
+          <MissionIntro title="A rover needs its sunshine.">Change the conditions in an illustrative weather lab. See why dust, sunlight, and power mattered to Spirit and Opportunity.</MissionIntro><div className="club-game-shell"><MERSimulator standalone rover="opportunity" /></div>
         </div>
       </main>
     </>

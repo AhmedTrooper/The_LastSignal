@@ -1,6 +1,5 @@
 import { EAGLE_COMPONENTS, type EagleComponentId } from "@/lib/eagle-components";
 import { EAGLE_LESSONS } from "@/lib/eagle-lessons";
-import { SparkIcon } from "@/app/components/icons";
 import "./eagle-learning.css";
 
 export function EagleComponentList({ ids }: { ids: readonly EagleComponentId[] }) {
@@ -11,7 +10,7 @@ export default function EagleLearningLens({ memory, compact = false }: { memory:
   const lesson = EAGLE_LESSONS[memory];
   if (!lesson) return null;
   return <section className={`eagle-learning-lens ${compact ? "is-compact" : ""}`} aria-label="What Eagle’s equipment made possible">
-    <p className="eagle-learning-kicker"><SparkIcon className="h-4 w-4" />The hardware behind this memory</p>
+    <p className="eagle-learning-kicker">The hardware behind this memory</p>
     <h2>{lesson.question}</h2><p className="eagle-learning-answer">{lesson.answer}</p>
     <details><summary>Meet the actual components</summary><EagleComponentList ids={lesson.components} /></details>
   </section>;

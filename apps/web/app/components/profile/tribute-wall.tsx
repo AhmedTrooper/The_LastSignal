@@ -132,9 +132,9 @@ export default function TributeWall({
               </svg>
             </div>
             <div>
-              <h3 className={`text-base font-bold ${dark ? "text-white" : "text-ink"}`}>Leave a Last Signal Tribute</h3>
+              <h3 className={`text-lg font-bold ${dark ? "text-white" : "text-ink"}`}>A kind message goes a long way.</h3>
               <p className={`mt-1 text-xs max-w-xs ${dark ? "text-white/60" : "text-ink-soft"}`}>
-                Sign in with Google to honor {name} on the worldwide transmission wall.
+                You can read the messages without an account. Sign in with Google if you’d like to add your own.
               </p>
             </div>
             <button
@@ -187,7 +187,7 @@ export default function TributeWall({
                     {user.displayName || "Explorer"}
                   </p>
                   <p className={`text-[11px] ${dark ? "text-white/50" : "text-ink-soft"}`}>
-                    Verified Explorer
+                    RoverVilla explorer
                   </p>
                 </div>
               </div>
@@ -211,8 +211,8 @@ export default function TributeWall({
 
             {/* Tribute Textarea */}
             <div>
-              <label className="sr-only" htmlFor={`t-msg-${slug}`}>
-                Your tribute to {name}
+              <label className="mb-3 block text-sm font-semibold" htmlFor={`t-msg-${slug}`}>
+                What would you like to say to {name}?
               </label>
               <textarea
                 id={`t-msg-${slug}`}
@@ -224,7 +224,7 @@ export default function TributeWall({
                 maxLength={1000}
                 rows={4}
                 required
-                placeholder={`Write your tribute to ${name} (max 1,000 characters)...`}
+                placeholder={`A favourite moment, a little thank-you, or something ${name} helped you learn…`}
                 className={`w-full resize-none rounded-xl border px-4 py-3 text-sm outline-none transition-all ${field}`}
               />
               <div className="mt-1 flex items-center justify-between text-xs">
@@ -232,20 +232,20 @@ export default function TributeWall({
                   {message.length} / 1000
                 </span>
                 <span className="font-mono text-[10px] text-ink-soft">
-                  1 transmission / 60s
+                  A short pause between messages
                 </span>
               </div>
             </div>
 
             {/* Error & Success Feedback */}
             {error && (
-              <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-xs text-red-500">
+              <div role="alert" className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-xs text-red-500">
                 {error}
               </div>
             )}
             {success && (
-              <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 text-xs text-emerald-500">
-                ✓ Tribute transmitted to the memorial wall!
+              <div role="status" className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 text-xs text-emerald-700">
+                Your message is on the RoverVilla wall. Thank you for sharing it.
               </div>
             )}
 
@@ -256,12 +256,12 @@ export default function TributeWall({
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-violet-deep disabled:cursor-not-allowed disabled:opacity-50"
             >
               {cooldown > 0 ? (
-                <>Cooldown: Wait {cooldown}s</>
+                <>You can share another message in {cooldown}s</>
               ) : loading ? (
-                <>Transmitting signal…</>
+                <>Adding your message…</>
               ) : (
                 <>
-                  Leave a tribute <ArrowRight />
+                  Share my message <ArrowRight />
                 </>
               )}
             </button>
@@ -275,7 +275,7 @@ export default function TributeWall({
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             <h4 className={`text-xs font-mono font-bold tracking-wider uppercase ${dark ? "text-white/70" : "text-ink-soft"}`}>
-              MEMORIAL DOWNLINK ({Array.isArray(tributes) ? tributes.length : 0})
+              Messages from explorers ({Array.isArray(tributes) ? tributes.length : 0})
             </h4>
           </div>
         </div>
@@ -287,7 +287,7 @@ export default function TributeWall({
                 dark ? "border-white/20 text-white/60" : "border-line text-ink-soft"
               }`}
             >
-              No transmissions received yet. Be the first to say goodbye to {name}.
+              No messages yet. There’s room for your little thank-you.
             </li>
           ) : (
             tributes.map((t) => (
@@ -350,7 +350,7 @@ export default function TributeWall({
               </li>
             ))
           )}
-        </ul>
+        </ul><p className={`mt-4 text-xs leading-relaxed ${dark ? "text-white/60" : "text-ink-soft"}`}>The shared RoverVilla wall stays here on Earth. These messages are not transmitted to a spacecraft.</p>
       </div>
     </div>
   );

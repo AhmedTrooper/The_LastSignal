@@ -12,15 +12,15 @@ export const metadata = generateSEO({
 });
 
 const RULES = [
-  { title: "Facts only", text: "Every date, number and last word comes from a real mission record, and each hero lists its sources. We never invent quotes." },
-  { title: "Real imagery", text: "We use public-domain mission photos and videos, credited. The images you see today are AI placeholders and are labelled as such." },
-  { title: "Independent", text: "RoverVilla is not affiliated with or endorsed by any space agency, and carries no agency branding." },
-  { title: "AI is labelled", text: "Narration or video made with AI is always marked as AI-made, and is built only from the real record." },
+  { title: "Real history underneath", text: "The adventures begin with real mission records. Source links let curious readers look deeper. An imagined machine voice is never presented as an astronaut’s quotation." },
+  { title: "Pictures with a story", text: "Archival photographs carry their credits. Story illustrations are labelled, so you can tell a drawing from a real view of another world." },
+  { title: "Room for everyone", text: "Read a chapter, try a control, or just look around. You do not need an account to explore RoverVilla." },
+  { title: "Our own little clubhouse", text: "RoverVilla is independent, not affiliated with or endorsed by a space agency. AI-assisted narration and artwork are identified separately." },
 ];
 
 export default function AboutPage() {
   return (
-    <SitePage eyebrow="About" title="They had names, birthdays and last words, just like us.">
+    <SitePage eyebrow="Why RoverVilla exists" title="They had names, birthdays and last words, just like us." lede="The people came home. Many of their machines didn’t. We made a place to remember what those explorers helped us do." scene="about">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_1fr]">
         <div className="space-y-5 text-lg leading-relaxed" data-reveal>
           <p>
@@ -33,7 +33,7 @@ export default function AboutPage() {
           </p>
           <Waveform seed="about" bars={40} live className="h-12 w-72 text-violet" />
           <Link href="/heroes" className="inline-flex items-center gap-3 rounded-full bg-violet px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-violet-deep">
-            Meet the heroes <ArrowRight />
+            Meet the explorers <ArrowRight />
           </Link>
         </div>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <p className="font-mono text-xs">LEGAL &amp; COMPLIANCE</p>
             <h2 className="display mt-2 text-2xl">Your Data &amp; Privacy</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-              We respect your privacy and provide full transparency over all collected data. You can inspect our policies or permanently purge your account and memorial transmissions at any time.
+              You can read our policies and manage your account and messages. Exploring the stories does not require signing in.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-semibold">
               <Link href="/privacy" className="rounded-full border border-line bg-white px-4 py-2 text-ink hover:border-violet hover:text-violet transition-colors">

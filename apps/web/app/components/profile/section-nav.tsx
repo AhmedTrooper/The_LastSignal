@@ -49,7 +49,7 @@ export default function SectionNav({ items, variant = "list" }: { items: { id: s
             <a
               href={`#${i.id}`}
               aria-current={active === i.id ? "true" : undefined}
-              className="group flex items-center gap-4 py-1.5 text-[15px] transition-colors hover:text-violet"
+              className="group flex min-h-11 items-center gap-3 py-2 text-[13px] transition-colors hover:text-violet"
             >
               <span
                 className={`h-[18px] w-[18px] rounded-full border-2 transition-colors ${

@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #0d0b26;
-  --color-ink-soft: #5d5a78;
+  --color-ink: #24243e;
+  --color-ink-soft: #646078;
   --color-violet: #5b2eff;
   --color-violet-deep: #4317e6;
   --color-violet-bright: #7a57ff;
   --color-violet-soft: #ece7ff;
   --color-mars: #ff5a1f;
-  --color-mist: #f7f7fb;
-  --color-line: #e8e6f2;
+  --color-mist: #f4eff8;
+  --color-line: #e3dbe9;
   --color-night: #0c0a22;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
@@ -30,7 +30,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #ffffff;
+  background: #fcf9f2;
   color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: clip;

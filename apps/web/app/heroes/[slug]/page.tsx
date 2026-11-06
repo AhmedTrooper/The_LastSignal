@@ -582,7 +582,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
       <>
         <HeroSchema hero={hero} />
         <Header />
-        <main>
+        <main id="club-main">
           {/* The console owns the first screen: header + this section = one viewport. */}
           <section className="bg-[#fff9ef]">
             <div>
@@ -620,11 +620,11 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
     <>
       <HeroSchema hero={hero} />
       <Header />
-      <main className={mars ? "bg-[#fbf7f4]" : "bg-[#f6f7fa]"}>
+      <main id="club-main" className={`club-profile ${mars ? "bg-[#fbf7f4]" : "bg-[#f6f7fa]"}`}>
         <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-4 px-4 py-6 sm:px-8 lg:grid-cols-[270px_minmax(0,1fr)] lg:py-8">
           <Sidebar hero={hero} nav={nav} />
           {/* Phones: the same section list as sticky chips under the header. */}
-          <div className={`sticky top-16 z-30 -mx-4 border-b border-line px-4 backdrop-blur sm:-mx-8 sm:px-8 lg:hidden ${mars ? "bg-[#fbf7f4]/95" : "bg-[#f6f7fa]/95"}`}>
+          <div className={`sticky top-[72px] z-30 -mx-4 border-b border-line px-4 backdrop-blur sm:-mx-8 sm:px-8 lg:hidden ${mars ? "bg-[#fbf7f4]/95" : "bg-[#f6f7fa]/95"}`}>
             <SectionNav items={nav} variant="chips" />
           </div>
 

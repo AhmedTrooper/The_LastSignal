@@ -18,7 +18,7 @@ export default function ApolloLandingGamePage() {
     <>
       <Header />
       <EagleJourneyNav />
-      <main className="min-h-screen bg-[#fff9ef] px-4 py-8 text-[#30243d] sm:px-6 lg:px-8">
+      <main id="club-main" className="club-game-page min-h-screen px-4 py-8 text-[#30243d] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex items-center justify-between">
             <Link
@@ -36,7 +36,7 @@ export default function ApolloLandingGamePage() {
             </Link>
           </div>
 
-          <div className="eagle-story"><p className="font-mono text-[10px] uppercase tracking-wider text-[#77528d]">One real mission. An illustrative practice game.</p><h1 className="display mt-3 text-4xl sm:text-5xl">Find a place for my feet.</h1><p className="mb-6 mt-4 max-w-xl text-sm leading-relaxed text-[#796781]">Guide the game lander beyond rough ground and settle gently. Then meet the actual engine and landing gear behind the lesson. This is not a replay of the flight or a live telemetry feed.</p><EagleLandingLesson /><Link href="/heroes/apollo-11-lander/story" className="mt-5 inline-flex min-h-11 items-center text-sm text-[#79548b]">Explore the actual mission&apos;s eight memories ↗</Link></div>
+          <div className="eagle-story"><p className="club-kicker">One real mission. An illustrative practice game.</p><h1 className="display mt-3 text-4xl sm:text-5xl">Find a place for my feet.</h1><p className="mb-6 mt-4 max-w-xl text-base leading-relaxed text-[#796781]">Guide the game lander beyond rough ground and settle gently. Then meet the actual engine and landing gear behind the lesson. This is not a replay of the flight or a live telemetry feed.</p><EagleLandingLesson /><Link href="/heroes/apollo-11-lander/story" className="mt-5 inline-flex min-h-11 items-center text-sm text-[#79548b]">Let Eagle&apos;s real story unfold ↗</Link></div>
         </div>
       </main>
     </>

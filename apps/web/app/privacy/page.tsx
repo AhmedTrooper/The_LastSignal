@@ -14,6 +14,7 @@ export default function PrivacyPolicyPage() {
     <SitePage
       eyebrow="Legal & Data Protection"
       title="Privacy Policy for The Last Signal"
+      scene="about"
     >
       <div className="mx-auto max-w-4xl space-y-10 text-ink" data-reveal>
         {/* Header Metadata */}

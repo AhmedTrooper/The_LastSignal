@@ -1,61 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Photo } from "@/lib/photos";
-import { Close } from "@/app/components/icons";
+import { ArrowLeft, ArrowRight, Close } from "@/app/components/icons";
 
-/** Thumbnail grid with a keyboard-friendly lightbox. Real archive photos carry their title and credit. */
+function PhotoViewer({ items, name, index, onChange, onClose }: { items: Photo[]; name: string; index: number; onChange: (index: number) => void; onClose: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const picture = items[index];
+  useEffect(() => {
+    const node = dialog.current;
+    const previous = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    const ownsLock = overflow !== "hidden";
+    node?.showModal();
+    if (ownsLock) document.body.style.overflow = "hidden";
+    return () => { node?.close(); if (ownsLock) document.body.style.overflow = overflow; previous?.focus({ preventScroll: true }); };
+  }, []);
+  const previous = () => onChange((index - 1 + items.length) % items.length);
+  const next = () => onChange((index + 1) % items.length);
+  return <dialog ref={dialog} className="club-photo-dialog" aria-labelledby="club-photo-title" onCancel={event => { event.preventDefault(); onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }} onKeyDown={event => { if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); event.stopPropagation(); if (event.key === "ArrowRight") next(); else previous(); } if (event.key === "Escape") event.stopPropagation(); }}>
+    <header><div><p className="club-kicker">{name}’s photo album</p><h2 id="club-photo-title">{picture.ai ? "An imagined view" : picture.title}</h2></div><button type="button" aria-label="Close photo" onClick={onClose}><Close /></button></header>
+    <figure><div className="club-photo-frame"><Image src={picture.src} alt={picture.ai ? `${name}, AI-generated illustration` : picture.alt} fill sizes="(min-width:1024px) 85vw, 95vw" className="object-contain" /></div><figcaption>{picture.ai ? "AI-generated illustration, not a mission photograph." : <><p>{picture.alt}</p><a href={picture.source} target="_blank" rel="noopener noreferrer">{picture.credit} · Open the original source ↗</a></>}</figcaption></figure>
+    <nav aria-label="Photo navigation"><button type="button" onClick={previous} disabled={items.length < 2}><ArrowLeft className="h-4 w-4" />Previous</button><span role="status">{index + 1} / {items.length}</span><button type="button" onClick={next} disabled={items.length < 2}>Next<ArrowRight className="h-4 w-4" /></button></nav>
+  </dialog>;
+}
+
 export default function Gallery({ items, name, columns = "grid-cols-2 sm:grid-cols-3" }: { items: Photo[]; name: string; columns?: string }) {
   const [open, setOpen] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (open === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(null);
-      if (e.key === "ArrowRight") setOpen((i) => (i === null ? i : (i + 1) % items.length));
-      if (e.key === "ArrowLeft") setOpen((i) => (i === null ? i : (i - 1 + items.length) % items.length));
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, items.length]);
-
-  const cur = open === null ? null : items[open];
-
-  return (
-    <>
-      <div className={`grid gap-2 ${columns}`}>
-        {items.map((p, i) => (
-          <button key={p.name + i} onClick={() => setOpen(i)} className="group relative aspect-[3/2] overflow-hidden rounded-lg bg-mist" aria-label={`Open ${p.ai ? `${name}, image ${i + 1} (AI placeholder)` : p.title}`}>
-            <Image src={p.src} alt={p.ai ? `${name}, image ${i + 1} (AI placeholder)` : p.alt} fill sizes="(min-width:1024px) 15vw, 45vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-            {p.ai && <span className="absolute right-1.5 bottom-1.5 rounded bg-white/85 px-1.5 py-0.5 font-mono text-[10px] text-ink">AI</span>}
-          </button>
-        ))}
-      </div>
-
-      {cur && open !== null && (
-        <div role="dialog" aria-modal="true" aria-label={`${name} gallery`} className="fixed inset-0 z-[60] flex items-center justify-center bg-night/90 p-4 backdrop-blur" onClick={() => setOpen(null)}>
-          <button className="absolute top-4 right-4 rounded-full bg-white/10 p-3 text-white hover:bg-white/20" aria-label="Close" autoFocus>
-            <Close />
-          </button>
-          <figure className="relative h-[78vh] w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <Image src={cur.src} alt={cur.ai ? "" : cur.alt} fill sizes="100vw" className="object-contain" />
-            <figcaption className="absolute -bottom-12 left-0 right-0 font-mono text-xs leading-relaxed text-white/75">
-              {open + 1} / {items.length} ·{" "}
-              {cur.ai ? (
-                "AI-generated placeholder, to be replaced with a credited archive photo"
-              ) : (
-                <>
-                  {cur.title} · {cur.credit} ·{" "}
-                  <a href={cur.source} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
-                    source
-                  </a>
-                </>
-              )}
-            </figcaption>
-          </figure>
-        </div>
-      )}
-    </>
-  );
+  return <><div className={`club-photo-grid grid gap-3 ${columns}`}>{items.map((picture, index) => <button key={`${picture.name}-${index}`} type="button" onClick={() => setOpen(index)} className="club-photo-tile" aria-label={`Open ${picture.ai ? `${name}, image ${index + 1} (AI illustration)` : picture.title}`}><span className="club-photo-thumb"><Image src={picture.src} alt={picture.ai ? `${name}, AI-generated illustration` : picture.alt} fill sizes="(min-width:1024px) 25vw, 45vw" className="object-cover" /></span><span className="club-photo-tile-caption">{picture.ai ? "AI illustration" : picture.title}<span aria-hidden="true">↗</span></span></button>)}</div>{open !== null && <PhotoViewer items={items} name={name} index={open} onChange={setOpen} onClose={() => setOpen(null)} />}</>;
 }

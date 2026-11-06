@@ -84,7 +84,7 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
       {/* Header row */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
-          <h1 className="display text-6xl lg:text-[88px]">Timeline</h1>
+          <p className="club-kicker">The time machine</p><h1 className="display mt-4 max-w-[17ch] text-5xl lg:text-[64px]">Every journey has a beginning.</h1><p className="mt-5 max-w-xl text-base leading-relaxed text-ink-soft">Move through the years. Find who came first, who kept going, and which explorer you’d like to meet.</p>
           <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-5">
             <div className="flex gap-2" role="group" aria-label="Filter by world">
               {(["all", "mars", "moon"] as const).map((f) => (
@@ -130,7 +130,7 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
       </div>
 
       {/* Chart: scrolls sideways on narrow screens rather than squashing the years. */}
-      <div className="no-scrollbar mt-6 overflow-x-auto rounded-2xl border border-line bg-white">
+      <div className="club-timeline-chart mt-8 overflow-x-auto rounded-2xl border border-line bg-white">
         <div ref={chart} className="min-w-[860px] px-4 py-6 sm:px-6 sm:py-8">
         <div className="grid grid-cols-[90px_1fr] gap-4">
           {lanes.map((lane, li) => {
@@ -151,7 +151,6 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
                       <button
                         key={h.slug}
                         onClick={() => setSelected(h.slug)}
-                        onMouseEnter={() => setSelected(h.slug)}
                         className={`absolute flex items-start gap-2.5 rounded-full text-left transition-all ${on ? "z-10" : ""}`}
                         style={{ left: `calc(${left}% - 26px)`, top }}
                         aria-pressed={on}
@@ -222,7 +221,7 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
               <p className="mt-4 font-mono">{served(h)}</p>
               {cta && (
                 <span className="mt-auto inline-flex w-fit items-center gap-3 rounded-full bg-violet px-5 py-3 text-sm font-semibold whitespace-nowrap text-white">
-                  Read their story <ArrowRight />
+                   Meet {h.name} <ArrowRight />
                 </span>
               )}
             </div>

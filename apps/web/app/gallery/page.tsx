@@ -14,20 +14,21 @@ export const metadata = generateSEO({
 export default function GalleryPage() {
   return (
     <SitePage
-      eyebrow="Gallery"
-      title="Their last views."
-      lede="Real photos from NASA's public image archive, credited one by one. Tap any picture for its title, credit and source."
+      eyebrow="The space photo album"
+      title="Look what they saw."
+      lede="Rocks up close. Worlds from above. Little tracks in a very big place. Open a picture to see its story, credit, and original source. Any AI illustration is clearly labelled."
+      scene="photos"
     >
-      <div className="space-y-12">
+      <div className="club-gallery-room space-y-8">
         {HEROES.filter((h) => h.gallery.length > 0).map((h) => (
           <section key={h.slug} data-reveal>
             <div className="mb-4 flex items-baseline justify-between gap-4">
               <h2 className="display text-3xl">{h.name}</h2>
               <Link href={`/heroes/${h.slug}`} className="text-sm font-semibold text-violet hover:underline">
-                Read their story
+                 Meet this explorer ↗
               </Link>
             </div>
-            <Gallery items={h.gallery.map((n) => photo(n, h.name))} name={h.name} columns="grid-cols-2 sm:grid-cols-3 lg:grid-cols-6" />
+            <Gallery items={h.gallery.map((n) => photo(n, h.name))} name={h.name} columns="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4" />
           </section>
         ))}
       </div>

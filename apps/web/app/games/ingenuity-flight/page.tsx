@@ -4,6 +4,7 @@ import { generateSEO } from "@/lib/seo";
 import Header from "@/app/components/header";
 import IngenuitySimulator from "@/app/components/profile/ingenuity-simulator";
 import { ArrowLeft } from "@/app/components/icons";
+import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
   title: "Ingenuity: Mars Rotorcraft Aerodynamics & Flight Lab | The Last Signal",
@@ -16,7 +17,7 @@ export default function IngenuityFlightGamePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#06050e] px-4 py-8 sm:px-6 lg:px-8">
+      <main id="club-main" className="club-game-page min-h-screen px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex items-center justify-between">
             <Link
@@ -30,11 +31,11 @@ export default function IngenuityFlightGamePage() {
               href="/heroes/ingenuity"
               className="font-mono text-xs text-cyan-300 transition hover:underline"
             >
-              View Ingenuity Profile ↗
+              Meet Ingenuity ↗
             </Link>
           </div>
 
-          <IngenuitySimulator standalone />
+          <MissionIntro title="What if we could fly on Mars?">Explore spinning blades and thin air. Try a setting, notice what changes, and meet the real little helicopter behind the experiment.</MissionIntro><div className="club-game-shell"><IngenuitySimulator standalone /></div>
         </div>
       </main>
     </>

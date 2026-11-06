@@ -37,13 +37,16 @@ export const CalendarIcon = ({ className = "h-7 w-7" }: P) => (
     <path d="M10.5 18h.01M16 18h.01M21.5 18h.01M10.5 22.5h.01M16 22.5h.01M21.5 22.5h.01" strokeWidth="2.6" />
   </svg>
 );
-export const SparkIcon = ({ className = "h-7 w-7" }: P) => (
+export const LightbulbIcon = ({ className = "h-7 w-7" }: P) => (
   <svg viewBox="0 0 32 32" className={className} {...base} aria-hidden>
-    <path d="M16 4l2.8 8.2L27 15l-8.2 2.8L16 26l-2.8-8.2L5 15l8.2-2.8z" />
+    <path d="M11 23v-3c-3-2-5-4-5-8a10 10 0 0 1 20 0c0 4-2 6-5 8v3M11 26h10m-8 4h6M16 22v-7m-4-3 4 3 4-3" />
   </svg>
 );
 
-export const STAT_ICONS = { route: RouteIcon, timer: TimerIcon, calendar: CalendarIcon, spark: SparkIcon };
+export const STAT_ICONS = { route: RouteIcon, timer: TimerIcon, calendar: CalendarIcon, spark: LightbulbIcon };
+export const RoverIcon = ({ className = "h-6 w-6" }: P) => (
+  <svg viewBox="0 0 24 24" className={className} {...base} aria-hidden="true"><path d="M7 13h12l2 4H5l2-4zm5 0V7m-3-4h7v4H9z" /><circle cx="7" cy="20" r="1.5" /><circle cx="13" cy="20" r="1.5" /><circle cx="19" cy="20" r="1.5" /></svg>
+);
 
 /* Mobile tab bar */
 export const HomeIcon = ({ className = "h-6 w-6" }: P) => (

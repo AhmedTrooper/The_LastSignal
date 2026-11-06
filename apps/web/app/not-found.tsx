@@ -1,17 +1,7 @@
 import Link from "next/link";
-import Header from "@/app/components/header";
-import { Waveform } from "@/app/components/waveform";
+import SitePage from "@/app/components/site-page";
+import { ArrowRight } from "@/app/components/icons";
 
 export default function NotFound() {
-  return (
-    <>
-      <Header />
-      <main className="mx-auto flex min-h-[70vh] max-w-[1440px] flex-col justify-center px-4 py-20 sm:px-8">
-        <p className="font-mono text-sm text-violet">404 · no signal</p>
-        <h1 className="display mt-3 text-5xl lg:text-7xl">We lost contact with this page.</h1>
-        <Waveform seed="404" bars={30} fade={0.6} className="mt-8 h-12 w-72 text-violet" />
-        <Link href="/" className="mt-8 font-semibold text-violet hover:underline">Back to the archive →</Link>
-      </main>
-    </>
-  );
+  return <SitePage eyebrow="404 / A little detour" title="This page wandered off into space." lede="Nothing to worry about. There’s another story waiting just around the corner." scene="map"><div className="flex flex-wrap gap-4"><Link href="/" className="club-button club-button-primary">Back to the clubhouse <ArrowRight className="h-4 w-4" /></Link><Link href="/story" className="club-button club-button-secondary">Find a story</Link></div></SitePage>;
 }

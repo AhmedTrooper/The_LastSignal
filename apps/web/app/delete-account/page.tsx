@@ -14,6 +14,7 @@ export default function DeleteAccountPage() {
     <SitePage
       eyebrow="Account & Data Management"
       title="Delete Account & Personal Data"
+      scene="about"
       lede="Request permanent deletion of your account, memorial transmissions, and associated profile information from The Last Signal."
     >
       <DeleteAccountContent />

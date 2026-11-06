@@ -1,72 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { type Hero, catNo, lifespan, assetUrl } from "@/lib/heroes";
-import { Waveform } from "@/app/components/waveform";
-import MachinePhoto from "@/app/components/machine-photo";
+import { type Hero, catNo, lifespan, assetUrl, img, portrait } from "@/lib/heroes";
+import { photo } from "@/lib/photos";
+import { ArrowRight } from "@/app/components/icons";
+import { EXPLORER_TRAITS } from "@/lib/clubhouse";
 
-/**
- * Exhibit card: catalogue number, name, years and the last-signal waveform on the left,
- * the machine on the right. Heroes with a studio cut-out (`hero.card`, a transparent WebP)
- * show it standing in the card; the rest fall back to a framed photo.
- */
-export default function HeroCard({ hero, size = "md", priority = false }: { hero: Hero; size?: "lg" | "md"; priority?: boolean }) {
-  const lg = size === "lg";
-  const sizes = lg ? "(min-width:1024px) 30vw, 90vw" : "(min-width:1024px) 20vw, 60vw";
-
-  const picture = hero.card ? (
-    <div className={`pointer-events-none absolute -z-10 ${lg ? "right-0 bottom-0 h-[58%] w-full p-4 lg:h-[66%] lg:w-[76%]" : "inset-x-0 bottom-0 h-[48%] px-3 pb-3 sm:inset-y-0 sm:left-auto sm:h-auto sm:w-[56%] sm:py-4 sm:pr-3 sm:pl-0"}`}>
-      <div className="relative h-full w-full">
-        <Image
-          src={assetUrl(`images/${hero.card}.webp`)}
-          alt=""
-          fill
-          priority={priority}
-          sizes={sizes}
-          className="object-contain object-bottom drop-shadow-[0_18px_18px_rgba(45,20,90,0.08)] transition-transform duration-700 group-hover:-translate-y-1 group-hover:scale-[1.03]"
-        />
-      </div>
+/** A roomy explorer card: character first, source-labelled image, mission facts underneath. */
+export default function HeroCard({ hero, size = "md", priority = false, story = false }: { hero: Hero; size?: "lg" | "md"; priority?: boolean; story?: boolean }) {
+  const archive = photo(portrait(hero), hero.name);
+  const illustration = !!hero.card;
+  return <Link href={`/heroes/${hero.slug}${story ? "/story" : ""}`} className={`club-explorer-card ${size === "lg" ? "club-explorer-card-large" : ""}`}>
+    <div className="club-explorer-stage" data-world={hero.body}>
+      <span className="club-world-badge" data-world={hero.body}><span aria-hidden="true" />{hero.body === "moon" ? "The Moon" : "Mars"}</span>
+      <Image src={illustration ? assetUrl(`images/${hero.card}.webp`) : img(portrait(hero))} alt={illustration ? `${hero.name}, AI-generated illustration` : archive.alt} fill priority={priority} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className={illustration ? "object-contain p-5" : "object-cover"} />
+      <span className="club-art-label">{illustration || archive.ai ? "AI-generated illustration" : archive.credit}</span>
     </div>
-  ) : lg ? (
-    <MachinePhoto
-      name={hero.image}
-      ratio={0.85}
-      fill={0.92}
-      anchor={{ x: 52, y: 52 }}
-      priority={priority}
-      sizes={sizes}
-      className="right-0 bottom-0 -z-10 h-[55%] w-full lg:h-[78%] lg:w-[64%]"
-    />
-  ) : (
-    <MachinePhoto
-      name={hero.image}
-      ratio={1.05}
-      fill={0.84}
-      anchor={{ x: 52, y: 54 }}
-      priority={priority}
-      sizes={sizes}
-      className="inset-x-0 bottom-0 -z-10 h-[50%] sm:inset-y-0 sm:left-auto sm:h-auto sm:w-[62%]"
-    />
-  );
-
-  return (
-    <Link
-      href={`/heroes/${hero.slug}`}
-      className={`group relative isolate flex overflow-hidden rounded-2xl border border-line bg-[linear-gradient(135deg,#ffffff_0%,#f1f0f9_100%)] transition-shadow hover:shadow-[0_18px_40px_-18px_rgba(45,20,140,0.35)] ${
-        lg ? "h-full min-h-[480px]" : "min-h-[330px] sm:min-h-[230px]"
-      }`}
-    >
-      {picture}
-      <div className={`flex flex-col ${lg ? "p-6 lg:p-8" : "w-full p-4 sm:max-w-[48%] sm:p-5"}`}>
-        <p className="font-mono text-xs">{catNo(hero.no)}</p>
-        <h3 className={`display mt-2 ${lg ? "text-4xl lg:text-5xl" : "text-[22px] leading-[1.05] sm:text-[26px]"}`}>{hero.name}</h3>
-        <p className="mt-2 font-mono text-sm">{lifespan(hero)}</p>
-        <Waveform seed={hero.slug} bars={lg ? 30 : 24} className={`text-violet ${lg ? "mt-6 h-10 w-44" : "mt-3 h-6 w-24 sm:mt-4 sm:h-7 sm:w-28"}`} />
-        <p className={`font-mono text-[13px] leading-relaxed ${lg ? "mt-6" : "mt-3 text-[12px] sm:mt-auto sm:pt-4 sm:text-[13px]"}`}>
-          {hero.end.label}
-          <br />
-          {hero.end.date}
-        </p>
-      </div>
-    </Link>
-  );
+    <div className="club-explorer-copy"><p className="club-kicker">{catNo(hero.no)} / {hero.kind}</p><h3 className="display">{hero.slug === "apollo-11-lander" ? "Eagle" : hero.name}</h3><p className="club-explorer-trait">{EXPLORER_TRAITS[hero.slug] ?? "An explorer with a story"}</p><p className="club-explorer-summary">{hero.summary}</p><div className="club-explorer-bottom"><span>{lifespan(hero)}</span><span>{story ? "Read my story" : "Meet me"} <ArrowRight className="h-4 w-4" /></span></div></div>
+  </Link>;
 }

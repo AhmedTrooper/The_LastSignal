@@ -1,33 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/app/components/logo";
-import { ArrowRight } from "@/app/components/icons";
+import { ArrowRight, BookIcon, ChevronDown, Close, MapIcon, Play, RoverIcon } from "@/app/components/icons";
 import { useAuth } from "@/lib/auth-context";
+import { CLUB_LINKS, CLUB_MORE_LINKS, isClubLinkActive } from "@/lib/clubhouse";
 
-const LINKS = [
-  { href: "/heroes", label: "Heroes" },
-  { href: "/story", label: "Story" },
-  { href: "/story/book", label: "Storybook" },
-  { href: "/timeline", label: "Timeline" },
-  { href: "/where-they-rest", label: "Where They Rest" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/games", label: "Games" },
-  { href: "/about", label: "About" },
-];
-
-/** Hero profiles live under /heroes, but their story pages belong to the Story section. */
-const isActive = (pathname: string, href: string) =>
-  href === "/story/book"
-    ? pathname === "/story/book"
-    : href === "/story"
-      ? pathname === "/story" || (pathname.endsWith("/story") && pathname !== "/story/book")
-      : href === "/heroes"
-        ? pathname.startsWith("/heroes") && !pathname.endsWith("/story")
-        : pathname.startsWith(href);
+const NAV_ICONS = { explorers: RoverIcon, stories: BookIcon, games: Play, map: MapIcon };
 
 export function TributeButton({ className = "" }: { className?: string }) {
   const pathname = usePathname();
@@ -85,122 +67,41 @@ export function AuthButton() {
   );
 }
 
+function MobileMenu({ pathname, onClose }: { pathname: string; onClose: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const node = dialog.current;
+    const previous = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    node?.showModal();
+    document.body.style.overflow = "hidden";
+    return () => { node?.close(); document.body.style.overflow = overflow; previous?.focus({ preventScroll: true }); };
+  }, []);
+  return <dialog ref={dialog} id="club-mobile-menu" className="club-menu-dialog" aria-label="Explore RoverVilla" onCancel={event => { event.preventDefault(); onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    <header><Logo compact /><button type="button" onClick={onClose} aria-label="Close menu"><Close /></button></header>
+    <p className="club-kicker mt-6">Where shall we go?</p>
+    <nav className="club-mobile-links" aria-label="Main navigation">{CLUB_LINKS.map(link => { const Icon = NAV_ICONS[link.icon]; return <Link key={link.href} href={link.href} onClick={onClose} aria-current={isClubLinkActive(pathname, link.href) ? "page" : undefined}><Icon className="h-7 w-7" /><span><strong>{link.label}</strong><small>{link.description}</small></span></Link>; })}</nav>
+    <nav className="club-menu-extra" aria-label="More places">{CLUB_MORE_LINKS.map(link => <Link key={link.href} href={link.href} onClick={onClose}>{link.label}</Link>)}</nav>
+    <div className="club-menu-bottom"><div><p className="text-xs text-ink-soft">No account needed to explore.</p><div className="mt-3"><AuthButton /></div></div><Link href="/privacy" onClick={onClose} className="py-3 text-xs text-ink-soft">Privacy &amp; your data ↗</Link></div>
+  </dialog>;
+}
+
 export default function Header() {
   const pathname = usePathname();
-  const home = pathname === "/";
-  const kidFriendly = home || pathname.startsWith("/heroes/apollo-11-lander") || pathname === "/games/apollo-11-landing";
-  const navigation = kidFriendly ? [
-    { href: "/heroes", label: "Meet the machines" },
-    { href: "/story/book", label: "Comic book" },
-    { href: "/games", label: "Play a mission" },
-    { href: "/where-they-rest", label: "Space map" },
-  ] : LINKS;
   const [open, setOpen] = useState(false);
-
+  const more = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    const desktop = window.matchMedia("(min-width: 1024px)");
-    const onDesktop = () => desktop.matches && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    desktop.addEventListener("change", onDesktop);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      desktop.removeEventListener("change", onDesktop);
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  return (
-    <>
-      <header className={`sticky top-0 z-50 border-b border-line/80 backdrop-blur-md text-ink ${kidFriendly ? "bg-[#fffaf0]/95" : "bg-white/90"}`}>
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-6 px-4 sm:px-8 lg:h-[76px]">
-          <Link href="/" aria-label="RoverVilla home" className="shrink-0 text-ink">
-            <Logo />
-          </Link>
-
-          <nav className="hidden items-center gap-5 text-[15px] font-medium text-ink lg:flex xl:gap-7">
-            {navigation.map((l) => {
-              const active = isActive(pathname, l.href);
-              return (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`relative py-1 transition-colors hover:text-violet ${active ? "text-violet after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:rounded after:bg-violet" : "text-ink"}`}
-                >
-                  {l.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-3">
-            {kidFriendly ? <Link href={home ? "#meet-machines" : "/#meet-machines"} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#ff9a25] px-5 text-sm font-bold text-[#17203c] hover:bg-[#ffad4e]">{home ? "Start exploring" : "More explorers"} <ArrowRight className="h-4 w-4" /></Link> : <><TributeButton /><AuthButton /></>}
-          </div>
-
-          <button
-            className="-mr-2 p-2 text-ink lg:hidden"
-            onClick={() => setOpen(!open)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-          >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              {open ? <path d="M5 5l12 12M17 5L5 17" /> : <path d="M3 7h16M3 15h16" />}
-            </svg>
-          </button>
-        </div>
-      </header>
-
-      {/* Kept outside <header>: its backdrop-filter would otherwise become the
-          containing block for this fixed panel and collapse it to the bar's height. */}
-      <div
-        id="mobile-menu"
-        aria-hidden={!open}
-        inert={!open ? true : undefined}
-        className={`fixed inset-x-0 top-16 bottom-0 h-[calc(100dvh-4rem)] z-40 flex flex-col overflow-y-auto bg-white lg:hidden ${
-          open ? "flex" : "hidden"
-        }`}
-      >
-        {/* Account / Sign-in section placed at the top of the scrollable menu */}
-        {!kidFriendly && <div className="flex items-center justify-between border-b border-line bg-mist/60 px-6 py-4 shrink-0">
-          <span className="text-xs font-mono uppercase tracking-wider text-ink-soft">Account</span>
-          <AuthButton />
-        </div>}
-        <nav className="flex flex-col gap-1 px-6 pt-2">
-          {[...navigation, ...(kidFriendly ? [{ href: "/about", label: "About RoverVilla" }] : [{ href: "/tributes", label: "Tributes" }])].map((l) => (
-            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="display border-b border-line py-3.5 text-2xl text-ink">
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="p-6 pt-4 pb-4 shrink-0">
-          {kidFriendly ? <Link href="/#meet-machines" onClick={() => setOpen(false)} className="flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#ff9a25] px-5 text-sm font-bold text-[#17203c]">{home ? "Meet your first explorer" : "Meet more explorers"} <ArrowRight className="h-4 w-4" /></Link> : <div onClick={() => setOpen(false)}>
-            <TributeButton className="w-full justify-center py-4 text-base" />
-          </div>}
-        </div>
-        <div className="flex flex-col gap-2 border-t border-line bg-mist/40 px-6 py-4 mb-20 text-xs font-mono text-ink-soft shrink-0">
-          <div className="flex items-center justify-between">
-            <Link href="/privacy" onClick={() => setOpen(false)} className="hover:text-violet">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" onClick={() => setOpen(false)} className="hover:text-violet">
-              Terms
-            </Link>
-          </div>
-          <Link
-            href="/delete-account"
-            onClick={() => setOpen(false)}
-            className="mt-1 inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 py-2.5 font-bold text-red-600 hover:bg-red-100"
-          >
-            Delete Account &amp; Data
-          </Link>
-        </div>
-        {/* Extra bottom spacer to ensure full clearance above mobile browser bars */}
-        <div className="h-16 shrink-0" aria-hidden="true" />
-      </div>
-    </>
-  );
+    const closeMore = (event: KeyboardEvent) => { if (event.key === "Escape" && more.current?.open) { more.current.open = false; more.current.querySelector<HTMLElement>("summary")?.focus(); } };
+    window.addEventListener("keydown", closeMore);
+    return () => window.removeEventListener("keydown", closeMore);
+  }, []);
+  return <>
+    <a href="#club-main" className="club-skip-link">Skip to page content</a>
+    <header className="club-header"><div className="club-header-inner">
+      <Link href="/" aria-label="RoverVilla home" className="club-header-logo"><Logo /></Link>
+      <nav className="club-desktop-nav" aria-label="Explore RoverVilla">{CLUB_LINKS.map(link => <Link key={link.href} href={link.href} aria-current={isClubLinkActive(pathname, link.href) ? "page" : undefined} className="club-nav-link">{link.label}</Link>)}<details ref={more} className="club-more-menu"><summary>More <ChevronDown className="h-3.5 w-3.5" /></summary><div className="club-more-panel">{CLUB_MORE_LINKS.map(link => <Link key={link.href} href={link.href} onClick={() => { if (more.current) more.current.open = false; }}>{link.label}</Link>)}<div className="club-account"><AuthButton /></div></div></details></nav>
+      <div className="club-header-actions"><Link href="/story" className="club-button club-button-primary">Find a story <ArrowRight className="h-4 w-4" /></Link><button type="button" className="club-menu-toggle" aria-label="Open menu" aria-expanded={open} aria-controls="club-mobile-menu" onClick={() => setOpen(true)}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><path d="M5 8h14M5 16h14" /></svg></button></div>
+    </div></header>
+    {open && <MobileMenu pathname={pathname} onClose={() => setOpen(false)} />}
+  </>;
 }

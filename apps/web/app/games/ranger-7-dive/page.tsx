@@ -4,6 +4,7 @@ import { generateSEO } from "@/lib/seo";
 import Header from "@/app/components/header";
 import RangerDive from "@/app/components/profile/ranger-dive";
 import { ArrowLeft } from "@/app/components/icons";
+import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
   title: "Ranger 7: 17-Minute Lunar Impact Dive | The Last Signal",
@@ -16,7 +17,7 @@ export default function RangerDiveGamePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#070611] px-4 py-8 sm:px-6 lg:px-8">
+      <main id="club-main" className="club-game-page min-h-screen px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-6 flex items-center justify-between">
             <Link
@@ -30,11 +31,11 @@ export default function RangerDiveGamePage() {
               href="/heroes/ranger-7"
               className="font-mono text-xs text-violet-bright transition hover:underline"
             >
-              View Ranger 7 Dossier ↗
+              Meet Ranger 7 ↗
             </Link>
           </div>
 
-          <RangerDive standalone />
+          <MissionIntro title="What could one last picture tell us?">Follow a camera spacecraft toward the Moon. Explore its view, then look closer at what those pictures helped people learn.</MissionIntro><div className="club-game-shell"><RangerDive standalone /></div>
         </div>
       </main>
     </>

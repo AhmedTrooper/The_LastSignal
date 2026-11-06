@@ -14,7 +14,7 @@ export default function TributesPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-night text-white">
+      <main id="club-main" className="club-message-page min-h-screen">
         <TributesView heroes={HEROES} />
       </main>
       <Footer />

@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
 import { assetUrl } from "@thelastsignal/data";
+import { ArrowRight, Play } from "@/app/components/icons";
+import EagleIssueArt from "@/app/components/profile/eagle-issue-art";
 
 export const metadata = generateSEO({
   title: "Games | The Last Signal",
@@ -17,12 +19,11 @@ const tile = "h-full w-full rounded-[22%]";
 
 const GAMES: Game[] = [
   {
-    title: "GRAIL: Microwave Gravity Lab",
-    text: "Measure Moon gravity down to 0.02 µm/s in tandem orbit and explore the Sally K. Ride Impact Site.",
+    title: "Two spacecraft. One Moon.",
+    text: "Explore how a pair of spacecraft helps reveal the Moon’s gravity.",
     href: "/games/grail-gravity",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-purple-600 via-indigo-700 to-slate-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <circle cx="20" cy="32" r="8" className="text-purple-300" strokeWidth="2.5" />
           <circle cx="44" cy="32" r="8" className="text-cyan-300" strokeWidth="2.5" />
@@ -32,12 +33,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "LCROSS: 7.2 GJ Water Plume",
-    text: "Simulate the 9,000 km/h kinetic impact into Cabeus crater and detect water ice at 1.4 µm & 1.9 µm.",
+    title: "A clue in the shadows",
+    text: "Follow an impact plume and learn how scientists looked for lunar water.",
     href: "/games/lcross-impact",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-sky-500 via-cyan-600 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M12 50l20-30 20 30" className="text-cyan-300" strokeWidth="3" />
           <circle cx="32" cy="16" r="4" className="text-amber-300" fill="currentColor" />
@@ -47,12 +47,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "Mars Polar Lander: 40m Bug Forensics",
-    text: "Calculate free-fall physics, dissect the un-cleared sensor bit, and discover the reforms that saved Curiosity.",
+    title: "The missing-signal mystery",
+    text: "Investigate a possible landing failure. What can missing data tell us?",
     href: "/games/polar-lander-forensics",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-rose-600 via-red-700 to-zinc-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M32 10v32m-8-8l8 8 8-8" className="text-rose-300" strokeWidth="3" />
           <path d="M14 54h36" className="text-white" strokeWidth="3" />
@@ -62,12 +61,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "Viking: Mars Biology Lab",
-    text: "Inject 14C nutrient broth into Martian soil, listen to the Geiger counter, and solve the perchlorate mystery.",
+    title: "A scoop of Mars",
+    text: "Try a soil experiment, then think carefully about what its results mean.",
     href: "/games/viking-biology",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-amber-600 via-rose-700 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M24 12v12l-10 24h36l-10-24v-12" className="text-amber-300" strokeWidth="3" />
           <path d="M20 12h24" className="text-white" strokeWidth="3" />
@@ -79,12 +77,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "InSight: Mars Seismology Lab",
-    text: "Hear deep marsquakes, analyze seismograms, and hammer the heat probe through Martian regolith.",
+    title: "Listen inside Mars",
+    text: "Look for a quake signal and discover what vibrations can reveal.",
     href: "/games/insight-seismology",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-emerald-600 via-teal-700 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M6 32h14l4-12 6 24 6-18 4 10 4-4h14" className="text-emerald-300" strokeWidth="3" />
           <circle cx="32" cy="52" r="4" className="text-amber-400" fill="currentColor" />
@@ -93,12 +90,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "Ingenuity: Mars Aerodynamics",
-    text: "Spin rotors at 2,900 RPM in Mars's 1% air and fly across 72 missions.",
+    title: "Fly with Ingenuity",
+    text: "Explore how spinning blades can help a little helicopter fly in thin air.",
     href: "/games/ingenuity-flight",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-cyan-500 via-sky-600 to-indigo-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M12 20h40M8 26h48" className="text-cyan-300" strokeWidth="3" />
           <rect x="26" y="26" width="12" height="14" rx="2" className="text-amber-400" fill="currentColor" />
@@ -108,12 +104,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "Mars Twins: Dust & Power",
-    text: "Scrub atmospheric dust (tau) from clear skies to blackout and survive on Mars.",
+    title: "The rover weather lab",
+    text: "See how dust changes the sunlight a solar-powered rover depends on.",
     href: "/games/mer-twins",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-amber-600 via-orange-600 to-rose-950 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <circle cx="32" cy="24" r="12" className="text-amber-300" strokeWidth="2.5" />
           <path d="M12 52c8-8 16-12 24-8s16 4 20-4" className="text-orange-200" strokeWidth="2.5" />
@@ -124,12 +119,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "Tranquility Base Cockpit",
-    text: "Fly Eagle past West Crater and explore 100+ discarded Moon artifacts.",
+    title: "Find a place for Eagle’s feet",
+    text: "Try an illustrated landing, then meet the real engine and landing gear.",
     href: "/games/apollo-11-landing",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-amber-500 via-sky-600 to-indigo-900 text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:10px_10px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M16 48l16-32 16 32-16-8-16 8z" className="text-amber-300" />
           <path d="M12 56l10-8M52 56l-10-8" className="text-white" />
@@ -139,12 +133,11 @@ const GAMES: Game[] = [
     ),
   },
   {
-    title: "17-Minute Impact Dive",
-    text: "Scrub Ranger 7's kamikaze dive from 2,110 km to the Moon's surface.",
+    title: "One last look at the Moon",
+    text: "Follow Ranger 7’s camera views as the spacecraft approaches the surface.",
     href: "/games/ranger-7-dive",
     icon: (
       <span className={`${tile} flex items-center justify-center bg-linear-to-br from-violet-600 via-indigo-700 to-black text-white relative overflow-hidden shadow-inner`}>
-        <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:12px_12px]" />
         <svg viewBox="0 0 64 64" className="h-1/2 w-1/2 relative z-10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden>
           <circle cx="32" cy="32" r="22" strokeDasharray="4 4" className="text-violet-300" />
           <circle cx="32" cy="32" r="8" className="text-amber-400" />
@@ -188,24 +181,26 @@ const GAMES: Game[] = [
 
 /** Games: a simple store grid of icons. */
 export default function GamesPage() {
+  const playable = GAMES.filter(game => game.href).sort((a, b) => (a.href === "/games/apollo-11-landing" ? -1 : b.href === "/games/apollo-11-landing" ? 1 : 0));
   return (
-    <SitePage eyebrow="RoverVilla" title="Games">
-      <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
-        {GAMES.map((g) => {
+    <SitePage eyebrow="The mission playground" title="A little try. A big “aha!”" lede="You don’t have to get it right first time. Try the controls, notice what changes, and discover the engineering behind a real space adventure." scene="games">
+      <section className="club-game-feature"><div><p className="club-kicker">A good place to begin / Eagle</p><h2 className="display">Can you find a place for my feet?</h2><p>There’s rough ground ahead. Help the illustrated lander find a clear patch, then see how the real landing happened.</p><Link href="/games/apollo-11-landing" className="club-button club-button-primary">Try Eagle’s landing <ArrowRight className="h-4 w-4" /></Link><span>No score to beat. Your curiosity is enough.</span></div><figure><EagleIssueArt scene="boulders" /><figcaption>AI-assisted illustration · practice game, not a flight replay</figcaption></figure></section>
+      <div className="club-section-heading"><div><h2 className="display">Choose your next mission.</h2><p>A camera, a pair of wings, a tiny ground movement. There’s more than one way to explore.</p></div></div>
+      <ul className="club-game-grid">
+        {playable.map((g) => {
           const body = (
             <>
-              <div className="relative aspect-square w-full shadow-[0_12px_30px_rgba(13,11,38,0.14)] transition-transform duration-300 group-hover:-translate-y-1 rounded-[22%]">
+               <div className="club-game-icon">
                 {g.icon}
                 {!g.href && <span className="absolute top-2 right-2 rounded-full bg-white/90 px-2 py-0.5 font-mono text-[10px] text-ink">Soon</span>}
               </div>
-              <h2 className="mt-3 font-semibold text-ink">{g.title}</h2>
-              <p className="mt-0.5 text-sm leading-snug text-ink-soft">{g.text}</p>
+               <div className="club-game-copy"><h3 className="display">{g.title}</h3><p>{g.text}</p><span>Let’s try it <Play className="h-3.5 w-3.5" /></span></div>
             </>
           );
           return (
             <li key={g.title}>
               {g.href ? (
-                <Link href={g.href} className="group block">
+                 <Link href={g.href} className="club-game-card">
                   {body}
                 </Link>
               ) : (
@@ -215,7 +210,8 @@ export default function GamesPage() {
           );
         })}
       </ul>
-      <p className="mt-16 font-mono text-[11px] text-ink-soft">Touchdown icon: AI-generated.</p>
+      <div className="club-note mt-10"><strong>Practice, not Mission Control.</strong><p className="mt-2">These games are illustrative learning tools, not live spacecraft controls or exact flight replays. Mission records and sources are available alongside the stories. The Touchdown icon is AI-generated.</p></div>
+      <details className="mt-8 text-sm text-ink-soft"><summary className="cursor-pointer py-3">In the workshop</summary><ul className="mt-3 space-y-3">{GAMES.filter(game => !game.href).map(game => <li key={game.title}><strong>{game.title}</strong> — {game.text} <span className="text-xs">Coming later</span></li>)}</ul></details>
     </SitePage>
   );
 }

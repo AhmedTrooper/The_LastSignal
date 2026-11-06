@@ -25,7 +25,7 @@ export default function MachineBookShelf({ book }: { book: MachineBook }) {
   const saved = bookmarks[book.slug];
   const index = book.chapters.findIndex(chapter => chapter.id === saved?.chapter);
   const chapters = book.chapters.map((chapter, number) => ({ chapter, number })).filter(({ chapter }) => `${chapter.title} ${chapter.event} ${chapter.hardware} ${chapter.beats.map(beat => beat.detail).join(" ")}`.toLowerCase().includes(query.trim().toLowerCase()));
-  return <SitePage eyebrow={`${book.name}’s Book & Comic Nook`} title={`The Chronicles of ${book.name}.`} lede={`One ${eagle ? "lunar module" : "Mars rover"}. A book of true events. Choose any chapter: read the comic, settle into the storybook, or let the story unfold as you scroll.`}>
+  return <SitePage eyebrow={`${book.name}’s Book & Comic Nook`} title={`The Chronicles of ${book.name}.`} lede={`One ${eagle ? "lunar module" : "Mars rover"}. A book of true events. Choose any chapter: read the comic, settle into the storybook, or let the story unfold as you scroll.`} scene="stories">
     <div className="nook-eagle-cover">
       <Link href={machineBookUrl(book.slug)} className="nook-cover" aria-label={`Open ${book.name}: ${book.title}`}>
         <Image src={eagle ? img(portrait(hero)) : image.src} alt={image.alt} fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover" />

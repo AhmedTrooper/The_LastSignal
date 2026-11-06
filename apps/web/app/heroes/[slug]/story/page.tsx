@@ -37,7 +37,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   // Eagle's event chapters share their text with the book and comic editions.
   if (hero.slug === "apollo-11-lander") {
     return (
-      <main>
+      <main id="club-main">
         <EagleScrollStory />
       </main>
     );
@@ -62,7 +62,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
       <div className="hidden lg:block">
         <Header />
       </div>
-      <main>
+      <main id="club-main">
         <h1 className="sr-only">{hero.name}: the story</h1>
         <StoryView
           slug={hero.slug}

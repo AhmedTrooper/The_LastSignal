@@ -14,7 +14,7 @@ export default function TimelinePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-mist">
+      <main id="club-main" className="club-timeline-page min-h-screen">
         <TimelineView heroes={HEROES} />
       </main>
       <Footer />
