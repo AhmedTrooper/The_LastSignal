@@ -12,12 +12,12 @@ function Rover({ stuck = false, clean = true }: { stuck?: boolean; clean?: boole
 }
 
 /** AI-assisted illustrative panels. Apparent scale, motion and readouts are not flight telemetry. */
-export default function OpportunityIllustration({ scene, step = 0 }: { scene: OpportunityScene; step?: number }) {
+export default function OpportunityIllustration({ scene, step = 0, stage = false }: { scene: OpportunityScene; step?: number; stage?: boolean }) {
   const id = useId().replaceAll(":", "");
   const dark = ["dust", "signal", "quiet", "memory", "handoff"].includes(scene);
   return <svg viewBox="0 0 640 440" role="img" aria-label={`Illustrative Opportunity scene: ${scene}`} className={`opportunity-art opportunity-art-${scene}`}>
     <defs><linearGradient id={`${id}-sky`} x2="0" y2="1"><stop stopColor={dark ? "#211b23" : "#c79778"} /><stop offset="1" stopColor={dark ? "#6b504b" : "#ecceb0"} /></linearGradient><pattern id={`${id}-dots`} width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#493734" opacity=".1" /></pattern></defs>
-    <path d="M0 0h640v440H0z" fill={`url(#${id}-sky)`} /><path d="M0 332q126-54 273-5t367-12v125H0z" fill={dark ? "#866051" : "#c28e6b"} /><path d="M0 358q196-45 335-17t305-17v116H0z" fill="#c29c7a" /><path d="M0 0h640v440H0z" fill={`url(#${id}-dots)`} />
+    {!stage && <><path d="M0 0h640v440H0z" fill={`url(#${id}-sky)`} /><path d="M0 332q126-54 273-5t367-12v125H0z" fill={dark ? "#866051" : "#c28e6b"} /><path d="M0 358q196-45 335-17t305-17v116H0z" fill="#c29c7a" /><path d="M0 0h640v440H0z" fill={`url(#${id}-dots)`} /></>}
     {scene === "airbags" ? <g stroke="#5b4639" strokeWidth="2"><path d="M225 46q100-75 200 0z" fill="#e8d9b9" /><path d="M225 46l69 116m131-116-71 116" fill="none" /><g className="oppy-airbags" style={{ transform: `translateY(${step > 0 ? 65 : 0}px)` }}>{[[271, 208], [329, 185], [389, 217], [250, 261], [318, 267], [382, 271]].map(([x, y]) => <circle key={x} cx={x} cy={y} r="46" fill="#d4bc8d" />)}<path d="m284 200 50-20 28 47-54 25z" fill="#9c8e77" /></g><path d="m179 373 47 9m225-18 37 8" stroke="#876045" /></g> : ["berries", "minerals", "grinder"].includes(scene) ? <>
       <path d="m63 203 374-33 142 191-437 43z" fill="#d5c8a9" stroke="#705841" strokeWidth="3" /><path d="m79 238 384-36m-360 64 380-30m-346 65 381-35m-350 69 373-38" fill="none" stroke="#ac967a" strokeWidth="2" />
       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(i => <circle key={i} cx={129 + i % 5 * 70 + Math.floor(i / 5) * 20} cy={221 + Math.floor(i / 5) * 55} r={i % 3 ? 10 : 14} fill="#777b7d" stroke="#48494a" strokeWidth="2" />)}

@@ -1,6 +1,6 @@
 # Next storytelling phase: scroll-driven thought clouds
 
-**Plan only. Do not implement until the current UI redesign has been reviewed and committed with the user’s approval.**
+**Implementation started for Opportunity after the UI redesign was committed as `725457a`.** The user selected `/heroes/opportunity/story` for the first cloud edition. Eagle’s existing reader remains unchanged.
 
 ## The idea
 
@@ -61,6 +61,12 @@ This example describes the proposed schema. It does not create an audio asset or
 - Preserve context and uncertainty when shortening factual explanations.
 - Keep a straightforward book/text alternative, keyboard navigation, readable mobile text, and reduced-motion behavior.
 
-## Review before building
+## Current implementation and review
 
-After the current redesign is approved, prototype one Eagle chapter with four clouds and its beat-ID manifest. Review motion, placement and reading pace before applying it to all chapters or producing narration audio.
+- Opportunity has 20 authored moments across five chapters, displayed on one continuous scroll stage.
+- Each moment keeps the exact short line, complete explanation, sources and book/comic links.
+- “More to this moment” opens the full explanation rather than removing it from the story.
+- `/api/stories/opportunity/narration` downloads the production manifest, including stable IDs, display serials, narration text, revisions, fingerprints and suggested audio filenames.
+- `lib/opportunity-narration.ts` is the registry for actual produced audio. No clips or invented timings are attached yet.
+- Optional browser voice preview uses synthetic English narration. It does not claim to be a produced or archival recording.
+- Review the cloud padding, placement, movement and reading pace before extending this presentation to Eagle or producing a full set of recorded narration.
