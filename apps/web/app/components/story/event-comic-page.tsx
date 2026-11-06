@@ -2,6 +2,7 @@ import type { EventChapter, MachineBook } from "@/lib/machine-books";
 import { getHero } from "@/lib/heroes";
 import EagleIssueArt from "@/app/components/profile/eagle-issue-art";
 import ComicScene from "./comic-scene";
+import OpportunityIllustration from "./opportunity-illustration";
 
 /** The same four beats become the prose edition; no parallel, drifting comic script. */
 export default function EventComicPage({ book, chapter }: { book: MachineBook; chapter: EventChapter }) {
@@ -11,7 +12,8 @@ export default function EventComicPage({ book, chapter }: { book: MachineBook; c
     {chapter.beats.map((beat, index) => <figure key={`${chapter.id}-${index}`} className="nook-panel">
       <div className="nook-panel-heading"><span>{String(index + 1).padStart(2, "0")}</span><span>{book.name}’s imagined voice</span></div>
       <div className="nook-bubble"><p>{beat.line}</p></div>
-      {beat.art ? <EagleIssueArt scene={beat.art} /> : <ComicScene machine={book.slug} stage={stages[index]} moon={moon} />}
+      {beat.roverArt ? <OpportunityIllustration scene={beat.roverArt} step={index} /> : beat.art ? <EagleIssueArt scene={beat.art} /> : <ComicScene machine={book.slug} stage={stages[index]} moon={moon} />}
+      {beat.sfx && <span className="nook-sfx" aria-label={`Imagined sound effect: ${beat.sfx}`}>{beat.sfx}</span>}
       <figcaption>{beat.detail}</figcaption>
     </figure>)}
   </div>;

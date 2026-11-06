@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
+      { protocol: "https", hostname: "d2pn8kiwq2w21t.cloudfront.net", pathname: "/original_images/**" },
       {
         protocol: "https",
         hostname: "**.r2.dev",
@@ -61,6 +62,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      { source: "/heroes/opportunity-rover", destination: "/heroes/opportunity", permanent: true },
+      { source: "/heroes/opportunity-rover/:path*", destination: "/heroes/opportunity/:path*", permanent: true },
       {
         source: "/privacy-policy",
         destination: "/privacy",

@@ -16,7 +16,7 @@ const TABS = [
 export default function TabBar() {
   const pathname = usePathname();
   // Stories and games play full screen with their own controls.
-  if (/^\/heroes\/[^/]+\/story$/.test(pathname) || pathname === "/story/book" || pathname === "/heroes/apollo-11-lander/book" || pathname.startsWith("/games/")) return null;
+  if (/^\/heroes\/[^/]+\/(story|book)$/.test(pathname) || pathname === "/story/book" || pathname.startsWith("/games/")) return null;
   return (
     <nav
       aria-label="Sections"

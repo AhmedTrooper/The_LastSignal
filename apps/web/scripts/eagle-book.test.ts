@@ -3,8 +3,8 @@ import { test } from "node:test";
 import { APOLLO_BOOK } from "../lib/machine-books/apollo";
 import { chapterParagraphs, MACHINE_BOOKS, machineBookUrl, readMachineBookmarks, resolveMachineReading } from "../lib/machine-books";
 
-test("only Eagle's event book is published, with standalone, source-linked chapters", () => {
-  assert.deepEqual(MACHINE_BOOKS.map(book => book.slug), ["apollo-11-lander"]);
+test("Eagle's event book remains published with standalone, source-linked chapters", () => {
+  assert.ok(MACHINE_BOOKS.includes(APOLLO_BOOK));
   const ids = APOLLO_BOOK.chapters.map(chapter => chapter.id);
   assert.equal(new Set(ids).size, ids.length);
   for (const chapter of APOLLO_BOOK.chapters) {
@@ -24,7 +24,7 @@ test("bookmarks reject malformed, unknown, and obsolete chapter positions", () =
   }
   assert.deepEqual(readMachineBookmarks(JSON.stringify({
     "apollo-11-lander": { chapter: "breaker", format: "book" },
-    "opportunity": { chapter: "dust-storm", format: "comic" },
+    "spirit": { chapter: "dust-storm", format: "comic" },
   })), { "apollo-11-lander": { chapter: "breaker", format: "book" } });
 });
 

@@ -6,9 +6,10 @@ import Header from "@/app/components/header";
 import StoryView from "@/app/components/story/story-view";
 import CinematicStory from "@/app/components/story/cinematic-story";
 import { STORIES } from "@/lib/stories";
-import { APOLLO_BOOK } from "@/lib/machine-books/apollo";
 import { photo } from "@/lib/photos";
 import EagleScrollStory from "@/app/components/story/eagle-scroll-story";
+import OpportunityScrollStory from "@/app/components/story/opportunity-scroll-story";
+import { getMachineBook } from "@/lib/machine-books";
 
 export function generateStaticParams() {
   return HEROES.map((h) => ({ slug: h.slug }));
@@ -17,10 +18,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const hero = getHero((await params).slug);
   if (!hero) return {};
-  const eagle = hero.slug === "apollo-11-lander";
-  const count = eagle ? APOLLO_BOOK.chapters.length : (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
+  const book = getMachineBook(hero.slug);
+  const count = book?.chapters.length ?? (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
-    title: `${hero.name}, a story in ${count} ${eagle || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
+    title: `${book?.name ?? hero.name}, a story in ${count} ${book || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
     description: hero.summary,
     path: `/heroes/${hero.slug}/story`,
     ogImage: img(portrait(hero)),
@@ -41,6 +42,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
       </main>
     );
   }
+  if (hero.slug === "opportunity") return <main><OpportunityScrollStory /></main>;
 
   if (film) {
     return (

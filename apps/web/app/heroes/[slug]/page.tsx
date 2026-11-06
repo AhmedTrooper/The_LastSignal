@@ -28,6 +28,8 @@ import Wiki from "@/app/components/profile/wiki";
 import EagleComicAdventure from "@/app/components/profile/eagle-comic-adventure";
 import Archive from "@/app/components/profile/archive";
 import { HeroSchema } from "@/app/components/structured-data";
+import OpportunityLibrary from "@/app/components/profile/opportunity-library";
+import { machineBookUrl } from "@/lib/machine-books";
 
 const HERO_GAMES: Record<string, { href: string; title: string; desc: string }> = {
   "ranger-7": {
@@ -125,6 +127,7 @@ function Heading({ children, sub }: { children: React.ReactNode; sub?: string })
 }
 
 function storyLabel(hero: Hero) {
+  if (hero.slug === "opportunity") return "Scroll the story";
   return STORIES[hero.slug] ? "Watch the film" : "Read the story";
 }
 
@@ -200,6 +203,7 @@ function Sidebar({ hero, nav }: { hero: Hero; nav: { id: string; label: string }
           <Link href={`/heroes/${hero.slug}/story`} className="flex items-center justify-between rounded-full bg-violet px-6 py-3.5 text-sm font-semibold text-white hover:bg-violet-deep">
             {storyLabel(hero)} <ArrowRight />
           </Link>
+          {hero.slug === "opportunity" && <Link href={machineBookUrl(hero.slug)} className="flex items-center justify-between rounded-full border border-line px-6 py-3 text-sm font-semibold hover:border-violet">Book &amp; Comic Nook <ArrowRight /></Link>}
           <a href="#tributes" className="flex items-center justify-between rounded-full border border-line px-6 py-3 text-sm font-semibold hover:border-violet hover:text-violet">
             Leave a tribute <ArrowRight />
           </a>
@@ -263,7 +267,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   // Sections present for this hero, in the order its life calls for.
   const has: Record<SectionId, boolean> = {
     model: true,
-    film: !!film,
+    film: !!film && hero.slug !== "opportunity",
     signature:
       !!sig ||
       hero.slug === "ranger-7" ||
@@ -293,7 +297,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   };
   const order = (LAYOUTS[hero.slug] ?? (Object.keys(SECTION_LABEL) as SectionId[])).filter((id) => has[id]);
   const label = (id: SectionId) => (id === "lost" ? hero.end.label : id === "signature" && sig ? sig.title : SECTION_LABEL[id]);
-  const nav = order.filter((id) => id !== "twin").map((id) => ({ id, label: label(id) }));
+  const nav = [...(hero.slug === "opportunity" ? [{ id: "opportunity-stories", label: "Book, comic & scroll" }] : []), ...order.filter((id) => id !== "twin").map((id) => ({ id, label: label(id) }))];
 
   const sections: Record<SectionId, () => React.ReactNode> = {
     model: () => (
@@ -309,7 +313,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
       </section>
     ),
 
-    film: () =>
+    film: () => hero.slug === "opportunity" ? null :
       film && (
         <section id="film" className="relative isolate scroll-mt-24 overflow-hidden rounded-2xl bg-night text-white">
           <Image src={pics.portrait.src} alt="" fill sizes="(min-width:1024px) 70vw, 100vw" className="-z-10 object-cover opacity-55" />
@@ -445,7 +449,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
         </div>
         {pics.end && !pics.end.ai && (
           <a href={pics.end.source} target="_blank" rel="noopener noreferrer" className="mt-5 block font-mono text-[11px] text-white/55 hover:text-white">
-            Background: {pics.end.title} · {pics.end.credit}
+            Background: {pics.end.title} · {pics.end.credit}{hero.slug === "opportunity" ? " · Simulated darkness graphic, not a final camera frame" : ""}
           </a>
         )}
       </section>
@@ -625,6 +629,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
           </div>
 
           <div className="min-w-0 space-y-4">
+            {hero.slug === "opportunity" && <OpportunityLibrary />}
             {order.map((id) => (
               <div key={id}>{sections[id]()}</div>
             ))}

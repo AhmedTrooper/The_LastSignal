@@ -1,4 +1,13 @@
 .eagle-scroll { --es-paper: #eee9df; --es-night: #151517; --es-signal: #bf9de0; color: var(--es-paper); background: var(--es-night); font-family: var(--font-sans); }
+.eagle-scroll.es-mars { --es-signal: #d3a886; --es-night: #201a19; }
+.es-mars .es-paper { --es-background: #f0e7db; --es-signal: #8d553c; }
+.es-mars .es-night { --es-background: #201a19; }
+.es-mars .es-opening-image img { object-position: center 65%; filter: saturate(.8) brightness(.85); }
+.es-mars .es-scroll-progress { background: #daa47a; }
+.es-mars .es-opening-copy h1 { font-size: clamp(70px,8vw,125px); }
+.es-mars .es-visual-frame > .opportunity-art { width: 100%; max-height: 100%; height: auto; }
+.oppy-airbags, .oppy-rover-move { transition: transform 800ms ease; }
+.es-mars .es-home { white-space: nowrap; }
 .eagle-scroll ::selection { color: #18141e; background: #d9c3eb; }
 .eagle-scroll :is(button,a,summary):focus-visible, .es-contents :is(button,a):focus-visible { outline: 2px solid #a677c9; outline-offset: 5px; }
 .es-label { font: 10px/1.8 var(--font-mono); letter-spacing: .15em; text-transform: uppercase; }

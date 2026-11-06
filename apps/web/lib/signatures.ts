@@ -131,7 +131,7 @@ export const SIGNATURES: Record<string, Signature> = {
       { label: "Planned", value: 1, muted: true },
       { label: "May 2013: passes Apollo 17's lunar rover", value: 35.744 },
       { label: "July 2014: past Lunokhod 2's 39 km", value: 40.25 },
-      { label: "24 March 2015: a marathon", value: 42.198 },
+      { label: "24 March 2015: exceeds marathon distance", value: 42.195 },
       { label: "Final, when the mission ended", value: 45.16 },
     ],
   },

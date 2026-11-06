@@ -17,7 +17,7 @@ import { photo } from "@/lib/photos";
 import { BOOK_SPREADS as SPREADS } from "@/lib/book-spreads";
 import { calculateIngenuityAerodynamics } from "@/lib/ingenuity-mission";
 import { calculateDustImpact } from "@/lib/mer-mission";
-import { machineBookUrl } from "@/lib/machine-books";
+import { getMachineBook, machineBookUrl } from "@/lib/machine-books";
 
 import { TOC_ITEMS } from "@thelastsignal/data";
 import "./book.css";
@@ -27,17 +27,18 @@ export default function StoryBookPage() {
 
 function BookRoute() {
   const query = useSearchParams();
-  if (query.get("machine") === "apollo-11-lander") {
+  const book = getMachineBook(query.get("machine") ?? "");
+  if (book) {
     const format = query.get("format");
-    return <EagleBookRedirect href={machineBookUrl("apollo-11-lander", query.get("chapter") ?? undefined, format === "book" || format === "comic" ? format : undefined)} />;
+    return <MachineBookRedirect name={book.name} href={machineBookUrl(book.slug, query.get("chapter") ?? undefined, format === "book" || format === "comic" ? format : undefined)} />;
   }
   return <LegacyStoryBookReader />;
 }
 
-function EagleBookRedirect({ href }: { href: string }) {
+function MachineBookRedirect({ name, href }: { name: string; href: string }) {
   const router = useRouter();
   useEffect(() => { router.replace(href); }, [href, router]);
-  return <main className="storybook-reader min-h-dvh p-8" aria-busy="true">Opening Eagle’s event chapters…</main>;
+  return <main className="storybook-reader min-h-dvh p-8" aria-busy="true">Opening {name}’s event chapters…</main>;
 }
 
 function LegacyStoryBookReader() {

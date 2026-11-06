@@ -5,6 +5,7 @@ import { photo } from "@/lib/photos";
 import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
 import { ArrowRight } from "@/app/components/icons";
+import { getMachineBook } from "@/lib/machine-books";
 
 export const metadata = generateSEO({
   title: "Stories: every machine, chapter by chapter | The Last Signal",
@@ -49,7 +50,7 @@ export default function StoryIndex() {
                 <Image src={img(portrait(h))} alt={pic.alt} fill sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 100vw" className="-z-10 object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(12,10,34,0)_35%,rgba(12,10,34,0.92))]" />
                 <p className="font-mono text-xs text-white/75">
-                  {catNo(h.no)} · {storyChapters(h).length} chapters
+                  {catNo(h.no)} · {getMachineBook(h.slug)?.chapters.length ?? storyChapters(h).length} chapters
                 </p>
                 <h2 className="display mt-1 text-3xl">{h.name}</h2>
                 <p className="mt-1 font-mono text-sm text-white/80">{lifespan(h)}</p>

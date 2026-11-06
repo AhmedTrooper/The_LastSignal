@@ -1,6 +1,7 @@
 import type { EagleComicScene } from "../eagle-comic";
 
-export type StoryBeat = { line: string; detail: string; art?: EagleComicScene };
+export type OpportunityScene = "airbags" | "rollout" | "berries" | "grinder" | "minerals" | "sand" | "testbed" | "escape" | "solar" | "memory" | "marathon" | "dust" | "signal" | "quiet" | "handoff";
+export type StoryBeat = { line: string; detail: string; art?: EagleComicScene; roverArt?: OpportunityScene; sfx?: string };
 export type EventChapter = {
   id: string;
   title: string;
@@ -8,6 +9,7 @@ export type EventChapter = {
   hardware: string;
   source: string;
   relatedSources?: { label: string; url: string }[];
+  telemetry?: { label: string; value: string; note: string; source: string }[];
   beats: [StoryBeat, StoryBeat, StoryBeat, StoryBeat];
   discovery: string;
   question: string;
