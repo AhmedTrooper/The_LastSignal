@@ -1,0 +1,44 @@
+.viking-thoughts { background: #3f3747; }
+.viking-thoughts .tc-topbar { background: #3f3747f2; }
+.viking-thoughts .tc-topbar-serial { color: #e0d5c5; }
+.viking-thoughts .tc-total-progress { background: #dfc591; }
+.viking-thoughts .tc-topbar nav > span[aria-current] { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 2px solid #dfc591; color: #dfc591; font-size: 12px; }
+.viking-thoughts .tc-tone-paper { --tc-bg: #ece3d5; --tc-ink: #514440; --tc-muted: #786254; --tc-ground: #b79c83; }
+.viking-thoughts .tc-tone-night { --tc-bg: #3f3747; --tc-ink: #f7e8cd; --tc-muted: #d5c9c6; --tc-ground: #876e66; }
+.viking-thoughts .tc-topbar nav a { min-width: 44px; justify-content: center; }
+.viking-thoughts .tc-opening .es-opening-copy h1 { font-size: clamp(48px, 6.6vw, 100px); }
+.viking-extras { margin-top: 24px; color: #51483e; overflow-wrap: anywhere; }
+.viking-activity, .viking-archive { margin: 0; padding: 24px; border: 1px solid #b6aa94; border-radius: 18px; background: #f1ebdf; color: #51483e; }
+.viking-activity + .viking-activity, .viking-archive { margin-top: 24px; }
+.viking-extras h3 { margin-top: 8px; font-size: 21px; line-height: 1.4; text-wrap: balance; }
+.viking-extras h4 { margin-top: 24px; font-size: 17px; line-height: 1.6; }
+.viking-extras p:not(.tc-eyebrow) { margin-top: 14px; font-size: 16px; line-height: 1.8; }
+.viking-extras .tc-eyebrow { color: #725746; }
+.viking-activity > .viking-art { display: block; width: 100%; max-width: 560px; height: auto; margin: 20px auto; border-radius: 12px; }
+.viking-extras [role="group"] { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.viking-extras button { min-height: 44px; max-width: 100%; padding: 10px 16px; border: 1px solid #927761; border-radius: 12px; background: #fff8ec; color: #624b3d; font-size: 14px; line-height: 1.5; cursor: pointer; }
+.viking-extras button[aria-pressed="true"] { background: #6c5243; color: #fff6e6; }
+.viking-extras button:hover:not(:disabled) { border-color: #4c372c; }
+.viking-extras button:disabled { opacity: .5; cursor: default; }
+.viking-extras .viking-activity > button { margin-top: 16px; }
+.viking-extras label { display: block; font-size: 15px; line-height: 1.6; font-weight: 650; }
+.viking-extras input[type="range"] { display: block; width: 100%; min-height: 48px; accent-color: #725746; }
+.viking-extras :is(a, button, input):focus-visible { outline: 3px solid #755523; outline-offset: 4px; }
+.viking-extras a { display: inline-block; min-height: 44px; padding-block: 12px; font-size: 13px; line-height: 1.7; color: #765038; text-decoration: underline; text-underline-offset: 4px; }
+.viking-extras .viking-teaching-note { color: #736351; font-size: 12px; }
+.viking-photo-frame { position: relative; width: 100%; aspect-ratio: 3 / 2; margin-top: 16px; overflow: hidden; border-radius: 12px; background: #3f3747; }
+.viking-archive figcaption { margin-top: 16px; line-height: 1.7; }
+.viking-power-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.viking-power-comparison > div { padding: 14px; border: 1px solid #baac96; border-radius: 10px; }
+.viking-power-comparison dt { font-size: 15px; font-weight: 700; }
+.viking-power-comparison dd { margin-top: 8px; font-size: 14px; line-height: 1.7; }
+.nook-mechanism .viking-extras { max-width: 900px; margin-inline: auto; padding: 0 16px 16px; }
+.nook-mechanism .viking-extras > a, .nook-mechanism .viking-extras > .viking-teaching-note { color: #eadac1; }
+@media (max-width: 599px) {
+  .viking-thoughts .tc-topbar { padding-inline: 12px; gap: 8px; }
+  .viking-thoughts .tc-topbar-serial { display: none; }
+  .viking-thoughts .tc-topbar nav { gap: 8px; }
+  .viking-thoughts .tc-opening .es-opening-copy h1 { font-size: clamp(40px, 9.5vw, 52px); }
+  .viking-activity, .viking-archive { padding: 18px; }
+  .viking-power-comparison { grid-template-columns: 1fr; }
+}

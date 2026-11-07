@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "assets.science.nasa.gov", pathname: "/content/dam/science/**" },
       { protocol: "https", hostname: "www.nasa.gov", pathname: "/wp-content/uploads/**" },
       { protocol: "https", hostname: "d2pn8kiwq2w21t.cloudfront.net", pathname: "/original_images/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA00381/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA00563/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA00567/**" },
       {
         protocol: "https",
         hostname: "**.r2.dev",
