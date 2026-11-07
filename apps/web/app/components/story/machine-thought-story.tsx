@@ -116,7 +116,9 @@ export default function MachineThoughtStory({ edition: EDITION, renderIllustrati
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     const measure = () => {
-      positions.current = Array.from(root.current!.querySelectorAll<HTMLElement>("[data-thought-marker]"), element => window.scrollY + element.getBoundingClientRect().top - HEADER_HEIGHT);
+      const node = root.current;
+      if (!node) return; // A queued ResizeObserver callback can land right after unmount.
+      positions.current = Array.from(node.querySelectorAll<HTMLElement>("[data-thought-marker]"), element => window.scrollY + element.getBoundingClientRect().top - HEADER_HEIGHT);
       endPosition.current = window.scrollY + document.getElementById("tc-ending")!.getBoundingClientRect().top - HEADER_HEIGHT;
       schedule();
     };
