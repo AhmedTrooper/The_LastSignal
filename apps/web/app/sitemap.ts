@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1.0 },
     { path: "/where-they-rest", priority: 0.8 },
     { path: "/story", priority: 0.8 },
+    { path: "/our-hero", priority: 0.8 },
     { path: "/timeline", priority: 0.8 },
     { path: "/gallery", priority: 0.6 },
     { path: "/tributes", priority: 0.6 },

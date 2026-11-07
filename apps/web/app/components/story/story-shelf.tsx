@@ -7,7 +7,7 @@ import RangerIllustration from "./ranger-illustration";
 import InsightIllustration from "./insight-illustration";
 import IngenuityIllustration from "./ingenuity-illustration";
 
-/** The story editions shelf, separate from the machine catalogue below it. */
+/** The story editions shelf, separate from the machine catalogue. */
 export default function StoryShelf() {
   return (
     <div className="story-index-shelf">

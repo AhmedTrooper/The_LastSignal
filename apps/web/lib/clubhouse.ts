@@ -1,5 +1,6 @@
 /** Navigation labels are UI copy, never a replacement for mission facts. */
 export const CLUB_LINKS = [
+  { href: "/our-hero", label: "Our heroes", short: "Heroes", icon: "explorers", description: "Meet the machines and follow their real adventures." },
   { href: "/story", label: "Story room", short: "Stories", icon: "stories", description: "Scroll, read a book, or follow the panels." },
   { href: "/where-they-rest", label: "Space map", short: "Map", icon: "map", description: "Find our explorers on the Moon and Mars." },
 ] as const;
