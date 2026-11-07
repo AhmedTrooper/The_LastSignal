@@ -9,6 +9,7 @@ import { STORIES } from "@/lib/stories";
 import { photo } from "@/lib/photos";
 import EagleScrollStory from "@/app/components/story/eagle-scroll-story";
 import OpportunityScrollStory from "@/app/components/story/opportunity-scroll-story";
+import RangerThoughtStory from "@/app/components/story/ranger-thought-story";
 import { getMachineBook } from "@/lib/machine-books";
 
 export function generateStaticParams() {
@@ -43,6 +44,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
     );
   }
   if (hero.slug === "opportunity") return <main><OpportunityScrollStory /></main>;
+  if (hero.slug === "ranger-7") return <main><RangerThoughtStory /></main>;
 
   if (film) {
     return (

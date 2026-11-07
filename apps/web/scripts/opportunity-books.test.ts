@@ -3,13 +3,15 @@ import { test } from "node:test";
 import { MACHINE_BOOKS, machineBookUrl, machineStoryUrl, readMachineBookmarks, resolveMachineReading, chapterParagraphs } from "../lib/machine-books";
 import { OPPORTUNITY_BOOK, OPPORTUNITY_HANDOFF } from "../lib/machine-books/opportunity";
 import { APOLLO_BOOK } from "../lib/machine-books/apollo";
+import { RANGER_BOOK } from "../lib/machine-books/ranger";
 import { OPPORTUNITY_SCROLL_EDITION, OPPORTUNITY_PHOTOS } from "../lib/opportunity-media";
 import { readMachineScrollPosition } from "../lib/machine-scroll";
 
-test("only the completed Eagle and Opportunity books are in the published library", () => {
-  assert.deepEqual(MACHINE_BOOKS.map(book => book.slug), ["apollo-11-lander", "opportunity"]);
+test("the completed Eagle, Opportunity and Ranger books are in the published library", () => {
+  assert.deepEqual(MACHINE_BOOKS.map(book => book.slug), ["apollo-11-lander", "opportunity", "ranger-7"]);
   assert.equal(APOLLO_BOOK.chapters.length, 10);
   assert.deepEqual(OPPORTUNITY_BOOK.chapters.map(chapter => chapter.id), ["airbag-landing", "blueberries", "purgatory", "marathon", "dust-storm"]);
+  assert.deepEqual(RANGER_BOOK.chapters.map(chapter => chapter.id), ["six-eyed-tower", "six-failures", "lucky-peanuts", "seventeen-minutes", "mare-cognitum"]);
 });
 
 test("all Opportunity formats share four beats and retain event-specific sources", () => {

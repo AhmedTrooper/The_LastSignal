@@ -6,6 +6,17 @@
 .eagle-thoughts .tc-topbar-serial { color: #cab1df; }
 .eagle-thoughts .tc-total-progress { background: #bca0d6; }
 .eagle-thoughts .tc-stage { --es-ink: var(--tc-ink); }
+.ranger-thoughts { background: #1b2230; }
+.ranger-thoughts .tc-tone-paper { --tc-bg: #eee7d8; --tc-ink: #2f2b33; --tc-muted: #6f6a62; --tc-ground: #d5c9b6; }
+.ranger-thoughts .tc-tone-night { --tc-bg: #222c3d; --tc-ink: #f2ecdf; --tc-muted: #b7c1cf; --tc-ground: #3d4a60; }
+.ranger-thoughts .tc-topbar { background: #1b2230f2; }
+.ranger-thoughts .tc-topbar-serial { color: #d8b06a; }
+.ranger-thoughts .tc-total-progress { background: #d8b06a; }
+.ranger-thoughts .tc-stage { --es-ink: var(--tc-ink); }
+.ranger-thoughts .tc-cloud-speaker { color: #7a6b55; }
+.ranger-thoughts .tc-cloud-inside > button { border-bottom-color: #b9ab97; color: #735f44; }
+.ranger-thoughts ::selection { color: #1b2230; background: #e0bf7e; }
+.ranger-thoughts :is(button,a,summary):focus-visible { outline-color: #d8b06a; }
 .tc-topbar { position: fixed; top: 0; inset-inline: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; gap: 20px; height: var(--tc-header); padding-inline: clamp(18px,4vw,64px); border-bottom: 1px solid #ffffff1f; background: #201a19f2; backdrop-filter: blur(10px); }
 .tc-topbar > a { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; }
 .tc-topbar-description { color: #bbab9f; }

@@ -1,13 +1,22 @@
 import type { MachineBook } from "./machine-books/types";
 import type { Photo } from "./photos";
 
-export type ScrollDirection = { place: string; date: string; tone: "night" | "paper"; photograph?: Photo; diagram?: string; diagramBeats?: number[] };
+export type ScrollDirection = {
+  place: string;
+  date: string;
+  tone: "night" | "paper";
+  photograph?: Photo;
+  /** Optional per-beat archive frames. An entry here wins over the chapter-level photograph. */
+  photographs?: Record<number, Photo>;
+  diagram?: string;
+  diagramBeats?: number[];
+};
 export type ScrollEdition = {
   book: MachineBook;
   directions: Record<string, ScrollDirection>;
   cover: Photo;
   bookmarkKey: string;
-  theme?: "mars";
+  theme?: "mars" | "moon";
   opening: { kicker: string; title: string; emphasis: string; introduction: string; invitation: string };
   preface: { label: string; text: string };
   ending: string;
