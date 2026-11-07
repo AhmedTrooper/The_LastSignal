@@ -84,7 +84,7 @@ function ThoughtStage({ edition, renderIllustration, active, hasStarted, blocked
 
 export default function MachineThoughtStory({ edition: EDITION, renderIllustration, onChapterChange, renderNotesExtras }: { edition: ThoughtEdition; renderIllustration: IllustrationRenderer; onChapterChange?: (index: number) => void; renderNotesExtras?: IllustrationRenderer }) {
   const BOOK = EDITION.book;
-  const storyFirst = BOOK.slug === "apollo-11-lander" || BOOK.slug === "insight" || BOOK.slug === "ingenuity";
+  const storyFirst = BOOK.slug === "apollo-11-lander" || BOOK.slug === "insight" || BOOK.slug === "ingenuity" || BOOK.slug === "spirit";
   const MOMENTS = EDITION.moments;
   const root = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -167,7 +167,7 @@ export default function MachineThoughtStory({ edition: EDITION, renderIllustrati
     return () => window.removeEventListener("keydown", key);
   }, [active, started, dialog, move]);
 
-  const themeClass = BOOK.slug === "ingenuity" ? "es-mars ingenuity-thoughts" : BOOK.slug === "insight" ? "es-mars insight-thoughts" : EDITION.theme === "mars" ? "es-mars opportunity-thoughts" : EDITION.theme === "moon" ? "ranger-thoughts" : "eagle-thoughts";
+  const themeClass = BOOK.slug === "spirit" ? "es-mars spirit-thoughts" : BOOK.slug === "ingenuity" ? "es-mars ingenuity-thoughts" : BOOK.slug === "insight" ? "es-mars insight-thoughts" : EDITION.theme === "mars" ? "es-mars opportunity-thoughts" : EDITION.theme === "moon" ? "ranger-thoughts" : "eagle-thoughts";
   return <div ref={root} className={`eagle-scroll thought-story ${themeClass}`} data-machine={BOOK.slug} data-active-moment={moment.beatId} data-started={started}>
     <a href={`#${MOMENTS[0].beatId}`} className="es-skip" onClick={event => { event.preventDefault(); move(0); }}>Skip to {BOOK.name}’s first thought</a>
     <header className="tc-topbar"><Link href="/story" aria-label="Back to the story room"><ArrowLeft className="h-4 w-4" /><span>{BOOK.name}<span className="tc-topbar-description"> / a story in thoughts</span></span></Link><p className="tc-topbar-serial" aria-label={started ? `Moment ${moment.displaySerial} of ${MOMENTS.length}` : `${MOMENTS.length} story moments`}>{started ? `${String(moment.displaySerial).padStart(2, "0")} / ${MOMENTS.length}` : `${MOMENTS.length} moments`}</p><nav aria-label="Story controls"><button type="button" onClick={() => setDialog("chapters")}>Chapters</button>{storyFirst && <><span aria-current="page">Story</span><Link href={machineBookUrl(BOOK.slug, moment.chapterId, "comic")}>Comic</Link></>}<Link href={machineBookUrl(BOOK.slug, moment.chapterId, "book")}>{storyFirst ? "Book" : "Full book"}</Link></nav><div className="tc-total-progress" style={{ transform: `scaleX(${started ? moment.displaySerial / MOMENTS.length : 0})` }} aria-hidden="true" /></header>

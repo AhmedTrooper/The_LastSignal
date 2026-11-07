@@ -1,0 +1,43 @@
+.spirit-thoughts { background: #302535; }
+.spirit-thoughts .tc-topbar { background: #302535f2; }
+.spirit-thoughts .tc-topbar-serial { color: #e1c399; }
+.spirit-thoughts .tc-total-progress { background: #e1c399; }
+.spirit-thoughts .tc-topbar nav > span[aria-current] { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 2px solid #e1c399; color: #e1c399; font-size: 12px; }
+.spirit-thoughts .tc-tone-paper { --tc-bg: #f0e1c8; --tc-ink: #44343e; --tc-muted: #79636c; --tc-ground: #c59d83; }
+.spirit-thoughts .tc-tone-night { --tc-bg: #302e43; --tc-ink: #f8ead4; --tc-muted: #c8b6bf; --tc-ground: #745e6b; }
+.spirit-thoughts .tc-topbar nav a { justify-content: center; min-width: 44px; }
+.spirit-thoughts .tc-opening .es-opening-copy h1 { font-size: clamp(52px, 7.5vw, 112px); }
+.spirit-extras { margin-top: 24px; color: #453a41; overflow-wrap: anywhere; }
+.spirit-activity, .spirit-archive { margin: 0; padding: 24px; border: 1px solid #c5aa91; border-radius: 18px; color: #453a41; background: #f6ecdc; }
+.spirit-archive { margin-top: 24px; }
+.spirit-extras h3 { margin-top: 8px; font-size: 21px; line-height: 1.35; text-wrap: balance; }
+.spirit-extras p:not(.tc-eyebrow) { margin-top: 14px; font-size: 16px; line-height: 1.8; }
+.spirit-extras .tc-eyebrow { color: #765744; }
+.spirit-activity > .spirit-art { display: block; width: 100%; max-width: 560px; height: auto; margin: 20px auto; border-radius: 12px; }
+.spirit-extras [role="group"] { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.spirit-extras button { min-height: 44px; padding: 10px 16px; border: 1px solid #937166; border-radius: 12px; color: #68473e; background: #fffaf0; font-size: 14px; line-height: 1.5; cursor: pointer; }
+.spirit-extras button[aria-pressed="true"] { color: #fff8e9; background: #704e44; }
+.spirit-extras button:hover:not(:disabled) { border-color: #50352e; }
+.spirit-extras button:disabled { opacity: .5; cursor: default; }
+.spirit-extras .spirit-reset { margin-top: 16px; margin-right: 16px; }
+.spirit-extras label { display: block; font-size: 15px; font-weight: 650; line-height: 1.5; }
+.spirit-extras input[type="range"] { display: block; width: 100%; min-height: 48px; accent-color: #704e44; }
+.spirit-extras :is(button, input, a):focus-visible { outline: 3px solid #99701b; outline-offset: 4px; }
+.spirit-extras a { display: inline-block; min-height: 44px; padding-block: 12px; color: #7655a1; font-size: 13px; line-height: 1.7; text-decoration: underline; text-underline-offset: 4px; }
+.spirit-activity a, .spirit-archive a { color: #684b71; }
+.spirit-extras .spirit-teaching-note { color: inherit; font-size: 12px; }
+.spirit-photo-frame { position: relative; width: 100%; aspect-ratio: 3 / 2; margin-top: 16px; border-radius: 12px; overflow: hidden; background: #342d39; }
+.spirit-archive figcaption { margin-top: 16px; line-height: 1.65; }
+.spirit-archive video { display: block; width: 100%; max-height: 360px; margin-top: 18px; background: #302535; border-radius: 12px; }
+.nook-mechanism .spirit-extras { max-width: 900px; margin-inline: auto; padding: 0 16px 16px; }
+.nook-mechanism .spirit-extras > .spirit-teaching-note { color: #d9c8dc; }
+.nook-mechanism .spirit-extras > a { color: #dec4ef; }
+.tc-notes .spirit-extras > .spirit-teaching-note { color: #6d5365; }
+.tc-notes .spirit-extras > a { color: #684b71; }
+@media (max-width: 599px) {
+  .spirit-thoughts .tc-topbar { padding-inline: 14px; gap: 8px; }
+  .spirit-thoughts .tc-topbar-serial { display: none; }
+  .spirit-thoughts .tc-topbar nav { gap: 8px; }
+  .spirit-thoughts .tc-opening .es-opening-copy h1 { font-size: clamp(42px, 10vw, 54px); }
+  .spirit-activity, .spirit-archive { padding: 18px; }
+}
