@@ -11,6 +11,8 @@ import IngenuityIllustration from "./ingenuity-illustration";
 import { INGENUITY_ART_SCENES } from "@/lib/ingenuity-scenes";
 import SpiritIllustration from "./spirit-illustration";
 import { SPIRIT_ART_SCENES } from "@/lib/spirit-scenes";
+import SurveyorIllustration from "./surveyor-illustration";
+import { SURVEYOR_ART_SCENES } from "@/lib/surveyor-scenes";
 
 /** The same four beats become the prose edition; no parallel, drifting comic script. */
 export default function EventComicPage({ book, chapter }: { book: MachineBook; chapter: EventChapter }) {
@@ -21,7 +23,7 @@ export default function EventComicPage({ book, chapter }: { book: MachineBook; c
     {chapter.beats.map((beat, index) => <figure key={`${chapter.id}-${index}`} className="nook-panel">
       <div className="nook-panel-heading"><span>{String(index + 1).padStart(2, "0")}</span><span>{book.name}’s imagined voice</span></div>
       <div className="nook-bubble"><p>{beat.line}</p></div>
-      {book.slug === "spirit" ? <SpiritIllustration scene={SPIRIT_ART_SCENES[chapter.id]?.[index] ?? "hills"} /> : book.slug === "ingenuity" ? <IngenuityIllustration scene={INGENUITY_ART_SCENES[chapter.id]?.[index] ?? "hover"} /> : book.slug === "insight" ? <InsightIllustration scene={INSIGHT_ART_SCENES[chapter.id]?.[index] ?? "lander"} /> : beat.roverArt ? <OpportunityIllustration scene={beat.roverArt} step={index} /> : beat.art ? <EagleIssueArt scene={beat.art} /> : rangerScenes?.[index] ? <RangerIllustration scene={rangerScenes[index]} step={index} /> : <ComicScene machine={book.slug} stage={stages[index]} moon={moon} />}
+      {book.slug === "surveyor-1" ? <SurveyorIllustration scene={SURVEYOR_ART_SCENES[chapter.id]?.[index] ?? "touchdown"} /> : book.slug === "spirit" ? <SpiritIllustration scene={SPIRIT_ART_SCENES[chapter.id]?.[index] ?? "hills"} /> : book.slug === "ingenuity" ? <IngenuityIllustration scene={INGENUITY_ART_SCENES[chapter.id]?.[index] ?? "hover"} /> : book.slug === "insight" ? <InsightIllustration scene={INSIGHT_ART_SCENES[chapter.id]?.[index] ?? "lander"} /> : beat.roverArt ? <OpportunityIllustration scene={beat.roverArt} step={index} /> : beat.art ? <EagleIssueArt scene={beat.art} /> : rangerScenes?.[index] ? <RangerIllustration scene={rangerScenes[index]} step={index} /> : <ComicScene machine={book.slug} stage={stages[index]} moon={moon} />}
       {beat.sfx && <span className="nook-sfx" aria-label={`Imagined sound effect: ${beat.sfx}`}>{beat.sfx}</span>}
       <figcaption>{beat.detail}</figcaption>
     </figure>)}

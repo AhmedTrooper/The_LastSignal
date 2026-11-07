@@ -7,6 +7,7 @@ import RangerIllustration from "./ranger-illustration";
 import InsightIllustration from "./insight-illustration";
 import IngenuityIllustration from "./ingenuity-illustration";
 import SpiritIllustration from "./spirit-illustration";
+import SurveyorIllustration from "./surveyor-illustration";
 
 /** The story editions shelf, separate from the machine catalogue. */
 export default function StoryShelf() {
@@ -22,6 +23,7 @@ export default function StoryShelf() {
                   : book.slug === "insight" ? <InsightIllustration />
                   : book.slug === "ingenuity" ? <IngenuityIllustration />
                   : book.slug === "spirit" ? <SpiritIllustration />
+                  : book.slug === "surveyor-1" ? <SurveyorIllustration />
                   : <OpportunityIllustration scene="rollout" />}
               </div>
             </figure>
