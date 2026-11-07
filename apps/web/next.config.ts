@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
+      { protocol: "https", hostname: "assets.science.nasa.gov", pathname: "/content/dam/science/**" },
+      { protocol: "https", hostname: "www.nasa.gov", pathname: "/wp-content/uploads/**" },
       { protocol: "https", hostname: "d2pn8kiwq2w21t.cloudfront.net", pathname: "/original_images/**" },
       {
         protocol: "https",

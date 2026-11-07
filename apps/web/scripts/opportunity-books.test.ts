@@ -7,8 +7,8 @@ import { RANGER_BOOK } from "../lib/machine-books/ranger";
 import { OPPORTUNITY_SCROLL_EDITION, OPPORTUNITY_PHOTOS } from "../lib/opportunity-media";
 import { readMachineScrollPosition } from "../lib/machine-scroll";
 
-test("the completed Eagle, Opportunity and Ranger books are in the published library", () => {
-  assert.deepEqual(MACHINE_BOOKS.map(book => book.slug), ["apollo-11-lander", "opportunity", "ranger-7"]);
+test("the completed machine books are in the published library", () => {
+  assert.deepEqual(MACHINE_BOOKS.map(book => book.slug), ["apollo-11-lander", "opportunity", "ranger-7", "insight"]);
   assert.equal(APOLLO_BOOK.chapters.length, 10);
   assert.deepEqual(OPPORTUNITY_BOOK.chapters.map(chapter => chapter.id), ["airbag-landing", "blueberries", "purgatory", "marathon", "dust-storm"]);
   assert.deepEqual(RANGER_BOOK.chapters.map(chapter => chapter.id), ["six-eyed-tower", "six-failures", "lucky-peanuts", "seventeen-minutes", "mare-cognitum"]);

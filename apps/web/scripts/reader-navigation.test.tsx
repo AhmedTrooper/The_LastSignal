@@ -4,9 +4,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import EagleScrollStory from "../app/components/story/eagle-scroll-story";
 import OpportunityScrollStory from "../app/components/story/opportunity-scroll-story";
 import RangerThoughtStory from "../app/components/story/ranger-thought-story";
+import InsightThoughtStory from "../app/components/story/insight-thought-story";
 
 test("every featured scroll reader returns to the story list and never links a hidden profile or shelf", () => {
-  for (const Reader of [EagleScrollStory, OpportunityScrollStory, RangerThoughtStory]) {
+  for (const Reader of [EagleScrollStory, OpportunityScrollStory, RangerThoughtStory, InsightThoughtStory]) {
     const markup = renderToStaticMarkup(<Reader />);
     const topbar = markup.match(/<header class="tc-topbar">([\s\S]*?)<\/header>/)?.[1];
     assert.ok(topbar, Reader.name);

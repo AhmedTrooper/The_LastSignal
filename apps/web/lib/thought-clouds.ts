@@ -40,7 +40,7 @@ export type ThoughtMoment = {
     durationMs: number | null;
   };
 };
-export type ThoughtEdition = ScrollEdition & { moments: ThoughtMoment[]; manifestUrl: string };
+export type ThoughtEdition = ScrollEdition & { moments: ThoughtMoment[]; manifestUrl: string; evidenceUrl?: string };
 
 export function buildNarrationManifest(book: MachineBook, moments: ThoughtMoment[]) {
   return {

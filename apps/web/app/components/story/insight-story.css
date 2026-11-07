@@ -1,0 +1,27 @@
+.insight-thoughts { background: #1f2731; }
+.insight-thoughts .tc-topbar { background: #1f2731f2; }
+.insight-thoughts .tc-topbar-serial { color: #e9c591; }
+.insight-thoughts .tc-total-progress { background: #e9c591; }
+.insight-thoughts .tc-topbar nav > span[aria-current] { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 2px solid #e9c591; color: #e9c591; font-size: 12px; }
+.insight-thoughts .tc-tone-paper { --tc-bg: #eee4d4; --tc-ink: #37313c; --tc-muted: #74616c; --tc-ground: #d5b69e; }
+.insight-thoughts .tc-tone-night { --tc-bg: #28323d; --tc-ink: #f5ead9; --tc-muted: #c5bdc6; --tc-ground: #59424a; }
+.insight-thoughts .es-opening-copy h1 { font-size: clamp(68px,8vw,125px); }
+.insight-extras { margin-top: 24px; }
+.insight-activity, .insight-archive { padding: 22px; border: 1px solid #b9a4af; border-radius: 16px; background: #f3e7de; color: #3d2e37; }
+.insight-archive { margin-top: 20px; background: #eee8ec; }
+.insight-extras h3 { margin-top: 8px; font-size: 19px; line-height: 1.4; }
+.insight-extras p:not(.tc-eyebrow) { margin-top: 14px; font-size: 16px; line-height: 1.8; }
+.insight-extras [role="group"] { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.insight-extras button { min-height: 44px; padding: 10px 15px; border: 1px solid #8f738b; border-radius: 999px; background: #fff9ec; color: #523b56; cursor: pointer; font-size: 14px; }
+.insight-extras button[aria-pressed="true"] { background: #5b4162; color: #fff9ec; }
+.insight-extras button:hover { border-color: #57345a; }
+.insight-extras :is(button,a,summary):focus-visible { outline: 3px solid #83518b; outline-offset: 4px; }
+.insight-extras a { display: inline-block; min-height: 44px; padding-block: 12px; color: #674568; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.insight-archive video { width: 100%; max-height: 360px; margin-top: 16px; border-radius: 12px; background: #141d27; }
+.insight-comparison { margin-top: 18px; }
+.insight-comparison img { width: 100%; height: auto; max-height: 380px; border-radius: 12px; background: #ddd0ca; }
+.insight-comparison figcaption { font-size: 12px; }
+.insight-future { margin-top: 20px; padding: 0 8px; }
+.insight-future summary { min-height: 44px; padding-block: 12px; cursor: pointer; }
+.nook-mechanism .insight-extras { max-width: 900px; margin-inline: auto; }
+@media (max-width:599px) { .insight-thoughts .tc-topbar-serial { display: none; } .insight-thoughts .tc-topbar nav { gap: 12px; } .insight-thoughts .tc-opening .es-opening-copy h1 { font-size: 68px; } .insight-activity, .insight-archive { padding: 18px; } }
