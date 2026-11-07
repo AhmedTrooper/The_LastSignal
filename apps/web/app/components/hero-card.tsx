@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { type Hero, catNo, lifespan, assetUrl, img, portrait } from "@/lib/heroes";
 import { photo } from "@/lib/photos";
 import { ArrowRight } from "@/app/components/icons";
@@ -9,7 +10,7 @@ import { EXPLORER_TRAITS } from "@/lib/clubhouse";
 export default function HeroCard({ hero, size = "md", priority = false, story = false }: { hero: Hero; size?: "lg" | "md"; priority?: boolean; story?: boolean }) {
   const archive = photo(portrait(hero), hero.name);
   const illustration = !!hero.card;
-  return <Link href={`/heroes/${hero.slug}${story ? "/story" : ""}`} className={`club-explorer-card ${size === "lg" ? "club-explorer-card-large" : ""}`}>
+  return <Link href={story ? `/heroes/${hero.slug}/story` : machineEntryUrl(hero.slug)} className={`club-explorer-card ${size === "lg" ? "club-explorer-card-large" : ""}`}>
     <div className="club-explorer-stage" data-world={hero.body}>
       <span className="club-world-badge" data-world={hero.body}><span aria-hidden="true" />{hero.body === "moon" ? "The Moon" : "Mars"}</span>
       <Image src={illustration ? assetUrl(`images/${hero.card}.webp`) : img(portrait(hero))} alt={illustration ? `${hero.name}, AI-generated illustration` : archive.alt} fill priority={priority} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className={illustration ? "object-contain p-5" : "object-cover"} />

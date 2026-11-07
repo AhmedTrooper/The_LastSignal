@@ -1,0 +1,177 @@
+{
+  "recordType": "research-handoff",
+  "status": "starter-pack-not-production-approved",
+  "reviewedOn": "2026-11-07",
+  "subject": {
+    "machineSlug": "apollo-11-lander",
+    "name": "Eagle",
+    "identifier": "LM-5",
+    "mission": "Apollo 11",
+    "sourceId": "overview"
+  },
+  "sources": [
+    { "id": "mission", "title": "Apollo 11", "url": "https://www.nasa.gov/mission/apollo-11/", "verification": "page-read" },
+    { "id": "overview", "title": "Apollo 11 Mission Overview", "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/", "verification": "page-read" },
+    { "id": "audio", "title": "Apollo 11 Audio Highlights", "url": "https://www.nasa.gov/history/apollo-11-audio-highlights/", "verification": "page-read" },
+    { "id": "video", "title": "Apollo 11 HD Videos", "url": "https://www.nasa.gov/history/apollo-11-hd-videos/", "verification": "page-read" },
+    { "id": "reflector", "title": "The Apollo Experiment That Keeps on Giving", "url": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/", "publicationDate": "2019-07-24", "verification": "page-read" },
+    { "id": "orbital-image", "title": "Apollo 11: Second Look", "url": "https://science.nasa.gov/photojournal/apollo-11-second-look/", "verification": "page-and-download-links-read" }
+  ],
+  "facts": [
+    {
+      "id": "identity",
+      "claim": "NASA identifies Eagle as LM-5 and Columbia as CSM-107.",
+      "sourceId": "overview", "locator": "Payload",
+      "evidenceExcerpt": "Columbia (CSM-107)\nEagle (LM-5)"
+    },
+    {
+      "id": "integrated-test",
+      "claim": "NASA lists an LM-5 integrated systems test on November 21, 1968.",
+      "sourceId": "overview", "locator": "Prelaunch Milestones",
+      "evidenceExcerpt": "11/21/68 – LM-5 integrated systems test"
+    },
+    {
+      "id": "acceptance-test",
+      "claim": "NASA lists an LM-5 acceptance test on December 13, 1968.",
+      "sourceId": "overview", "locator": "Prelaunch Milestones",
+      "evidenceExcerpt": "12/13/68 – LM-5 acceptance test"
+    },
+    {
+      "id": "stage-delivery",
+      "claim": "The ascent stage was delivered to Kennedy on January 8, 1969; the descent stage followed on January 12.",
+      "sourceId": "overview", "locator": "Prelaunch Milestones",
+      "evidenceExcerpt": "1/8/69 – LM-5 ascent stage delivered to Kennedy\n1/12/69 – LM-5 descent stage delivered to Kennedy"
+    },
+    {
+      "id": "launch",
+      "claim": "Apollo 11 launched on July 16, 1969 at 9:32 a.m. EDT from Launch Pad 39A on Saturn-V AS-506.",
+      "sourceId": "overview", "locator": "Launch",
+      "evidenceExcerpt": "July 16, 1969; 9:32 a.m. EDT\nLaunch Pad 39A\nSaturn-V AS-506",
+      "timeSystemAsPublished": "EDT"
+    },
+    {
+      "id": "crew",
+      "claim": "Neil Armstrong was commander; Buzz Aldrin was lunar module pilot; Michael Collins was command module pilot.",
+      "sourceId": "overview", "locator": "Crew",
+      "evidenceExcerpt": "Neil Armstrong, Commander\nEdwin E. “Buzz” Aldrin Jr., Lunar Module Pilot\nMichael Collins, Command Module Pilot"
+    },
+    {
+      "id": "undocking",
+      "claim": "Eagle undocked from Columbia on July 20 at 100 hours, 12 minutes into the flight, as reported in NASA's overview.",
+      "sourceId": "overview", "locator": "Mission Highlights, paragraph beginning On July 20",
+      "evidenceExcerpt": "at 100 hours, 12 minutes into the flight, the Eagle undocked and separated from Columbia for visual inspection",
+      "timeSystemAsPublished": "time into flight, not UTC"
+    },
+    {
+      "id": "science-purpose",
+      "claim": "Surface objectives included a television camera, a solar wind composition experiment, a seismic experiment package, a laser-ranging retroreflector and samples returned to Earth.",
+      "sourceId": "overview", "locator": "Mission Objective",
+      "evidenceExcerpt": "deployment of a solar wind composition experiment, seismic experiment package and a Laser Ranging Retroreflector"
+    },
+    {
+      "id": "plaque",
+      "claim": "A commemorative plaque was attached to Eagle's descent stage.",
+      "sourceId": "overview", "locator": "Mission Highlights, landing paragraph",
+      "evidenceExcerpt": "Attached to the descent stage was a commemorative plaque signed by President Richard M. Nixon and the three astronauts."
+    },
+    {
+      "id": "goodwill-disk",
+      "claim": "A silicon disk carrying miniaturized goodwill messages from 73 countries was left on the Moon.",
+      "sourceId": "overview", "locator": "Mission Highlights, commemorative objects paragraph",
+      "evidenceExcerpt": "A one-and-a-half inch silicon disk, containing micro miniaturized goodwill messages from 73 countries, and the names of congressional and NASA leaders, also stayed behind."
+    },
+    {
+      "id": "ascent-and-jettison",
+      "claim": "The ascent stage returned to lunar orbit, docked with Columbia, and was later jettisoned after Armstrong and Aldrin returned to the command and service module.",
+      "sourceId": "overview", "locator": "Mission Highlights, paragraph beginning Armstrong and Aldrin spent",
+      "evidenceExcerpt": "Armstrong and Aldrin returned to the CSM with Collins. Four hours later, the LM jettisoned and remained in lunar orbit.",
+      "qualification": "Historical sequence only; this is not evidence of its present orbit or final impact location."
+    },
+    {
+      "id": "reflector-engineering",
+      "claim": "The Apollo 11 reflector array has 100 quartz-glass corner cubes and requires no power.",
+      "sourceId": "reflector", "locator": "Opening paragraphs",
+      "evidenceExcerpt": "The Apollo 11 and 14 arrays have 100 quartz glass prisms (called corner cubes) each",
+      "additionalEvidenceExcerpt": "The arrays themselves require no power."
+    },
+    {
+      "id": "reflector-science",
+      "claim": "Lunar laser ranging measures the travel time of laser pulses and has helped determine lunar motion and provided evidence of a fluid lunar core.",
+      "sourceId": "reflector", "locator": "Laser timing, lunar motion and core paragraphs",
+      "evidenceExcerpt": "Analysis of lunar laser data shows that the Moon has a fluid core.",
+      "qualification": "Findings from the lunar laser-ranging program; do not attribute the whole result exclusively to Apollo 11's array. Article dated 2019, not a live status feed."
+    },
+    {
+      "id": "later-observation",
+      "claim": "NASA Photojournal PIA12909 presents a later LRO narrow-angle-camera view of the Apollo 11 landing site.",
+      "sourceId": "orbital-image", "locator": "Identifier, mission/instrument metadata and Description",
+      "evidenceExcerpt": "LRO passed over the site again providing LROC a new view of the historic site.",
+      "qualification": "The source lists September 29, 2009 as Image Addition Date. It is not recorded here as the exposure date."
+    }
+  ],
+  "coordinates": {
+    "status": "conflicting-source-values-not-approved-for-map",
+    "latitudeDegrees": null,
+    "longitudeDegrees": null,
+    "referenceFrame": null,
+    "sourceId": "overview",
+    "valuesAsPublished": [
+      { "locator": "Mission Highlights, landing paragraph", "latitude": "0 degrees, 41 minutes, 15 seconds north", "longitude": "23 degrees, 26 minutes east" },
+      { "locator": "Orbit", "latitude": ".71 degrees north", "longitude": "23.63 degrees east" }
+    ],
+    "nextVerification": "Resolve against a NASA-hosted geodetic record identifying reference frame, epoch and precision."
+  },
+  "mediaVerification": {
+    "level": "links-observed-on-source-pages",
+    "fileFetchVerified": false,
+    "playbackVerified": false,
+    "seekingVerified": false,
+    "captionsAudited": false,
+    "clipTimestamps": null,
+    "approvedHistoricalQuotes": [],
+    "note": "Audio/PDF links are paired by NASA's page. Video caption availability is as described on NASA's HD Videos page. Inspect the files before publication."
+  },
+  "audio": [
+    { "label": "Flight Day 1 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-01-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-01-Highlights.pdf?emrc=33e698" },
+    { "label": "Flight Day 2 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-02-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-02-Highlights.pdf?emrc=e56cfc" },
+    { "label": "Flight Day 3 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-03-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-03-Highlights.pdf?emrc=903c35" },
+    { "label": "Flight Day 4 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-04-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-04-Highlights.pdf?emrc=64fbcf" },
+    { "label": "Flight Day 5 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-05-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-05-Highlights.pdf?emrc=b103e2" },
+    { "label": "Flight Day 6 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-06-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-06-Highlights.pdf?emrc=b9fd21" },
+    { "label": "Flight Day 7 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-07-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-07-Highlights.pdf?emrc=40244b" },
+    { "label": "Flight Day 8 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-08-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-08-Highlights.pdf?emrc=ca97bc" },
+    { "label": "Flight Day 9 highlights", "sourceId": "audio", "url": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-09-Highlights.mp3", "transcriptUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/Apollo-11_Day-09-Highlights.pdf?emrc=efcc7b" }
+  ],
+  "video": [
+    { "label": "Apollo 11 Moonwalk Montage", "sourceId": "video", "catalogUrl": "https://images.nasa.gov/details/Apollo_11_moonwalk_montage_720p" },
+    { "label": "One Small Step comparison", "sourceId": "video", "catalogUrl": "https://images.nasa.gov/details/One_Small_Step_Comparison_720p", "directUrl": "https://www.nasa.gov/wp-content/uploads/2015/03/One_Small_Step_Comparison_720p.mov", "note": "Comparison of existing and partially restored footage, not an uninterrupted raw recording." },
+    { "label": "Buzz Aldrin ladder descent comparison", "sourceId": "video", "catalogUrl": "https://images.nasa.gov/details/Buzz_Descends_Comparison__720p" },
+    { "label": "Apollo 11 plaque comparison", "sourceId": "video", "catalogUrl": "https://images.nasa.gov/details/Apollo_11_Plaque_Comparison_720p" },
+    { "label": "Raising the American flag comparison", "sourceId": "video", "catalogUrl": "https://images.nasa.gov/details/Raising_The_American_Flag_Comparison_720p" },
+    { "label": "Apollo 11 Introduction", "sourceId": "video", "catalogUrl": "https://images.nasa.gov/details/Apollo_11_Intro_720p" }
+  ],
+  "images": [
+    {
+      "id": "PIA12909",
+      "title": "Apollo 11: Second Look",
+      "sourceId": "orbital-image",
+      "credit": "NASA/GSFC/Arizona State University",
+      "instrumentAsPublished": "NAC (Narrow Angle Camera)",
+      "imageAdditionDate": "2009-09-29",
+      "acquisitionDate": null,
+      "jpegUrl": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia12/pia12909/PIA12909.jpg",
+      "tiffUrl": "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia12/pia12909/PIA12909.tif"
+    }
+  ],
+  "documentsToInspect": [
+    { "label": "Apollo by the Numbers", "sourceId": "overview", "url": "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4029.pdf#page=99", "verification": "link-observed-document-not-read" }
+  ],
+  "unresolved": [
+    "Manufacturing start, builder-specific milestones and detailed engineering dimensions require primary documentation.",
+    "Exact landing coordinates require resolution of the differing values in the overview.",
+    "Current ascent-stage location, survival, impact date and final transmission are not established by this pack.",
+    "The current Apollo chapter citations on apollojournals.org require NASA-hosted corroboration under the new source policy.",
+    "Every historical quote, speaker attribution and audio timestamp needs a transcript-and-recording audit.",
+    "The 1201/1202 alarm, damaged breaker and solar-wind-return chapters need their own NASA-hosted evidence records before source replacement."
+  ]
+}

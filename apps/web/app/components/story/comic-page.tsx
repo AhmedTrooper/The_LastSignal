@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import type { BookSpread } from "@thelastsignal/data";
 import { comicLines } from "@/lib/book-comic";
 import ComicScene from "./comic-scene";
@@ -26,7 +27,7 @@ export default function ComicPage({ spread, side, page, onNotes }: { spread: Boo
         </figure>)}
       </div>
       {spread.heroSlug === "apollo-11-lander" && <details className="mt-3 text-xs text-[#76528a]"><summary className="cursor-pointer py-2">What did this hardware make possible?</summary><EagleLearningLens memory={spread.id === "apollo-11-part-1" ? side === "left" ? "alarm" : "touchdown" : side === "left" ? "liftoff" : "science"} compact /></details>}
-      <div className="comic-page-links"><button type="button" onClick={onNotes}>Open the field notes <ArrowRight className="h-3.5 w-3.5" /></button>{side === "right" && spread.heroSlug && <Link href={`/heroes/${spread.heroSlug}`}>Meet the machine ↗</Link>}</div>
+      <div className="comic-page-links"><button type="button" onClick={onNotes}>Open the field notes <ArrowRight className="h-3.5 w-3.5" /></button>{side === "right" && spread.heroSlug && <Link href={machineEntryUrl(spread.heroSlug)}>Meet the machine ↗</Link>}</div>
       <footer className="comic-page-footer"><span>Imagined voice · Original SVG art</span><span>{page}</span></footer>
     </div>
   );

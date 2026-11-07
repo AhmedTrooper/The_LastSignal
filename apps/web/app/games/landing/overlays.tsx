@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { useState, type ReactNode } from "react";
 import type { GameSite } from "./game";
 import { ORDER } from "./story";
@@ -98,7 +99,7 @@ export function Journal({ sites, save, onGo, onClose }: { sites: GameSite[]; sav
                 <button type="button" onClick={() => onGo(sel.slug)} className="inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold hover:bg-violet-deep">
                   {ss.found ? "Visit again" : "Go there"} <ArrowRight />
                 </button>
-                <Link href={`/heroes/${sel.slug}`} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
+                <Link href={machineEntryUrl(sel.slug)} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
                   Its page in the archive
                 </Link>
               </div>

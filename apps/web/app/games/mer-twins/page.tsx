@@ -29,13 +29,13 @@ export default function MERTwinsGamePage() {
 
             <div className="flex gap-4 font-mono text-xs">
               <Link
-                href="/heroes/opportunity"
+                href="/heroes/opportunity/story"
                 className="text-orange-400 transition hover:underline"
               >
                 Meet Opportunity ↗
               </Link>
               <Link
-                href="/heroes/spirit"
+                href="/heroes/spirit/story"
                 className="text-rose-400 transition hover:underline"
               >
                 Meet Spirit ↗

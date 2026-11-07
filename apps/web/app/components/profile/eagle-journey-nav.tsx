@@ -6,11 +6,9 @@ import { Logo } from "@/app/components/logo";
 import "./eagle-learning.css";
 
 const LINKS = [
-  { href: "/heroes/apollo-11-lander", label: "Explore my hardware" },
-  { href: "/heroes/apollo-11-lander/book", label: "Book & Comic Nook" },
   { href: "/heroes/apollo-11-lander/story", label: "Scroll my story" },
-  { href: "/heroes/apollo-11-lander/movie", label: "Watch my memories" },
-  { href: "/games/apollo-11-landing", label: "Try the landing" },
+  { href: "/heroes/apollo-11-lander/book?read=1&format=comic&chapter=undocking", label: "Comic" },
+  { href: "/heroes/apollo-11-lander/book?read=1&format=book&chapter=undocking", label: "Book" },
 ];
 
 export default function EagleJourneyNav({ branded = false }: { branded?: boolean }) {

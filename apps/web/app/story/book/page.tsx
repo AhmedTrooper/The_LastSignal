@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect, useCallback, useRef, type CSSProperties 
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { useReducedMotion } from "motion/react";
 import { ArrowLeft, ArrowRight, BookIcon } from "@/app/components/icons";
 import { SignalMark } from "@/app/components/logo";
@@ -1292,7 +1293,7 @@ function LegacyStoryBookReader() {
                   {currentSpread.heroSlug && (
                     <div className="mt-2 pt-2 border-t border-[#e5dcce] flex items-center justify-between">
                       <Link
-                        href={`/heroes/${currentSpread.heroSlug}`}
+                        href={machineEntryUrl(currentSpread.heroSlug)}
                         className="font-mono text-xs text-rose-900 hover:text-rose-700 font-bold hover:underline inline-flex items-center gap-1"
                       >
                         Meet {currentSpread.machineName} <ArrowRight className="h-3.5 w-3.5" />

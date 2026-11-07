@@ -4,8 +4,7 @@ import type { ReactNode } from "react";
 import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
 import { assetUrl } from "@thelastsignal/data";
-import { ArrowRight, Play } from "@/app/components/icons";
-import EagleIssueArt from "@/app/components/profile/eagle-issue-art";
+import { Play } from "@/app/components/icons";
 
 export const metadata = generateSEO({
   title: "Games | The Last Signal",
@@ -181,10 +180,9 @@ const GAMES: Game[] = [
 
 /** Games: a simple store grid of icons. */
 export default function GamesPage() {
-  const playable = GAMES.filter(game => game.href).sort((a, b) => (a.href === "/games/apollo-11-landing" ? -1 : b.href === "/games/apollo-11-landing" ? 1 : 0));
+  const playable = GAMES.filter(game => game.href && game.href !== "/games/apollo-11-landing");
   return (
     <SitePage eyebrow="The mission playground" title="A little try. A big “aha!”" lede="You don’t have to get it right first time. Try the controls, notice what changes, and discover the engineering behind a real space adventure." scene="games">
-      <section className="club-game-feature"><div><p className="club-kicker">A good place to begin / Eagle</p><h2 className="display">Can you find a place for my feet?</h2><p>There’s rough ground ahead. Help the illustrated lander find a clear patch, then see how the real landing happened.</p><Link href="/games/apollo-11-landing" className="club-button club-button-primary">Try Eagle’s landing <ArrowRight className="h-4 w-4" /></Link><span>No score to beat. Your curiosity is enough.</span></div><figure><EagleIssueArt scene="boulders" /><figcaption>AI-assisted illustration · practice game, not a flight replay</figcaption></figure></section>
       <div className="club-section-heading"><div><h2 className="display">Choose your next mission.</h2><p>A camera, a pair of wings, a tiny ground movement. There’s more than one way to explore.</p></div></div>
       <ul className="club-game-grid">
         {playable.map((g) => {

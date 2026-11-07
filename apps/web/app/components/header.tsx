@@ -12,11 +12,9 @@ import { CLUB_LINKS, CLUB_MORE_LINKS, isClubLinkActive } from "@/lib/clubhouse";
 const NAV_ICONS = { explorers: RoverIcon, stories: BookIcon, games: Play, map: MapIcon };
 
 export function TributeButton({ className = "" }: { className?: string }) {
-  const pathname = usePathname();
-  const hero = pathname.match(/^\/heroes\/([^/]+)/)?.[1];
   return (
     <Link
-      href={hero ? `/heroes/${hero}#tributes` : "/tributes"}
+      href="/tributes"
       className={`inline-flex items-center gap-2 rounded-full bg-violet px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-violet-deep ${className}`}
     >
       Leave a tribute

@@ -389,7 +389,7 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
           {/* Chrome */}
           <div className="pointer-events-none absolute inset-0 z-10">
             <div className="pointer-events-auto absolute inset-x-4 top-4 flex items-center justify-between gap-3 sm:inset-x-8 sm:top-6">
-              <Link href={`/heroes/${slug}`} className="flex items-center gap-2.5 text-white/90 hover:text-white">
+              <Link href="/story" aria-label="Back to the story room" className="flex items-center gap-2.5 text-white/90 hover:text-white">
                 <SignalMark className="h-7 w-7" />
                 <span className="font-mono text-xs tracking-[0.12em] uppercase">
                   RoverVilla <span className="text-white/50">/ {name}</span>
@@ -408,7 +408,7 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
                   )}
                   {playing ? "Pause" : "Play"}
                 </button>
-                <Link href={`/heroes/${slug}`} aria-label="Close story" className="rounded-full bg-white/15 p-2 backdrop-blur hover:bg-white/25">
+                <Link href="/story" aria-label="Close story and return to the story room" className="rounded-full bg-white/15 p-2 backdrop-blur hover:bg-white/25">
                   <Close />
                 </Link>
               </div>
@@ -464,8 +464,8 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
           <p className="font-mono text-xs tracking-[0.14em] text-white/60 uppercase">The end</p>
           <h2 className="display mt-3 text-4xl sm:text-5xl">Thank you, {name}.</h2>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href={`/heroes/${slug}`} className="inline-flex items-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold hover:bg-violet-deep">
-              Explore {name}&apos;s page <ArrowRight />
+            <Link href="/story" className="inline-flex items-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold hover:bg-violet-deep">
+              Find another story <ArrowRight />
             </Link>
             {slug === "apollo-11-lander" && (
               <Link href={`/heroes/${slug}/story`} className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
@@ -475,11 +475,6 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
             {slug === "ranger-7" && (
               <Link href="/games/ranger-7-dive" className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 text-sm font-bold text-black hover:bg-amber-300 shadow-lg">
                 <span>🎯</span> Play 17-Minute Impact Dive <ArrowRight />
-              </Link>
-            )}
-            {slug === "apollo-11-lander" && (
-              <Link href="/games/apollo-11-landing" className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3.5 text-sm font-bold text-black hover:bg-cyan-300 shadow-lg">
-                <span>🌕</span> Explore Tranquility Base &amp; Cockpit <ArrowRight />
               </Link>
             )}
             {(slug === "spirit" || slug === "opportunity") && (
@@ -492,10 +487,7 @@ export default function CinematicStory({ slug, name, scenes, sources }: Props) {
                 <span>🚁</span> Fly Ingenuity Aerodynamics Lab <ArrowRight />
               </Link>
             )}
-            <Link href="/story" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
-              All stories
-            </Link>
-            <Link href={`/heroes/${slug}#tributes`} className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
+            <Link href="/tributes" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-semibold hover:border-white">
               Leave a tribute
             </Link>
           </div>

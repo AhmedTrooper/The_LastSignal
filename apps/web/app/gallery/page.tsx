@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { HEROES } from "@/lib/heroes";
 import { photo } from "@/lib/photos";
 import { generateSEO } from "@/lib/seo";
@@ -24,7 +25,7 @@ export default function GalleryPage() {
           <section key={h.slug} data-reveal>
             <div className="mb-4 flex items-baseline justify-between gap-4">
               <h2 className="display text-3xl">{h.name}</h2>
-              <Link href={`/heroes/${h.slug}`} className="text-sm font-semibold text-violet hover:underline">
+              <Link href={machineEntryUrl(h.slug)} className="text-sm font-semibold text-violet hover:underline">
                  Meet this explorer ↗
               </Link>
             </div>

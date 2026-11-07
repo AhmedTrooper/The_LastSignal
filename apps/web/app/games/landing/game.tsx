@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GlobeApi } from "./globe";
 import type { Landing, WorldApi, WorldPhase, Quality as WorldQuality } from "./world";
@@ -1047,7 +1048,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
               <button type="button" onClick={postcard} className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-3 text-sm font-semibold hover:bg-white/20">
                 {Icon.camera} Postcard
               </button>
-              <Link href={`/heroes/${site.slug}`} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
+              <Link href={machineEntryUrl(site.slug)} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
                 Its page
               </Link>
             </div>

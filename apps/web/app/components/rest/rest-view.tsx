@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { useState } from "react";
 import { type Body, type Category, type Hero, bodyName, catNo, fmtDate, img, isAIImage, lifespan, portrait } from "@/lib/heroes";
 import Globe from "@/app/components/globe";
@@ -42,7 +43,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
 
   return (
     <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:py-12">
-      <header className="club-section-heading mb-10"><div><p className="club-kicker">The space map</p><h1 className="display mt-4 text-5xl lg:text-6xl">Resting among the stars.</h1><p>Turn a world. Choose a pin. Meet the little explorer that made it all the way there.</p></div><Link href="/heroes" className="club-button club-button-secondary">Meet all the explorers <ArrowRight className="h-4 w-4" /></Link></header>
+      <header className="club-section-heading mb-10"><div><p className="club-kicker">The space map</p><h1 className="display mt-4 text-5xl lg:text-6xl">Resting among the stars.</h1><p>Turn a world. Choose a pin. Meet the little explorer that made it all the way there.</p></div><Link href="/story" className="club-button club-button-secondary">Meet all the explorers <ArrowRight className="h-4 w-4" /></Link></header>
       <div className="club-map-layout grid grid-cols-1 gap-7 lg:grid-cols-[minmax(0,270px)_minmax(0,1fr)_minmax(0,340px)] lg:items-start">
         {/* Left: title, toggles, counts */}
         <div>
@@ -125,7 +126,7 @@ export default function RestView({ heroes }: { heroes: Hero[] }) {
               <Waveform seed={`${sel.slug}-rest`} bars={40} fade={0.1} className="h-10 w-44 text-violet" />
             </div>
             <Link
-              href={`/heroes/${sel.slug}`}
+              href={machineEntryUrl(sel.slug)}
               className="mt-6 flex items-center justify-between rounded-full bg-violet px-7 py-4 font-semibold text-white transition-colors hover:bg-violet-deep"
             >
               Meet {sel.name} <ArrowRight className="h-5 w-5" />

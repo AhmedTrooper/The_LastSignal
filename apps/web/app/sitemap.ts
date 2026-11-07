@@ -5,12 +5,9 @@ import { BASE_URL } from "@/lib/seo";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     { path: "", priority: 1.0 },
-    { path: "/heroes", priority: 0.9 },
     { path: "/where-they-rest", priority: 0.8 },
     { path: "/story", priority: 0.8 },
     { path: "/timeline", priority: 0.8 },
-    { path: "/games", priority: 0.5 },
-    { path: "/games/landing", priority: 0.5 },
     { path: "/gallery", priority: 0.6 },
     { path: "/tributes", priority: 0.6 },
     { path: "/about", priority: 0.5 },
@@ -18,13 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/terms", priority: 0.3 },
     { path: "/delete-account", priority: 0.3 },
   ];
-  const heroRoutes = HEROES.flatMap((h) => [
-    { path: `/heroes/${h.slug}`, priority: 0.8 },
-    { path: `/heroes/${h.slug}/story`, priority: 0.6 },
-  ]);
-  const movieRoutes = [{ path: "/heroes/apollo-11-lander/movie", priority: 0.6 }];
-
-  return [...staticRoutes, ...heroRoutes, ...movieRoutes].map((route) => ({
+  const heroRoutes = HEROES.map((h) => ({ path: `/heroes/${h.slug}/story`, priority: 0.8 }));
+  return [...staticRoutes, ...heroRoutes].map((route) => ({
     url: `${BASE_URL}${route.path}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

@@ -28,7 +28,7 @@ export default function RangerDiveGamePage() {
             </Link>
 
             <Link
-              href="/heroes/ranger-7"
+              href="/heroes/ranger-7/story"
               className="font-mono text-xs text-violet-bright transition hover:underline"
             >
               Meet Ranger 7 ↗

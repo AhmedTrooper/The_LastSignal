@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { HEROES, bodyName, getHero, lifespan, type Body, type Hero, assetUrl } from "@/lib/heroes";
 import { photoMeta } from "@/lib/photos";
 import { PARTS } from "@/lib/parts";
@@ -67,7 +68,7 @@ export function Famous() {
             Same curiosity.
           </h2>
         </div>
-        <Link href="/heroes" className="inline-flex items-center gap-2 text-sm font-semibold text-violet hover:underline max-sm:hidden xl:pointer-events-auto">
+        <Link href="/story" className="inline-flex items-center gap-2 text-sm font-semibold text-violet hover:underline max-sm:hidden xl:pointer-events-auto">
           All {HEROES.length} machines <ArrowRight />
         </Link>
       </div>
@@ -84,7 +85,7 @@ export function Famous() {
               style={{ "--g": Math.round(height * r) } as React.CSSProperties}
               data-reveal
             >
-              <Link href={`/heroes/${last.slug}`} className="group block" aria-label={hs.map((h) => h.name).join(" and ")}>
+              <Link href={machineEntryUrl(last.slug)} className="group block" aria-label={hs.map((h) => h.name).join(" and ")}>
                 <span className="relative block w-full" style={{ aspectRatio: r }}>
                   <Image
                     src={cutout(last)}
@@ -99,7 +100,7 @@ export function Famous() {
                 {hs.map((h, i) => (
                   <span key={h.slug}>
                     {i > 0 && " & "}
-                    <Link href={`/heroes/${h.slug}`} className="hover:text-violet">
+                    <Link href={machineEntryUrl(h.slug)} className="hover:text-violet">
                       {h.name}
                     </Link>
                   </span>
@@ -146,8 +147,8 @@ function Orbit({ body }: { body: Body }) {
         </Eyebrow>
         <h3 className="display text-2xl sm:mt-3 sm:text-5xl">{w.title}</h3>
         <p className="mt-3 max-w-sm text-ink-soft max-sm:hidden">{w.lede}</p>
-        <Link href={`/heroes#h-${body}`} className={`inline-flex shrink-0 items-center gap-2 text-sm font-semibold hover:underline sm:mt-4 sm:text-base ${w.accent}`}>
-          <span className="max-sm:hidden">All {bodyName(body)} machines</span>
+        <Link href="/story" className={`inline-flex shrink-0 items-center gap-2 text-sm font-semibold hover:underline sm:mt-4 sm:text-base ${w.accent}`}>
+          <span className="max-sm:hidden">All machines</span>
           <span className="sm:hidden">See all</span> <ArrowRight />
         </Link>
       </div>
@@ -168,7 +169,7 @@ function Orbit({ body }: { body: Body }) {
                 className="absolute w-[19%] -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${(50 + 39 * Math.cos(a)).toFixed(2)}%`, top: `${(50 + 39 * Math.sin(a)).toFixed(2)}%` }}
               >
-                <Link href={`/heroes/${h.slug}`} className="group block text-center" title={h.name} aria-label={h.name}>
+                <Link href={machineEntryUrl(h.slug)} className="group block text-center" title={h.name} aria-label={h.name}>
                   <span className="relative block aspect-square overflow-hidden rounded-full bg-white shadow-[0_8px_20px_-8px_rgba(45,20,90,0.35)] ring-2 ring-white transition-transform duration-300 group-hover:scale-110 group-hover:ring-violet">
                     <Image src={cutout(h)} alt="" fill sizes="80px" className="object-contain p-1.5" />
                   </span>
@@ -248,7 +249,7 @@ export function LastSignals() {
               data-reveal
             >
               <Link
-                href={`/heroes/${h.slug}`}
+                href={machineEntryUrl(h.slug)}
                 className="relative block bg-white p-2 pb-3 shadow-[0_14px_30px_-12px_rgba(13,11,38,0.35)] transition-[rotate,scale] duration-300 hover:z-10 hover:scale-105 hover:rotate-0! sm:p-3 sm:pb-4"
                 style={{ rotate: `${p.tilt}deg` }}
               >
@@ -291,7 +292,7 @@ export function RoverModel() {
               </div>
             ))}
           </dl>
-          <Link href={`/heroes/${h.slug}`} className="mt-5 inline-flex items-center gap-2 font-semibold text-violet hover:underline sm:mt-8">
+          <Link href={machineEntryUrl(h.slug)} className="mt-5 inline-flex items-center gap-2 font-semibold text-violet hover:underline sm:mt-8">
             Opportunity’s story <ArrowRight />
           </Link>
         </div>

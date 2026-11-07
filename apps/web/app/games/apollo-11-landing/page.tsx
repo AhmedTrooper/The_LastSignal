@@ -29,7 +29,7 @@ export default function ApolloLandingGamePage() {
             </Link>
 
             <Link
-              href="/heroes/apollo-11-lander"
+              href="/heroes/apollo-11-lander/story"
               className="font-mono text-xs text-violet-bright transition hover:underline"
             >
               Read Eagle&apos;s comic ↗

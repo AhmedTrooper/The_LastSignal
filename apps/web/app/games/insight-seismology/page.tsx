@@ -28,7 +28,7 @@ export default function InSightSeismologyGamePage() {
             </Link>
 
             <Link
-              href="/heroes/insight"
+              href="/heroes/insight/story"
               className="font-mono text-xs text-rose-300 transition hover:underline"
             >
               Meet InSight ↗

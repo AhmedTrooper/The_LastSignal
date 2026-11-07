@@ -28,7 +28,7 @@ export default function IngenuityFlightGamePage() {
             </Link>
 
             <Link
-              href="/heroes/ingenuity"
+              href="/heroes/ingenuity/story"
               className="font-mono text-xs text-cyan-300 transition hover:underline"
             >
               Meet Ingenuity ↗

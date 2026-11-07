@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { machineEntryUrl } from "@/lib/machine-links";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { type Body, type Hero, catNo, img, lifespan, portrait, assetUrl } from "@/lib/heroes";
 import { Waveform } from "@/app/components/waveform";
@@ -210,7 +211,7 @@ export default function TimelineView({ heroes }: { heroes: Hero[] }) {
         ].map(({ label, h, cta }) => (
           <Link
             key={label}
-            href={`/heroes/${h.slug}`}
+            href={machineEntryUrl(h.slug)}
             className="group grid min-h-[280px] grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] overflow-hidden rounded-2xl border border-line bg-white"
           >
             <div className="flex flex-col p-6">

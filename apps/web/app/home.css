@@ -31,36 +31,10 @@
 .rv-true-stories .club-book-feature-copy { display: flex; flex: 1; flex-direction: column; }
 .rv-true-stories .club-book-feature-copy > div { margin-top: auto; padding-top: 20px; }
 .rv-curiosity-strip > span { display: inline-flex; align-items: center; gap: 9px; color: #6f6278; font-size: 12px; font-weight: 600; }
-.rv-explorers, .rv-adventure-loop { max-width: 1380px; margin: 0 auto; padding: 62px 48px; scroll-margin-top: 100px; }
+.rv-adventure-loop { max-width: 1380px; margin: 0 auto; padding: 62px 48px; scroll-margin-top: 100px; }
 .rv-section-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
 .rv-section-heading h2 { margin-top: 12px; font-size: clamp(30px, 3.2vw, 45px); line-height: 1.12; }
 .rv-section-heading p:not(.rv-kicker) { margin-top: 12px; font-size: 14px; line-height: 1.8; color: #71667c; }
-.rv-world-toggle { display: flex; padding: 5px; border: 1px solid #ddcfba; border-radius: 999px; background: #f1e7d7; }
-.rv-world-toggle button { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; min-width: 120px; padding: 9px 16px; border-radius: 999px; color: #786b79; font-size: 12px; font-weight: 700; cursor: pointer; }
-.rv-world-toggle button.is-active { background: #fffdf7; color: #25304b; box-shadow: 0 3px 8px #503e2720; }
-.rv-world-dot { width: 15px; height: 15px; display: block; border-radius: 50%; }
-.rv-world-moon { background: #aba4b8; box-shadow: inset -3px -2px 0 #7e768e; }
-.rv-world-mars { background: #e68e62; box-shadow: inset -3px -2px 0 #b06351; }
-.rv-story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 30px; }
-.rv-story-card { overflow: hidden; border: 1px solid #ded3c7; border-radius: 22px; background: #fffdfa; box-shadow: 0 6px 0 #efe5d4; }
-.rv-story-art { display: block; position: relative; overflow: hidden; border-bottom: 1px solid #ded3c7; }
-.rv-story-art > svg { display: block; width: 100%; height: auto; transition: transform 240ms ease; }
-.rv-story-art:hover > svg { transform: scale(1.03); }
-.rv-story-tag { position: absolute; top: 12px; left: 12px; padding: 6px 10px; border: 1px solid #293046; border-radius: 8px; background: #fff3ce; color: #352c44; font-size: 9px; font-weight: 650; }
-.rv-story-copy { padding: 23px; }
-.rv-story-copy h3 { margin-top: 12px; font-size: 27px; line-height: 1.12; }
-.rv-story-dialogue { margin-top: 15px; min-height: 66px; color: #76677d; font-size: 14px; line-height: 1.8; }
-.rv-science-bridge { display: flex; align-items: flex-start; gap: 9px; margin-top: 18px; padding: 12px; border-radius: 10px; color: #735084; background: #f4ecfa; font-size: 12px; line-height: 1.7; }
-.rv-card-actions { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
-.rv-button-small { justify-content: space-between; min-height: 44px; flex: 1; padding: 10px 13px; border: 1px solid #d9c9df; border-radius: 11px; color: #705282; background: #fffaf0; font-size: 11px; }
-.rv-button-small:hover { background: #f1e5f7; }
-.rv-button-small:active { background: #e8daf2; transform: translateY(1px); }
-.rv-listen-button { display: flex; flex-shrink: 0; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid #d9c9df; border-radius: 50%; color: #705282; cursor: pointer; transition: background 160ms, border-color 160ms, transform 120ms; }
-.rv-listen-button:hover { background: #f1e5f7; border-color: #ac90c5; }
-.rv-listen-button:active { transform: translateY(1px); }
-.rv-gallery-footnote { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 23px; color: #74637d; font-size: 11px; line-height: 1.7; }
-.rv-gallery-footnote a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #735386; font-weight: 650; }
-.rv-adventure-loop { padding-top: 20px; }
 .rv-step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
 .rv-step-grid > div { position: relative; border: 1px dashed #c9b4d8; border-radius: 24px; padding: 28px; background: #f1e9f8; }
 .rv-step-grid > div:nth-child(2) { background: #fff0df; border-color: #e6c7a6; }
@@ -115,7 +89,7 @@
 .rv-reel-arrow:disabled { opacity: 0.3; cursor: default; }
 .rv-reel-dialog :is(button,a):focus-visible { outline: 2px solid #f6c37d; outline-offset: 3px; }
 .rv-reel-video { width: min(100%,320px); aspect-ratio: 9 / 16; max-height: 65dvh; margin: 0 auto; border-radius: 12px; background: black; }
-@media (max-width: 1100px) { .rv-hero { gap: 35px; padding-inline: 30px; } .rv-explorers, .rv-adventure-loop { padding-inline: 30px; } .rv-story-grid { gap: 16px; } .rv-story-copy { padding: 18px; } .rv-comic-feature, .rv-launchpad { margin-inline: 30px; } }
+@media (max-width: 1100px) { .rv-hero { gap: 35px; padding-inline: 30px; } .rv-adventure-loop { padding-inline: 30px; } .rv-comic-feature, .rv-launchpad { margin-inline: 30px; } }
 @media (max-width: 767px) {
   .rv-true-stories { padding: 42px 22px 0; }
   .rv-hero { grid-template-columns: 1fr; gap: 38px; padding: 30px 22px 38px; }
@@ -130,14 +104,11 @@
   .rv-mascot-bubble { left: -12px; top: 14px; padding: 12px 16px; font-size: 12px; }
   .rv-curiosity-strip { justify-content: flex-start; gap: 14px 25px; padding: 20px 24px; }
   .rv-curiosity-strip > span { font-size: 11px; }
-  .rv-explorers, .rv-adventure-loop { padding: 40px 22px; }
+  .rv-adventure-loop { padding: 40px 22px; }
   .rv-section-heading { gap: 20px; }
   .rv-section-heading h2 { font-size: 33px; }
   .rv-section-heading p:not(.rv-kicker) { font-size: 13px; }
-  .rv-story-grid, .rv-step-grid { grid-template-columns: 1fr; gap: 23px; }
-  .rv-story-art > svg { max-height: 260px; }
-  .rv-story-copy { padding: 24px; }
-  .rv-story-dialogue { min-height: 0; font-size: 16px; }
+  .rv-step-grid { grid-template-columns: 1fr; gap: 23px; }
   .rv-comic-feature { grid-template-columns: 1fr; gap: 32px; padding: 22px; margin: 0 22px 40px; border-radius: 22px; }
   .rv-comic-feature h2 { font-size: 35px; }
   .rv-comic-speech { padding: 10px 12px; font-size: 12px; }
@@ -146,4 +117,4 @@
   .rv-launchpad .rv-actions { width: 100%; }
   .rv-launchpad .rv-button { width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .explorer-home * { transition: none !important; scroll-behavior: auto !important; } .rv-story-art:hover > svg, .rv-reel-card:hover .rv-reel-poster img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .explorer-home * { transition: none !important; scroll-behavior: auto !important; } .rv-reel-card:hover .rv-reel-poster img { transform: none; } }

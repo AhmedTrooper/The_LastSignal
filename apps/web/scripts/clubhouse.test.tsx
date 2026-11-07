@@ -5,10 +5,10 @@ import { CLUB_LINKS, CLUB_MORE_LINKS, EXPLORER_TRAITS, isClubLinkActive } from "
 import { HEROES } from "../lib/heroes";
 import WorldIllustration, { type ClubScene } from "../app/components/clubhouse/world-illustration";
 
-test("the main navigation gives four clear choices without hiding secondary pages", () => {
-  assert.deepEqual(CLUB_LINKS.map(link => link.href), ["/heroes", "/story", "/games", "/where-they-rest"]);
+test("the story room is the only machine list in the main navigation", () => {
+  assert.deepEqual(CLUB_LINKS.map(link => link.href), ["/story", "/where-they-rest"]);
   assert.deepEqual(CLUB_MORE_LINKS.map(link => link.href), ["/gallery", "/timeline", "/tributes", "/about"]);
-  assert.equal(new Set([...CLUB_LINKS, ...CLUB_MORE_LINKS].map(link => link.href)).size, 8);
+  assert.equal(new Set([...CLUB_LINKS, ...CLUB_MORE_LINKS].map(link => link.href)).size, 6);
 });
 
 test("immersive readers belong to Stories rather than the explorer directory", () => {

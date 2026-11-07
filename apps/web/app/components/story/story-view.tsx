@@ -70,7 +70,7 @@ export default function StoryView({ slug, name, no, body, coords, chapters, next
                   <button key={c.title} onClick={() => go(i)} aria-label={`Chapter ${i + 1}: ${c.title}`} className={`h-1.5 flex-1 rounded-full ${i <= active ? "bg-violet-bright" : "bg-white/35"}`} />
                 ))}
               </div>
-              <Link href={`/heroes/${slug}`} aria-label="Close story" className="p-1">
+              <Link href="/story" aria-label="Close story and return to the story room" className="p-1">
                 <Close />
               </Link>
             </div>
@@ -159,8 +159,8 @@ export default function StoryView({ slug, name, no, body, coords, chapters, next
           <Link href={`/heroes/${next.slug}/story`} className="display text-5xl">
             {next.name} →
           </Link>
-          <Link href={`/heroes/${slug}`} className="font-mono text-sm underline">
-            Back to {name}
+          <Link href="/story" className="font-mono text-sm underline">
+            Back to the story room
           </Link>
         </section>
       </div>

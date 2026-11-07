@@ -32,7 +32,7 @@ export default function AboutPage() {
             their last signal home. The archive holds {HEROES.length} of them today, from Ranger 7 in 1964 to Ingenuity.
           </p>
           <Waveform seed="about" bars={40} live className="h-12 w-72 text-violet" />
-          <Link href="/heroes" className="inline-flex items-center gap-3 rounded-full bg-violet px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-violet-deep">
+          <Link href="/story" className="inline-flex items-center gap-3 rounded-full bg-violet px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-violet-deep">
             Meet the explorers <ArrowRight />
           </Link>
         </div>

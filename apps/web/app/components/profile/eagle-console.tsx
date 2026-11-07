@@ -242,7 +242,6 @@ export default function EagleConsole({ data, slug, name, model, parts, poster, p
                 <span className="mt-2 block text-xs leading-relaxed text-[#74667d]">Real photographs, a little narration, and original film reels.</span>
               </a>
             </div>
-            <div className="eagle-play-invitation mt-5"><div><p className="text-sm font-bold">Can you find a place for my feet?</p><p className="mt-1 text-xs leading-relaxed text-[#74667d]">Try a simplified 3D landing. The real crew’s story is in the archive.</p></div><a href="/games/apollo-11-landing" target="_blank" rel="noopener noreferrer" className="eagle-utility">Take the controls <ArrowRight className="h-4 w-4" /></a></div>
             <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#74667d]">
               <button type="button" onClick={openArchive} className="py-3 hover:text-[#73518c]">Want the deeper details? Open the mission record ↓</button>
             </div>

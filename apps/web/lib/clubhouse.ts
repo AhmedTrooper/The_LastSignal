@@ -1,8 +1,6 @@
 /** Navigation labels are UI copy, never a replacement for mission facts. */
 export const CLUB_LINKS = [
-  { href: "/heroes", label: "Meet the explorers", short: "Explorers", icon: "explorers", description: "A little machine. A big story." },
   { href: "/story", label: "Story room", short: "Stories", icon: "stories", description: "Scroll, read a book, or follow the panels." },
-  { href: "/games", label: "Mission games", short: "Games", icon: "games", description: "Try the controls. Find your aha moment." },
   { href: "/where-they-rest", label: "Space map", short: "Map", icon: "map", description: "Find our explorers on the Moon and Mars." },
 ] as const;
 export const CLUB_MORE_LINKS = [

@@ -331,7 +331,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
       ),
 
     signature: () => {
-      const game = HERO_GAMES[hero.slug];
+      const game = hero.slug === "apollo-11-lander" ? undefined : HERO_GAMES[hero.slug];
       return (
         sig && (
           <section id="signature" className={`${card} scroll-mt-24`}>
