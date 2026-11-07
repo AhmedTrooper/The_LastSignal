@@ -1,0 +1,24 @@
+.ingenuity-thoughts { background: #192a30; }
+.ingenuity-thoughts .tc-topbar { background: #192a30f2; }
+.ingenuity-thoughts .tc-topbar-serial { color: #b9d9cf; }
+.ingenuity-thoughts .tc-total-progress { background: #b9d9cf; }
+.ingenuity-thoughts .tc-topbar nav > span[aria-current] { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 2px solid #b9d9cf; color: #b9d9cf; font-size: 12px; }
+.ingenuity-thoughts .tc-tone-paper { --tc-bg: #e8e9dd; --tc-ink: #343641; --tc-muted: #667076; --tc-ground: #c8b4a2; }
+.ingenuity-thoughts .tc-tone-night { --tc-bg: #25383e; --tc-ink: #f6ecd9; --tc-muted: #bdced0; --tc-ground: #5a5053; }
+.ingenuity-thoughts .es-opening-copy h1 { font-size: clamp(58px,7.5vw,115px); }
+.ingenuity-thoughts .tc-topbar nav a { justify-content: center; min-width: 44px; }
+.ingenuity-extras { margin-top: 24px; }
+.ingenuity-activity, .ingenuity-archive { padding: 22px; border: 1px solid #a9b5ab; border-radius: 16px; background: #e9eee4; color: #343c3d; }
+.ingenuity-archive { margin-top: 20px; }
+.ingenuity-extras h3 { margin-top: 8px; font-size: 19px; line-height: 1.4; }
+.ingenuity-extras p:not(.tc-eyebrow) { margin-top: 14px; font-size: 16px; line-height: 1.8; }
+.ingenuity-extras [role="group"] { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.ingenuity-extras button { min-height: 44px; padding: 10px 15px; border: 1px solid #738f89; border-radius: 999px; background: #fff9ec; color: #36544c; cursor: pointer; font-size: 14px; }
+.ingenuity-extras button[aria-pressed="true"] { color: #fff9ec; background: #365f54; }
+.ingenuity-extras button:hover { border-color: #365f54; }
+.ingenuity-extras :is(button,a):focus-visible { outline: 3px solid #4d8270; outline-offset: 4px; }
+.ingenuity-extras a { display: inline-block; min-height: 44px; padding-block: 12px; color: #3a6255; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.ingenuity-archive :is(video,audio) { width: 100%; max-height: 360px; margin-top: 16px; border-radius: 12px; }
+.ingenuity-archive video { background: #15272d; }
+.nook-mechanism .ingenuity-extras { max-width: 900px; margin-inline: auto; }
+@media (max-width:599px) { .ingenuity-thoughts .tc-topbar { padding-inline: 14px; gap: 8px; } .ingenuity-thoughts .tc-topbar-serial { display: none; } .ingenuity-thoughts .tc-topbar nav { gap: 8px; } .ingenuity-thoughts .tc-opening .es-opening-copy h1 { font-size: 54px; } .ingenuity-activity, .ingenuity-archive { padding: 18px; } }
