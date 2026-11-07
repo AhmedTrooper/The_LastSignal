@@ -29,6 +29,7 @@ import EagleComicAdventure from "@/app/components/profile/eagle-comic-adventure"
 import Archive from "@/app/components/profile/archive";
 import { HeroSchema } from "@/app/components/structured-data";
 import OpportunityLibrary from "@/app/components/profile/opportunity-library";
+import Ranger7Dialogue from "@/app/components/profile/ranger7-dialogue";
 import { machineBookUrl } from "@/lib/machine-books";
 
 const HERO_GAMES: Record<string, { href: string; title: string; desc: string }> = {
@@ -297,7 +298,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
   };
   const order = (LAYOUTS[hero.slug] ?? (Object.keys(SECTION_LABEL) as SectionId[])).filter((id) => has[id]);
   const label = (id: SectionId) => (id === "lost" ? hero.end.label : id === "signature" && sig ? sig.title : SECTION_LABEL[id]);
-  const nav = [...(hero.slug === "opportunity" ? [{ id: "opportunity-stories", label: "Book, comic & scroll" }] : []), ...order.filter((id) => id !== "twin").map((id) => ({ id, label: label(id) }))];
+  const nav = [...(hero.slug === "opportunity" ? [{ id: "opportunity-stories", label: "Book, comic & scroll" }] : []), ...(hero.slug === "ranger-7" ? [{ id: "ranger-hub", label: "Talk to Ranger 7" }] : []), ...order.filter((id) => id !== "twin").map((id) => ({ id, label: label(id) }))];
 
   const sections: Record<SectionId, () => React.ReactNode> = {
     model: () => (
@@ -630,6 +631,7 @@ export default async function HeroPage({ params }: { params: Promise<{ slug: str
 
           <div className="min-w-0 space-y-4">
             {hero.slug === "opportunity" && <OpportunityLibrary />}
+            {hero.slug === "ranger-7" && <Ranger7Dialogue />}
             {order.map((id) => (
               <div key={id}>{sections[id]()}</div>
             ))}
