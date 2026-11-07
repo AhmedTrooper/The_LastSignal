@@ -1,0 +1,92 @@
+/* Only the illustrated edition cards on /story, never the machine catalogue. */
+.story-index-shelf { margin-bottom: 48px; }
+
+.story-index-shelf .club-featured-stories {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-bottom: 0;
+}
+
+.story-index-shelf .club-book-feature {
+  --story-cover-paper: #eee5f6;
+  min-width: 0;
+  background: #fdfbff;
+  box-shadow: var(--club-shadow);
+  transition: border-color 180ms, box-shadow 180ms;
+}
+.story-index-shelf .club-book-feature:nth-child(3n + 2) {
+  --story-cover-paper: #f1e3d3;
+  border-color: #dcc2a8;
+  background: #fff8f0;
+}
+.story-index-shelf .club-book-feature:nth-child(3n) {
+  --story-cover-paper: #eee9dd;
+  border-color: #c3dbc9;
+  background: #f7fbf7;
+}
+.story-index-shelf .club-book-feature:hover {
+  border-color: #ac8bc1;
+  box-shadow: 0 7px 0 #e2d6e8, 0 14px 28px #4b335111;
+}
+
+.story-index-shelf .story-index-figure { flex-shrink: 0; margin: 0; }
+.story-index-shelf .club-book-feature-art {
+  height: auto;
+  aspect-ratio: 3 / 2;
+  background: var(--story-cover-paper);
+}
+.story-index-shelf .club-book-feature-art > svg {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+/* The 600×380 Eagle canvas fills the frame without stretching its drawing. */
+.story-index-shelf .club-book-feature-art > .eagle-issue-art { width: calc(100% * 20 / 19); }
+
+.story-index-shelf .club-book-feature-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 28px;
+  overflow-wrap: anywhere;
+}
+.story-index-shelf .club-book-feature-copy .club-kicker { letter-spacing: 0.08em; }
+.story-index-shelf .club-book-feature-copy h2 {
+  margin-top: 12px;
+  font-size: 29px;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.story-index-shelf .club-book-feature-copy > p:not(.club-kicker) {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.story-index-shelf .club-book-feature-copy > .story-index-links {
+  gap: 8px 24px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+.story-index-shelf .story-index-links .club-button { width: 100%; border-radius: 16px; }
+.story-index-shelf .story-index-links svg { flex-shrink: 0; }
+.story-index-shelf .story-index-links > a:not(.club-button):hover { color: #5b2eff; text-decoration: underline; }
+.story-index-shelf .story-index-art-note { margin-top: 24px; color: var(--club-muted); font-size: 11px; line-height: 1.8; }
+
+@media (max-width: 1199px) {
+  .story-index-shelf .club-featured-stories { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+}
+@media (max-width: 767px) {
+  .story-index-shelf .club-featured-stories { grid-template-columns: minmax(0, 1fr); }
+  .story-index-shelf .club-book-feature-copy { padding: 24px; }
+  .story-index-shelf .club-book-feature-copy h2 { font-size: 28px; }
+  .story-index-shelf .club-book-feature-copy > p:not(.club-kicker) { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-index-shelf .club-book-feature,
+  .story-index-shelf a { transition: none; }
+}
