@@ -13,6 +13,9 @@ export const ChevronDown = ({ className = "h-5 w-5" }: P) => (
 export const Play = ({ className = "h-6 w-6" }: P) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" /></svg>
 );
+export const Pause = ({ className = "h-6 w-6" }: P) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14" rx="1.4" /><rect x="14" y="5" width="4" height="14" rx="1.4" /></svg>
+);
 export const Pin = ({ className = "h-4 w-4" }: P) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" /></svg>
 );
