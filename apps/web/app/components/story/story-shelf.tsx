@@ -8,6 +8,7 @@ import InsightIllustration from "./insight-illustration";
 import IngenuityIllustration from "./ingenuity-illustration";
 import SpiritIllustration from "./spirit-illustration";
 import SurveyorIllustration from "./surveyor-illustration";
+import LcrossIllustration from "./lcross-illustration";
 
 /** The story editions shelf, separate from the machine catalogue. */
 export default function StoryShelf() {
@@ -24,6 +25,7 @@ export default function StoryShelf() {
                   : book.slug === "ingenuity" ? <IngenuityIllustration />
                   : book.slug === "spirit" ? <SpiritIllustration />
                   : book.slug === "surveyor-1" ? <SurveyorIllustration />
+                  : book.slug === "lcross" ? <LcrossIllustration />
                   : <OpportunityIllustration scene="rollout" />}
               </div>
             </figure>

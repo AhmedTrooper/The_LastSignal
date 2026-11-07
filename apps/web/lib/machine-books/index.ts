@@ -5,11 +5,12 @@ import { INSIGHT_BOOK } from "./insight";
 import { INGENUITY_BOOK } from "./ingenuity";
 import { SPIRIT_BOOK } from "./spirit";
 import { SURVEYOR_BOOK } from "./surveyor";
+import { LCROSS_BOOK } from "./lcross";
 import type { MachineBook } from "./types";
 export { chapterParagraphs } from "./types";
 export type { MachineBook, EventChapter, StoryBeat } from "./types";
 
-export const MACHINE_BOOKS = [APOLLO_BOOK, OPPORTUNITY_BOOK, RANGER_BOOK, INSIGHT_BOOK, INGENUITY_BOOK, SPIRIT_BOOK, SURVEYOR_BOOK];
+export const MACHINE_BOOKS = [APOLLO_BOOK, OPPORTUNITY_BOOK, RANGER_BOOK, INSIGHT_BOOK, INGENUITY_BOOK, SPIRIT_BOOK, SURVEYOR_BOOK, LCROSS_BOOK];
 export const getMachineBook = (slug: string) => MACHINE_BOOKS.find(book => book.slug === slug);
 export type ReadingFormat = "comic" | "book";
 export const machineStoryUrl = (slug: string, chapter?: string) => `/heroes/${slug}/story${chapter ? `#${encodeURIComponent(chapter)}` : ""}`;
