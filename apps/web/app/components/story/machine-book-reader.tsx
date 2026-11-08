@@ -21,6 +21,7 @@ import LcrossChapterExtras from "./lcross-chapter-extras";
 import VikingChapterExtras from "./viking-chapter-extras";
 import VikingTwoChapterExtras from "./viking-two-chapter-extras";
 import GrailChapterExtras from "./grail-chapter-extras";
+import PhoenixChapterExtras from "./phoenix-chapter-extras";
 
 const MECHANISMS: Record<string, { kind: EagleTrigger; action: string }> = {
   undocking: { kind: "undock", action: "Separate the illustrated spacecraft" },
@@ -124,6 +125,7 @@ export default function MachineBookReader({ book, requestedChapter, requestedFor
       {book.slug === "viking-1" && <div className="nook-mechanism"><VikingChapterExtras key={chapter.id} chapter={chapter.id} /></div>}
       {book.slug === "viking-2" && <div className="nook-mechanism"><VikingTwoChapterExtras key={chapter.id} chapter={chapter.id} /></div>}
       {book.slug === "grail" && <div className="nook-mechanism"><GrailChapterExtras key={chapter.id} chapter={chapter.id} /></div>}
+      {book.slug === "phoenix" && <div className="nook-mechanism"><PhoenixChapterExtras key={chapter.id} chapter={chapter.id} /></div>}
       <details className="nook-source" key={`source-${chapter.id}`}><summary>Open the mission record</summary><dl><div><dt>Documented event</dt><dd>{chapter.event}</dd></div><div><dt>Hardware</dt><dd>{chapter.hardware}</dd></div>{memory?.telemetry.map(item => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}{chapter.telemetry?.map(item => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}<p className="mt-2 text-xs leading-relaxed text-[#c9bcd0]">{item.note}</p><a href={item.source} target="_blank" rel="noopener noreferrer">Source ↗</a></dd></div>)}</dl><a href={chapter.source} target="_blank" rel="noopener noreferrer">Read the source: {new URL(chapter.source).hostname} ↗</a>{chapter.relatedSources?.map(source => <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>)}{memory && <a href={memory.source} target="_blank" rel="noopener noreferrer">Event telemetry and context ↗</a>}<p>First-person storytelling is an imagined retelling of the linked record, not an original transmission. Artwork is illustrative, not to scale.</p></details>
       <nav className="nook-chapter-nav" aria-label="Chapter navigation"><button type="button" className="book-reader-button" disabled={index === 0} onClick={() => navigate(index - 1)}><ArrowLeft className="h-4 w-4" />Previous chapter</button><span role="status">{index + 1} / {book.chapters.length}</span>{index < book.chapters.length - 1 ? <button type="button" className="book-reader-button book-reader-button-primary" onClick={() => navigate(index + 1)}>Next chapter<ArrowRight className="h-4 w-4" /></button> : <Link className="book-reader-button book-reader-button-primary" href={backUrl}>{backLabel}<ArrowRight className="h-4 w-4" /></Link>}</nav>
       <div className="nook-reader-footer"><p>Chapter and format are bookmarked when browser storage is available.</p></div>
