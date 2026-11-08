@@ -17,6 +17,8 @@ import SurveyorThoughtStory from "@/app/components/story/surveyor-thought-story"
 import LcrossThoughtStory from "@/app/components/story/lcross-thought-story";
 import VikingThoughtStory from "@/app/components/story/viking-thought-story";
 import { VIKING_PHOTOS } from "@/lib/viking-media";
+import VikingTwoThoughtStory from "@/app/components/story/viking-two-thought-story";
+import { VIKING_TWO_PHOTOS } from "@/lib/viking-two-media";
 import { getMachineBook } from "@/lib/machine-books";
 
 export function generateStaticParams() {
@@ -30,9 +32,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const count = book?.chapters.length ?? (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
     title: `${book?.name ?? hero.name}, a story in ${count} ${book || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
-    description: hero.slug === "viking-1" && book ? book.introduction : hero.summary,
+    description: hero.slug.startsWith("viking-") && book ? book.introduction : hero.summary,
     path: `/heroes/${hero.slug}/story`,
-    ogImage: hero.slug === "viking-1" ? VIKING_PHOTOS.cover.src : img(portrait(hero)),
+    ogImage: hero.slug === "viking-2" ? VIKING_TWO_PHOTOS.cover.src : hero.slug === "viking-1" ? VIKING_PHOTOS.cover.src : img(portrait(hero)),
   });
 }
 
@@ -58,6 +60,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   if (hero.slug === "surveyor-1") return <main id="club-main"><SurveyorThoughtStory /></main>;
   if (hero.slug === "lcross") return <main id="club-main"><LcrossThoughtStory /></main>;
   if (hero.slug === "viking-1") return <main id="club-main"><VikingThoughtStory /></main>;
+  if (hero.slug === "viking-2") return <main id="club-main"><VikingTwoThoughtStory /></main>;
 
   if (film) {
     return (

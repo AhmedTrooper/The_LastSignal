@@ -39,18 +39,21 @@ test("Eagle and Opportunity never share beat IDs, audio manifests or bookmark st
   assert.equal(EAGLE_THOUGHT_EDITION.bookmarkKey, "rv:eagle:scroll:v1");
   assert.equal(EAGLE_THOUGHT_EDITION.manifestUrl, "/api/stories/apollo-11-lander/narration");
   assert.equal(OPPORTUNITY_THOUGHTS.length, 20);
-  assert.equal(EAGLE_AUDIO_MANIFEST.readyClips, 0);
-  assert.equal(EAGLE_AUDIO_MANIFEST.missingClips, 40);
+  assert.equal(EAGLE_AUDIO_MANIFEST.readyClips, 40);
+  assert.equal(EAGLE_AUDIO_MANIFEST.missingClips, 0);
+  assert.ok(EAGLE_THOUGHTS.every(moment => moment.audio.status === "ready"));
+  assert.ok(EAGLE_THOUGHTS.every(moment => moment.audio.src?.endsWith(`/audio/story-scroll/apollo11/${moment.beatId}.mp3`)));
+  assert.ok(EAGLE_THOUGHTS.every(moment => (moment.audio.durationMs ?? 0) > 0));
 });
 
-test("Eagle's narration endpoint exposes all forty scripts without inventing recorded audio", async () => {
+test("Eagle's narration endpoint exposes all forty recorded clips with exact beat IDs", async () => {
   const response = GET();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("Content-Disposition")!, /eagle-narration-manifest\.json/);
   const manifest = await response.json();
   assert.equal(manifest.totalMoments, 40);
-  assert.equal(manifest.readyClips, 0);
+  assert.equal(manifest.readyClips, 40);
   assert.equal(manifest.moments[0].beatId, "apollo-11-lander.undocking.b01");
   assert.equal(manifest.moments[39].beatId, "apollo-11-lander.seen-again.b04");
-  assert.ok(manifest.moments.every((moment: { audio: { src: string | null; durationMs: number | null } }) => moment.audio.src === null && moment.audio.durationMs === null));
+  assert.ok(manifest.moments.every((moment: { audio: { status: string; src: string | null; durationMs: number | null }; beatId: string }) => moment.audio.status === "ready" && moment.audio.src?.endsWith(`/audio/story-scroll/apollo11/${moment.beatId}.mp3`) && (moment.audio.durationMs ?? 0) > 0));
 });

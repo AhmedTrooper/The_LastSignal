@@ -23,6 +23,8 @@ function Lander({ arm = false, firing = false, dishAway = false }: { arm?: boole
   </g>;
 }
 
+export { Lander as VikingLander };
+
 /** AI-assisted teaching art. All diagrams are stylized; no flight telemetry is reconstructed. */
 export default function VikingIllustration({ scene = "touchdown", reveal = 100 }: { scene?: VikingScene; reveal?: number }) {
   const id = useId().replaceAll(":", "");

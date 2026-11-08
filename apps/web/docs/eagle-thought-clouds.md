@@ -15,6 +15,8 @@ Open `/heroes/apollo-11-lander/story` for Eagle's ten chapters as forty chronolo
 
 Download `/api/stories/apollo-11-lander/narration` to get the forty-moment production manifest. IDs begin with `apollo-11-lander`, for example `apollo-11-lander.alarm.b01`; they cannot collide with Opportunity's IDs.
 
-The manifest includes full narration text, text revision, a spoken-text fingerprint, suggested filename and recording status. Add actual clips to `lib/eagle-narration.ts` using those fields and measured durations. No recorded clips or timings are invented. English browser-voice preview is synthetic and optional.
+The forty current moments are attached to recorded imagined-voice clips in R2 at `audio/story-scroll/apollo11/<beatId>.mp3`. `lib/eagle-narration.ts` keys each clip by the same beat ID used by the scroll story and stores the measured duration and text fingerprint. The manifest reports those forty clips as ready. In the scroll reader, the matching recorded clip starts automatically when a moment becomes active—including Previous/Next, chapter selection, keyboard navigation and scrolling—so readers do not have to press “Listen” for each moment. Browser-voice preview remains synthetic and manual for moments without a recorded clip.
+
+Earlier local audio files named `apollo-11-lander.epilogue.b01` through `b04` exist under `videos/audio/story-scroll/apollo11/`, but the current shared Apollo book has no epilogue chapter, so those four clips are not wired into the forty-moment scroll story.
 
 This implementation changes presentation, not mission facts. Reflectors return light rather than radio signals, Panel 16 remains the breaker location in the sourced story, and later photographs remain clearly identified as archival observations.

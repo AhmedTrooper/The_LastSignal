@@ -67,13 +67,17 @@
 .tc-stage-controls { position: absolute; z-index: 4; bottom: 24px; left: clamp(24px,5vw,80px); right: clamp(24px,5vw,80px); display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; gap: 20px; }
 .tc-stage-controls > button { display: flex; align-items: center; gap: 10px; min-height: 44px; width: fit-content; padding: 9px 0; border-bottom: 1px solid color-mix(in srgb,var(--tc-ink) 40%,transparent); color: var(--tc-ink); font-size: 12px; cursor: pointer; }
 .tc-stage-controls > button:last-child { justify-self: end; text-align: right; }
-.tc-stage-controls > button:disabled { opacity: .3; cursor: default; }
+.tc-stage-controls > button[data-disabled="true"] { opacity: .3; cursor: default; }
 .tc-scroll-invitation { display: block; padding-bottom: 10px; color: var(--tc-muted); font: 10px/1.6 var(--font-mono); text-align: center; }
 .tc-narration { text-align: center; }
 .tc-narration > div { display: flex; justify-content: center; gap: 10px; }
 .tc-narration button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 8px 10px; color: var(--tc-ink); font-size: 12px; cursor: pointer; }
 .tc-narration button:disabled { opacity: .45; cursor: default; }
 .tc-narration > p { color: var(--tc-muted); font-size: 9px; line-height: 1.5; }
+.tc-audio-debug { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px; max-width: 100%; overflow-wrap: anywhere; }
+.tc-audio-debug span { max-width: 100%; }
+.tc-audio-debug a { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 8px; border: 1px solid color-mix(in srgb,var(--tc-ink) 35%,transparent); border-radius: 999px; color: var(--tc-ink); font-size: 9px; text-decoration: none; }
+.tc-audio-debug a:hover, .tc-audio-debug a:focus-visible { text-decoration: underline; text-underline-offset: 2px; }
 .tc-moment-track { position: absolute; bottom: 0; inset-inline: 0; display: flex; gap: 3px; height: 3px; }
 .tc-moment-track span { flex: 1; background: color-mix(in srgb,var(--tc-ink) 12%,transparent); }
 .tc-moment-track span[data-complete="true"] { background: #b08499; }

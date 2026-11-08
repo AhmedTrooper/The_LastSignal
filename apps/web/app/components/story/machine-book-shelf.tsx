@@ -16,6 +16,7 @@ import { SPIRIT_PHOTOS } from "@/lib/spirit-media";
 import { SURVEYOR_PHOTOS } from "@/lib/surveyor-media";
 import { LCROSS_PHOTOS } from "@/lib/lcross-media";
 import { VIKING_PHOTOS } from "@/lib/viking-media";
+import { VIKING_TWO_PHOTOS } from "@/lib/viking-two-media";
 
 export default function MachineBookShelf({ book }: { book: MachineBook }) {
   const [query, setQuery] = useState("");
@@ -34,8 +35,8 @@ export default function MachineBookShelf({ book }: { book: MachineBook }) {
   const spirit = book.slug === "spirit";
   const surveyor = book.slug === "surveyor-1";
   const lcross = book.slug === "lcross";
-  const viking = book.slug === "viking-1";
-  const image = viking ? VIKING_PHOTOS.cover : lcross ? LCROSS_PHOTOS.cover : surveyor ? SURVEYOR_PHOTOS.cover : spirit ? SPIRIT_PHOTOS.cover : ingenuity ? INGENUITY_PHOTOS.cover : insight ? INSIGHT_PHOTOS.firstSelfie : ranger ? RANGER_PHOTOS.cover : book.slug === "opportunity" ? OPPORTUNITY_PHOTOS.shadow : photo(portrait(hero), hero.name);
+  const viking = book.slug === "viking-1" || book.slug === "viking-2";
+  const image = book.slug === "viking-2" ? VIKING_TWO_PHOTOS.cover : viking ? VIKING_PHOTOS.cover : lcross ? LCROSS_PHOTOS.cover : surveyor ? SURVEYOR_PHOTOS.cover : spirit ? SPIRIT_PHOTOS.cover : ingenuity ? INGENUITY_PHOTOS.cover : insight ? INSIGHT_PHOTOS.firstSelfie : ranger ? RANGER_PHOTOS.cover : book.slug === "opportunity" ? OPPORTUNITY_PHOTOS.shadow : photo(portrait(hero), hero.name);
   const saved = bookmarks[book.slug];
   const index = book.chapters.findIndex(chapter => chapter.id === saved?.chapter);
   const chapters = book.chapters.map((chapter, number) => ({ chapter, number })).filter(({ chapter }) => `${chapter.title} ${chapter.event} ${chapter.hardware} ${chapter.beats.map(beat => beat.detail).join(" ")}`.toLowerCase().includes(query.trim().toLowerCase()));
@@ -43,7 +44,7 @@ export default function MachineBookShelf({ book }: { book: MachineBook }) {
     <div className="nook-eagle-cover">
       <Link href={machineBookUrl(book.slug)} className="nook-cover" aria-label={`Open ${book.name}: ${book.title}`}>
         <Image src={eagle ? img(portrait(hero)) : image.src} alt={image.alt} fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover" />
-        <div className="nook-cover-shade" /><span className="nook-cover-number">{eagle ? "Apollo 11 / LM-5" : viking ? "Viking 1 / 1975-075C / stationary Mars lander" : lcross ? "LCROSS / 2009-031B / Centaur experiment" : surveyor ? "Surveyor 1 / 1966-045A" : ranger ? "Ranger 7 / 1964-041A" : insight ? "InSight / 2018-042A" : ingenuity ? "Ingenuity / Mars helicopter" : spirit ? "Spirit / MER-A / 2003-027A" : "Opportunity / MER-B"}</span><div className="nook-cover-title"><p>{book.name}</p><h2>{book.title}</h2></div>{image.ai && <span className="nook-ai-label">AI-generated illustration</span>}
+        <div className="nook-cover-shade" /><span className="nook-cover-number">{eagle ? "Apollo 11 / LM-5" : viking ? `${book.name} / ${book.slug === "viking-2" ? "1975-083C" : "1975-075C"} / stationary Mars lander` : lcross ? "LCROSS / 2009-031B / Centaur experiment" : surveyor ? "Surveyor 1 / 1966-045A" : ranger ? "Ranger 7 / 1964-041A" : insight ? "InSight / 2018-042A" : ingenuity ? "Ingenuity / Mars helicopter" : spirit ? "Spirit / MER-A / 2003-027A" : "Opportunity / MER-B"}</span><div className="nook-cover-title"><p>{book.name}</p><h2>{book.title}</h2></div>{image.ai && <span className="nook-ai-label">AI-generated illustration</span>}
       </Link>
       <div className="nook-cover-introduction"><p className="nook-eyebrow">{book.chapters.length} true-event chapters · Three ways to read</p><h2 className="display text-3xl sm:text-4xl">{eagle ? <>The crew went home.<br />My story stayed.</> : viking ? <>My feet stayed on Mars.<br />My questions traveled.</> : lcross ? <>My flight ended.<br />The experiment kept teaching.</> : surveyor ? <>My feet stayed on the Moon.<br />My pictures came home.</> : ranger ? <>I had no way home.<br />My pictures did.</> : insight ? <>I stayed in one place.<br />My records went much farther.</> : ingenuity ? <>My flights ended.<br />Their lessons stayed.</> : <>Built for a short visit.<br />I kept rolling.</>}</h2><p>{book.introduction}</p><Link href={machineBookUrl(book.slug)} className="nook-open">{saved ? `Resume chapter ${index + 1} · ${saved.format === "book" ? "Storybook" : "Comic"}` : `Open ${book.name}’s book`}<ArrowRight className="h-5 w-5" /></Link><Link href={machineStoryUrl(book.slug)} className="nook-open">Let the story unfold as you scroll <ArrowRight className="h-5 w-5" /></Link>{!image.ai && <a className="nook-image-credit" href={image.source} target="_blank" rel="noopener noreferrer">Cover {lcross ? "artist’s concept" : "image"}: {image.credit} ↗</a>}</div>
     </div>

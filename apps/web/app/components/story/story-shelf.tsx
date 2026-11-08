@@ -10,6 +10,7 @@ import SpiritIllustration from "./spirit-illustration";
 import SurveyorIllustration from "./surveyor-illustration";
 import LcrossIllustration from "./lcross-illustration";
 import VikingIllustration from "./viking-illustration";
+import VikingTwoIllustration from "./viking-two-illustration";
 
 /** The story editions shelf, separate from the machine catalogue. */
 export default function StoryShelf() {
@@ -28,6 +29,7 @@ export default function StoryShelf() {
                   : book.slug === "surveyor-1" ? <SurveyorIllustration />
                   : book.slug === "lcross" ? <LcrossIllustration />
                   : book.slug === "viking-1" ? <VikingIllustration />
+                  : book.slug === "viking-2" ? <VikingTwoIllustration />
                   : <OpportunityIllustration scene="rollout" />}
               </div>
             </figure>

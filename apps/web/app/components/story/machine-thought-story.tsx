@@ -71,20 +71,21 @@ function ThoughtStage({ edition, renderIllustration, active, hasStarted, blocked
   const moments = MOMENTS.filter(moment => moment.chapterId === chapter.id);
   const local = moment.beatSequence - 1;
   const direction = edition.directions[chapter.id];
+  const previousDisabled = moment.displaySerial === 1;
   return <div className={`tc-stage tc-tone-${direction.tone}`} data-placement={moment.bubblePlacement} data-current={hasStarted} data-chapter={chapter.id} inert={!hasStarted}>
       <header className="tc-chapter-heading"><p className="tc-eyebrow">Chapter {chapterIndex + 1} / {BOOK.chapters.length} · {direction.date}</p><h2 id={`tc-title-${chapter.id}`}>{chapter.title}</h2><p>{direction.place}</p></header>
       <MomentVisual moment={moment} edition={edition} renderIllustration={renderIllustration} />
       {hasStarted && <motion.div key={moment.beatId} id={`cloud-${moment.beatId}`} tabIndex={-1} className="tc-cloud" data-beat-id={moment.beatId} data-serial={moment.displaySerial} initial={reduced ? false : { opacity: 0, y: 14, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: reduced ? 0 : 0.32, ease: "easeOut" }}>
         <CloudOutline /><div className="tc-cloud-inside"><p className="tc-cloud-speaker">{BOOK.name}<span>{String(moment.displaySerial).padStart(2, "0")} / {MOMENTS.length}</span></p><p className="tc-cloud-line">{moment.bubbleText}</p><button type="button" onClick={() => onNotes(moment.displaySerial - 1)}>More to this moment <ArrowRight className="h-3.5 w-3.5" /></button></div><span className="tc-thought-dot tc-thought-dot-one" aria-hidden="true" /><span className="tc-thought-dot tc-thought-dot-two" aria-hidden="true" />
       </motion.div>}
-      <footer className="tc-stage-controls"><button type="button" disabled={moment.displaySerial === 1} onClick={() => onMove(moment.displaySerial - 2)} aria-label="Previous moment"><ArrowLeft className="h-4 w-4" /><span>Previous</span></button><div>{hasStarted && !blocked ? <ThoughtNarration key={moment.beatId} moment={moment} /> : <span className="tc-scroll-invitation">Scroll to follow the thought</span>}</div><button type="button" onClick={() => onMove(moment.displaySerial)}>{moment.displaySerial === MOMENTS.length ? "Finish story" : local === moments.length - 1 ? "Next chapter" : "Next moment"}<ArrowRight className="h-4 w-4" /></button></footer>
+      <footer className="tc-stage-controls"><button type="button" aria-disabled={previousDisabled} data-disabled={previousDisabled} tabIndex={previousDisabled ? -1 : undefined} onClick={() => { if (!previousDisabled) onMove(moment.displaySerial - 2); }} aria-label="Previous moment"><ArrowLeft className="h-4 w-4" /><span>Previous</span></button><div>{hasStarted && !blocked ? <ThoughtNarration key={moment.beatId} moment={moment} /> : <span className="tc-scroll-invitation">Scroll to follow the thought</span>}</div><button type="button" onClick={() => onMove(moment.displaySerial)}>{moment.displaySerial === MOMENTS.length ? "Finish story" : local === moments.length - 1 ? "Next chapter" : "Next moment"}<ArrowRight className="h-4 w-4" /></button></footer>
       <div className="tc-moment-track" aria-hidden="true">{moments.map((item, index) => <span key={item.beatId} data-complete={index <= local} />)}</div>
   </div>;
 }
 
 export default function MachineThoughtStory({ edition: EDITION, renderIllustration, onChapterChange, renderNotesExtras }: { edition: ThoughtEdition; renderIllustration: IllustrationRenderer; onChapterChange?: (index: number) => void; renderNotesExtras?: IllustrationRenderer }) {
   const BOOK = EDITION.book;
-  const storyFirst = BOOK.slug === "apollo-11-lander" || BOOK.slug === "insight" || BOOK.slug === "ingenuity" || BOOK.slug === "spirit" || BOOK.slug === "surveyor-1" || BOOK.slug === "lcross" || BOOK.slug === "viking-1";
+  const storyFirst = BOOK.slug === "apollo-11-lander" || BOOK.slug === "insight" || BOOK.slug === "ingenuity" || BOOK.slug === "spirit" || BOOK.slug === "surveyor-1" || BOOK.slug === "lcross" || BOOK.slug === "viking-1" || BOOK.slug === "viking-2";
   const MOMENTS = EDITION.moments;
   const root = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -160,14 +161,15 @@ export default function MachineThoughtStory({ edition: EDITION, renderIllustrati
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (dialog !== null || !started || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (event.target instanceof HTMLElement && event.target.closest('a,button,input,textarea,select,summary,dialog,[contenteditable="true"]')) return;
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      if (target && !target.closest(".tc-stage-controls") && target.closest('a,button,input,textarea,select,summary,dialog,[contenteditable="true"]')) return;
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); move(active + (event.key === "ArrowRight" ? 1 : -1)); }
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
   }, [active, started, dialog, move]);
 
-  const themeClass = BOOK.slug === "viking-1" ? "es-mars viking-thoughts" : BOOK.slug === "lcross" ? "lcross-thoughts" : BOOK.slug === "surveyor-1" ? "surveyor-thoughts" : BOOK.slug === "spirit" ? "es-mars spirit-thoughts" : BOOK.slug === "ingenuity" ? "es-mars ingenuity-thoughts" : BOOK.slug === "insight" ? "es-mars insight-thoughts" : EDITION.theme === "mars" ? "es-mars opportunity-thoughts" : EDITION.theme === "moon" ? "ranger-thoughts" : "eagle-thoughts";
+  const themeClass = BOOK.slug === "viking-2" ? "es-mars viking-two-thoughts" : BOOK.slug === "viking-1" ? "es-mars viking-thoughts" : BOOK.slug === "lcross" ? "lcross-thoughts" : BOOK.slug === "surveyor-1" ? "surveyor-thoughts" : BOOK.slug === "spirit" ? "es-mars spirit-thoughts" : BOOK.slug === "ingenuity" ? "es-mars ingenuity-thoughts" : BOOK.slug === "insight" ? "es-mars insight-thoughts" : EDITION.theme === "mars" ? "es-mars opportunity-thoughts" : EDITION.theme === "moon" ? "ranger-thoughts" : "eagle-thoughts";
   return <div ref={root} className={`eagle-scroll thought-story ${themeClass}`} data-machine={BOOK.slug} data-active-moment={moment.beatId} data-started={started}>
     <a href={`#${MOMENTS[0].beatId}`} className="es-skip" onClick={event => { event.preventDefault(); move(0); }}>Skip to {BOOK.name}’s first thought</a>
     <header className="tc-topbar"><Link href="/story" aria-label="Back to the story room"><ArrowLeft className="h-4 w-4" /><span>{BOOK.name}<span className="tc-topbar-description"> / a story in thoughts</span></span></Link><p className="tc-topbar-serial" aria-label={started ? `Moment ${moment.displaySerial} of ${MOMENTS.length}` : `${MOMENTS.length} story moments`}>{started ? `${String(moment.displaySerial).padStart(2, "0")} / ${MOMENTS.length}` : `${MOMENTS.length} moments`}</p><nav aria-label="Story controls"><button type="button" onClick={() => setDialog("chapters")}>Chapters</button>{storyFirst && <><span aria-current="page">Story</span><Link href={machineBookUrl(BOOK.slug, moment.chapterId, "comic")}>Comic</Link></>}<Link href={machineBookUrl(BOOK.slug, moment.chapterId, "book")}>{storyFirst ? "Book" : "Full book"}</Link></nav><div className="tc-total-progress" style={{ transform: `scaleX(${started ? moment.displaySerial / MOMENTS.length : 0})` }} aria-hidden="true" /></header>

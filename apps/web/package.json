@@ -15,6 +15,7 @@
   "dependencies": {
     "@opennextjs/cloudflare": "1.19.11",
     "@thelastsignal/data": "*",
+    "@vercel/analytics": "^2.0.1",
     "@videojs/react": "10.3.0",
     "amplitudejs": "^5.3.2",
     "firebase": "^13.0.0",

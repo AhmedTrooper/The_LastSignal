@@ -1,0 +1,16 @@
+.viking-two-thoughts { background: #344958; }
+.viking-two-thoughts .tc-topbar { background: #344958f2; }
+.viking-two-thoughts .tc-topbar-serial { color: #d5e0d3; }
+.viking-two-thoughts .tc-total-progress { background: #cbd8bb; }
+.viking-two-thoughts .tc-topbar nav > span[aria-current] { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 2px solid #cbd8bb; color: #cbd8bb; font-size: 12px; }
+.viking-two-thoughts .tc-tone-paper { --tc-bg: #e8e8da; --tc-ink: #465352; --tc-muted: #606d64; --tc-ground: #b2b59e; }
+.viking-two-thoughts .tc-tone-night { --tc-bg: #344958; --tc-ink: #f1efd5; --tc-muted: #ccdcd6; --tc-ground: #7c908f; }
+.viking-two-thoughts .tc-topbar nav a { min-width: 44px; justify-content: center; }
+.viking-two-thoughts .tc-opening .es-opening-copy h1 { font-size: clamp(48px, 6.6vw, 100px); }
+.viking-two-extras .viking-activity > .viking-two-art { display: block; width: 100%; max-width: 560px; height: auto; margin: 20px auto; border-radius: 12px; }
+@media (max-width: 599px) {
+  .viking-two-thoughts .tc-topbar { padding-inline: 12px; gap: 8px; }
+  .viking-two-thoughts .tc-topbar-serial { display: none; }
+  .viking-two-thoughts .tc-topbar nav { gap: 8px; }
+  .viking-two-thoughts .tc-opening .es-opening-copy h1 { font-size: clamp(40px, 9.5vw, 52px); }
+}

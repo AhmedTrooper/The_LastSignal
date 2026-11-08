@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Jost, IBM_Plex_Mono, Caveat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./clubhouse.css";
 import { defaultSEO } from "@/lib/seo";
@@ -57,6 +58,7 @@ export default function RootLayout({
           {children}
           <TabBar />
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
