@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA10705/**" },
       { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA10908/**" },
       { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA10911/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA02312/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA02314/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA02347/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA02348/**" },
+      { protocol: "https", hostname: "images-assets.nasa.gov", pathname: "/image/PIA02353/**" },
       { protocol: "https", hostname: "static.uahirise.org", pathname: "/images/**" },
       {
         protocol: "https",

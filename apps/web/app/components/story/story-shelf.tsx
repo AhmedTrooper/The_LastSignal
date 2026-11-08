@@ -13,6 +13,7 @@ import VikingIllustration from "./viking-illustration";
 import VikingTwoIllustration from "./viking-two-illustration";
 import GrailIllustration from "./grail-illustration";
 import PhoenixIllustration from "./phoenix-illustration";
+import MplIllustration from "./mpl-illustration";
 
 /** The story editions shelf, separate from the machine catalogue. */
 export default function StoryShelf() {
@@ -34,6 +35,7 @@ export default function StoryShelf() {
                   : book.slug === "viking-2" ? <VikingTwoIllustration />
                   : book.slug === "grail" ? <GrailIllustration />
                   : book.slug === "phoenix" ? <PhoenixIllustration />
+                  : book.slug === "mars-polar-lander" ? <MplIllustration />
                   : <OpportunityIllustration scene="rollout" />}
               </div>
             </figure>
