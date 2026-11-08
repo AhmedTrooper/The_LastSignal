@@ -327,6 +327,11 @@ body {
   padding-bottom: calc(76px + env(safe-area-inset-bottom));
 }
 
+@media (max-width: 1023px) {
+  body.pb-tabbar:has(.thought-story),
+  body.pb-tabbar:has(.storybook-reader) { padding-bottom: 0; }
+}
+
 @media (min-width: 1024px) {
   .pb-tabbar { padding-bottom: 0; }
 }

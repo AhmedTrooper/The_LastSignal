@@ -92,9 +92,15 @@ export default function ThoughtNarration({ moment }: { moment: ThoughtMoment }) 
       } else { window.speechSynthesis.resume(); setStatus("playing"); }
     } else await start();
   };
+  const statusText = status === "error" ? "Voice couldn’t play. You can retry or read the full moment." : recorded ? "Recorded imagined voice" : browserVoice ? "Synthetic preview · full context included" : "Script ready · no recorded clip yet";
+  if (recorded) {
+    return <div className="tc-narration" data-audio-beat={moment.beatId} data-status={status}>
+      {status === "playing" && <span className="tc-voice-dots" aria-hidden="true"><span /><span /><span /></span>}
+      <span className="sr-only" role="status">{statusText}</span>
+    </div>;
+  }
   return <div className="tc-narration" data-audio-beat={moment.beatId}>
-    <div><button type="button" onClick={toggle} disabled={!recorded && !browserVoice} aria-label={status === "playing" ? "Pause narration" : status === "paused" ? "Resume narration" : recorded ? "Play this moment’s narration" : "Preview this moment with a synthetic English voice"}>{status === "playing" ? <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M6 4h4v16H6zm8 0h4v16h-4z" fill="currentColor" /></svg> : <Play className="h-3.5 w-3.5" />}{status === "playing" ? "Pause" : status === "paused" ? "Resume" : recorded ? "Listen" : "Voice preview"}</button>{(status === "playing" || status === "paused") && <button type="button" onClick={() => { cancel(); setStatus("idle"); }}>Stop</button>}</div>
-    <p role="status">{status === "error" ? "Voice couldn’t play. You can retry or read the full moment." : recorded ? "Recorded imagined voice" : browserVoice ? "Synthetic preview · full context included" : "Script ready · no recorded clip yet"}</p>
-    {recorded && <p className="tc-audio-debug"><span>{moment.audio.src}</span><a href={moment.audio.src!} target="_blank" rel="noopener noreferrer">Open audio</a></p>}
+    <div><button type="button" onClick={toggle} disabled={!browserVoice} aria-label={status === "playing" ? "Pause narration" : status === "paused" ? "Resume narration" : "Preview this moment with a synthetic English voice"}>{status === "playing" ? <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M6 4h4v16H6zm8 0h4v16h-4z" fill="currentColor" /></svg> : <Play className="h-3.5 w-3.5" />}{status === "playing" ? "Pause" : status === "paused" ? "Resume" : "Voice preview"}</button>{(status === "playing" || status === "paused") && <button type="button" onClick={() => { cancel(); setStatus("idle"); }}>Stop</button>}</div>
+    <p role="status">{statusText}</p>
   </div>;
 }
