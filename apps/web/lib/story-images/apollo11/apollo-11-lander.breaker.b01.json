@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.breaker.b01",
+  "title": "Something small on the floor",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.breaker.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.breaker.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A dramatic floor-level close-up shows a broken dark control knob between an astronaut's boots. Panel wiring and a cropped backpack edge establish the cramped cabin.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "focus",
+  "context": "Aldrin found the damaged engine-arm circuit-breaker knob. The composition focuses on discovering the loose piece, without asserting an exact moment or cause of the damage.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · breaker",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1232043"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "83cdfe5027adaa2362a879047709be4c0fd6f37d6223aa3f48daec6253b05b77"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.undocking.b01",
+  "title": "Free of Columbia",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.undocking.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.undocking.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Eagle's angular silver cabin and gold descent stage float above the curved Moon, with landing legs extended. Columbia recedes into the upper left, leaving a clear gap between the spacecraft.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "context": "Eagle has separated from Columbia in lunar orbit. Neil Armstrong and Buzz Aldrin are aboard Eagle; Michael Collins remains in Columbia. This composition emphasizes the separation between two spacecraft, with Eagle's ascent and descent stages still joined.",
+  "interpretation": "Original illustrative viewpoint. Shapes, spacing, surface relief and lighting are stylized, not a to-scale reconstruction or flight telemetry. No latch count, altitude, historical quote or exact separation attitude is asserted by the drawing.",
+  "sources": [
+    {
+      "label": "Apollo 11 Flight Journal · Undocking and descent-orbit insertion",
+      "url": "https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html#1001203"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "motion": "drift",
+  "assetSha256": "516f09afd7f02b589f4c947847da43b44b9b2d5e77325e2b41b6d413f408bad7"
+}

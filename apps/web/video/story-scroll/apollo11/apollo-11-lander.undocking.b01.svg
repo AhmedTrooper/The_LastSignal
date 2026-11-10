@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1200" viewBox="0 0 1440 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Free of Columbia — Eagle begins its own journey</title>
+  <desc id="desc">AI-assisted story illustration, not a mission photograph or a to-scale reconstruction. A large, angular Eagle lunar module with a silver crew cabin, gold descent stage and extended landing legs floats above the curved Moon. Columbia recedes into the upper left. The gap between the spacecraft tells the story of undocking. Based on the Apollo 11 Flight Journal and NASA's mission overview.</desc>
+  <metadata>Beat ID: apollo-11-lander.undocking.b01. Historical context: https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html#1001203 . Visual geometry, relative distance, camera position and lighting are artistic interpretations.</metadata>
+  <defs>
+    <linearGradient id="space" x2=".85" y2="1"><stop stop-color="#060e20"/><stop offset=".54" stop-color="#13223b"/><stop offset="1" stop-color="#263747"/></linearGradient>
+    <radialGradient id="halo" cx=".68" cy=".35" r=".65"><stop stop-color="#879892" stop-opacity=".2"/><stop offset="1" stop-color="#879892" stop-opacity="0"/></radialGradient>
+    <linearGradient id="lunar" x1=".15" x2=".85" y2="1"><stop stop-color="#c8d0c9"/><stop offset=".42" stop-color="#758b90"/><stop offset="1" stop-color="#253f53"/></linearGradient>
+    <linearGradient id="foil" x2=".75" y2="1"><stop stop-color="#fff0b1"/><stop offset=".28" stop-color="#e5b95e"/><stop offset=".64" stop-color="#b57525"/><stop offset="1" stop-color="#79501f"/></linearGradient>
+    <linearGradient id="gold-side" x2=".9" y2=".65"><stop stop-color="#d7a346"/><stop offset=".4" stop-color="#91632a"/><stop offset="1" stop-color="#443629"/></linearGradient>
+    <linearGradient id="alloy" x2="1" y2=".8"><stop stop-color="#f1f1dc"/><stop offset=".35" stop-color="#b2c3c0"/><stop offset="1" stop-color="#526c7c"/></linearGradient>
+    <linearGradient id="shadow-alloy" x2=".9" y2="1"><stop stop-color="#8b9e9e"/><stop offset="1" stop-color="#2d465b"/></linearGradient>
+    <linearGradient id="glass" x2=".8" y2="1"><stop stop-color="#487383"/><stop offset=".24" stop-color="#162c43"/><stop offset="1" stop-color="#050f24"/></linearGradient>
+    <pattern id="grain" width="33" height="29" patternUnits="userSpaceOnUse"><circle cx="4" cy="6" r=".8" fill="#faf2d2" opacity=".13"/><circle cx="22" cy="19" r=".65" fill="#050e20" opacity=".22"/></pattern>
+    <pattern id="mesh" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 0h9v9" fill="none" stroke="#b3c5bf" stroke-width=".65" opacity=".4"/></pattern>
+    <clipPath id="rounded"><rect width="1440" height="1200" rx="36"/></clipPath>
+    <clipPath id="moon-clip"><path d="M-100 967Q600 737 1540 951V1260H-100Z"/></clipPath>
+    <clipPath id="front-foil"><path d="M675 490l228-13 27 126-260 24-40-80z"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <path fill="url(#space)" d="M0 0h1440v1200H0z"/>
+    <path fill="url(#halo)" d="M0 0h1440v1200H0z"/>
+    <!-- Sparse, art-directed stars. They are decorative, not a chart of the sky. -->
+    <g fill="#e2e6d5">
+      <circle cx="110" cy="126" r="1.5"/><circle cx="337" cy="90" r="1.2"/><circle cx="465" cy="194" r="1.4"/>
+      <circle cx="1302" cy="92" r="1.7"/><circle cx="1170" cy="226" r="1.2"/><circle cx="1014" cy="104" r="1.2"/>
+      <circle cx="92" cy="434" r="1.8"/><circle cx="438" cy="487" r="1.5"/><circle cx="244" cy="593" r="1.1"/>
+      <circle cx="1302" cy="681" r="1.6"/><circle cx="1159" cy="818" r="1.1"/><circle cx="392" cy="711" r="1.2"/>
+      <circle cx="1269" cy="388" r="1.2"/><circle cx="546" cy="83" r="1"/><circle cx="582" cy="702" r="1"/>
+    </g>
+    <g fill="none" stroke="#bdd4cd" stroke-linecap="round" opacity=".7"><path d="M1148 116v12m-6-6h12M155 706v8m-4-4h8M552 259v8m-4-4h8"/></g>
+    <!-- A curved, shaded lunar surface leaves a visible gap under the footpads. -->
+    <path d="M-100 967Q600 737 1540 951V1260H-100Z" fill="url(#lunar)"/>
+    <g clip-path="url(#moon-clip)">
+      <path d="M-45 973q235-50 399-66t345 17 340 11 441 101v210H-45Z" fill="#67828a" opacity=".45"/>
+      <path d="M-32 1100q190-111 366-105t344 108 356-37 428 57v130H-32Z" fill="#3f6173" opacity=".45"/>
+      <g fill="#3b5c6d" stroke="#aebfba" stroke-width="3">
+        <ellipse cx="187" cy="965" rx="91" ry="26" transform="rotate(-10 187 965)"/>
+        <ellipse cx="535" cy="913" rx="52" ry="14" transform="rotate(-3 535 913)"/>
+        <ellipse cx="1059" cy="969" rx="95" ry="24" transform="rotate(8 1059 969)"/>
+        <ellipse cx="726" cy="1055" rx="168" ry="62" transform="rotate(3 726 1055)"/>
+        <ellipse cx="1267" cy="1097" rx="71" ry="32" transform="rotate(14 1267 1097)"/>
+      </g>
+      <g fill="#789297" stroke="#273f54" stroke-width="2">
+        <ellipse cx="187" cy="971" rx="66" ry="16" transform="rotate(-10 187 971)"/>
+        <ellipse cx="537" cy="918" rx="35" ry="8"/>
+        <ellipse cx="1061" cy="976" rx="70" ry="14" transform="rotate(8 1061 976)"/>
+        <ellipse cx="726" cy="1073" rx="126" ry="39" transform="rotate(3 726 1073)"/>
+      </g>
+      <g stroke="#d4dbca" fill="none" opacity=".35" stroke-linecap="round"><path d="m306 944 20-4m514 14 34 3m-474 89 22-6m523 17 32 2m-703 53 28-8m373-220 27 1m-470 121 37-6m970-17 22 4" stroke-width="3"/></g>
+      <path fill="url(#grain)" d="M0 820h1440v380H0z"/>
+    </g>
+    <path d="M-40 948Q654 748 1480 937" stroke="#e5e6ce" stroke-width="3" fill="none" opacity=".85"/>
+    <!-- Columbia: the conical command module remains attached to its cylindrical service module. -->
+    <g transform="translate(260 309) rotate(-28)">
+      <path d="m-151-44-55 9v70l55 9" fill="#101d31" stroke="#677d8a" stroke-width="3"/>
+      <ellipse cx="-204" cy="0" rx="12" ry="35" fill="#080e1c" stroke="#8a9d9f" stroke-width="3"/>
+      <path d="M-155-69H1v138h-156q-25-69 0-138" fill="url(#shadow-alloy)" stroke="#0c192a" stroke-width="4"/>
+      <ellipse cx="0" cy="0" rx="18" ry="69" fill="#486376" stroke="#a9bcb9" stroke-width="2"/>
+      <path d="M-143-57H-15v29h-128z" fill="#d6ded2" opacity=".7"/>
+      <path d="M-138 10H-27v32h-111z" fill="#223d53" stroke="#99b1b1" stroke-width="2"/>
+      <path d="M-119 10v32m13-32v32m13-32v32m13-32v32m13-32v32m13-32v32" stroke="#738f9c"/>
+      <path d="M-62-68V68m-85-136V68" stroke="#d0d9d0" stroke-width="2" opacity=".5"/>
+      <path d="M-2-72 107-15v30L-2 72q-26-72 0-144" fill="url(#alloy)" stroke="#101d30" stroke-width="4"/>
+      <path d="m-5 15 104-19 8 19L-2 72Z" fill="#657f8b"/>
+      <path d="m20-47 31 13-4 14-31-10z" fill="url(#glass)" stroke="#f3efda" stroke-width="2"/>
+      <path d="m-2-61 102 49M-5 54l101-43" stroke="#e8e8d6" stroke-width="2" opacity=".7"/>
+      <path d="M107-15h15v30h-15" fill="#8da6ac" stroke="#182d40" stroke-width="3"/>
+      <ellipse cx="122" cy="0" rx="5" ry="15" fill="#101f33" stroke="#e2d9b8" stroke-width="3"/>
+      <path d="m-114-70-11-16m11 16 15-14M-114 69l-11 16m11-16 15 14" stroke="#afbfb9" stroke-width="5"/>
+      <path d="m-160 67-18 45m-13 0q14 20 30 0" fill="none" stroke="#a1b8b5" stroke-width="3"/>
+    </g>
+    <!-- Gentle visual separation marks; no invented latch counts, flight path or telemetry. -->
+    <g stroke="#dbbc77" stroke-linecap="round" fill="none" opacity=".75">
+      <path d="m434 276 31-5m18-3 14-3" stroke-width="2"/>
+      <path d="m510 208 8-14m-53 19-8-14m85 49 16 2" stroke-width="2"/>
+    </g>
+    <!-- EAGLE / three-quarter view. Rear landing struts sit behind the descent stage. -->
+    <g stroke-linejoin="round" stroke-linecap="round">
+      <g stroke="#24384b" stroke-width="13" fill="none"><path d="m679 495-90 111-78 5m-12 5 132-53"/></g>
+      <g stroke="#acbbae" stroke-width="7" fill="none"><path d="m679 495-90 111-78 5m-12 5 132-53"/></g>
+      <g fill="url(#alloy)" stroke="#253b4b" stroke-width="3"><ellipse cx="499" cy="619" rx="36" ry="10" transform="rotate(-10 499 619)"/></g>
+      <!-- Descent-stage octagon and foil blankets, intentionally faceted rather than toy blocks. -->
+      <path d="m674 459 185-17 90 31 32 105-52 25-259 24-41-80z" fill="url(#gold-side)" stroke="#111f32" stroke-width="5"/>
+      <path d="m674 459 185-17 90 31-46 4-228 13-46 57z" fill="#debd7b" stroke="#263441" stroke-width="3"/>
+      <path d="m675 490 228-13 27 126-260 24-40-80z" fill="url(#foil)" stroke="#172637" stroke-width="4"/>
+      <g clip-path="url(#front-foil)">
+        <path d="m667 480 38 65-51 25 91-9-16 52 49-64 36 44 15-99 42 29 34-33-7 85 46 23" fill="none" stroke="#f8d88f" stroke-width="3" opacity=".7"/>
+        <path d="m672 532 41-29 27 55 40-58 18 74 36-47 31 60 38-43 22 54" fill="none" stroke="#75512b" stroke-width="2" opacity=".8"/>
+        <path d="m629 547 76-2-35 82m43-124 27 55 38-9m51-55 5 33 37-4m-73 51 16 19 51-6" fill="none" stroke="#fff0b6" stroke-width="1.2"/>
+        <path fill="url(#grain)" d="M625 468h310v170H625z"/>
+      </g>
+      <path d="m927 486 32 4 16 85-35 14z" fill="#16263a" stroke="#ceaa6b" stroke-width="2"/>
+      <path d="m653 524 12-14 13 86-10 7zM745 490l16-2 11 128-18 2zM865 481l18-1 18 125-17 2z" fill="#222e39"/>
+      <path d="m781 611 58-5 14 28-76 8z" fill="#101e30" stroke="#718182" stroke-width="3"/>
+      <!-- Ascent-stage side equipment compartments. -->
+      <path d="m872 278 67 35 34 85-11 78-70 8-38-68z" fill="#112339" stroke="#91aaa9" stroke-width="3"/>
+      <path d="m937 323 20 8 25 61-45-6z" fill="#baa889" stroke="#14263b" stroke-width="3"/>
+      <path d="m886 390 55-4 15 69-48 7z" fill="url(#mesh)" stroke="#9ea88e" stroke-width="2"/>
+      <path d="m645 345-34 9-19 70 35 44 41-29z" fill="#1c2f41" stroke="#8ca1a2" stroke-width="3"/>
+      <path d="m600 401 33 13-5 40-21-19z" fill="#c7aa68"/>
+      <!-- Pressure cabin: irregular angular planes and the distinctive triangular forward windows. -->
+      <path d="m653 307 87-73 129 11 53 73-34 133-195 26-63-71z" fill="url(#alloy)" stroke="#122236" stroke-width="5"/>
+      <path d="m740 234 129 11 53 73-88-29-96-18-85 36z" fill="#dce3d6"/>
+      <path d="m834 289 88 29-34 133-61-38z" fill="#567381" stroke="#1c3547" stroke-width="2"/>
+      <path d="m653 307 82-33 7 30-19 83-76 28-17-9z" fill="#95acaf"/>
+      <path d="m669 330 60-19-5 64-70 21z" fill="#0d1c31" stroke="#263c4e" stroke-width="9"/>
+      <path d="m671 333 53-18-57 66z" fill="url(#glass)" stroke="#e0dcc3" stroke-width="3"/>
+      <path d="m767 310 61-5 36 67-86 9z" fill="#0d1b2e" stroke="#263c4e" stroke-width="9"/>
+      <path d="m774 316 49-5 30 55z" fill="url(#glass)" stroke="#dcdcc4" stroke-width="3"/>
+      <path d="m675 341 38-13m75-5 32-4" fill="none" stroke="#8eb9bc" stroke-width="2"/>
+      <path d="m706 401 113-17 28 59-120 19-21-29z" fill="#a0b0ab" stroke="#334d5c" stroke-width="4"/>
+      <path d="m719 411 90-14 21 39-94 16z" fill="#b9c5b9" stroke="#ebdfba" stroke-width="2"/>
+      <path d="m794 421 20-4m-8-6 2 13" stroke="#3e5260" stroke-width="3"/>
+      <path d="m648 422 42 8 8 39-30-23z" fill="#0d2036"/>
+      <path d="m738 271 5 29m-3-57 50 30m47 143 35 13m-145 17 18 19" fill="none" stroke="#e1dfc6" stroke-width="2" opacity=".8"/>
+      <g fill="#223e51"><circle cx="715" cy="409" r="2"/><circle cx="806" cy="391" r="2"/><circle cx="837" cy="439" r="2"/><circle cx="732" cy="455" r="2"/></g>
+      <!-- Top docking tunnel and open docking ring, the storytelling focus of this beat. -->
+      <path d="m755 239-2-37 64-8 7 41" fill="url(#shadow-alloy)" stroke="#172b3d" stroke-width="4"/>
+      <ellipse cx="784" cy="202" rx="36" ry="14" transform="rotate(-7 784 202)" fill="#b7c6c0" stroke="#e8dec0" stroke-width="4"/>
+      <ellipse cx="784" cy="201" rx="26" ry="8" transform="rotate(-7 784 201)" fill="#07162b"/>
+      <path d="m751 197 7-7m52 1 8 3m-29 18 1 8" stroke="#ced7c7" stroke-width="3"/>
+      <!-- Antenna dish, feed and supporting struts. -->
+      <path d="m663 316-22-53m-5-7 21-31" stroke="#a0b5b7" stroke-width="5"/>
+      <path d="M607 237q44 62 85 9l-40-11z" fill="url(#alloy)" stroke="#253e53" stroke-width="3"/>
+      <ellipse cx="650" cy="241" rx="44" ry="14" transform="rotate(8 650 241)" fill="#a0b3af" stroke="#dce3cf" stroke-width="2"/>
+      <path d="m619 242 32-48 28 54m-28-54-5 53" stroke="#deceaa" stroke-width="2" fill="none"/>
+      <circle cx="651" cy="194" r="4" fill="#f4dc98"/>
+      <path d="m873 277 25-89m-15 50 25 3" stroke="#9eafb0" stroke-width="3"/>
+      <!-- Reaction-control clusters: quiet nozzles, no invented undocking exhaust. -->
+      <g fill="#4c646e" stroke="#101f32" stroke-width="3">
+        <path d="m620 338-29 4-14-14 27-6zM619 345l-28 14-14-7 28-22zM620 338l-4-23 13-10 6 31z"/>
+        <path d="m938 329 28-2 16 12-28 9zM941 343l21 22 21-2-25-29zM941 331l7-26 16 4-12 27z"/>
+      </g>
+      <g stroke="#c6d0c3" stroke-width="2" fill="none"><path d="m577 328 27-6m-27 30 14 7m375-32 16 12m-20 26 21-2"/></g>
+      <!-- Front landing-gear trusses. Large spread and attached joints make the craft legible. -->
+      <g fill="none" stroke="#152b3f" stroke-width="16"><path d="m647 547-65 60-90 176m48-184 118 23-166 161m398-238 93 35 123 173m-212-142 89-31m-177 172-33-196m120-10-87 206"/></g>
+      <g fill="none" stroke="#b3c3b9" stroke-width="9"><path d="m647 547-65 60-90 176m48-184 118 23-166 161m398-238 93 35 123 173m-212-142 89-31m-177 172-33-196m120-10-87 206"/></g>
+      <g stroke="#f1d59c" stroke-width="3" fill="none"><path d="m647 544-68 59-91 176m410-237 88 37 121 172M653 619 493 778m319-37-34-189"/></g>
+      <g stroke="#d3a24c" stroke-width="17" fill="none"><path d="m563 642-27 51m494-48 27 39m-253 21-10-57"/></g>
+      <g stroke="#ffe1a0" stroke-width="5" fill="none"><path d="m558 645-25 45m493-38 24 33m-249 16-8-49"/></g>
+      <g fill="#87999a" stroke="#20394b" stroke-width="3"><circle cx="582" cy="607" r="10"/><circle cx="983" cy="580" r="10"/><circle cx="648" cy="547" r="7"/><circle cx="891" cy="545" r="7"/></g>
+      <!-- Footpads are suspended above the distant Moon, rather than standing on it. -->
+      <g fill="url(#alloy)" stroke="#142b3f" stroke-width="4">
+        <path d="m441 786 13-15 67-11 19 10-10 19-64 12z"/>
+        <path d="m1058 756 21-16 64 9 17 21-12 12-70-9z"/>
+        <path d="m768 752 20-12 59 2 22 15-17 13-67-4z"/>
+      </g>
+      <g fill="none" stroke="#eee0b8" stroke-width="2"><ellipse cx="491" cy="779" rx="40" ry="8" transform="rotate(-11 491 779)"/><ellipse cx="1108" cy="762" rx="41" ry="8" transform="rotate(9 1108 762)"/><ellipse cx="817" cy="754" rx="38" ry="7"/></g>
+      <!-- Forward porch and ladder. -->
+      <path d="m729 461 88-9 23 25-93 13z" fill="#748d92" stroke="#243d50" stroke-width="3"/>
+      <path d="m752 486 28 246m45-252 1 253" fill="none" stroke="#172c3e" stroke-width="8"/>
+      <path d="m752 486 28 246m45-252 1 253" fill="none" stroke="#d1c5a5" stroke-width="4"/>
+      <path d="m756 510 69-5m-66 30 66-5m-63 31 63-5m-61 32 61-5m-58 32 58-4m-55 31 55-3m-52 30 52-2m-49 28 49-1m-46 25h46" fill="none" stroke="#b6b9a7" stroke-width="4"/>
+    </g>
+    <!-- Quiet exhibit labels keep the image understandable even before the narration. -->
+    <g font-family="ui-monospace, monospace" font-size="15" letter-spacing="3" fill="#c1d3cd">
+      <text x="104" y="172">COLUMBIA</text><path d="M105 187h83l18 23" stroke="#69899a" fill="none"/>
+      <text x="1111" y="452" fill="#efd496">EAGLE</text><path d="M1109 466h-54l-54 38" stroke="#ad905e" fill="none"/>
+    </g>
+    <g transform="translate(74 78)" fill="#e9e5d3"><path d="M0 0h26" stroke="#e0bd71" stroke-width="3"/><text x="43" y="5" font-family="ui-monospace, monospace" font-size="14" letter-spacing="3">THE MOMENT THEY PARTED</text></g>
+    <g transform="translate(74 1130)"><rect x="0" y="-20" width="510" height="38" rx="19" fill="#071528" opacity=".85"/><text x="20" y="4" font-family="ui-monospace, monospace" font-size="13" letter-spacing="1.3" fill="#d6ddd2">AI-ASSISTED ILLUSTRATION · NOT A PHOTOGRAPH</text></g>
+  </g>
+</svg>

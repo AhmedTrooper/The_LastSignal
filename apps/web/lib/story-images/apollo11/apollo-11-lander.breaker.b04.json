@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.breaker.b04",
+  "title": "A small push, a useful solution",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.breaker.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.breaker.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "An extreme close-up shows the blunt end of a pen engaging a recessed breaker stem. Beneath it, a simple circuit changes to a connected path.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "sweep",
+  "context": "Aldrin used the pen to push the breaker in during ascent preparations. The pen operated a control; it did not power the engine or replace the circuit.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · breaker",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1232043"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "98eb082e2406455bfdaa213732ca925a00c39246f6f4eebea43825f6dc49e683"
+}

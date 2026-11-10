@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.first-vibrations.b03",
+  "title": "Footsteps become a signal",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.first-vibrations.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.first-vibrations.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A trail of large bootprints crosses the lunar soil toward a seismic package. The right half of the artwork cuts to a paper recorder with a stylized waveform.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "trace",
+  "context": "The instrument detected nearby crew activity, which gave engineers and scientists context for interpreting its output. The displayed waveform is illustrative, not a flight recording.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · first-vibrations",
+      "url": "https://apollojournals.org/alsj/a11/a11.clsout.html"
+    },
+    {
+      "label": "NASA · The seismometer detects the crew’s footsteps",
+      "url": "https://www.nasa.gov/history/50-years-ago-one-small-step-one-giant-leap/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "5d21c72c8d4611d3d11063a103a07b4d612747e1aefd90bca0917a0353269a8c"
+}

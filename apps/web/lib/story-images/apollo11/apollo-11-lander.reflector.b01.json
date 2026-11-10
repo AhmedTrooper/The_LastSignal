@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.reflector.b01",
+  "title": "An experiment with no battery",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.reflector.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.reflector.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A low-angle portrait of the reflector array shows a field of glass corner cubes facing the sky. Eagle is small in the distance behind the instrument.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "bloom",
+  "context": "The passive reflector array returns incoming light without onboard power. This is an illustration of the deployed instrument, not a present-day photograph.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · reflector",
+      "url": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "bbbdcf7cfb64b99a96e9bec632e117ff4acbdae68b713566fcd3de14bbff7292"
+}

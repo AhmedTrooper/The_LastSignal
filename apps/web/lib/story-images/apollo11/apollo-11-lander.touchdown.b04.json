@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.touchdown.b04",
+  "title": "Four feet, a steady outpost",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.touchdown.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.touchdown.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A low ground-level viewpoint looks up at Eagle settled on its footpads. Settling dust forms broad foreground strokes, and a small cutaway inset explains crushable honeycomb inside the landing strut.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "settle",
+  "context": "The landing gear supported Eagle after touchdown. The honeycomb inset illustrates energy absorption, not a measurement of the exact compression during Apollo 11's landing.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · touchdown",
+      "url": "https://apollojournals.org/alsj/a11/a11.landing.html#1024540"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "e2d9edadf55181cbd3e9bf7440e0649d95317f071be1d1fc749f41a743366a06"
+}

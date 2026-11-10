@@ -5,6 +5,7 @@ import type { EagleScrollDiagram as Diagram } from "@/lib/eagle-scroll";
 import type { ThoughtMoment } from "@/lib/thought-clouds";
 import MachineThoughtStory from "./machine-thought-story";
 import EagleScrollDiagram from "./eagle-scroll-diagram";
+import "./eagle-story-art.css";
 
 const renderIllustration = (moment: ThoughtMoment) => {
   const direction = EAGLE_THOUGHT_EDITION.directions[moment.chapterId];

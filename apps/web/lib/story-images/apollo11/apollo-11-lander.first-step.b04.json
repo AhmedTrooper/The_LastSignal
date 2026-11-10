@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.first-step.b04",
+  "title": "A footprint. A world watching.",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.first-step.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.first-step.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A huge boot and fresh tread impression fill the foreground. Behind them, an illustrated television screen carries a small ladder scene, connecting the first step to viewers on Earth.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "settle",
+  "context": "The television system let people on Earth follow the first steps. The television insert is an original drawing, not an archival broadcast frame.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · first-step",
+      "url": "https://apollojournals.org/alsj/a11/a11.step.html"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "af80e1ca3536bfbd8253776ef9d8d959710b26e495aba046d7b9998ec7273b26"
+}

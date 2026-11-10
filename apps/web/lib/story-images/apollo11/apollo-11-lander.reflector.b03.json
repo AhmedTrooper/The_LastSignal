@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.reflector.b03",
+  "title": "Light makes a round trip",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.reflector.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.reflector.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Earth and Moon occupy opposite corners connected by separate outward and return light paths. An observatory and small reflector anchor the two ends.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "trace",
+  "context": "Timing the outward and return journey of laser light allows distance measurement. Distances and timing are not to scale and no numerical reading is invented.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · reflector",
+      "url": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "41bda09fc216e6170056b06b3270f66196e6360e199ec6095199e61cf741e608"
+}

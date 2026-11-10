@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.reflector.b04",
+  "title": "A long conversation made of light",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.reflector.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.reflector.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A large passive reflector in the foreground is paired with a fan of successive observation cards and an orbit diagram, conveying repeated measurements across time.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "orbit",
+  "context": "Repeated lunar laser-ranging observations support studies of lunar motion and interior properties. The notebook pages and arcs represent accumulation of evidence, not a measured data series.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · reflector",
+      "url": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "46f3567eb19e3844551c23cc71365e52f230ef4a32a308b7af70edfac2518a59"
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.solar-wind.b01",
+  "title": "A foil sheet faces the Sun",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.solar-wind.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.solar-wind.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "An astronaut plants the slender solar-wind collector beside Eagle. The vertical reflective foil, rather than a flag, dominates the composition.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "rise",
+  "context": "The solar-wind composition experiment used exposed foil to collect material for later laboratory analysis. The scene illustrates deployment and does not depict a national flag.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · solar-wind",
+      "url": "https://apollojournals.org/alsj/a11/a11.clsout.html#1112011"
+    },
+    {
+      "label": "NASA · How the solar-wind collector worked",
+      "url": "https://www.nasa.gov/history/50-years-ago-on-the-way-to-the-moon-lunar-science-announced/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "83dca6338b99c26851363f3e6810353ce9c983a9688ab8e1926da62da9b3974f"
+}

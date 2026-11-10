@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.undocking.b03",
+  "title": "Two stages. Two jobs.",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.undocking.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.undocking.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "An exploded educational diagram separates Eagle's silver crew cabin above its gold landing stage. Fine alignment lines join the two, with callouts explaining the return engine and landing gear.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "unfold",
+  "context": "The ascent and descent stages performed different jobs. This exploded view explains their design; the stages remained joined during undocking.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · undocking",
+      "url": "https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html#1001203"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "3a0ac17459655a99aaef1e2bedbfdb3bc98422c1cf6dbdbfe5315170bb66b807"
+}

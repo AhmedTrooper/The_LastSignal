@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.first-step.b01",
+  "title": "A hatch opens onto another world",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.first-step.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.first-step.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "From inside a dark cabin hatch we see a suited astronaut backing onto Eagle's porch, with a ladder disappearing below and the bright lunar surface beyond.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "hinge",
+  "context": "Armstrong emerged from Eagle before descending the ladder. The body pose, interior surfaces and camera position are artistic interpretations.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · first-step",
+      "url": "https://apollojournals.org/alsj/a11/a11.step.html"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "d07b6e6922a96c9e57c415d0703389cd211fab57e778f037f04f2d3fa705adbb"
+}

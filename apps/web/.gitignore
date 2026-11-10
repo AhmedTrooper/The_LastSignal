@@ -41,3 +41,6 @@ film/**/*.wav
 film/
 # Local agent state
 .claude/
+
+# Temporary story-scroll copies; originals live in video/story-scroll/ for R2 upload.
+/public/video/story-scroll/

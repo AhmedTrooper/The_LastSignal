@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.alarm.b02",
+  "title": "Keep the work that matters",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.alarm.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.alarm.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A schematic priority switchboard shows incoming work dividing into a bright route toward guidance and thrusters and a dim route for deferred work.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "shutter",
+  "context": "Restart protection preserved essential guidance while lower-priority work was set aside. Arrows and work cards are explanatory metaphors, not a literal circuit diagram.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · alarm",
+      "url": "https://apollojournals.org/alsj/a11/a11.landing.html#1023826"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "41ef16eb307762ec87f735a10508955ce9653d8360c0ca3fbe19a25dca591c59"
+}

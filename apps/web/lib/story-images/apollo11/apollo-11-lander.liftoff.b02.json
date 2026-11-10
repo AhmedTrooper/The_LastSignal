@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.liftoff.b02",
+  "title": "Take only what must go home",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.liftoff.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.liftoff.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A vertical split contrasts the ascent cabin and sample container lifting upward with the heavy descent engine and landing legs remaining on the lunar ground.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "unfold",
+  "context": "The ascent stage could return the crew and samples without carrying the descent engine and legs. This is a design comparison, not a mass or performance chart.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · liftoff",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1242202"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "bf36b9de8ccba3e3049bf62fe20421cf7fc617c94a9fa9db4736e16c2df34d68"
+}

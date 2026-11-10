@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.first-vibrations.b01",
+  "title": "Listening through the ground",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.first-vibrations.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.first-vibrations.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A science bay opens like a treasure chest to reveal a compact gold seismic package. A ground cutaway beneath the scene carries a drawn wave, contrasting ground vibration with the silent sky.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "bloom",
+  "context": "Eagle carried a seismic experiment for deployment on the surface. The cutaway wave illustrates ground motion and is not recorded lunar data.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · first-vibrations",
+      "url": "https://apollojournals.org/alsj/a11/a11.clsout.html"
+    },
+    {
+      "label": "NASA · The seismometer detects the crew’s footsteps",
+      "url": "https://www.nasa.gov/history/50-years-ago-one-small-step-one-giant-leap/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "7a1f00577862acb11b5c54e172cad4a16c6bfa64d1af9f64949950c22849bf21"
+}

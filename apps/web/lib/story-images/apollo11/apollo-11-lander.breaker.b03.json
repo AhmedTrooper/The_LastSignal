@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.breaker.b03",
+  "title": "An ordinary tool, a careful idea",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.breaker.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.breaker.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A large felt-tip pen lies diagonally across an illustrated engineering workbench. A crew sleeve pocket and a small circuit sketch connect the everyday tool with the damaged control.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "drift",
+  "context": "A felt-tip pen was used to operate the damaged breaker. The composition emphasizes the tool choice without depicting a spark, fire or engine ignition.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · breaker",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1232043"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "1c47797358bf986da6933b04e4faa0cd29bfbb59cd2fe12b312e828d427fe976"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.seen-again.b01",
+  "title": "Sunlight returns to the same place",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.seen-again.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.seen-again.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Three long vertical panels show a solitary descent stage under changing light: low sunlight and a long shadow, bright daylight, then lunar night.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "sweep",
+  "context": "The landing stage remained while lighting at the site changed over time. These three views are an artistic passage-of-time device, not a photographic time sequence.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · seen-again",
+      "url": "https://science.nasa.gov/photojournal/apollo-11-second-look/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "3c75f739323f9796471d9901d69b45ac79f0d5d78f87dd7b0fa4ea17f9fbaf00"
+}

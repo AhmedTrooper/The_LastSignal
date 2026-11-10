@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.first-step.b03",
+  "title": "The camera's first window",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.first-step.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.first-step.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A camera mounted in the opened equipment bay fills the foreground. Thin view lines point toward the ladder, while a radio-wave motif connects the scene to Earth.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "shutter",
+  "context": "The deployed television camera viewed the ladder and footpad, and communications equipment carried the scene to Earth. View lines and radio rings are explanatory graphics.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · first-step",
+      "url": "https://apollojournals.org/alsj/a11/a11.step.html"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "0c9eb04c9939611945baed5e685f80a7d404df9ee65b14dc2700afa6967d4cb8"
+}

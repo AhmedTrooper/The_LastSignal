@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.touchdown.b01",
+  "title": "Beyond the boulder field",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.touchdown.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.touchdown.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "An aerial view looks down over a wide crater rim lined with angular boulders. Small Eagle is offset above a clear patch, showing the need to choose a safer landing area.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "focus",
+  "context": "Armstrong guided Eagle beyond rough terrain during the final approach. The crater relief, aircraft position and apparent distances are illustrative.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · touchdown",
+      "url": "https://apollojournals.org/alsj/a11/a11.landing.html#1024540"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "c5a6996cc24229ef57e93ba423f78d4282910406bce317101eb3317b12e8977a"
+}

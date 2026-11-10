@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.liftoff.b03",
+  "title": "The lander becomes a launchpad",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.liftoff.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.liftoff.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Eagle's ascent cabin rises dramatically into the upper left, leaving its golden descent stage low on the surface. A stylized pale engine plume crosses the gap between the stages.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "rise",
+  "context": "The descent stage served as the launch platform for the ascent stage. Exhaust and displaced dust are illustrative; the image does not specify an ascent speed or reproduce a film frame.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · liftoff",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1242202"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "983769969f7d5a6938d2275e7f355a33d848e342120c6466c5efb8c2cb161a9b"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.alarm.b04",
+  "title": "Then the window filled with rocks",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.alarm.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.alarm.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Inside Eagle, a large angled forward window reveals a crater and boulders. A small guidance display sits in the foreground, shifting attention from the alarm to the landing terrain.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "focus",
+  "context": "As the landing approach continued, Armstrong assessed the terrain ahead. The cockpit view is interpretive; no targeting crosshair or invented live altitude is shown.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · alarm",
+      "url": "https://apollojournals.org/alsj/a11/a11.landing.html#1023826"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "a5b19571c314d4d026607dc4ad9c687f014421aa8fcf72024af96cbbe208d03a"
+}

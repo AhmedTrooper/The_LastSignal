@@ -40,7 +40,27 @@ export type ThoughtMoment = {
     durationMs: number | null;
   };
 };
-export type ThoughtEdition = ScrollEdition & { moments: ThoughtMoment[]; manifestUrl: string; evidenceUrl?: string };
+/** Authored story art is keyed by the same stable beat ID as narration, separately from archive photos. */
+export type StoryIllustration = {
+  beatId: string;
+  title: string;
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  credit: string;
+  context: string;
+  interpretation: string;
+  sources: { label: string; url: string }[];
+  /** JSON motion preset; validated against STORY_IMAGE_MOTIONS by the artwork checks. */
+  motion?: string;
+};
+export type ThoughtEdition = ScrollEdition & {
+  moments: ThoughtMoment[];
+  manifestUrl: string;
+  evidenceUrl?: string;
+  illustrations?: Record<string, StoryIllustration>;
+};
 
 export function buildNarrationManifest(book: MachineBook, moments: ThoughtMoment[]) {
   return {

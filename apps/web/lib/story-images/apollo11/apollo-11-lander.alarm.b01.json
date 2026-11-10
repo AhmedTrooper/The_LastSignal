@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.alarm.b01",
+  "title": "An alarm inside the cabin",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.alarm.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.alarm.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A close-up guidance-computer display dominates the dark cockpit. The code 1202 glows beside a warning indicator; a suited arm reaches toward the keypad.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "scan",
+  "context": "A 1202 executive-overflow alarm appeared during powered descent. The drawing is a simplified display illustration; the other readout fields are not fabricated telemetry.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · alarm",
+      "url": "https://apollojournals.org/alsj/a11/a11.landing.html#1023826"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "56e0a734363f43d9c35a883a0aa3d42f955c05518cda7b6be82ff012e9173800"
+}

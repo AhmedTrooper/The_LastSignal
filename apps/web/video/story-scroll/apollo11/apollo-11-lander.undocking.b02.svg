@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1200" viewBox="0 0 1440 1200" role="img" aria-labelledby="title desc">
+  <title id="title">A closer look at Eagle's feet — the view from Columbia</title>
+  <desc id="desc">AI-assisted illustration, not a photograph. From inside a stylized Columbia window, we look toward the underside of Eagle as it turns for inspection. Four extended landing legs surround a faceted gold descent stage and its dark engine bell. The silver cabin is above it. A pale lunar limb crosses the left side of the window. The foreground window rim makes this a close inspection scene, distinct from the wide separation scene.</desc>
+  <metadata>Beat ID: apollo-11-lander.undocking.b02. Context: https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html . Viewpoint, window shape, geometry, lighting and the explanatory turn arc are artistic interpretations, not recorded flight imagery or telemetry.</metadata>
+  <defs>
+    <linearGradient id="interior" x2=".8" y2="1"><stop stop-color="#1b2930"/><stop offset=".48" stop-color="#0c1724"/><stop offset="1" stop-color="#26323b"/></linearGradient>
+    <linearGradient id="void" x2="1" y2=".7"><stop stop-color="#153747"/><stop offset=".5" stop-color="#071a2c"/><stop offset="1" stop-color="#070f20"/></linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a9b5aa"/><stop offset=".22" stop-color="#687d80"/><stop offset=".58" stop-color="#334d60"/><stop offset=".84" stop-color="#c8baa0"/><stop offset="1" stop-color="#5e6a69"/></linearGradient>
+    <linearGradient id="moon" x2="1" y2=".55"><stop stop-color="#536f79"/><stop offset=".5" stop-color="#a4b8b5"/><stop offset="1" stop-color="#dde2cf"/></linearGradient>
+    <linearGradient id="foil" x1=".12" y1=".1" x2=".9" y2=".85"><stop stop-color="#f7dda0"/><stop offset=".4" stop-color="#d5a452"/><stop offset=".7" stop-color="#8c622e"/><stop offset="1" stop-color="#deb977"/></linearGradient>
+    <linearGradient id="foil-edge" x2="0" y2="1"><stop stop-color="#f1cd86"/><stop offset="1" stop-color="#79502c"/></linearGradient>
+    <linearGradient id="alloy" x1=".1" y1=".1" x2=".8" y2="1"><stop stop-color="#e0e5d8"/><stop offset=".45" stop-color="#97aead"/><stop offset="1" stop-color="#405f71"/></linearGradient>
+    <linearGradient id="bell" x2=".8" y2=".8"><stop stop-color="#45596b"/><stop offset=".35" stop-color="#9ba594"/><stop offset=".6" stop-color="#394857"/><stop offset="1" stop-color="#182c40"/></linearGradient>
+    <radialGradient id="throat" cx=".46" cy=".32" r=".7"><stop stop-color="#000913"/><stop offset=".6" stop-color="#101e2c"/><stop offset="1" stop-color="#535545"/></radialGradient>
+    <pattern id="grain" width="27" height="31" patternUnits="userSpaceOnUse"><circle cx="7" cy="9" r=".8" fill="#e9e3bf" opacity=".13"/><circle cx="22" cy="26" r=".9" fill="#071323" opacity=".22"/></pattern>
+    <pattern id="radiator" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0v8" stroke="#9ca99d" stroke-width="2"/></pattern>
+    <clipPath id="card"><rect width="1440" height="1200" rx="36"/></clipPath>
+    <path id="window" d="M226 152 1153 129q70-2 88 66l113 607q18 91-83 109L284 1039q-105 10-123-91L83 380Q56 217 226 152Z"/>
+    <clipPath id="through-window"><use href="#window"/></clipPath>
+    <clipPath id="lunar-limb"><path d="M0 156q283 159 365 409t77 510H0Z"/></clipPath>
+    <clipPath id="foil-face"><path d="m626 468 195-25 144 93 21 118-131 116-200-19-120-111 21-118z"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <path d="M0 0h1440v1200H0z" fill="url(#interior)"/>
+    <!-- Inside the observer's spacecraft: a thick foreground rim, rather than another exterior portrait. -->
+    <use href="#window" fill="url(#void)"/>
+    <g clip-path="url(#through-window)">
+      <!-- The lunar limb is vertical here; the camera and perspective have changed. -->
+      <path d="M0 156q283 159 365 409t77 510H0Z" fill="url(#moon)"/>
+      <g clip-path="url(#lunar-limb)" fill="none" stroke-linecap="round">
+        <path d="M-28 223q202 151 282 347t111 509" stroke="#537881" stroke-width="46" opacity=".35"/>
+        <g stroke="#d5ded0" stroke-width="4" fill="#607f88">
+          <ellipse cx="146" cy="428" rx="45" ry="64" transform="rotate(-38 146 428)"/>
+          <ellipse cx="251" cy="673" rx="33" ry="64" transform="rotate(-18 251 673)"/>
+          <ellipse cx="185" cy="889" rx="69" ry="91" transform="rotate(-12 185 889)"/>
+          <ellipse cx="384" cy="977" rx="13" ry="39" transform="rotate(-8 384 977)"/>
+        </g>
+        <g fill="#8ba3a5" stroke="#3e6372" stroke-width="2">
+          <ellipse cx="139" cy="439" rx="28" ry="46" transform="rotate(-38 139 439)"/>
+          <ellipse cx="245" cy="685" rx="19" ry="43" transform="rotate(-18 245 685)"/>
+          <ellipse cx="173" cy="904" rx="44" ry="65" transform="rotate(-12 173 904)"/>
+        </g>
+        <path d="m293 533 10 28m24 200 8 40M58 665l19 28m12-107 13 23m218 213 6 19" stroke="#dde0c8" stroke-width="3" opacity=".6"/>
+        <path d="M0 150h445v930H0z" fill="url(#grain)" stroke="none"/>
+      </g>
+      <path d="M0 156q283 159 365 409t77 510" fill="none" stroke="#e8e9cf" stroke-width="3" opacity=".8"/>
+      <g fill="#d7e3d9"><circle cx="539" cy="239" r="1.4"/><circle cx="973" cy="212" r="1.5"/><circle cx="1179" cy="506" r="1.2"/><circle cx="461" cy="758" r="1.2"/><circle cx="1249" cy="827" r="1.6"/><circle cx="1061" cy="927" r="1.4"/><circle cx="679" cy="880" r="1.2"/></g>
+      <!-- Rear legs are visible above the descent-stage underside, not duplicated foreground feet. -->
+      <g stroke-linejoin="round" stroke-linecap="round">
+        <g stroke="#0b1c2e" stroke-width="15" fill="none"><path d="M657 493 516 431 468 319M711 477 566 347 468 319M837 471 1014 437 1101 327M884 491 1050 341 1101 327"/></g>
+        <g stroke="#a2b7ae" stroke-width="8" fill="none"><path d="M657 493 516 431 468 319M711 477 566 347 468 319M837 471 1014 437 1101 327M884 491 1050 341 1101 327"/></g>
+        <g stroke="#e6c784" stroke-width="12"><path d="m490 370 14 31m568-40-21 28"/></g>
+        <g fill="url(#alloy)" stroke="#183448" stroke-width="4"><ellipse cx="464" cy="313" rx="42" ry="16" transform="rotate(28 464 313)"/><ellipse cx="1108" cy="320" rx="45" ry="17" transform="rotate(-27 1108 320)"/></g>
+        <g fill="none" stroke="#dce0c7" stroke-width="2"><ellipse cx="464" cy="309" rx="34" ry="11" transform="rotate(28 464 309)"/><ellipse cx="1108" cy="316" rx="37" ry="12" transform="rotate(-27 1108 316)"/></g>
+        <!-- Ascent cabin seen obliquely above and behind the wide gold lower stage. -->
+        <path d="m666 284 91-45 106 31 66 104-27 94-83 26-149-28-43-85z" fill="url(#alloy)" stroke="#102438" stroke-width="5"/>
+        <path d="m757 239 106 31 66 104-72-23-85-51-106-16z" fill="#d4ddce"/>
+        <path d="m772 300 85 51 45 117-83 26-60-96z" fill="#314d62" stroke="#152b40" stroke-width="3"/>
+        <path d="m666 284 48 56-25 119-19 7-43-85z" fill="#a4b8b5"/>
+        <path d="m648 381-34 3-12 39 49 43 34-12z" fill="#101f33" stroke="#92a8a6" stroke-width="3"/>
+        <path d="m891 371 46 12 16 61-41 42-12-31z" fill="#14273c" stroke="#819aa0" stroke-width="3"/>
+        <path d="m902 390 29 6 12 39-26 28z" fill="url(#radiator)" stroke="#8f9e8c" stroke-width="2"/>
+        <path d="m685 321 42-13 18 57-52 24z" fill="#08192d" stroke="#78939c" stroke-width="6"/>
+        <path d="m690 324 32-8-23 57z" fill="#132d45" stroke="#d6d7bb" stroke-width="2.5"/>
+        <path d="m784 365 43-10 27 55-60 2z" fill="#061528" stroke="#7e9496" stroke-width="5"/>
+        <path d="m790 366 33-7 21 41z" fill="#172f45" stroke="#c8cbb3" stroke-width="2"/>
+        <path d="m714 400 56-1 16 52-67-1z" fill="#99aca7" stroke="#1d3c51" stroke-width="3"/>
+        <path d="m724 409 36-1 10 33-43 1z" fill="#b4c0b2" stroke="#ddd7b9" stroke-width="2"/>
+        <path d="m745 423 13-1" stroke="#365366" stroke-width="3"/>
+        <!-- Docking tunnel, small antenna dish and quiet reaction-control clusters. -->
+        <path d="m719 256-8-31 53-18 13 35" fill="url(#alloy)" stroke="#1d3447" stroke-width="3"/>
+        <ellipse cx="738" cy="216" rx="30" ry="10" transform="rotate(-17 738 216)" fill="#8da9a9" stroke="#e8ddbc" stroke-width="3"/>
+        <ellipse cx="738" cy="216" rx="22" ry="5" transform="rotate(-17 738 216)" fill="#0b2036"/>
+        <path d="m841 273 39-43m-22-11q31 41 60 1z" fill="#93aaa8" stroke="#b7c8ba" stroke-width="3"/>
+        <path d="m866 221 23-33 21 34m-21-34-2 40" stroke="#d6cca8" stroke-width="2" fill="none"/>
+        <path d="m643 329-27-24m10 39-38-7m297-5 30-24m-18 36 39 1" stroke="#102539" stroke-width="10"/>
+        <path d="m643 329-27-24m10 39-38-7m297-5 30-24m-18 36 39 1" stroke="#a0b3ac" stroke-width="4"/>
+        <!-- Side wall of the octagonal descent stage. -->
+        <path d="m626 411 195-25 143 93 1 57-144-93-195 25-70 54 6-64z" fill="url(#foil-edge)" stroke="#203143" stroke-width="4"/>
+        <path d="m626 411 4 53m42-59 3 57m69-65 4 55m73-66v57m59-18-2 55m55-22v56" stroke="#554a36" stroke-width="6"/>
+        <path d="m640 425 19 28 26-33 27 24 35-34 26 20 33-28m27 23 43 40 20-17 43 43" stroke="#ffe3a0" fill="none" stroke-width="2"/>
+        <!-- Underside, not the front face used in b01. -->
+        <path d="m626 468 195-25 144 93 21 118-131 116-200-19-120-111 21-118z" fill="url(#foil)" stroke="#0c2238" stroke-width="5"/>
+        <g clip-path="url(#foil-face)" fill="none">
+          <path d="m596 491 20 84-75 70 77-10 37 116 37-68 50 49 58-61 45 84 56-58 41 9 24-138-73 32-41-98-50 50-55-110" stroke="#f4d797" stroke-width="3" opacity=".75"/>
+          <path d="m556 522 80 31 57-24 15-68m-92 114 69 52-67 8m74 48 14-55 88 24 6 29m45 84 16-109 55 41m-53-123 77 43 48-30" stroke="#755528" stroke-width="2" opacity=".7"/>
+          <path d="m625 470 43 74-11 49m164-148-40 87m176 10-56 42m-236 150 41-48m96 73 40-68" stroke="#fff0b6" stroke-width="1.5"/>
+          <path d="M530 440h470v340H530z" fill="url(#grain)" stroke="none"/>
+        </g>
+        <path d="m557 546 41-30 34 52-38 36zM891 484l50 32-40 53-40-32zM918 686l32 21-69 57-32-32zM594 669l34 39-24 21-52-47z" fill="#132438" stroke="#c9a262" stroke-width="3"/>
+        <path d="m640 488 194-27 109 88 20 94-117 100-180-18-108-88 20-91z" stroke="#57452c" stroke-width="3" fill="none"/>
+        <!-- Central descent-engine bell: no flame during this inspection view. -->
+        <ellipse cx="769" cy="598" rx="77" ry="56" fill="#182c3d" stroke="#bd9e66" stroke-width="6"/>
+        <path d="m726 578-27 86q55 73 143 7l-30-88" fill="url(#bell)" stroke="#102437" stroke-width="4"/>
+        <path d="m733 589-22 69m38-65-11 78m59-79 26 74" stroke="#c0b897" stroke-width="2" opacity=".6"/>
+        <ellipse cx="770" cy="667" rx="71" ry="48" transform="rotate(4 770 667)" fill="url(#throat)" stroke="#b4ad8b" stroke-width="5"/>
+        <ellipse cx="770" cy="667" rx="58" ry="37" transform="rotate(4 770 667)" fill="none" stroke="#314757" stroke-width="2"/>
+        <ellipse cx="766" cy="654" rx="27" ry="18" fill="#040d19"/>
+        <!-- Near legs: long, triangular trusses spread out toward the window corners. -->
+        <g stroke="#0a2034" stroke-width="16" fill="none"><path d="M580 603 509 666 466 859M691 738 557 762 466 859M930 597 1026 657 1121 834M872 749 1031 758 1121 834"/></g>
+        <g stroke="#b3c2b5" stroke-width="9" fill="none"><path d="M580 603 509 666 466 859M691 738 557 762 466 859M930 597 1026 657 1121 834M872 749 1031 758 1121 834"/></g>
+        <g stroke="#f4dba4" stroke-width="3" fill="none"><path d="M579 599 505 663 462 856M930 594 1030 654 1125 830M686 735 556 758 472 847M879 747 1032 754 1110 823"/></g>
+        <path d="m495 727-15 65m581-73 33 56" stroke="#b6883e" stroke-width="18" fill="none"/>
+        <path d="m491 726-14 64m581-68 32 54" stroke="#efd49a" stroke-width="6" fill="none"/>
+        <g fill="#6c868b" stroke="#173347" stroke-width="3"><circle cx="509" cy="666" r="11"/><circle cx="1026" cy="657" r="11"/><circle cx="580" cy="603" r="9"/><circle cx="930" cy="597" r="9"/><circle cx="557" cy="762" r="8"/><circle cx="1031" cy="758" r="8"/></g>
+        <g fill="url(#alloy)" stroke="#173348" stroke-width="4"><ellipse cx="462" cy="868" rx="62" ry="22" transform="rotate(-21 462 868)"/><ellipse cx="1130" cy="844" rx="68" ry="23" transform="rotate(22 1130 844)"/></g>
+        <g fill="none" stroke="#e6e2c9" stroke-width="2"><ellipse cx="462" cy="862" rx="52" ry="14" transform="rotate(-21 462 862)"/><ellipse cx="1130" cy="838" rx="57" ry="15" transform="rotate(22 1130 838)"/></g>
+        <!-- A diagonal glimpse of the ladder on the nearest leg. -->
+        <path d="m929 670 130 128m-150-110 128 131" stroke="#243c4d" stroke-width="7" fill="none"/>
+        <path d="m929 670 130 128m-150-110 128 131" stroke="#c9c6a9" stroke-width="3" fill="none"/>
+        <path d="m935 682-20 19m33-6-20 19m33-6-20 19m33-6-20 19m33-6-20 19m33-6-20 19m33-6-20 19m33-6-20 19" stroke="#c9c6a9" stroke-width="3" fill="none"/>
+      </g>
+      <!-- A single explanatory turn arc, not a measured flight path or instrument overlay. -->
+      <g fill="none" stroke="#d4b97a" stroke-width="2.5" stroke-linecap="round" opacity=".8"><path d="M1121 412q128 98 74 245" stroke-dasharray="6 12"/><path d="m1182 640 10 23 23-12"/></g>
+      <!-- A quiet edge reflection establishes glass without obscuring the machine. -->
+      <path d="m199 229 33-34 66 716-41 15z" fill="#d7e5d8" opacity=".045"/>
+    </g>
+    <!-- Window shell drawn last: the viewer is aboard Columbia, not outside beside it. -->
+    <use href="#window" fill="none" stroke="#040c18" stroke-width="99"/>
+    <use href="#window" fill="none" stroke="url(#rim)" stroke-width="64"/>
+    <use href="#window" fill="none" stroke="#0b2134" stroke-width="27"/>
+    <use href="#window" fill="none" stroke="#b6c1ab" stroke-width="3" opacity=".65"/>
+    <!-- Schematic fasteners belong to the illustrated frame, not a hardware count. -->
+    <g fill="#162b3b" stroke="#85978e" stroke-width="2">
+      <circle cx="282" cy="132" r="8"/><circle cx="675" cy="120" r="8"/><circle cx="1137" cy="110" r="8"/>
+      <circle cx="1257" cy="241" r="8"/><circle cx="1320" cy="581" r="8"/><circle cx="1332" cy="875" r="8"/>
+      <circle cx="1126" cy="948" r="8"/><circle cx="690" cy="1009" r="8"/><circle cx="304" cy="1059" r="8"/>
+      <circle cx="147" cy="928" r="8"/><circle cx="99" cy="582" r="8"/><circle cx="100" cy="284" r="8"/>
+    </g>
+    <g stroke="#b4b9a3" stroke-width="2"><path d="m278 132h8m385-12h8m462-10h8m116 131h8m55 340h8m4 294h8m-214 73h8m-444 61h8m-394 50h8m-165-131h8m-56-346h8m-7-298h8"/></g>
+    <!-- Interior framing and printed exhibit text. -->
+    <path d="m15 990 89 24 75 160H0z" fill="#0b1623" stroke="#354a53" stroke-width="2"/>
+    <path d="m1395 955-49 35-40 210h134V933z" fill="#0a1523" stroke="#354a53" stroke-width="2"/>
+    <g font-family="ui-monospace, monospace" fill="#d8dbc9">
+      <text x="82" y="65" font-size="17" letter-spacing="3">THROUGH COLUMBIA'S WINDOW</text>
+      <text x="1238" y="67" text-anchor="end" font-size="14" letter-spacing="2" fill="#b0beb5">EAGLE / INSPECTION</text>
+    </g>
+    <g transform="translate(241 1097)"><path d="M0 0h37" stroke="#e8c980" stroke-width="4"/><text x="57" y="8" fill="#e9dfbe" font-family="Georgia, serif" font-size="33">A closer look at my feet.</text></g>
+    <text x="242" y="1147" fill="#aabbb4" font-family="ui-monospace, monospace" font-size="13" letter-spacing="1.2">AI-ASSISTED ILLUSTRATION · NOT A PHOTOGRAPH</text>
+  </g>
+</svg>

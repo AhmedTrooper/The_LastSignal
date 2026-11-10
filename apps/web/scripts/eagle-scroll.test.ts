@@ -5,7 +5,7 @@ import { EAGLE_SCROLL_DIRECTION, eagleScrollUrl, readEagleScrollPosition } from 
 
 test("scroll art covers the shared chronological chapters without merging their stories", () => {
   assert.deepEqual(APOLLO_BOOK.chapters.map(chapter => chapter.id), ["undocking", "alarm", "touchdown", "first-step", "first-vibrations", "reflector", "solar-wind", "breaker", "liftoff", "seen-again"]);
-  assert.match(APOLLO_BOOK.chapters.find(chapter => chapter.id === "solar-wind")!.event, /Recovering/);
+  assert.match(APOLLO_BOOK.chapters.find(chapter => chapter.id === "solar-wind")!.event, /Solar Wind Composition/);
   for (const chapter of APOLLO_BOOK.chapters) {
     const direction = EAGLE_SCROLL_DIRECTION[chapter.id];
     assert.ok(direction, chapter.id);

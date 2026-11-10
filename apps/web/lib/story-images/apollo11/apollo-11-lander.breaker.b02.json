@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.breaker.b02",
+  "title": "Find the damaged control",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.breaker.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.breaker.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A large Engine Arm panel is paired with a circular magnification of the recessed stem where its knob should be. A conceptual open circuit explains why the control mattered.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "scan",
+  "context": "The damaged knob made the engine-arm breaker difficult to operate. The enlarged stem and circuit illustration explain the control, not the full ascent wiring or an actual panel photograph.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · breaker",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1232043"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "2c954fecf57c9b1a59a651cbe792ff8fe85b4653a40cd422640645597e67dbc1"
+}

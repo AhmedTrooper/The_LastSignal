@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.seen-again.b02",
+  "title": "A new explorer looks down",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.seen-again.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.seen-again.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Lunar Reconnaissance Orbiter fills the upper foreground, with a long solar array and downward-looking camera above the broad Moon. A faint viewing cone links it to the surface.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "orbit",
+  "context": "LRO photographed the Apollo landing sites from orbit. The instrument, viewing cone and apparent scale are simplified; no resolution or altitude is asserted by the image.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · seen-again",
+      "url": "https://science.nasa.gov/photojournal/apollo-11-second-look/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "37333d0012f8fb9f5f587e37219d26376aa85de355f5080629ca57b0ec5d4f4f"
+}

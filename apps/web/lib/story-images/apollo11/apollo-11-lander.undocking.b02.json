@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.undocking.b02",
+  "title": "A closer look at my feet",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.undocking.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.undocking.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "Through a thick, stylized Columbia window, Eagle turns its gold underside toward us. Four extended landing legs and broad footpads surround the dark descent-engine bell. Its silver crew cabin rises behind the lower stage, with the Moon's pale limb along the left edge.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "context": "After undocking, Eagle turned in front of Columbia so Michael Collins could inspect its extended landing gear. This moment focuses on the legs and footpads: a close inspection viewpoint rather than the wide separation composition used for the preceding beat.",
+  "interpretation": "The underside viewpoint, foreground window shape, lighting, apparent scale and simplified hardware are artistic interpretations, not a reconstruction of a particular film frame. The curved mark indicates turning, not a measured flight path. This image does not assert a particular spacecraft attitude, latch count or instrument reading.",
+  "sources": [
+    {
+      "label": "Apollo 11 Flight Journal · Undocking, inspection and descent-orbit insertion",
+      "url": "https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "motion": "orbit",
+  "assetSha256": "751d7302406a31045d11557ac8ed437f1f7ed64141a3d792da07c69d3d1c55a7"
+}

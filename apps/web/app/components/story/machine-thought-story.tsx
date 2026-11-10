@@ -3,12 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowLeft, ArrowRight, BookIcon, Close } from "@/app/components/icons";
 import { machineBookUrl } from "@/lib/machine-books";
 import { readMachineScrollPosition } from "@/lib/machine-scroll";
 import { thoughtAtScroll, type ThoughtEdition, type ThoughtMoment } from "@/lib/thought-clouds";
 import ThoughtNarration from "./thought-narration";
+import StoryIllustrationView from "./story-illustration";
+import { useReaderReducedMotion } from "./use-reader-reduced-motion";
 import "./eagle-scroll.css";
 import "./thought-clouds.css";
 
@@ -48,9 +50,11 @@ function MomentNotes({ moment, edition, renderNotesExtras }: { moment: ThoughtMo
   const BOOK = edition.book;
   const MOMENTS = edition.moments;
   const chapter = BOOK.chapters[moment.chapterSequence - 1];
+  const illustration = edition.illustrations?.[moment.beatId];
   return <div className="tc-notes">
     <p className="tc-note-serial">Moment {String(moment.displaySerial).padStart(2, "0")} / {MOMENTS.length} · Chapter {moment.chapterSequence}</p>
     <p className="tc-note-line">{moment.bubbleText}</p><p className="tc-note-detail">{moment.detailText}</p>
+    {illustration && <details className="tc-illustration-sources"><summary>About this illustration · sources &amp; context</summary><p><strong>{illustration.title}</strong> · {illustration.credit}</p><p>{illustration.context}</p><p>{illustration.interpretation}</p>{illustration.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>)}</details>}
     <section><h3>What this helped us learn</h3><p>{chapter.discovery}</p></section>
     <details><summary>The hardware and mission record</summary><p>{chapter.hardware}</p>{chapter.telemetry?.map(item => <p key={item.label}><strong>{item.label}: {item.value}.</strong> {item.note} <a href={item.source} target="_blank" rel="noopener noreferrer">Source ↗</a></p>)}<a href={moment.sourceUrl} target="_blank" rel="noopener noreferrer">Open this event’s source ↗</a>{moment.relatedSources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>)}</details>
     <div className="tc-note-formats"><Link href={machineBookUrl(BOOK.slug, chapter.id, "book")}><BookIcon className="h-4 w-4" />Read the complete chapter</Link><Link href={machineBookUrl(BOOK.slug, chapter.id, "comic")}>Open the comic ↗</Link></div>
@@ -66,7 +70,9 @@ function MomentVisual({ moment, edition, renderIllustration, reduced }: { moment
   const direction = edition.directions[chapter.id];
   const index = moment.beatSequence - 1;
   const photograph = direction.photographs?.[index] ?? (direction.photograph && !direction.diagramBeats?.includes(index) ? direction.photograph : undefined);
-  const fromRight = moment.bubblePlacement?.includes("right") ?? false;
+  const illustration = edition.illustrations?.[moment.beatId];
+  if (illustration) return <StoryIllustrationView key={moment.beatId} illustration={illustration} reduced={reduced} fallback={renderIllustration(moment)} />;
+  const image = photograph;
   const pattern = moment.displaySerial % 4;
   const photoClip = [
     ["circle(0.1% at 50% 50%)", "circle(52% at 50% 50%)", "circle(78% at 50% 50%)", "circle(70% at 50% 50%)", "circle(76.5% at 50% 50%)", "circle(75% at 50% 50%)"],
@@ -80,9 +86,14 @@ function MomentVisual({ moment, edition, renderIllustration, reduced }: { moment
     [1.06, 1.02, 1],
     [1.08, 1, 1],
   ][pattern]!;
-  return <motion.figure key={moment.beatId} className={`tc-art ${photograph ? "tc-art-photo" : ""}`} data-art-for={moment.beatId} initial={false} animate={{ opacity: 1 }}>
-    <motion.div className="tc-art-picture" initial={reduced ? { opacity: 1 } : photograph ? { opacity: 0, clipPath: photoClip[0], scale: photoScale[0] } : { opacity: 0, scale: 0.96, rotateX: 12 }} animate={reduced ? { opacity: 1 } : photograph ? { opacity: 1, clipPath: photoClip, scale: photoScale } : { opacity: 1, scale: 1, rotateX: 0 }} transition={photograph && !reduced ? { clipPath: { duration: 1.8, ease: [0.22, 1, 0.36, 1] }, scale: { duration: 1.8, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.3 } } : { duration: 0.5, ease: "easeOut" }} style={{ transformPerspective: 700 }}>{photograph ? <Image key={photograph.src} src={photograph.src} alt={photograph.alt} fill sizes="(min-width:900px) 58vw, 90vw" className="object-contain" /> : renderIllustration(moment)}{photograph && pattern === 0 && !reduced && <motion.span className="tc-center-dot" aria-hidden="true" initial={{ scale: 0, opacity: 0 }} animate={{ scale: [0, 1, 1.25, 1], opacity: [0, 0.9, 0.9, 0.25] }} transition={{ duration: 1.8, times: [0, 0.12, 0.3, 1], ease: "easeOut" }} />}</motion.div>
-    <motion.figcaption initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: photograph ? 1.2 : 0.4 }}>{photograph ? <a href={photograph.source} target="_blank" rel="noopener noreferrer">{photograph.title} · {photograph.credit} ↗<span>{photograph.alt}</span></a> : "Illustrated memory · AI-assisted, not to scale"}</motion.figcaption>
+  return <motion.figure key={moment.beatId} className={`tc-art ${photograph ? "tc-art-photo" : ""}`} data-art-for={moment.beatId} data-media-kind={photograph ? "archive" : "diagram"} initial={false} animate={{ opacity: 1 }}>
+    <motion.div className="tc-art-picture" initial={reduced ? false : image ? { opacity: 0, clipPath: photoClip[0], scale: photoScale[0] } : { opacity: 0, scale: 0.96, rotateX: 12 }} animate={reduced ? { opacity: 1, clipPath: "none", scale: 1, rotateX: 0 } : image ? { opacity: 1, clipPath: photoClip, scale: photoScale } : { opacity: 1, scale: 1, rotateX: 0 }} transition={reduced ? { duration: 0 } : image ? { clipPath: { type: "tween", duration: 1.8, ease: [0.22, 1, 0.36, 1] }, scale: { type: "tween", duration: 1.8, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.3 } } : { duration: 0.5, ease: "easeOut" }} style={{ transformPerspective: 700 }}>
+      {image ? <Image key={image.src} src={image.src} alt={image.alt} fill sizes="(min-width:900px) 58vw, 90vw" className="object-contain" /> : renderIllustration(moment)}
+      {image && pattern === 0 && !reduced && <motion.span className="tc-center-dot" aria-hidden="true" initial={{ scale: 0, opacity: 0 }} animate={{ scale: [0, 1, 1.25, 1], opacity: [0, 0.9, 0.9, 0.25] }} transition={{ type: "tween", duration: 1.8, times: [0, 0.12, 0.3, 1], ease: "easeOut" }} />}
+    </motion.div>
+    <motion.figcaption initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={reduced ? { duration: 0 } : { duration: 0.5, delay: image ? 1.2 : 0.4 }}>
+      {photograph ? <a href={photograph.source} target="_blank" rel="noopener noreferrer">{photograph.title} · {photograph.credit} ↗<span>{photograph.alt}</span></a> : "Illustrated memory · AI-assisted, not to scale"}
+    </motion.figcaption>
   </motion.figure>;
 }
 
@@ -121,7 +132,7 @@ export default function MachineThoughtStory({ edition: EDITION, renderIllustrati
   const needsFocus = useRef<string | null>(null);
   const positions = useRef<number[]>([]);
   const endPosition = useRef(Infinity);
-  const reduced = useReducedMotion();
+  const reduced = useReaderReducedMotion();
   const openingRef = useRef<HTMLElement>(null);
   const { scrollYProgress: openingProgress } = useScroll({ target: openingRef, offset: ["start start", "end start"] });
   const coverY = useTransform(openingProgress, [0, 1], [0, 90]);

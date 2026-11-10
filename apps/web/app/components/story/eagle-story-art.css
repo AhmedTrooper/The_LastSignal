@@ -1,0 +1,19 @@
+/* Eagle-only artwork and long-line fitting; the shared cloud shape is unchanged. */
+.eagle-thoughts .tc-art-story-image .tc-art-picture > img { animation: none; }
+.eagle-thoughts .tc-art-story-image figcaption > span:first-child { display: block; font: inherit; }
+
+@media (min-width:900px) and (min-height:641px) {
+  .eagle-thoughts .tc-stage[data-placement^="lower"] .tc-cloud { top: auto; bottom: 110px; }
+}
+
+@media (min-width:900px) and (min-height:641px) and (max-height:800px) {
+  .eagle-thoughts .tc-cloud-inside { padding: 28px 32px; }
+  .eagle-thoughts .tc-cloud-line { font-size: clamp(20px,2vw,26px); line-height: 1.32; }
+}
+
+@media (max-height:640px) and (min-width:600px) {
+  .eagle-thoughts .tc-cloud { width: 45%; }
+  .eagle-thoughts .tc-cloud-inside { padding: 16px 22px; }
+  .eagle-thoughts .tc-cloud-line { font-size: 16px; line-height: 1.24; }
+  .eagle-thoughts .tc-cloud-speaker { margin-bottom: 4px; }
+}

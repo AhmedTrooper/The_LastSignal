@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.touchdown.b02",
+  "title": "Hands on the approach",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.touchdown.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.touchdown.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A foreground gloved hand grips a spacecraft hand controller. Through a wide upper window the horizon passes and dust streaks sideways, while a second crew figure watches instruments.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "drift",
+  "context": "Armstrong used partial manual control while Aldrin called out observations from the instruments. Dust movement is an artistic cue, not recorded descent telemetry.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · touchdown",
+      "url": "https://apollojournals.org/alsj/a11/a11.landing.html#1024540"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "ed4334c9d4b9850f89ecbba90bde5148a475c24deedb614c4defcd2e4b6d3bc4"
+}

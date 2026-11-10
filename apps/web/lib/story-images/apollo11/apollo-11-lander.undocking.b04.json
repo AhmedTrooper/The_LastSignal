@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.undocking.b04",
+  "title": "Two spacecraft, different paths",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.undocking.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.undocking.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A broad Moon fills the lower right while small Columbia remains high above it. Eagle is angled toward the lunar world on a separate, illustrative descending route.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "sweep",
+  "context": "Collins stayed in Columbia in lunar orbit as Eagle began its landing journey. The routes in this drawing are conceptual, not plotted mission trajectories.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · undocking",
+      "url": "https://apollojournals.org/afj/ap11fj/17day5-undock-doi.html#1001203"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "80c6bc573feb9fd55f3a5a1636f7ccec219c20c6d735b841e678fe267e9d7ee8"
+}

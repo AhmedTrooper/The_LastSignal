@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.seen-again.b04",
+  "title": "Still a story worth finding",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.seen-again.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.seen-again.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A close foreground view of a landing leg and commemorative plaque leads toward the quiet descent stage. A small Earth hangs above the horizon, closing the story on the hardware that stayed.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "bloom",
+  "context": "The descent stage and its commemorative plaque remained at the landing site. The plaque is represented without invented signatures or a recreated inscription; the composition is illustrative.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · seen-again",
+      "url": "https://science.nasa.gov/photojournal/apollo-11-second-look/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "f41ff1a374a9e6bddc0cefd714fa5c5522f26d2991f1dafd9a38400d4ef04a40"
+}

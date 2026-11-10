@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.liftoff.b04",
+  "title": "The part that stayed",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.liftoff.b04.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.liftoff.b04.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "The gold descent stage stands alone under a huge dark sky. A small departing cabin is nearly lost above it, and its long shadow spreads over the quiet ground.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "settle",
+  "context": "Eagle's descent stage remained at Tranquility Base after the ascent stage left with the crew. The shadow direction and distant cabin size are interpretive.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · liftoff",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1242202"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "f7f57d1628e795a3032973abfdf770cffe8838434a226d310cbef471c710e65a"
+}

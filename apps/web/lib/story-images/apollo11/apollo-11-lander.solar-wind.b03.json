@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.solar-wind.b03",
+  "title": "Roll up the evidence",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.solar-wind.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.solar-wind.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A pair of large gloved hands gathers the foil into a compact roll above an open sample container. The empty support pole remains in the background.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "shutter",
+  "context": "The foil was recovered and packed for return to Earth. The container and handling pose are interpretive, emphasizing physical sample recovery rather than a radio transmission.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · solar-wind",
+      "url": "https://apollojournals.org/alsj/a11/a11.clsout.html#1112011"
+    },
+    {
+      "label": "NASA · How the solar-wind collector worked",
+      "url": "https://www.nasa.gov/history/50-years-ago-on-the-way-to-the-moon-lunar-science-announced/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "cc00b4f52d808bcf303966082b5f1ba5d36e98edbabba799bf051640bd911488"
+}

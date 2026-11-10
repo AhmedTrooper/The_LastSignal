@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.liftoff.b01",
+  "title": "The connection has one last job",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.liftoff.b01.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.liftoff.b01.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A macro mechanical cutaway isolates the connection between the silver ascent stage and gold descent stage, with a separated cable path and an inset of the intact lander.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "shutter",
+  "context": "Stage connections had to release for ascent. The drawing is a simplified separation-system explanation, not a literal wiring diagram or a count of cut cables and bolts.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · liftoff",
+      "url": "https://apollojournals.org/alsj/a11/a11.launch.html#1242202"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "2dcd2108c8f9a2abf41e02e21a87d492f65d54df98c1473595e3621a81f0337e"
+}

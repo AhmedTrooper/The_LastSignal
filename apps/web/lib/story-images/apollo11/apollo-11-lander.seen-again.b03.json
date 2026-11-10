@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.seen-again.b03",
+  "title": "A small shape, a long shadow",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.seen-again.b03.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.seen-again.b03.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "An overhead illustrative site map shows the small octagonal descent stage, its long shadow and scuffed paths. An offset magnifying panel enlarges the stage and four feet.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "focus",
+  "context": "Later orbital imagery can be interpreted alongside mission records to study the landing site. This is a diagram of how to read such a view, not an actual LROC photograph or a surveyed equipment map.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · seen-again",
+      "url": "https://science.nasa.gov/photojournal/apollo-11-second-look/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "c9952f0512489086c21706d455a93fbfeb6163c7d171a075f09705c334a4838b"
+}

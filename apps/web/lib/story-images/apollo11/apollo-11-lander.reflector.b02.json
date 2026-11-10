@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "beatId": "apollo-11-lander.reflector.b02",
+  "title": "Three surfaces, one return",
+  "src": "/video/story-scroll/apollo11/apollo-11-lander.reflector.b02.webp",
+  "r2Key": "images/story-scroll/apollo11/apollo-11-lander.reflector.b02.webp",
+  "width": 1440,
+  "height": 1200,
+  "alt": "A large transparent corner-cube diagram fills the page, showing a light ray reflecting across three internal surfaces. A small observatory drawing shows where the light begins.",
+  "credit": "RoverVilla · AI-assisted illustration",
+  "motion": "hinge",
+  "context": "Corner-cube geometry returns incoming light toward its source. The ray path is an explanatory construction, not an actual laser observation.",
+  "interpretation": "Original story illustration. Viewpoint, lighting, pose, geometry and apparent distances are interpretive. Scientific arrows, waves, cutaways and displays explain principles; they are not recorded telemetry, a literal instrument diagram or a historical photograph.",
+  "sources": [
+    {
+      "label": "Apollo mission record · reflector",
+      "url": "https://www.jpl.nasa.gov/news/the-apollo-experiment-that-keeps-on-giving/"
+    },
+    {
+      "label": "NASA · Apollo 11 Mission Overview",
+      "url": "https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"
+    }
+  ],
+  "assetSha256": "87a661c0b4245a3965bdeefb60eabc03c737036b7f0ba2694ea4dd4274ec6b35"
+}
