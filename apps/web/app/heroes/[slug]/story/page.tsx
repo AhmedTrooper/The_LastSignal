@@ -26,6 +26,10 @@ import { PHOENIX_PHOTOS } from "@/lib/phoenix-media";
 import MplThoughtStory from "@/app/components/story/mpl-thought-story";
 import { MPL_PHOTOS } from "@/lib/mpl-media";
 import { getMachineBook } from "@/lib/machine-books";
+import LrvThoughtStory from "@/app/components/story/lrv-thought-story";
+import PathfinderThoughtStory from "@/app/components/story/pathfinder-thought-story";
+import { LRV_PHOTOS } from "@/lib/lrv-media";
+import { PATHFINDER_PHOTOS } from "@/lib/pathfinder-media";
 
 export function generateStaticParams() {
   return HEROES.map((h) => ({ slug: h.slug }));
@@ -38,9 +42,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const count = book?.chapters.length ?? (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
     title: `${book?.name ?? hero.name}, a story in ${count} ${book || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
-    description: (hero.slug.startsWith("viking-") || hero.slug === "grail" || hero.slug === "phoenix" || hero.slug === "mars-polar-lander") && book ? book.introduction : hero.summary,
+    description: (hero.slug.startsWith("viking-") || hero.slug === "grail" || hero.slug === "phoenix" || hero.slug === "mars-polar-lander" || hero.slug === "apollo-15-rover" || hero.slug === "pathfinder-sojourner") && book ? book.introduction : hero.summary,
     path: `/heroes/${hero.slug}/story`,
-    ogImage: hero.slug === "mars-polar-lander" ? MPL_PHOTOS.cover.src : hero.slug === "phoenix" ? PHOENIX_PHOTOS.cover.src : hero.slug === "grail" ? GRAIL_PHOTOS.cover.src : hero.slug === "viking-2" ? VIKING_TWO_PHOTOS.cover.src : hero.slug === "viking-1" ? VIKING_PHOTOS.cover.src : img(portrait(hero)),
+    ogImage: hero.slug === "apollo-15-rover" ? LRV_PHOTOS.cover.src : hero.slug === "pathfinder-sojourner" ? PATHFINDER_PHOTOS.cover.src : hero.slug === "mars-polar-lander" ? MPL_PHOTOS.cover.src : hero.slug === "phoenix" ? PHOENIX_PHOTOS.cover.src : hero.slug === "grail" ? GRAIL_PHOTOS.cover.src : hero.slug === "viking-2" ? VIKING_TWO_PHOTOS.cover.src : hero.slug === "viking-1" ? VIKING_PHOTOS.cover.src : img(portrait(hero)),
   });
 }
 
@@ -70,6 +74,8 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   if (hero.slug === "grail") return <main id="club-main"><GrailThoughtStory /></main>;
   if (hero.slug === "phoenix") return <main id="club-main"><PhoenixThoughtStory /></main>;
   if (hero.slug === "mars-polar-lander") return <main id="club-main"><MplThoughtStory /></main>;
+  if (hero.slug === "apollo-15-rover") return <main id="club-main"><LrvThoughtStory /></main>;
+  if (hero.slug === "pathfinder-sojourner") return <main id="club-main"><PathfinderThoughtStory /></main>;
 
   if (film) {
     return (

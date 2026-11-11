@@ -11,11 +11,13 @@ import { VIKING_TWO_BOOK } from "./viking-two";
 import { GRAIL_BOOK } from "./grail";
 import { PHOENIX_BOOK } from "./phoenix";
 import { MPL_BOOK } from "./mars-polar-lander";
+import { LRV_BOOK } from "./apollo-15-rover";
+import { PATHFINDER_BOOK } from "./pathfinder-sojourner";
 import type { MachineBook } from "./types";
 export { chapterParagraphs } from "./types";
 export type { MachineBook, EventChapter, StoryBeat } from "./types";
 
-export const MACHINE_BOOKS = [APOLLO_BOOK, OPPORTUNITY_BOOK, RANGER_BOOK, INSIGHT_BOOK, INGENUITY_BOOK, SPIRIT_BOOK, SURVEYOR_BOOK, LCROSS_BOOK, VIKING_BOOK, VIKING_TWO_BOOK, GRAIL_BOOK, PHOENIX_BOOK, MPL_BOOK];
+export const MACHINE_BOOKS = [APOLLO_BOOK, OPPORTUNITY_BOOK, RANGER_BOOK, INSIGHT_BOOK, INGENUITY_BOOK, SPIRIT_BOOK, SURVEYOR_BOOK, LCROSS_BOOK, VIKING_BOOK, VIKING_TWO_BOOK, GRAIL_BOOK, PHOENIX_BOOK, MPL_BOOK, LRV_BOOK, PATHFINDER_BOOK];
 export const getMachineBook = (slug: string) => MACHINE_BOOKS.find(book => book.slug === slug);
 export type ReadingFormat = "comic" | "book";
 export const machineStoryUrl = (slug: string, chapter?: string) => `/heroes/${slug}/story${chapter ? `#${encodeURIComponent(chapter)}` : ""}`;

@@ -1,0 +1,42 @@
+/* These editions alone: don't change Eagle or the other story layouts. */
+.lrv-thoughts { background: #1e3039; }
+.lrv-thoughts .tc-topbar { background: #1e3039f2; }
+.lrv-thoughts .tc-tone-paper { --tc-bg: #eee8d8; --tc-ink: #304852; --tc-muted: #60625b; --tc-ground: #c6bca1; }
+.lrv-thoughts .tc-tone-night { --tc-bg: #a7bdc1; --tc-ink: #243c46; --tc-muted: #455963; --tc-ground: #91a9ac; }
+.pathfinder-thoughts { background: #573f38; }
+.pathfinder-thoughts .tc-topbar { background: #573f38f2; }
+.pathfinder-thoughts .tc-tone-paper { --tc-bg: #f0dec3; --tc-ink: #513c36; --tc-muted: #6f594d; --tc-ground: #d4b797; }
+.pathfinder-thoughts .tc-tone-night { --tc-bg: #dfb68e; --tc-ink: #4a3632; --tc-muted: #674a41; --tc-ground: #c59872; }
+:is(.lrv-thoughts,.pathfinder-thoughts) .tc-total-progress { background: #edbe70; }
+:is(.lrv-thoughts,.pathfinder-thoughts) .tc-topbar nav > span[aria-current] { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 2px solid #edbe70; color: #f3d9a7; font-size: 12px; }
+:is(.lrv-thoughts,.pathfinder-thoughts) .tc-art-picture > svg { animation: none; }
+:is(.lrv-thoughts,.pathfinder-thoughts) .tc-opening .es-opening-copy h1 { font-size: clamp(50px,7vw,108px); }
+.reviewed-rover-extras { margin-top: 28px; color: #443c3c; }
+.reviewed-rover-activity,.reviewed-rover-archive,.reviewed-rover-ledger { margin-top: 22px; padding: 22px; border: 1px solid #c6b69c; border-radius: 16px; background: #f1e7d7; }
+.reviewed-rover-extras h3 { font: 650 21px/1.3 var(--font-display); }
+.reviewed-rover-extras :is(.lrv-art,.pathfinder-art) { width: 100%; height: auto; max-height: 360px; margin-top: 12px; }
+.reviewed-rover-activity [role="group"] { display: flex; flex-wrap: wrap; gap: 10px; }
+.reviewed-rover-extras button { min-height: 44px; padding: 10px 14px; border: 1px solid #816b54; border-radius: 999px; background: #faf5e9; cursor: pointer; }
+.reviewed-rover-extras button[aria-pressed="true"] { background: #304852; color: #fff8e8; }
+.reviewed-rover-extras p,.reviewed-rover-extras dd { margin-top: 12px; font-size: 15px; line-height: 1.8; }
+.reviewed-rover-extras a { display: inline-flex; align-items: center; min-height: 44px; color: #543c64; text-decoration: underline; text-underline-offset: 4px; }
+.reviewed-rover-note { color: #6d5365; font-size: 12px !important; }
+.reviewed-rover-photo { position: relative; height: clamp(220px,42vw,400px); margin-top: 14px; }
+.reviewed-rover-archive figcaption { margin-top: 16px; }
+.reviewed-rover-archive p > span { display: block; }
+.reviewed-rover-video { display: block; width: 100%; aspect-ratio: 16/9; border: 0; margin-top: 15px; }
+.reviewed-rover-ledger summary { min-height: 44px; cursor: pointer; font-size: 14px; font-weight: 650; }
+.reviewed-rover-ledger dl > div { margin-top: 20px; border-top: 1px solid #d1c2a8; padding-top: 15px; }
+.reviewed-rover-ledger dt { font-weight: 650; font-size: 14px; }
+.nook-mechanism .reviewed-rover-extras { max-width: 800px; margin: auto; }
+@media (min-width:900px) and (min-height:641px) { :is(.lrv-thoughts,.pathfinder-thoughts) .tc-stage[data-placement^="lower"] .tc-cloud { top: auto; bottom: 110px; } }
+@media (max-width:599px) {
+  :is(.lrv-thoughts,.pathfinder-thoughts) .tc-topbar { gap: 8px; padding-inline: 12px; }
+  :is(.lrv-thoughts,.pathfinder-thoughts) .tc-topbar-serial { display: none; }
+  :is(.lrv-thoughts,.pathfinder-thoughts) .tc-topbar nav { gap: 8px; }
+  :is(.lrv-thoughts,.pathfinder-thoughts) .tc-topbar > a { font-size: 11px; gap: 6px; }
+  :is(.lrv-thoughts,.pathfinder-thoughts) .tc-opening .es-opening-copy h1 { font-size: 53px; }
+  .reviewed-rover-activity,.reviewed-rover-archive,.reviewed-rover-ledger { padding: 16px; }
+}
+@media (max-height:640px) and (min-width:600px) { :is(.lrv-thoughts,.pathfinder-thoughts) .tc-cloud-line { font-size: 16px; } }
+@media (prefers-reduced-motion:reduce) { .reviewed-rover-extras * { animation: none !important; transition: none !important; } }

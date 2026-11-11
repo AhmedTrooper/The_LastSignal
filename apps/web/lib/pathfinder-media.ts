@@ -1,0 +1,16 @@
+import type { Photo } from "./photos";
+import { PATHFINDER_SOURCES as S } from "./pathfinder-sources";
+
+export const PATHFINDER_PHOTOS = {
+  cover: { name: "Pathfinder-Yogi-panorama", title: "The lander looks across the landing site", src: "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-9-panorama-large.jpg", source: S.history.url, credit: "NASA/JPL-Caltech", alt: "NASA's panoramic view shows Sojourner near the rock nicknamed Yogi and the surrounding terrain.", ai: false },
+  preparation: { name: "Pathfinder-flight-preparation", title: "Preparing the lander and rover on Earth", src: "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-2-lander-preparations-about-to-be-folded-up-oct-2-1996.jpg", source: S.history.url, credit: "NASA/JPL-Caltech", alt: "Ground crews prepare Pathfinder and Sojourner before launch, with the lander still open.", ai: false },
+  hardware: { name: "Pathfinder-instrument-schematic", title: "NASA's lander and rover instrument diagram", src: "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-4-instruments.jpg", source: S.history.url, credit: "NASA/JPL-Caltech · schematic", alt: "NASA's schematic identifies the separate spacecraft and their major instruments; this is not a Mars photograph.", ai: false },
+  yogi: { name: "Sojourner-APXS-Yogi", title: "Sojourner studies Yogi", src: "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-11-sojourner-apxs-on-yogi-rock-1997.jpg", source: S.history.url, credit: "NASA/JPL-Caltech", alt: "The rover positions its Alpha Proton X-ray Spectrometer at the rock nicknamed Yogi.", ai: false },
+  clouds: { name: "Pathfinder-clouds-Sol39", title: "Clouds seen by the lander", src: "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-12-clouds-sol-39.jpg", source: S.history.url, credit: "NASA/JPL-Caltech", alt: "Pathfinder photographs morning clouds that NASA describes as most likely composed of ice crystals.", ai: false },
+  orbital: { name: "PIA09105-Pathfinder-site", title: "An orbital view of the lander site in 2006", src: "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-14-from-mro-dec-21-2006-166943main-pia09105-parts-200.jpg", source: S.history.url, credit: "NASA/JPL-Caltech · Mars Reconnaissance Orbiter", alt: "NASA's caption identifies the Pathfinder lander in a 2006 orbital view. It does not identify Sojourner's final position or establish electronic health.", ai: false },
+} satisfies Record<string, Photo>;
+export const PATHFINDER_RESOURCES = [
+  { kind: "video", title: "Explore the Pathfinder landing site in 360 degrees", url: "https://www.youtube.com/watch?v=9HGRReKUzfU", embedId: "9HGRReKUzfU", source: S.mission.url, description: "The 360-degree view embedded on NASA's mission page. It is an assembled view of mission imagery, not live video from Mars." },
+  { kind: "document", title: "The instruments and their discoveries", url: S.mission.url, source: S.mission.url, description: "NASA's descriptions of APXS, imaging, atmosphere measurements and scientific interpretations." },
+  { kind: "document", title: "Read the contemporary ending—not a fictional goodbye", url: S.ending.url, source: S.ending.url, description: "The November 1997 report distinguishes last data, later carrier detections and an unknown rover condition." },
+] as const;

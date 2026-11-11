@@ -1,0 +1,1795 @@
+{
+  "schemaVersion": 1,
+  "machineId": "pathfinder-sojourner",
+  "reviewedOn": "2026-11-11",
+  "note": "NASA-owned sources only. First-person text is a source-backed retelling, not original spacecraft speech. SVGs and interactions are simplified teaching illustrations, not engineering reconstructions or measured telemetry. Unknown values remain null.",
+  "identity": {
+    "landerName": "Mars Pathfinder / Carl Sagan Memorial Station",
+    "roverName": "Sojourner",
+    "landerCosparId": "1996-068A",
+    "independentlyVerifiedRoverCosparId": null,
+    "independentlyVerifiedSatcatId": null,
+    "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+  },
+  "facts": [
+    {
+      "id": "identity",
+      "label": "Mars Pathfinder COSPAR ID",
+      "value": "1996-068A",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "locator": "Description; launch; entry/descent; ramp clearing; communications; landing site",
+      "note": "Mission/lander identity; no independently verified Sojourner COSPAR or SATCAT is assigned.",
+      "status": "documented"
+    },
+    {
+      "id": "launch",
+      "label": "Launch",
+      "value": "1996-12-04",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "locator": "Description; launch; entry/descent; ramp clearing; communications; landing site",
+      "note": "Delta II 7925; catalog time 06:58:00 UT. Earlier local 06:58:07 assertion is not reused.",
+      "status": "documented"
+    },
+    {
+      "id": "naming",
+      "label": "Sojourner's name",
+      "value": "Sojourner Truth; winning essay by Valerie Ambrose, age 12",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "Documented naming contest, not an imagined conversation with the rover.",
+      "status": "documented"
+    },
+    {
+      "id": "landing",
+      "label": "Airbag landing",
+      "value": "1997-07-04",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "note": "Heat shield, parachute, retrorockets and airbags performed different jobs.",
+      "status": "documented"
+    },
+    {
+      "id": "rollout",
+      "label": "Rover rollout",
+      "value": "1997-07-06 around 05:40 UT",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "locator": "Description; launch; entry/descent; ramp clearing; communications; landing site",
+      "note": "NASA Science describes the night of July 5 in US time; preserve the timezone distinction.",
+      "status": "documented"
+    },
+    {
+      "id": "mobility",
+      "label": "Sojourner mobility",
+      "value": "Six wheels; semi-autonomous hazard avoidance",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "A robotic rover supported and commanded through the stationary lander.",
+      "status": "documented"
+    },
+    {
+      "id": "mass",
+      "label": "Rover mass",
+      "value": 10.6,
+      "unit": "kg",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "note": "Later NASA Science value. Contemporary primary-mission article rounds it to 10.5 kg.",
+      "status": "documented"
+    },
+    {
+      "id": "rock-instrument",
+      "label": "APXS",
+      "value": "Alpha Proton X-ray Spectrometer",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "note": "Determined elemental composition of rocks and soil; not a microphone, life detector or drilling tool.",
+      "status": "documented"
+    },
+    {
+      "id": "rock-names",
+      "label": "Rock targets",
+      "value": "Barnacle Bill, Yogi and Scooby Doo",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "Team nicknames; not chemical classifications.",
+      "status": "documented"
+    },
+    {
+      "id": "weather",
+      "label": "Lander weather records",
+      "value": 8.5,
+      "unit": "million",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "Million measurements reported by NASA History, not an invented waveform drawn in the SVG.",
+      "status": "documented"
+    },
+    {
+      "id": "water",
+      "label": "Geological interpretation",
+      "value": "Observations suggest running water in a warmer Martian past",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "note": "Evidence-based interpretation; not a direct observation of liquid water or proof of life in 1997.",
+      "status": "documented"
+    },
+    {
+      "id": "primary",
+      "label": "Lander primary mission completed",
+      "value": "1997-08-03",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "locator": "August 3 milestone; APXS; hazard avoidance; battery conservation",
+      "note": "30-day design mission; rover's minimum design goal was seven days.",
+      "status": "documented"
+    },
+    {
+      "id": "power",
+      "label": "Power-management response",
+      "value": "Lander hibernation and nighttime battery conservation",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "locator": "August 3 milestone; APXS; hazard avoidance; battery conservation",
+      "note": "The rover's batteries were not rechargeable; do not transfer lander battery behavior to Sojourner.",
+      "status": "documented"
+    },
+    {
+      "id": "reported-life",
+      "label": "Sojourner reported operating life",
+      "value": 83,
+      "unit": "days",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "NASA's published 'days' wording; not calculated from calendar dates and not asserted as 83 sols.",
+      "status": "documented"
+    },
+    {
+      "id": "distance",
+      "label": "NASA History rover traverse",
+      "value": 330,
+      "unit": "feet",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "Approximately 100 m; do not turn a rounded summary into an exact route reconstruction.",
+      "status": "documented"
+    },
+    {
+      "id": "last-data",
+      "label": "Last successful data transmission",
+      "value": "1997-09-27",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "note": "3:23 a.m. PDT in the contemporary report; different from the later carrier detections.",
+      "status": "documented"
+    },
+    {
+      "id": "carrier",
+      "label": "Later carrier detections",
+      "value": "1997-10-01 / 1997-10-06",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "note": "A detected carrier did not supply recovered health data. It is not a resumed science mission.",
+      "status": "documented"
+    },
+    {
+      "id": "chimp",
+      "label": "Last reviewed rover science",
+      "value": "APXS study of the rock nicknamed Chimp",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "note": "No exact acquisition timestamp is supplied here; don't date it to the October carrier detections.",
+      "status": "documented"
+    },
+    {
+      "id": "data-later",
+      "label": "Later NASA Science data tally",
+      "value": 2.3,
+      "unit": "billion bits",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "note": "Billion bits; contemporary ending article reports 2.6. Preserve both source-specific totals.",
+      "status": "documented"
+    },
+    {
+      "id": "data-contemporary",
+      "label": "Contemporary JPL data tally",
+      "value": 2.6,
+      "unit": "billion bits",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "note": "Billion bits; not added to the later tally.",
+      "status": "documented"
+    },
+    {
+      "id": "rover-images",
+      "label": "Returned rover photographs",
+      "value": 550,
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "note": "Separate from lander photographs and stitched panoramas.",
+      "status": "documented"
+    },
+    {
+      "id": "loss-cause",
+      "label": "Uniquely proven loss cause",
+      "value": null,
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "note": "Battery depletion and thermal cycling were probable explanations; exact cause not established.",
+      "status": "unknown"
+    },
+    {
+      "id": "last-motion",
+      "label": "Sojourner's final movement and current condition",
+      "value": null,
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "note": "Post-link circling is a prediction, not observed rover telemetry.",
+      "status": "unknown"
+    },
+    {
+      "id": "orbiter",
+      "label": "Later lander observation",
+      "value": "Mars Reconnaissance Orbiter image, 2006",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "note": "The caption identifies the lander site, not Sojourner's exact final parking position or electronic health.",
+      "status": "documented"
+    }
+  ],
+  "position": {
+    "latitude": 19.33,
+    "longitudeWest": 33.55,
+    "longitudeEast": 326.45,
+    "longitudeConversion": "360 - 33.55 = 326.45 degrees east; derived conversion, not a new measurement",
+    "referenceFrame": "Not specified in the cited catalog passage",
+    "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+    "appliesTo": "Pathfinder landing site; not a reconstructed Sojourner final position",
+    "finalRoverCoordinates": null
+  },
+  "sources": {
+    "mission": {
+      "title": "Mars Pathfinder · NASA Science",
+      "url": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "locator": "Key Facts; Airbag Landing; Sojourner Rover; Instruments; Science Highlights",
+      "evidence": "Launch December 4, 1996; landing July 4, 1997; final data September 27. Stationary lander and Sojourner rover; 10.6 kg rover. APXS elemental composition, cameras, atmospheric/meteorology measurements. Page gives 2.3 billion bits, more than 16,500 lander images and 550 rover images. Contains a processed/retouched panorama and an official embedded 360-degree video."
+    },
+    "catalog": {
+      "title": "Mars Pathfinder · NSSDCA Master Catalog",
+      "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "locator": "Description; launch; entry/descent; ramp clearing; communications; landing site",
+      "evidence": "1996-068A identifies Mars Pathfinder. Launch 06:58:00 UT on December 4. Heat shield, parachute, bridle, radar, airbags and retrorockets; lander data relayed rover data to Earth. Airbag maneuvers cleared the deployment route; rover rollout July 6 around 05:40 UT. Site 19.33 N, 33.55 W. Loss of communications September 27 for unknown reasons. This source does not verify 1996-068B as Sojourner's ID."
+    },
+    "history": {
+      "title": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+      "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "locator": "Naming contest; launch; six-wheel deployment; rock studies; 83-day operation; weather; 2006 orbital image",
+      "evidence": "JPL-managed mission. Winning naming essay by 12-year-old Valerie Ambrose honored Sojourner Truth. Delta launch from LC-17B; 212-day cruise. July 6 rollout in the history account. Rock names include Barnacle Bill, Yogi and Scooby Doo. Rover operation reported as 83 days, 330 ft total travel; 550 rover photographs; lander 16,500 photographs and 8.5 million weather measurements. Loss cause unknown. Supplies NASA-captioned build, launch, schematic, geology, cloud and MRO photographs."
+    },
+    "primary": {
+      "title": "Mars Pathfinder Concludes Primary Science Mission · NASA/JPL · 8 August 1997",
+      "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "locator": "August 3 milestone; APXS; hazard avoidance; battery conservation",
+      "evidence": "Lander's 30-day primary mission completed August 3. Rover designed for at least a week; after 30 days reported healthy and 52 m travel. Wheel technology experiments and semi-autonomous hazard avoidance. Lander placed in two-day hibernation to recharge and then nighttime battery conservation; rover batteries were not rechargeable. Early rock chemistry interpretation suggested differentiated volcanic material."
+    },
+    "ending": {
+      "title": "Mars Pathfinder Winds Down After Phenomenal Mission · NASA/JPL · 4 November 1997",
+      "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "locator": "Last data cycle; October carrier detections; likely battery failure; unknown rover status; Chimp",
+      "evidence": "Final successful data cycle September 27 at 3:23 a.m. PDT, called Sol 83. Auxiliary carrier detected October 1 and October 6 without recovered lander health data. Battery depletion and deeper thermal cycling were probable explanations, not a uniquely proven cause. Rover health/status unknown; circling was a prediction, not observed motion. Last reviewed rover science concerned Chimp; a planned 50 m circuit was not initiated. Article gives 2.6 billion bits and more than 16,000 lander images, differing from later NASA Science totals."
+    }
+  },
+  "chapters": [
+    {
+      "id": "two-jobs-one-journey",
+      "title": "Two jobs. One journey.",
+      "event": "Preparing Mars Pathfinder and launching on 4 December 1996",
+      "hardware": "Pathfinder lander, Sojourner rover, science instruments and Delta II launch vehicle",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "beats": [
+        {
+          "line": "We travelled together, but we were built for different jobs.",
+          "detail": "Mars Pathfinder would become a stationary lander. Sojourner would explore nearby terrain. The mission tested a lower-cost way to land science equipment on Mars and operate a small rover. Both machines also carried tools for scientific observations."
+        },
+        {
+          "line": "A twelve-year-old helped give the rover its name.",
+          "detail": "NASA named Sojourner after Sojourner Truth, inspired by the winning essay of twelve-year-old Valerie Ambrose. A real naming contest connected a young person on Earth with a machine preparing to explore another planet."
+        },
+        {
+          "line": "On December 4, 1996, a Delta rocket carried us away from Florida.",
+          "detail": "The mission launched from Cape Canaveral's Launch Complex 17B. Course corrections refined the trajectory during the journey to Mars. We were not yet a station and a moving explorer—both were still travelling inside one spacecraft system."
+        },
+        {
+          "line": "The plan called for a month for the lander and a week for the rover.",
+          "detail": "Those were design mission goals, not dates when the machines were guaranteed to stop. First came a harder requirement: reaching the ground with the instruments and the rover intact."
+        }
+      ],
+      "discovery": "One mission can divide its work between different machines. Landing, local exploration and communications require different capabilities.",
+      "question": "Why send a rover and a stationary lander instead of making one machine do every job?"
+    },
+    {
+      "id": "the-landing-that-bounced",
+      "title": "The landing that bounced",
+      "event": "Atmospheric entry and airbag landing on 4 July 1997",
+      "hardware": "Heat shield, parachute, tether, radar, retrorockets and multi-lobed airbags",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "On July 4, our arrival began with a heat shield—not with wheels.",
+          "detail": "Pathfinder entered the Martian atmosphere directly from its approach trajectory. The shield reduced speed and protected the vehicle. The lander's instruments also recorded information about the atmosphere during descent."
+        },
+        {
+          "line": "A parachute slowed us. Rockets helped. Airbags took the final impacts.",
+          "detail": "The descent sequence handed work from one system to the next. After parachute deployment, the lander hung below the backshell on a tether. Radar measurements helped time the airbags and retrorockets before release near the surface."
+        },
+        {
+          "line": "We bounced and rolled before becoming a place where science could begin.",
+          "detail": "The inflated airbags cushioned the landing loads. NASA summaries differ in their detailed bounce counts and heights, so this illustration is not an exact replay. The documented outcome is clear: the lander came to rest and could operate."
+        },
+        {
+          "line": "The airbags deflated. The petals opened. A rover was still waiting inside.",
+          "detail": "Pathfinder opened its three triangular petals after landing. Solar cells, the camera and other instruments could begin their surface tasks. The airbags had protected the spacecraft—but one of them would now be in the rover's way."
+        }
+      ],
+      "discovery": "Landing is a sequence of different engineering jobs. Protecting a payload during arrival does not automatically make it ready to deploy.",
+      "question": "Why can't a parachute or an airbag do every part of a Mars landing on its own?"
+    },
+    {
+      "id": "a-ramp-not-yet-a-road",
+      "title": "A ramp, not yet a road",
+      "event": "Airbag clearing and rover rollout on 5 July US time / 6 July UTC",
+      "hardware": "Retracting airbags, deployment ramps, six wheels and rover-to-lander radio",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "An airbag had helped us land. Now it needed to move out of the way.",
+          "detail": "NASA's catalog records maneuvers to clear an airbag before rover deployment. The team checked the surroundings and prepared a usable ramp. A safe landing and a safe rollout were separate problems."
+        },
+        {
+          "line": "Sojourner stood up on six wheels before taking the slope to Mars.",
+          "detail": "The rover deployed from its stowed position and backed down a ramp. The catalog gives July 6 around 05:40 UTC. NASA Science describes the night of July 5 in US time. Those descriptions do not require two different rollouts."
+        },
+        {
+          "line": "Small wheels reached the ground. The lander stayed where it had landed.",
+          "detail": "Sojourner became the first wheeled vehicle operated on another planet. Pathfinder, renamed the Carl Sagan Memorial Station, remained the imaging, weather and communications station beside it."
+        },
+        {
+          "line": "The rover's next journey would still depend on the station behind it.",
+          "detail": "Sojourner exchanged information with Pathfinder, and the lander relayed rover data to Earth. Moving out onto Mars did not give the rover an independent Earth communications link. That partnership matters all the way to the end of this story."
+        }
+      ],
+      "discovery": "Deployment and communications are part of mobility. A rover can move separately while still relying on another spacecraft to send its evidence home.",
+      "question": "Which part of a rover mission stops being visible from Earth if its relay station cannot communicate?"
+    },
+    {
+      "id": "the-rocks-with-nicknames",
+      "title": "The rocks with nicknames",
+      "event": "Sojourner's early rock investigations in July 1997",
+      "hardware": "Rover cameras, wheels, hazard avoidance and Alpha Proton X-ray Spectrometer",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "Mars Pathfinder Concludes Primary Science Mission · NASA/JPL · 8 August 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "Barnacle Bill. Yogi. Scooby Doo. The rock names were only the beginning.",
+          "detail": "The team gave memorable nicknames to targets near the lander. Pictures showed where to investigate. The names did not tell anyone which elements the rocks contained; measurements had to answer that question."
+        },
+        {
+          "line": "A camera could show a rock. Another instrument could investigate its chemistry.",
+          "detail": "Sojourner carried an Alpha Proton X-ray Spectrometer, or APXS. It measured elemental composition in rocks and soil. It was not a microphone or a detector that could announce life on Mars."
+        },
+        {
+          "line": "The rover's wheels also became part of the experiment.",
+          "detail": "The mission performed wheel technology experiments and tested semi-autonomous hazard avoidance. NASA's contemporary report describes learning about Martian soil as well as the rover's ability to operate around obstacles."
+        },
+        {
+          "line": "A useful answer needed more than one interesting-looking stone.",
+          "detail": "The instruments found differences in rock chemistry. Scientists compared the measurements with images and geological context. NASA's later history describes rocks generally resembling volcanic rocks on Earth—not proof that every Martian rock had the same history."
+        }
+      ],
+      "discovery": "An image, a composition measurement and a terrain observation answer different questions. Together they provide stronger evidence than a nickname or photograph alone.",
+      "question": "Why could two similar-looking rocks still need separate chemical measurements?"
+    },
+    {
+      "id": "the-station-watched-the-sky",
+      "title": "The station watched the sky",
+      "event": "Lander imaging, weather measurements and radio science during surface operations",
+      "hardware": "Imager for Mars Pathfinder, meteorology package, radio system and solar-powered lander",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "While the rover visited rocks, the lander watched a changing world.",
+          "detail": "Pathfinder photographed the terrain and recorded atmospheric pressure, temperature and winds. Its scientific job was not limited to holding a ramp or passing along rover messages."
+        },
+        {
+          "line": "Clouds and sunsets became photographs—not guesses about the weather.",
+          "detail": "The camera recorded clouds and sunsets. NASA's descriptions interpret the morning clouds as likely ice crystals. That is a scientific interpretation of observations, not a claim that the camera touched a cloud."
+        },
+        {
+          "line": "A gust could leave clues in several measurements at once.",
+          "detail": "Temperature, wind and pressure signatures helped investigators identify dust-devil events. The mission also examined magnetic airborne dust. Our teaching diagrams illustrate these methods; their curves are not recovered weather telemetry."
+        },
+        {
+          "line": "The radio link was carrying science even when the rover was not moving.",
+          "detail": "Radio tracking constrained the lander's location and Mars' rotation. Geological observations also suggested running water in a warmer Martian past. Neither result was a direct sighting of liquid water or life at the 1997 landing site."
+        }
+      ],
+      "discovery": "A stationary spacecraft can investigate both the landscape and the environment. Observations and the explanations scientists draw from them must remain distinguishable.",
+      "question": "What can a weather sensor add to a dramatic photograph of the Martian sky?"
+    },
+    {
+      "id": "the-week-became-a-longer-journey",
+      "title": "The week became a longer journey",
+      "event": "Primary-mission completion and energy conservation in August 1997",
+      "hardware": "Rover hazard avoidance, lander solar cells and battery-management operations",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "The first week ended. Sojourner's exploration did not.",
+          "detail": "The rover had been designed to operate for at least a week. NASA's August report described it as healthy after thirty days, having travelled fifty-two metres. That is an interim report, not the final mission distance."
+        },
+        {
+          "line": "On August 3, the lander's thirty-day primary mission was complete.",
+          "detail": "The mission had met its primary objectives and returned atmospheric, geological and engineering information. Continuing operations meant deciding how to use hardware that had already fulfilled its minimum goals."
+        },
+        {
+          "line": "Sometimes continuing meant powering down and waiting.",
+          "detail": "The lander entered a two-day hibernation period to recharge, and the team planned nighttime battery conservation. Sojourner's batteries were not rechargeable. The two spacecraft's power arrangements must not be confused."
+        },
+        {
+          "line": "The longer journey produced more evidence. It did not promise endless power.",
+          "detail": "NASA later reported eighty-three days of rover operation and about one hundred metres of travel. Those published figures do not establish a countdown to a particular component's death. The mission would end with a communications problem, not a recorded rover goodbye."
+        }
+      ],
+      "discovery": "Design goals are not automatic failure dates. Extending a mission requires careful energy management and honest distinctions between interim reports and final totals.",
+      "question": "Why might a team deliberately put a successful lander to sleep?"
+    },
+    {
+      "id": "a-carrier-is-not-a-conversation",
+      "title": "A carrier is not a conversation",
+      "event": "Final successful data on 27 September and later carrier detections in October 1997",
+      "hardware": "Main and auxiliary transmitters, lander battery and the rover's relay dependency",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "beats": [
+        {
+          "line": "On September 27, the last successful data cycle reached Earth.",
+          "detail": "The November JPL report identifies that final transmission cycle. Its review of the rover's last science describes an APXS study of a rock called Chimp. We do not invent an acquisition time for that study."
+        },
+        {
+          "line": "The team kept listening—and detected a carrier again.",
+          "detail": "Signals from the auxiliary transmitter were detected on October 1 and October 6. But the team could not recover lander health data. Detecting the radio carrier was not the same as receiving a new picture, a science result or a complete status report."
+        },
+        {
+          "line": "Without the lander link, Earth could not keep following the little rover.",
+          "detail": "Battery depletion and deeper day-night thermal cycling were considered probable explanations for the outage. JPL explicitly kept the true cause uncertain. The lander problem also left Sojourner's status unknown."
+        },
+        {
+          "line": "Did the rover move afterward? The record does not let us watch that ending.",
+          "detail": "The team discussed probable backup behavior, but had no observed post-outage rover movement. This story does not turn a prediction about circling into a witnessed final drive. Sometimes the authentic ending contains a question."
+        }
+      ],
+      "discovery": "A radio signal, usable data and a known spacecraft condition are different levels of evidence. Losing a relay can also hide the condition of another machine.",
+      "question": "Why is hearing a carrier signal not enough to tell whether a rover is still driving?"
+    },
+    {
+      "id": "the-record-outlived-the-link",
+      "title": "The record outlived the link",
+      "event": "The November 1997 mission review and a later orbital image in 2006",
+      "hardware": "Returned images, rock and weather data, archived mission reports and an orbital camera",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder Winds Down After Phenomenal Mission · NASA/JPL · 4 November 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/"
+        },
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "Two silent machines had already sent a great deal home.",
+          "detail": "NASA records hundreds of rover photographs, thousands of lander images, rock chemistry and extensive weather observations. A panorama may combine many frames, so a beautiful stitched view is not a single instantaneous exposure."
+        },
+        {
+          "line": "Even the totals need their source labels.",
+          "detail": "The later NASA Science page reports 2.3 billion bits; the contemporary ending report gives 2.6 billion. We show both in the evidence ledger, not an invented combined figure. Source differences remain visible to readers and judges."
+        },
+        {
+          "line": "In 2006, an orbiter looked back at the lander's site.",
+          "detail": "NASA's history article includes a Mars Reconnaissance Orbiter view identifying the Pathfinder lander. It does not establish Sojourner's exact final position or prove that either spacecraft's electronics still work."
+        },
+        {
+          "line": "One stayed. One rolled. Their evidence helped the next explorers.",
+          "detail": "Pathfinder demonstrated landing technology and Sojourner demonstrated surface mobility and science. Both became predecessors of later Mars exploration. Their authentic legacy is what the record supports—not an invented final message from the dust."
+        }
+      ],
+      "discovery": "Mission records can continue teaching after the link ends. Their value includes discoveries, engineering lessons and clearly preserved limits on what is known.",
+      "question": "Which unanswered question would you preserve for a future investigator rather than fill with a guess?"
+    }
+  ],
+  "moments": [
+    {
+      "beatId": "pathfinder-sojourner.two-jobs-one-journey.b01",
+      "chapterId": "two-jobs-one-journey",
+      "chapterTitle": "Two jobs. One journey.",
+      "chapterSequence": 1,
+      "beatSequence": 1,
+      "displaySerial": 1,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "We travelled together, but we were built for different jobs.",
+      "detailText": "Mars Pathfinder would become a stationary lander. Sojourner would explore nearby terrain. The mission tested a lower-cost way to land science equipment on Mars and operate a small rover. Both machines also carried tools for scientific observations.",
+      "narrationText": "We travelled together, but we were built for different jobs. Mars Pathfinder would become a stationary lander. Sojourner would explore nearby terrain. The mission tested a lower-cost way to land science equipment on Mars and operate a small rover. Both machines also carried tools for scientific observations.",
+      "textRevision": 1,
+      "textFingerprint": "71c26b6a",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.two-jobs-one-journey.b01",
+      "legacyAnchor": "two-jobs-one-journey-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.two-jobs-one-journey.b01.en.r1.71c26b6a.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.two-jobs-one-journey.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "71c26b6a",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.two-jobs-one-journey.b02",
+      "chapterId": "two-jobs-one-journey",
+      "chapterTitle": "Two jobs. One journey.",
+      "chapterSequence": 1,
+      "beatSequence": 2,
+      "displaySerial": 2,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A twelve-year-old helped give the rover its name.",
+      "detailText": "NASA named Sojourner after Sojourner Truth, inspired by the winning essay of twelve-year-old Valerie Ambrose. A real naming contest connected a young person on Earth with a machine preparing to explore another planet.",
+      "narrationText": "A twelve-year-old helped give the rover its name. NASA named Sojourner after Sojourner Truth, inspired by the winning essay of twelve-year-old Valerie Ambrose. A real naming contest connected a young person on Earth with a machine preparing to explore another planet.",
+      "textRevision": 1,
+      "textFingerprint": "cfa52dc5",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.two-jobs-one-journey.b02",
+      "legacyAnchor": "two-jobs-one-journey-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.two-jobs-one-journey.b02.en.r1.cfa52dc5.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.two-jobs-one-journey.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "cfa52dc5",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.two-jobs-one-journey.b03",
+      "chapterId": "two-jobs-one-journey",
+      "chapterTitle": "Two jobs. One journey.",
+      "chapterSequence": 1,
+      "beatSequence": 3,
+      "displaySerial": 3,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On December 4, 1996, a Delta rocket carried us away from Florida.",
+      "detailText": "The mission launched from Cape Canaveral's Launch Complex 17B. Course corrections refined the trajectory during the journey to Mars. We were not yet a station and a moving explorer—both were still travelling inside one spacecraft system.",
+      "narrationText": "On December 4, 1996, a Delta rocket carried us away from Florida. The mission launched from Cape Canaveral's Launch Complex 17B. Course corrections refined the trajectory during the journey to Mars. We were not yet a station and a moving explorer—both were still travelling inside one spacecraft system.",
+      "textRevision": 1,
+      "textFingerprint": "a4ba7176",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.two-jobs-one-journey.b03",
+      "legacyAnchor": "two-jobs-one-journey-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.two-jobs-one-journey.b03.en.r1.a4ba7176.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.two-jobs-one-journey.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "a4ba7176",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.two-jobs-one-journey.b04",
+      "chapterId": "two-jobs-one-journey",
+      "chapterTitle": "Two jobs. One journey.",
+      "chapterSequence": 1,
+      "beatSequence": 4,
+      "displaySerial": 4,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The plan called for a month for the lander and a week for the rover.",
+      "detailText": "Those were design mission goals, not dates when the machines were guaranteed to stop. First came a harder requirement: reaching the ground with the instruments and the rover intact.",
+      "narrationText": "The plan called for a month for the lander and a week for the rover. Those were design mission goals, not dates when the machines were guaranteed to stop. First came a harder requirement: reaching the ground with the instruments and the rover intact.",
+      "textRevision": 1,
+      "textFingerprint": "e408c52a",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.two-jobs-one-journey.b04",
+      "legacyAnchor": "two-jobs-one-journey-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.two-jobs-one-journey.b04.en.r1.e408c52a.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.two-jobs-one-journey.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "e408c52a",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-landing-that-bounced.b01",
+      "chapterId": "the-landing-that-bounced",
+      "chapterTitle": "The landing that bounced",
+      "chapterSequence": 2,
+      "beatSequence": 1,
+      "displaySerial": 5,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On July 4, our arrival began with a heat shield—not with wheels.",
+      "detailText": "Pathfinder entered the Martian atmosphere directly from its approach trajectory. The shield reduced speed and protected the vehicle. The lander's instruments also recorded information about the atmosphere during descent.",
+      "narrationText": "On July 4, our arrival began with a heat shield—not with wheels. Pathfinder entered the Martian atmosphere directly from its approach trajectory. The shield reduced speed and protected the vehicle. The lander's instruments also recorded information about the atmosphere during descent.",
+      "textRevision": 1,
+      "textFingerprint": "17efdbb9",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-landing-that-bounced.b01",
+      "legacyAnchor": "the-landing-that-bounced-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-landing-that-bounced.b01.en.r1.17efdbb9.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-landing-that-bounced.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "17efdbb9",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-landing-that-bounced.b02",
+      "chapterId": "the-landing-that-bounced",
+      "chapterTitle": "The landing that bounced",
+      "chapterSequence": 2,
+      "beatSequence": 2,
+      "displaySerial": 6,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A parachute slowed us. Rockets helped. Airbags took the final impacts.",
+      "detailText": "The descent sequence handed work from one system to the next. After parachute deployment, the lander hung below the backshell on a tether. Radar measurements helped time the airbags and retrorockets before release near the surface.",
+      "narrationText": "A parachute slowed us. Rockets helped. Airbags took the final impacts. The descent sequence handed work from one system to the next. After parachute deployment, the lander hung below the backshell on a tether. Radar measurements helped time the airbags and retrorockets before release near the surface.",
+      "textRevision": 1,
+      "textFingerprint": "95f13c85",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-landing-that-bounced.b02",
+      "legacyAnchor": "the-landing-that-bounced-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-landing-that-bounced.b02.en.r1.95f13c85.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-landing-that-bounced.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "95f13c85",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-landing-that-bounced.b03",
+      "chapterId": "the-landing-that-bounced",
+      "chapterTitle": "The landing that bounced",
+      "chapterSequence": 2,
+      "beatSequence": 3,
+      "displaySerial": 7,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "We bounced and rolled before becoming a place where science could begin.",
+      "detailText": "The inflated airbags cushioned the landing loads. NASA summaries differ in their detailed bounce counts and heights, so this illustration is not an exact replay. The documented outcome is clear: the lander came to rest and could operate.",
+      "narrationText": "We bounced and rolled before becoming a place where science could begin. The inflated airbags cushioned the landing loads. NASA summaries differ in their detailed bounce counts and heights, so this illustration is not an exact replay. The documented outcome is clear: the lander came to rest and could operate.",
+      "textRevision": 1,
+      "textFingerprint": "2dcbe15f",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-landing-that-bounced.b03",
+      "legacyAnchor": "the-landing-that-bounced-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-landing-that-bounced.b03.en.r1.2dcbe15f.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-landing-that-bounced.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "2dcbe15f",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-landing-that-bounced.b04",
+      "chapterId": "the-landing-that-bounced",
+      "chapterTitle": "The landing that bounced",
+      "chapterSequence": 2,
+      "beatSequence": 4,
+      "displaySerial": 8,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The airbags deflated. The petals opened. A rover was still waiting inside.",
+      "detailText": "Pathfinder opened its three triangular petals after landing. Solar cells, the camera and other instruments could begin their surface tasks. The airbags had protected the spacecraft—but one of them would now be in the rover's way.",
+      "narrationText": "The airbags deflated. The petals opened. A rover was still waiting inside. Pathfinder opened its three triangular petals after landing. Solar cells, the camera and other instruments could begin their surface tasks. The airbags had protected the spacecraft—but one of them would now be in the rover's way.",
+      "textRevision": 1,
+      "textFingerprint": "64b90298",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-landing-that-bounced.b04",
+      "legacyAnchor": "the-landing-that-bounced-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-landing-that-bounced.b04.en.r1.64b90298.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-landing-that-bounced.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "64b90298",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b01",
+      "chapterId": "a-ramp-not-yet-a-road",
+      "chapterTitle": "A ramp, not yet a road",
+      "chapterSequence": 3,
+      "beatSequence": 1,
+      "displaySerial": 9,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "An airbag had helped us land. Now it needed to move out of the way.",
+      "detailText": "NASA's catalog records maneuvers to clear an airbag before rover deployment. The team checked the surroundings and prepared a usable ramp. A safe landing and a safe rollout were separate problems.",
+      "narrationText": "An airbag had helped us land. Now it needed to move out of the way. NASA's catalog records maneuvers to clear an airbag before rover deployment. The team checked the surroundings and prepared a usable ramp. A safe landing and a safe rollout were separate problems.",
+      "textRevision": 1,
+      "textFingerprint": "0a53e19d",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-ramp-not-yet-a-road.b01",
+      "legacyAnchor": "a-ramp-not-yet-a-road-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-ramp-not-yet-a-road.b01.en.r1.0a53e19d.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "0a53e19d",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b02",
+      "chapterId": "a-ramp-not-yet-a-road",
+      "chapterTitle": "A ramp, not yet a road",
+      "chapterSequence": 3,
+      "beatSequence": 2,
+      "displaySerial": 10,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Sojourner stood up on six wheels before taking the slope to Mars.",
+      "detailText": "The rover deployed from its stowed position and backed down a ramp. The catalog gives July 6 around 05:40 UTC. NASA Science describes the night of July 5 in US time. Those descriptions do not require two different rollouts.",
+      "narrationText": "Sojourner stood up on six wheels before taking the slope to Mars. The rover deployed from its stowed position and backed down a ramp. The catalog gives July 6 around 05:40 UTC. NASA Science describes the night of July 5 in US time. Those descriptions do not require two different rollouts.",
+      "textRevision": 1,
+      "textFingerprint": "2d6c8ff2",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-ramp-not-yet-a-road.b02",
+      "legacyAnchor": "a-ramp-not-yet-a-road-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-ramp-not-yet-a-road.b02.en.r1.2d6c8ff2.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "2d6c8ff2",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b03",
+      "chapterId": "a-ramp-not-yet-a-road",
+      "chapterTitle": "A ramp, not yet a road",
+      "chapterSequence": 3,
+      "beatSequence": 3,
+      "displaySerial": 11,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Small wheels reached the ground. The lander stayed where it had landed.",
+      "detailText": "Sojourner became the first wheeled vehicle operated on another planet. Pathfinder, renamed the Carl Sagan Memorial Station, remained the imaging, weather and communications station beside it.",
+      "narrationText": "Small wheels reached the ground. The lander stayed where it had landed. Sojourner became the first wheeled vehicle operated on another planet. Pathfinder, renamed the Carl Sagan Memorial Station, remained the imaging, weather and communications station beside it.",
+      "textRevision": 1,
+      "textFingerprint": "f16b1218",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-ramp-not-yet-a-road.b03",
+      "legacyAnchor": "a-ramp-not-yet-a-road-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-ramp-not-yet-a-road.b03.en.r1.f16b1218.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "f16b1218",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b04",
+      "chapterId": "a-ramp-not-yet-a-road",
+      "chapterTitle": "A ramp, not yet a road",
+      "chapterSequence": 3,
+      "beatSequence": 4,
+      "displaySerial": 12,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The rover's next journey would still depend on the station behind it.",
+      "detailText": "Sojourner exchanged information with Pathfinder, and the lander relayed rover data to Earth. Moving out onto Mars did not give the rover an independent Earth communications link. That partnership matters all the way to the end of this story.",
+      "narrationText": "The rover's next journey would still depend on the station behind it. Sojourner exchanged information with Pathfinder, and the lander relayed rover data to Earth. Moving out onto Mars did not give the rover an independent Earth communications link. That partnership matters all the way to the end of this story.",
+      "textRevision": 1,
+      "textFingerprint": "5404e813",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-ramp-not-yet-a-road.b04",
+      "legacyAnchor": "a-ramp-not-yet-a-road-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-ramp-not-yet-a-road.b04.en.r1.5404e813.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-ramp-not-yet-a-road.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "5404e813",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b01",
+      "chapterId": "the-rocks-with-nicknames",
+      "chapterTitle": "The rocks with nicknames",
+      "chapterSequence": 4,
+      "beatSequence": 1,
+      "displaySerial": 13,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Barnacle Bill. Yogi. Scooby Doo. The rock names were only the beginning.",
+      "detailText": "The team gave memorable nicknames to targets near the lander. Pictures showed where to investigate. The names did not tell anyone which elements the rocks contained; measurements had to answer that question.",
+      "narrationText": "Barnacle Bill. Yogi. Scooby Doo. The rock names were only the beginning. The team gave memorable nicknames to targets near the lander. Pictures showed where to investigate. The names did not tell anyone which elements the rocks contained; measurements had to answer that question.",
+      "textRevision": 1,
+      "textFingerprint": "d6835a93",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "Mars Pathfinder Concludes Primary Science Mission · NASA/JPL · 8 August 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-rocks-with-nicknames.b01",
+      "legacyAnchor": "the-rocks-with-nicknames-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-rocks-with-nicknames.b01.en.r1.d6835a93.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "d6835a93",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b02",
+      "chapterId": "the-rocks-with-nicknames",
+      "chapterTitle": "The rocks with nicknames",
+      "chapterSequence": 4,
+      "beatSequence": 2,
+      "displaySerial": 14,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A camera could show a rock. Another instrument could investigate its chemistry.",
+      "detailText": "Sojourner carried an Alpha Proton X-ray Spectrometer, or APXS. It measured elemental composition in rocks and soil. It was not a microphone or a detector that could announce life on Mars.",
+      "narrationText": "A camera could show a rock. Another instrument could investigate its chemistry. Sojourner carried an Alpha Proton X-ray Spectrometer, or APXS. It measured elemental composition in rocks and soil. It was not a microphone or a detector that could announce life on Mars.",
+      "textRevision": 1,
+      "textFingerprint": "4b4e1b08",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "Mars Pathfinder Concludes Primary Science Mission · NASA/JPL · 8 August 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-rocks-with-nicknames.b02",
+      "legacyAnchor": "the-rocks-with-nicknames-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-rocks-with-nicknames.b02.en.r1.4b4e1b08.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "4b4e1b08",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b03",
+      "chapterId": "the-rocks-with-nicknames",
+      "chapterTitle": "The rocks with nicknames",
+      "chapterSequence": 4,
+      "beatSequence": 3,
+      "displaySerial": 15,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The rover's wheels also became part of the experiment.",
+      "detailText": "The mission performed wheel technology experiments and tested semi-autonomous hazard avoidance. NASA's contemporary report describes learning about Martian soil as well as the rover's ability to operate around obstacles.",
+      "narrationText": "The rover's wheels also became part of the experiment. The mission performed wheel technology experiments and tested semi-autonomous hazard avoidance. NASA's contemporary report describes learning about Martian soil as well as the rover's ability to operate around obstacles.",
+      "textRevision": 1,
+      "textFingerprint": "465157b0",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "Mars Pathfinder Concludes Primary Science Mission · NASA/JPL · 8 August 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-rocks-with-nicknames.b03",
+      "legacyAnchor": "the-rocks-with-nicknames-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-rocks-with-nicknames.b03.en.r1.465157b0.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "465157b0",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b04",
+      "chapterId": "the-rocks-with-nicknames",
+      "chapterTitle": "The rocks with nicknames",
+      "chapterSequence": 4,
+      "beatSequence": 4,
+      "displaySerial": 16,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A useful answer needed more than one interesting-looking stone.",
+      "detailText": "The instruments found differences in rock chemistry. Scientists compared the measurements with images and geological context. NASA's later history describes rocks generally resembling volcanic rocks on Earth—not proof that every Martian rock had the same history.",
+      "narrationText": "A useful answer needed more than one interesting-looking stone. The instruments found differences in rock chemistry. Scientists compared the measurements with images and geological context. NASA's later history describes rocks generally resembling volcanic rocks on Earth—not proof that every Martian rock had the same history.",
+      "textRevision": 1,
+      "textFingerprint": "34f4d237",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        },
+        {
+          "label": "Mars Pathfinder Concludes Primary Science Mission · NASA/JPL · 8 August 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-rocks-with-nicknames.b04",
+      "legacyAnchor": "the-rocks-with-nicknames-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-rocks-with-nicknames.b04.en.r1.34f4d237.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-rocks-with-nicknames.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "34f4d237",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b01",
+      "chapterId": "the-station-watched-the-sky",
+      "chapterTitle": "The station watched the sky",
+      "chapterSequence": 5,
+      "beatSequence": 1,
+      "displaySerial": 17,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "While the rover visited rocks, the lander watched a changing world.",
+      "detailText": "Pathfinder photographed the terrain and recorded atmospheric pressure, temperature and winds. Its scientific job was not limited to holding a ramp or passing along rover messages.",
+      "narrationText": "While the rover visited rocks, the lander watched a changing world. Pathfinder photographed the terrain and recorded atmospheric pressure, temperature and winds. Its scientific job was not limited to holding a ramp or passing along rover messages.",
+      "textRevision": 1,
+      "textFingerprint": "cd42ebff",
+      "sourceUrl": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-station-watched-the-sky.b01",
+      "legacyAnchor": "the-station-watched-the-sky-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-station-watched-the-sky.b01.en.r1.cd42ebff.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "cd42ebff",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b02",
+      "chapterId": "the-station-watched-the-sky",
+      "chapterTitle": "The station watched the sky",
+      "chapterSequence": 5,
+      "beatSequence": 2,
+      "displaySerial": 18,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Clouds and sunsets became photographs—not guesses about the weather.",
+      "detailText": "The camera recorded clouds and sunsets. NASA's descriptions interpret the morning clouds as likely ice crystals. That is a scientific interpretation of observations, not a claim that the camera touched a cloud.",
+      "narrationText": "Clouds and sunsets became photographs—not guesses about the weather. The camera recorded clouds and sunsets. NASA's descriptions interpret the morning clouds as likely ice crystals. That is a scientific interpretation of observations, not a claim that the camera touched a cloud.",
+      "textRevision": 1,
+      "textFingerprint": "1faccbb9",
+      "sourceUrl": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-station-watched-the-sky.b02",
+      "legacyAnchor": "the-station-watched-the-sky-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-station-watched-the-sky.b02.en.r1.1faccbb9.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "1faccbb9",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b03",
+      "chapterId": "the-station-watched-the-sky",
+      "chapterTitle": "The station watched the sky",
+      "chapterSequence": 5,
+      "beatSequence": 3,
+      "displaySerial": 19,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A gust could leave clues in several measurements at once.",
+      "detailText": "Temperature, wind and pressure signatures helped investigators identify dust-devil events. The mission also examined magnetic airborne dust. Our teaching diagrams illustrate these methods; their curves are not recovered weather telemetry.",
+      "narrationText": "A gust could leave clues in several measurements at once. Temperature, wind and pressure signatures helped investigators identify dust-devil events. The mission also examined magnetic airborne dust. Our teaching diagrams illustrate these methods; their curves are not recovered weather telemetry.",
+      "textRevision": 1,
+      "textFingerprint": "b6ad8ad4",
+      "sourceUrl": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-station-watched-the-sky.b03",
+      "legacyAnchor": "the-station-watched-the-sky-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-station-watched-the-sky.b03.en.r1.b6ad8ad4.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "b6ad8ad4",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b04",
+      "chapterId": "the-station-watched-the-sky",
+      "chapterTitle": "The station watched the sky",
+      "chapterSequence": 5,
+      "beatSequence": 4,
+      "displaySerial": 20,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The radio link was carrying science even when the rover was not moving.",
+      "detailText": "Radio tracking constrained the lander's location and Mars' rotation. Geological observations also suggested running water in a warmer Martian past. Neither result was a direct sighting of liquid water or life at the 1997 landing site.",
+      "narrationText": "The radio link was carrying science even when the rover was not moving. Radio tracking constrained the lander's location and Mars' rotation. Geological observations also suggested running water in a warmer Martian past. Neither result was a direct sighting of liquid water or life at the 1997 landing site.",
+      "textRevision": 1,
+      "textFingerprint": "f5c58517",
+      "sourceUrl": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-station-watched-the-sky.b04",
+      "legacyAnchor": "the-station-watched-the-sky-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-station-watched-the-sky.b04.en.r1.f5c58517.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-station-watched-the-sky.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "f5c58517",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b01",
+      "chapterId": "the-week-became-a-longer-journey",
+      "chapterTitle": "The week became a longer journey",
+      "chapterSequence": 6,
+      "beatSequence": 1,
+      "displaySerial": 21,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The first week ended. Sojourner's exploration did not.",
+      "detailText": "The rover had been designed to operate for at least a week. NASA's August report described it as healthy after thirty days, having travelled fifty-two metres. That is an interim report, not the final mission distance.",
+      "narrationText": "The first week ended. Sojourner's exploration did not. The rover had been designed to operate for at least a week. NASA's August report described it as healthy after thirty days, having travelled fifty-two metres. That is an interim report, not the final mission distance.",
+      "textRevision": 1,
+      "textFingerprint": "3757b0c6",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-week-became-a-longer-journey.b01",
+      "legacyAnchor": "the-week-became-a-longer-journey-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-week-became-a-longer-journey.b01.en.r1.3757b0c6.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "3757b0c6",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b02",
+      "chapterId": "the-week-became-a-longer-journey",
+      "chapterTitle": "The week became a longer journey",
+      "chapterSequence": 6,
+      "beatSequence": 2,
+      "displaySerial": 22,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On August 3, the lander's thirty-day primary mission was complete.",
+      "detailText": "The mission had met its primary objectives and returned atmospheric, geological and engineering information. Continuing operations meant deciding how to use hardware that had already fulfilled its minimum goals.",
+      "narrationText": "On August 3, the lander's thirty-day primary mission was complete. The mission had met its primary objectives and returned atmospheric, geological and engineering information. Continuing operations meant deciding how to use hardware that had already fulfilled its minimum goals.",
+      "textRevision": 1,
+      "textFingerprint": "867d02f4",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-week-became-a-longer-journey.b02",
+      "legacyAnchor": "the-week-became-a-longer-journey-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-week-became-a-longer-journey.b02.en.r1.867d02f4.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "867d02f4",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b03",
+      "chapterId": "the-week-became-a-longer-journey",
+      "chapterTitle": "The week became a longer journey",
+      "chapterSequence": 6,
+      "beatSequence": 3,
+      "displaySerial": 23,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Sometimes continuing meant powering down and waiting.",
+      "detailText": "The lander entered a two-day hibernation period to recharge, and the team planned nighttime battery conservation. Sojourner's batteries were not rechargeable. The two spacecraft's power arrangements must not be confused.",
+      "narrationText": "Sometimes continuing meant powering down and waiting. The lander entered a two-day hibernation period to recharge, and the team planned nighttime battery conservation. Sojourner's batteries were not rechargeable. The two spacecraft's power arrangements must not be confused.",
+      "textRevision": 1,
+      "textFingerprint": "309e690f",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-week-became-a-longer-journey.b03",
+      "legacyAnchor": "the-week-became-a-longer-journey-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-week-became-a-longer-journey.b03.en.r1.309e690f.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "309e690f",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b04",
+      "chapterId": "the-week-became-a-longer-journey",
+      "chapterTitle": "The week became a longer journey",
+      "chapterSequence": 6,
+      "beatSequence": 4,
+      "displaySerial": 24,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The longer journey produced more evidence. It did not promise endless power.",
+      "detailText": "NASA later reported eighty-three days of rover operation and about one hundred metres of travel. Those published figures do not establish a countdown to a particular component's death. The mission would end with a communications problem, not a recorded rover goodbye.",
+      "narrationText": "The longer journey produced more evidence. It did not promise endless power. NASA later reported eighty-three days of rover operation and about one hundred metres of travel. Those published figures do not establish a countdown to a particular component's death. The mission would end with a communications problem, not a recorded rover goodbye.",
+      "textRevision": 1,
+      "textFingerprint": "36d65e5b",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-concludes-primary-science-mission/",
+      "relatedSources": [
+        {
+          "label": "25 Years Ago: Mars Pathfinder Launches to Mars to Deploy Sojourner · NASA",
+          "url": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-week-became-a-longer-journey.b04",
+      "legacyAnchor": "the-week-became-a-longer-journey-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-week-became-a-longer-journey.b04.en.r1.36d65e5b.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-week-became-a-longer-journey.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "36d65e5b",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b01",
+      "chapterId": "a-carrier-is-not-a-conversation",
+      "chapterTitle": "A carrier is not a conversation",
+      "chapterSequence": 7,
+      "beatSequence": 1,
+      "displaySerial": 25,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On September 27, the last successful data cycle reached Earth.",
+      "detailText": "The November JPL report identifies that final transmission cycle. Its review of the rover's last science describes an APXS study of a rock called Chimp. We do not invent an acquisition time for that study.",
+      "narrationText": "On September 27, the last successful data cycle reached Earth. The November JPL report identifies that final transmission cycle. Its review of the rover's last science describes an APXS study of a rock called Chimp. We do not invent an acquisition time for that study.",
+      "textRevision": 1,
+      "textFingerprint": "b5abd49a",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-carrier-is-not-a-conversation.b01",
+      "legacyAnchor": "a-carrier-is-not-a-conversation-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b01.en.r1.b5abd49a.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "b5abd49a",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b02",
+      "chapterId": "a-carrier-is-not-a-conversation",
+      "chapterTitle": "A carrier is not a conversation",
+      "chapterSequence": 7,
+      "beatSequence": 2,
+      "displaySerial": 26,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The team kept listening—and detected a carrier again.",
+      "detailText": "Signals from the auxiliary transmitter were detected on October 1 and October 6. But the team could not recover lander health data. Detecting the radio carrier was not the same as receiving a new picture, a science result or a complete status report.",
+      "narrationText": "The team kept listening—and detected a carrier again. Signals from the auxiliary transmitter were detected on October 1 and October 6. But the team could not recover lander health data. Detecting the radio carrier was not the same as receiving a new picture, a science result or a complete status report.",
+      "textRevision": 1,
+      "textFingerprint": "8721a9ac",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-carrier-is-not-a-conversation.b02",
+      "legacyAnchor": "a-carrier-is-not-a-conversation-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b02.en.r1.8721a9ac.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "8721a9ac",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b03",
+      "chapterId": "a-carrier-is-not-a-conversation",
+      "chapterTitle": "A carrier is not a conversation",
+      "chapterSequence": 7,
+      "beatSequence": 3,
+      "displaySerial": 27,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Without the lander link, Earth could not keep following the little rover.",
+      "detailText": "Battery depletion and deeper day-night thermal cycling were considered probable explanations for the outage. JPL explicitly kept the true cause uncertain. The lander problem also left Sojourner's status unknown.",
+      "narrationText": "Without the lander link, Earth could not keep following the little rover. Battery depletion and deeper day-night thermal cycling were considered probable explanations for the outage. JPL explicitly kept the true cause uncertain. The lander problem also left Sojourner's status unknown.",
+      "textRevision": 1,
+      "textFingerprint": "a896396b",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-carrier-is-not-a-conversation.b03",
+      "legacyAnchor": "a-carrier-is-not-a-conversation-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b03.en.r1.a896396b.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "a896396b",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b04",
+      "chapterId": "a-carrier-is-not-a-conversation",
+      "chapterTitle": "A carrier is not a conversation",
+      "chapterSequence": 7,
+      "beatSequence": 4,
+      "displaySerial": 28,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Did the rover move afterward? The record does not let us watch that ending.",
+      "detailText": "The team discussed probable backup behavior, but had no observed post-outage rover movement. This story does not turn a prediction about circling into a witnessed final drive. Sometimes the authentic ending contains a question.",
+      "narrationText": "Did the rover move afterward? The record does not let us watch that ending. The team discussed probable backup behavior, but had no observed post-outage rover movement. This story does not turn a prediction about circling into a witnessed final drive. Sometimes the authentic ending contains a question.",
+      "textRevision": 1,
+      "textFingerprint": "b2a08d89",
+      "sourceUrl": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder · NSSDCA Master Catalog",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.a-carrier-is-not-a-conversation.b04",
+      "legacyAnchor": "a-carrier-is-not-a-conversation-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b04.en.r1.b2a08d89.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.a-carrier-is-not-a-conversation.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "b2a08d89",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b01",
+      "chapterId": "the-record-outlived-the-link",
+      "chapterTitle": "The record outlived the link",
+      "chapterSequence": 8,
+      "beatSequence": 1,
+      "displaySerial": 29,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Two silent machines had already sent a great deal home.",
+      "detailText": "NASA records hundreds of rover photographs, thousands of lander images, rock chemistry and extensive weather observations. A panorama may combine many frames, so a beautiful stitched view is not a single instantaneous exposure.",
+      "narrationText": "Two silent machines had already sent a great deal home. NASA records hundreds of rover photographs, thousands of lander images, rock chemistry and extensive weather observations. A panorama may combine many frames, so a beautiful stitched view is not a single instantaneous exposure.",
+      "textRevision": 1,
+      "textFingerprint": "73cad1ef",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder Winds Down After Phenomenal Mission · NASA/JPL · 4 November 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/"
+        },
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-record-outlived-the-link.b01",
+      "legacyAnchor": "the-record-outlived-the-link-beat-0",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-record-outlived-the-link.b01.en.r1.73cad1ef.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "73cad1ef",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b02",
+      "chapterId": "the-record-outlived-the-link",
+      "chapterTitle": "The record outlived the link",
+      "chapterSequence": 8,
+      "beatSequence": 2,
+      "displaySerial": 30,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Even the totals need their source labels.",
+      "detailText": "The later NASA Science page reports 2.3 billion bits; the contemporary ending report gives 2.6 billion. We show both in the evidence ledger, not an invented combined figure. Source differences remain visible to readers and judges.",
+      "narrationText": "Even the totals need their source labels. The later NASA Science page reports 2.3 billion bits; the contemporary ending report gives 2.6 billion. We show both in the evidence ledger, not an invented combined figure. Source differences remain visible to readers and judges.",
+      "textRevision": 1,
+      "textFingerprint": "91d09c79",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder Winds Down After Phenomenal Mission · NASA/JPL · 4 November 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/"
+        },
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-record-outlived-the-link.b02",
+      "legacyAnchor": "the-record-outlived-the-link-beat-1",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-record-outlived-the-link.b02.en.r1.91d09c79.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "91d09c79",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b03",
+      "chapterId": "the-record-outlived-the-link",
+      "chapterTitle": "The record outlived the link",
+      "chapterSequence": 8,
+      "beatSequence": 3,
+      "displaySerial": 31,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "In 2006, an orbiter looked back at the lander's site.",
+      "detailText": "NASA's history article includes a Mars Reconnaissance Orbiter view identifying the Pathfinder lander. It does not establish Sojourner's exact final position or prove that either spacecraft's electronics still work.",
+      "narrationText": "In 2006, an orbiter looked back at the lander's site. NASA's history article includes a Mars Reconnaissance Orbiter view identifying the Pathfinder lander. It does not establish Sojourner's exact final position or prove that either spacecraft's electronics still work.",
+      "textRevision": 1,
+      "textFingerprint": "2887bdce",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder Winds Down After Phenomenal Mission · NASA/JPL · 4 November 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/"
+        },
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-record-outlived-the-link.b03",
+      "legacyAnchor": "the-record-outlived-the-link-beat-2",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-record-outlived-the-link.b03.en.r1.2887bdce.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "2887bdce",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b04",
+      "chapterId": "the-record-outlived-the-link",
+      "chapterTitle": "The record outlived the link",
+      "chapterSequence": 8,
+      "beatSequence": 4,
+      "displaySerial": 32,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "One stayed. One rolled. Their evidence helped the next explorers.",
+      "detailText": "Pathfinder demonstrated landing technology and Sojourner demonstrated surface mobility and science. Both became predecessors of later Mars exploration. Their authentic legacy is what the record supports—not an invented final message from the dust.",
+      "narrationText": "One stayed. One rolled. Their evidence helped the next explorers. Pathfinder demonstrated landing technology and Sojourner demonstrated surface mobility and science. Both became predecessors of later Mars exploration. Their authentic legacy is what the record supports—not an invented final message from the dust.",
+      "textRevision": 1,
+      "textFingerprint": "0d3018a5",
+      "sourceUrl": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "relatedSources": [
+        {
+          "label": "Mars Pathfinder Winds Down After Phenomenal Mission · NASA/JPL · 4 November 1997",
+          "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/"
+        },
+        {
+          "label": "Mars Pathfinder · NASA Science",
+          "url": "https://science.nasa.gov/mission/mars-pathfinder/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/pathfinder-sojourner/story#pathfinder-sojourner.the-record-outlived-the-link.b04",
+      "legacyAnchor": "the-record-outlived-the-link-beat-3",
+      "suggestedAudioFilename": "pathfinder-sojourner.the-record-outlived-the-link.b04.en.r1.0d3018a5.mp3",
+      "audio": {
+        "beatId": "pathfinder-sojourner.the-record-outlived-the-link.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "0d3018a5",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    }
+  ],
+  "photographs": {
+    "cover": {
+      "name": "Pathfinder-Yogi-panorama",
+      "title": "The lander looks across the landing site",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-9-panorama-large.jpg",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "credit": "NASA/JPL-Caltech",
+      "alt": "NASA's panoramic view shows Sojourner near the rock nicknamed Yogi and the surrounding terrain.",
+      "ai": false
+    },
+    "preparation": {
+      "name": "Pathfinder-flight-preparation",
+      "title": "Preparing the lander and rover on Earth",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-2-lander-preparations-about-to-be-folded-up-oct-2-1996.jpg",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "credit": "NASA/JPL-Caltech",
+      "alt": "Ground crews prepare Pathfinder and Sojourner before launch, with the lander still open.",
+      "ai": false
+    },
+    "hardware": {
+      "name": "Pathfinder-instrument-schematic",
+      "title": "NASA's lander and rover instrument diagram",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-4-instruments.jpg",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "credit": "NASA/JPL-Caltech · schematic",
+      "alt": "NASA's schematic identifies the separate spacecraft and their major instruments; this is not a Mars photograph.",
+      "ai": false
+    },
+    "yogi": {
+      "name": "Sojourner-APXS-Yogi",
+      "title": "Sojourner studies Yogi",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-11-sojourner-apxs-on-yogi-rock-1997.jpg",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "credit": "NASA/JPL-Caltech",
+      "alt": "The rover positions its Alpha Proton X-ray Spectrometer at the rock nicknamed Yogi.",
+      "ai": false
+    },
+    "clouds": {
+      "name": "Pathfinder-clouds-Sol39",
+      "title": "Clouds seen by the lander",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-12-clouds-sol-39.jpg",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "credit": "NASA/JPL-Caltech",
+      "alt": "Pathfinder photographs morning clouds that NASA describes as most likely composed of ice crystals.",
+      "ai": false
+    },
+    "orbital": {
+      "name": "PIA09105-Pathfinder-site",
+      "title": "An orbital view of the lander site in 2006",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/12/mars-pathfinder-14-from-mro-dec-21-2006-166943main-pia09105-parts-200.jpg",
+      "source": "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/",
+      "credit": "NASA/JPL-Caltech · Mars Reconnaissance Orbiter",
+      "alt": "NASA's caption identifies the Pathfinder lander in a 2006 orbital view. It does not identify Sojourner's final position or establish electronic health.",
+      "ai": false
+    }
+  },
+  "resources": [
+    {
+      "kind": "video",
+      "title": "Explore the Pathfinder landing site in 360 degrees",
+      "url": "https://www.youtube.com/watch?v=9HGRReKUzfU",
+      "embedId": "9HGRReKUzfU",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "description": "The 360-degree view embedded on NASA's mission page. It is an assembled view of mission imagery, not live video from Mars."
+    },
+    {
+      "kind": "document",
+      "title": "The instruments and their discoveries",
+      "url": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "source": "https://science.nasa.gov/mission/mars-pathfinder/",
+      "description": "NASA's descriptions of APXS, imaging, atmosphere measurements and scientific interpretations."
+    },
+    {
+      "kind": "document",
+      "title": "Read the contemporary ending—not a fictional goodbye",
+      "url": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "source": "https://www.jpl.nasa.gov/news/mars-pathfinder-winds-down-after-phenomenal-mission/",
+      "description": "The November 1997 report distinguishes last data, later carrier detections and an unknown rover condition."
+    }
+  ],
+  "researchNotes": [
+    "Lander and rover had different jobs and power systems.",
+    "Airbag bounce counts/heights and entry figures differ across NASA summaries; short story uses the supported sequence without a falsely exact bounce replay.",
+    "1996-068B returned no spacecraft record during review; do not repeat the earlier local Sojourner/SATCAT attribution.",
+    "NASA Science and the contemporary JPL report give different total-data tallies; use source attribution rather than selecting an invented exact total.",
+    "No final spoken rover message, recorded Mars microphone audio, proven battery-death timestamp or observed post-outage rover circuit is supplied."
+  ],
+  "unknowns": {
+    "provenCommunicationLossCause": null,
+    "exactFinalRoverMovement": null,
+    "exactFinalRoverCoordinates": null,
+    "currentElectronicHealth": null,
+    "recordedMachineFarewell": null
+  },
+  "narration": {
+    "producedClips": 0,
+    "originalMachineSpeech": null,
+    "note": "No Mars microphone recording or spoken machine message is asserted. The reader's voice preview is synthetic."
+  }
+}

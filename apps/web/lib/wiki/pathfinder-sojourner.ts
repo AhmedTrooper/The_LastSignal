@@ -1,4 +1,5 @@
 import type { WikiEntry } from "./types";
+import { PATHFINDER_SOURCES as S } from "../pathfinder-sources";
 
 export const PATHFINDER: WikiEntry = {
   lead: "Mars Pathfinder was a NASA lander that tested a new way to land on Mars, bouncing down inside airbags, and delivered Sojourner, the first wheeled vehicle to operate on another planet. Both landed in Ares Vallis on 4 July 1997 and worked until contact was lost on 27 September 1997.",
@@ -15,7 +16,7 @@ export const PATHFINDER: WikiEntry = {
       title: "A bouncing landing",
       paras: [
         "Pathfinder launched on a Delta II from Cape Canaveral on 4 December 1996 and reached Mars on 4 July 1997 after a 212-day cruise. It entered the atmosphere at 14,000 mph inside an aeroshell derived from Viking's, slowed under a supersonic parachute, inflated its airbags 1,165 feet above the ground, fired three solid rockets, then cut itself free 71 feet up.",
-        "It hit the ground at 31 mph and bounced like a giant beach ball, about 15 times and as high as 15 m, coming to rest about 1 km from where it first struck. It was the first time a U.S. spacecraft had landed this way. After 87 minutes the airbags deflated and the lander opened like the petals of a flower.",
+        "The airbags cushioned the final impacts as Pathfinder bounced and rolled before stopping. NASA summaries differ in detailed bounce heights and counts, so this edition does not present an exact reconstructed trajectory. The airbags deflated and the lander opened its three petals after landing.",
       ],
     },
     {
@@ -31,14 +32,15 @@ export const PATHFINDER: WikiEntry = {
       title: "What they found",
       paras: [
         "The landing site, Ares Vallis, is an ancient flood plain thought to have been cut by a volume of water like North America's Great Lakes in about two weeks. Rounded pebbles and cobbles suggested conglomerates formed in running water during a warmer past. The findings suggested Mars was once warm and wet.",
-        "Radio tracking put the radius of Mars' metallic core between about 1,300 and 2,000 km. The lander saw magnetic dust, dust devils, and abrupt morning temperature swings, and made 8.5 million weather measurements.",
+        "Radio tracking supplied constraints on Mars' rotation and an early model of its core. NASA's mission summary reports a suggested core-radius range of about 1,300–2,000 km from that investigation; this is not asserted as today's best estimate. The lander observed magnetic dust, dust-devil signatures and morning temperature changes. NASA History reports 8.5 million weather measurements.",
       ],
     },
     {
       id: "end",
       title: "The last transmission",
       paras: [
-        "The lander was expected to work for a month and the rover for a week. The lander lasted nearly three times longer and Sojourner 83 days, 12 times its design life. The last successful data transmission came at 6:23 a.m. EDT on 27 September 1997, and contact was then lost for unknown reasons. In all they returned 2.3 billion bits of information, more than 16,500 images from the lander and 550 from the rover.",
+        "The lander was expected to work for a month and the rover for a week. NASA History reports 83 days of rover operation, not 83 sols. The contemporary JPL report identifies the last successful data cycle on 27 September 1997, followed by auxiliary carrier detections on 1 and 6 October without recovered health data.",
+        "Battery depletion and deeper thermal cycling were probable explanations, not a uniquely proven loss cause. Sojourner's condition and movements after the link failed remain unknown. Predictions of circling must not be presented as observed final drives. Later NASA Science reports 2.3 billion bits; the contemporary ending report gives 2.6 billion. Those source-specific totals are retained separately.",
         "The lander was renamed the Carl Sagan Memorial Station.",
       ],
     },
@@ -50,24 +52,20 @@ export const PATHFINDER: WikiEntry = {
     { date: "27 September 1997", text: "Last successful data transmission." },
   ],
   facts: [
-    { label: "Built by", value: "NASA Jet Propulsion Laboratory (Discovery Program #2)" },
-    { label: "COSPAR / NORAD", value: "1996-068A (Lander) / 1996-068B (Sojourner) / SATCAT 24680" },
-    { label: "Launch", value: "4 December 1996 at 06:58:07 UTC, Delta II 7925 (SLC-17B)" },
-    { label: "Touchdown", value: "4 July 1997 at 16:56:55 UTC (ERT 17:07:25 UTC)" },
-    { label: "Landing site", value: "Ares Vallis (19.33° N, 33.55° W / 326.45° E, elev. -3,680 m)" },
-    { label: "Lander mass", value: "360 kg landed dry / 570 kg deployed lander / 890 kg entry mass" },
-    { label: "Rover specifications", value: "10.6 kg mass · 65 cm L × 48 cm W × 30 cm H (6-wheel rocker-bogie)" },
-    { label: "Rover power & CPU", value: "0.22 m² solar array (16 W peak) + 150 Wh non-rechargeable LiSO2 battery · 80C85 CPU" },
-    { label: "Rover distance", value: "100 meters (328 ft) total traverse across 83 sols" },
+    { label: "Mission management", value: "NASA Jet Propulsion Laboratory; Discovery mission" },
+    { label: "Lander COSPAR ID", value: "1996-068A. No independently verified rover COSPAR or SATCAT is assigned here" },
+    { label: "Launch", value: "4 December 1996; NSSDCA time 06:58:00 UT; Delta II 7925 from LC-17B" },
+    { label: "Touchdown", value: "4 July 1997; NSSDCA reports 16:56:55 UT" },
+    { label: "Landing site", value: "Ares Vallis: 19.33° N, 33.55° W. 326.45° E is the conversion 360 − 33.55; the cited passage does not specify a frame" },
+    { label: "Rover", value: "10.6 kg (NASA Science); about 30 cm high; six wheels" },
+    { label: "Power distinction", value: "Lander battery recharging/conservation and non-rechargeable rover batteries are different systems" },
+    { label: "Rover distance", value: "NASA History: 330 feet, approximately 100 metres; reported operating life 83 days, not 83 sols" },
     { label: "Returned data", value: "16,500+ lander images, 550 rover images, 8.5 million weather records" },
-    { label: "Last transmission", value: "27 September 1997 at 10:23 UTC (Sol 83)" },
+    { label: "Last successful data", value: "27 September 1997; JPL reports 3:23 a.m. PDT and calls the cycle Sol 83" },
+    { label: "Later radio detections", value: "1 and 6 October 1997: carrier only, not recovered lander health data" },
     { label: "Memorial station", value: "Carl Sagan Memorial Station (named post-landing)" },
   ],
   sources: [
-    { label: "NSSDCA Master Catalog: Mars Pathfinder", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068A" },
-    { label: "NSSDCA Master Catalog: Sojourner Rover (MESUR Pathfinder)", url: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1996-068B" },
-    { label: "NASA Science: Mars Pathfinder", url: "https://science.nasa.gov/mission/mars-pathfinder/" },
-    { label: "NASA History: 25 Years Ago, Mars Pathfinder Launches", url: "https://www.nasa.gov/history/25-years-ago-mars-pathfinder-launches-to-mars-to-deploy-sojourner-the-first-planetary-rover-2/" },
-    { label: "NASA: July 4, 1997, Sojourner Arrives on the Red Planet", url: "https://www.nasa.gov/image-article/july-4-1997-sojourner-arrives-red-planet/" },
+    ...Object.values(S).map(source => ({ label: source.title, url: source.url })),
   ],
 };

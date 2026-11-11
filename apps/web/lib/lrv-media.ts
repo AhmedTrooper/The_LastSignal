@@ -1,0 +1,15 @@
+import type { Photo } from "./photos";
+import { LRV_SOURCES as S } from "./lrv-sources";
+
+export const LRV_PHOTOS = {
+  cover: { name: "AS15-88-11901", title: "Apollo 15 rover at its final parking place", src: "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_33_eva3_rover_final_parking_place_as15-88-11901hr.jpg", source: S.surface.url, credit: "NASA", alt: "NASA's Apollo 15 photograph shows the rover at its final parked position, with seats, mesh wheels and communications equipment.", ai: false },
+  deployment: { name: "Apollo-15-EVA1-deployment-TV", title: "The crew deploys the folded rover", src: "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_13_rover_deploy_eva1_1.jpg", source: S.surface.url, credit: "NASA · still from television downlink", alt: "A television still shows the astronauts deploying the Lunar Roving Vehicle during the first moonwalk.", ai: false },
+  slope: { name: "AS15-086-11659", title: "Holding the rover steady at Station 6a", src: "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_24_eva2_irwin_keeping_rover_from_sliding_down_hill_as15-086-11659.jpg", source: S.surface.url, credit: "NASA", alt: "James Irwin holds the rover steady behind the boulder being sampled at Station 6a.", ai: false },
+  genesis: { name: "AS15-86-11671", title: "The Genesis Rock before collection", src: "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_26_eva2_station_7_genesis_rock_as15-86-11671hr.jpg", source: S.surface.url, credit: "NASA", alt: "NASA's caption identifies the white crystalline rock at Station 7 before the crew collected it.", ai: false },
+  route: { name: "Apollo-15-traverses-LROC-overlay", title: "Three traverses over an orbital image", src: "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_14_lunar_traverses_on_lroc_image.png", source: S.surface.url, credit: "NASA · traverse overlay on LROC imagery", alt: "An annotated orbital image shows the three Apollo 15 traverse routes; it is a map overlay, not a single surface photograph.", ai: false },
+} satisfies Record<string, Photo>;
+export const LRV_RESOURCES = [
+  { kind: "interactive", title: "Look inside Seatbelt Rock", url: S.seatbelt.url, source: S.seatbelt.url, description: "NASA Astromaterials 3D: sample 15016's exterior model and X-ray CT imagery. This is a rock sample, not a rover mesh." },
+  { kind: "video", title: "Scott's hammer-and-feather demonstration", url: "https://www.youtube.com/watch?v=oYEgdZ3iEKA", embedId: "oYEgdZ3iEKA", source: S.surface.url, description: "Original lunar television footage linked by NASA. A physics demonstration after the third excursion, not the rover speaking or a simulated experiment." },
+  { kind: "document", title: "Rover hardware and deployment", url: S.hardware.url, source: S.hardware.url, description: "NASA's hardware descriptions and diagrams. The early deployment drawing is explicitly not the exact final flight sequence." },
+] as const;

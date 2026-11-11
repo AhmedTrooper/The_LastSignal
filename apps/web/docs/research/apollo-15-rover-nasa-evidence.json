@@ -1,0 +1,1777 @@
+{
+  "schemaVersion": 1,
+  "machineId": "apollo-15-rover",
+  "reviewedOn": "2026-11-11",
+  "note": "NASA-owned sources only. First-person text is a source-backed retelling, not original spacecraft speech. SVGs and interactions are simplified teaching illustrations, not engineering reconstructions or measured telemetry. Unknown values remain null.",
+  "identity": {
+    "name": "Apollo 15 Lunar Roving Vehicle",
+    "parentMissionCosparId": "1971-063C",
+    "parentIdAppliesTo": "Falcon lunar module / ALSEP",
+    "independentlyVerifiedRoverCosparId": null,
+    "independentlyVerifiedRoverSatcatId": null,
+    "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+  },
+  "facts": [
+    {
+      "id": "development",
+      "label": "Development duration",
+      "value": 17,
+      "unit": "months",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Reported development period; not an invented exact assembly birthday.",
+      "status": "documented"
+    },
+    {
+      "id": "launch",
+      "label": "Apollo 15 launch",
+      "value": "1971-07-26",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "locator": "Background; lunar surface operations; first, second and third EVAs; ascent; conclusions",
+      "note": "The rover travelled as stowed equipment, not an independently launched spacecraft.",
+      "status": "documented"
+    },
+    {
+      "id": "landing",
+      "label": "Falcon landing",
+      "value": "1971-07-30",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C",
+      "locator": "Description; Mission Profile; LRO-derived landing position",
+      "note": "Parent lander arrival; rover deployment followed the next day.",
+      "status": "documented"
+    },
+    {
+      "id": "driving-days",
+      "label": "Documented rover excursions",
+      "value": "1971-07-31 / 1971-08-01 / 1971-08-02",
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C",
+      "locator": "Description; Mission Profile; LRO-derived landing position",
+      "note": "Three EVAs. These dates are not a measured battery-death interval.",
+      "status": "documented"
+    },
+    {
+      "id": "mass",
+      "label": "Rover mass",
+      "value": 210,
+      "unit": "kg",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Mass does not become 35 kg on the Moon; weight changes with gravity.",
+      "status": "documented"
+    },
+    {
+      "id": "payload",
+      "label": "Design payload",
+      "value": 490,
+      "unit": "kg",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Design capacity, not the actual carried mass at every stop.",
+      "status": "documented"
+    },
+    {
+      "id": "power",
+      "label": "Battery supply",
+      "value": "Two 36 V silver-zinc batteries",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Non-rechargeable; not solar panels or a combustion engine.",
+      "status": "documented"
+    },
+    {
+      "id": "wheels",
+      "label": "Mobility",
+      "value": "Four mesh wheels; a drive motor at each wheel",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Steel-strand tyres and titanium chevrons; no inflated rubber tyres.",
+      "status": "documented"
+    },
+    {
+      "id": "steering",
+      "label": "First-EVA steering fault",
+      "value": "Front steering inoperative; rear steering used",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "locator": "Background; lunar surface operations; first, second and third EVAs; ascent; conclusions",
+      "note": "Front steering became operational after circuit-breaker recycling before EVA 2; no invented failure cause.",
+      "status": "documented"
+    },
+    {
+      "id": "navigation",
+      "label": "Navigation",
+      "value": "Directional gyro, odometer, computer and Sun-shadow check",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Not GPS, a road map uploaded from Earth, or autonomous rover driving.",
+      "status": "documented"
+    },
+    {
+      "id": "seatbelt-rock",
+      "label": "Seatbelt Rock",
+      "value": "15016,0 · low-Ti olivine basalt",
+      "source": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "locator": "Every Rock Tells a Story; classification; collection location; XCT and downloadable model",
+      "note": "A NASA curator's historical account; missing collection documentation means no exact collection-coordinate reconstruction.",
+      "status": "documented"
+    },
+    {
+      "id": "rock-age",
+      "label": "Sample 15016 reported age",
+      "value": 3.4,
+      "unit": "billion years",
+      "source": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "locator": "Every Rock Tells a Story; classification; collection location; XCT and downloadable model",
+      "note": "Laboratory-derived rock age, not the rover's age.",
+      "status": "documented"
+    },
+    {
+      "id": "slope",
+      "label": "Station 6a sampling",
+      "value": "Irwin held the rover steady while Scott sampled a boulder",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "locator": "First rover deployment; Elbow Crater; Station 6a; Spur Crater; third traverse; final parking",
+      "note": "NASA reports a 15-degree slope for this stop; do not generalize that angle to the whole traverse.",
+      "status": "documented"
+    },
+    {
+      "id": "genesis",
+      "label": "Spur Crater discovery",
+      "value": "White crystalline sample later dubbed the Genesis Rock",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "locator": "First rover deployment; Elbow Crater; Station 6a; Spur Crater; third traverse; final parking",
+      "note": "Do not call it the oldest Moon rock without a separate verified analysis.",
+      "status": "documented"
+    },
+    {
+      "id": "rille",
+      "label": "Third-traverse observation",
+      "value": "Exposed layering in Hadley Rille's west wall",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "locator": "Background; lunar surface operations; first, second and third EVAs; ascent; conclusions",
+      "note": "Photographs and samples were evidence, not a complete view into the lunar interior.",
+      "status": "documented"
+    },
+    {
+      "id": "nssdca-distance",
+      "label": "NSSDCA distance",
+      "value": 27.8,
+      "unit": "km",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Source-specific total; NASA SP-4029 gives about 27.9 km.",
+      "status": "documented"
+    },
+    {
+      "id": "summary-distance",
+      "label": "SP-4029 distance",
+      "value": 27.9,
+      "unit": "km",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "locator": "Background; lunar surface operations; first, second and third EVAs; ascent; conclusions",
+      "note": "Summary says about; not combined with NSSDCA into a falsely exact figure.",
+      "status": "documented"
+    },
+    {
+      "id": "driving-time",
+      "label": "NSSDCA driving time",
+      "value": "3 hours 2 minutes",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "note": "Actual driving time differs from the full lunar surface stay and design lifetime.",
+      "status": "documented"
+    },
+    {
+      "id": "parking",
+      "label": "Final rover task",
+      "value": "Parked for ground-controlled TV coverage of Falcon's ascent on 2 August 1971",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "locator": "Background; lunar surface operations; first, second and third EVAs; ascent; conclusions",
+      "note": "Rover and television/communications equipment stayed on the Moon; no invented farewell words.",
+      "status": "documented"
+    },
+    {
+      "id": "current-health",
+      "label": "Current rover electronic health",
+      "value": null,
+      "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C",
+      "locator": "Description; Mission Profile; LRO-derived landing position",
+      "note": "No current telemetry establishes working batteries or electronics.",
+      "status": "unknown"
+    }
+  ],
+  "position": {
+    "latitude": 26.13239,
+    "longitudeEast": 3.6333,
+    "referenceFrame": "DE421 mean Earth/polar rotation axis",
+    "source": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C",
+    "appliesTo": "Falcon lunar module landing position, NOT the rover's final parking position",
+    "roverParkingCoordinates": null
+  },
+  "sources": {
+    "hardware": {
+      "title": "The Apollo Lunar Roving Vehicle · NSSDCA",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "locator": "Apollo 15 traverse totals; chassis; wheels; power; navigation; deployment; development",
+      "evidence": "210 kg mass; 490 kg design payload; three-part folding chassis; mesh wheels with titanium chevrons; independent wheel drives; front/rear steering; two non-rechargeable 36 V batteries; gyro/odometer and Sun-shadow navigation. Apollo 15: 27.8 km, 3 h 2 min driving, 5 km maximum range. Development took 17 months. Deployment artwork on this page explicitly represents an earlier planned sequence."
+    },
+    "summary": {
+      "title": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+      "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "locator": "Background; lunar surface operations; first, second and third EVAs; ascent; conclusions",
+      "evidence": "Launch July 26, 1971; Falcon landing July 30. Front steering unavailable during first checkout; rear steering used; recycling circuit breakers restored front steering before EVA 2. Third EVA photographed exposed layering at Hadley Rille. Rover parked for ground-controlled TV coverage. Summary gives about 27.9 km and 3 h driving, differing slightly from NSSDCA's 27.8 km / 3 h 2 min. 78-hour design operation is not a measured time of battery death."
+    },
+    "surface": {
+      "title": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+      "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "locator": "First rover deployment; Elbow Crater; Station 6a; Spur Crater; third traverse; final parking",
+      "evidence": "Scott and Irwin deployed the rover on the first moonwalk. At stops they aimed its high-gain antenna toward Earth. Irwin held the rover steady on a 15-degree slope while Scott sampled a boulder at Station 6a. A white crystalline sample at Spur Crater was later called the Genesis Rock. Final traverse visited Hadley Rille. Rover parked about 500 ft from Falcon to broadcast ascent. Supplies captioned deployment, traverse, geology and parking photographs."
+    },
+    "seatbelt": {
+      "title": "Lunar sample 15016,0 · NASA Astromaterials 3D",
+      "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "locator": "Every Rock Tells a Story; classification; collection location; XCT and downloadable model",
+      "evidence": "NASA's curator account recounts a seatbelt stop during which Scott collected sample 15016 without a documentation photograph or field description. Later explanation supplied its Seatbelt Rock nickname. Low-Ti olivine basalt; exceptionally vesicular, cavities about half its volume; reported age 3.4 billion years. Collection listed between Stations 2–3, not an independently measured exact rock coordinate."
+    },
+    "catalog": {
+      "title": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+      "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C",
+      "locator": "Description; Mission Profile; LRO-derived landing position",
+      "evidence": "1971-063C identifies Falcon / lunar surface mission, which carried the rover; not a separately verified rover COSPAR ID. Rover EVAs July 31, August 1, August 2. Falcon landing location 26.13239 N, 3.63330 E in DE421 mean Earth/polar rotation-axis frame, determined from LRO imagery. This is the LM position, not the rover's final parking fix."
+    },
+    "legacy": {
+      "title": "50 Years Ago, First Apollo Astronauts to Drive on the Moon Took Final Cruise · NASA",
+      "url": "https://www.nasa.gov/history/50-years-ago-first-apollo-astronauts-to-drive-on-the-moon-took-final-cruise/",
+      "locator": "Apollo 15 photograph caption; three rover missions; geological reach",
+      "evidence": "Apollo 15 was the first lunar surface mission to use an LRV. Rovers increased access to varied geology on Apollos 15, 16 and 17. Article rounds Apollo 15 travel to 17.5 miles; do not turn this rounded value into a conflicting exact metric distance."
+    }
+  },
+  "chapters": [
+    {
+      "id": "a-car-in-a-cupboard",
+      "title": "A car in a cupboard",
+      "event": "Designing and stowing a folding lunar vehicle before Apollo 15",
+      "hardware": "Hinged chassis, mesh wheels, individual drive motors and two silver-zinc batteries",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "telemetry": [
+        {
+          "label": "Development",
+          "value": "17 months",
+          "note": "NSSDCA's reported development duration; not an exact assembly birthday.",
+          "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        }
+      ],
+      "beats": [
+        {
+          "line": "Before I could explore the Moon, I had to fit beside a lander.",
+          "detail": "I am Apollo 15's Lunar Roving Vehicle. Boeing developed the rover with Delco as a major subcontractor. My three-part aluminum chassis could fold into the descent stage's Quad 1 equipment bay. A larger exploration range began with a smaller package."
+        },
+        {
+          "line": "My wheels were not filled with air. They were woven from metal.",
+          "detail": "Steel-strand mesh formed the tyres, with titanium chevrons supplying traction. Each wheel had its own electric drive motor. This was hardware designed for the Moon's low-gravity vacuum, not an ordinary road car carried into space."
+        },
+        {
+          "line": "Two batteries had to travel with us. Recharging was not the plan.",
+          "detail": "Two non-rechargeable 36-volt silver-zinc batteries powered the drive and steering systems. Passive thermal control helped manage battery temperatures. Energy and heat mattered together; the rover did not carry a solar charging array."
+        },
+        {
+          "line": "I was built to carry explorers—and bring their samples back to the lander.",
+          "detail": "Seats, life-support equipment, cameras, tools and sample storage were part of the vehicle's job. The crew would do the geology. I would extend their reach. First, the folded machine needed a ride all the way to the Moon."
+        }
+      ],
+      "discovery": "A spacecraft's packing, power and mobility are linked engineering choices. A folding chassis made a larger surface exploration tool possible.",
+      "question": "Why does a lunar car need to be designed around its journey before anyone drives it?"
+    },
+    {
+      "id": "the-wheels-unfold",
+      "title": "The wheels unfold",
+      "event": "Launch on 26 July, Falcon landing on 30 July, and rover deployment on 31 July 1971",
+      "hardware": "Falcon equipment bay, deployment reels and tapes, locking chassis and crew controller",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "beats": [
+        {
+          "line": "On July 26, 1971, I left Earth as folded equipment aboard Apollo 15.",
+          "detail": "David Scott, James Irwin and Alfred Worden travelled with the mission. On July 30, Scott and Irwin landed Falcon at Hadley-Apennine. Worden remained in lunar orbit. The rover had not driven a metre yet."
+        },
+        {
+          "line": "On July 31, Scott and Irwin opened my place in the lander.",
+          "detail": "Reels, pulleys, ropes and cloth tapes controlled deployment. The chassis and wheels unfolded and locked as the vehicle was lowered. NSSDCA warns that its early deployment artwork does not exactly reproduce the final flight sequence."
+        },
+        {
+          "line": "Seats rose. Footrests rose. A packed machine became a vehicle.",
+          "detail": "The astronauts removed deployment hardware, raised the seats and footrests, and switched on the electronics. I was being prepared to carry people, not to choose my own route. Scott would operate the hand controller."
+        },
+        {
+          "line": "The first test drive should have been a beginning. A steering fault made it a puzzle.",
+          "detail": "Scott became the first person to drive on the Moon. But during checkout, the crew found that the front steering was not working. The rover had another steering system. Could the first excursion still go ahead?"
+        }
+      ],
+      "discovery": "Folding mechanisms and controlled deployment turn launch packaging into working surface hardware. Checkout reveals which systems are actually available.",
+      "question": "What would you test before taking a newly unfolded vehicle away from its lander?"
+    },
+    {
+      "id": "another-way-to-steer",
+      "title": "Another way to steer",
+      "event": "First-EVA front steering fault and rear-steering operation on 31 July 1971",
+      "hardware": "Separate front/rear steering motors, hand controller, gyro and odometer",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        }
+      ],
+      "telemetry": [
+        {
+          "label": "Steering response",
+          "value": "Rear steering for EVA 1",
+          "note": "The front system was unavailable; a cause is not invented.",
+          "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "beats": [
+        {
+          "line": "My front wheels would not steer. My rear wheels still could.",
+          "detail": "The vehicle had separate front and rear steering systems. After troubleshooting, the crew and Mission Control chose to make the first excursion with rear-wheel steering. One failed function did not remove every way to manoeuvre."
+        },
+        {
+          "line": "Scott's hand controller still commanded the drive, turns and brakes.",
+          "detail": "A T-shaped controller between the seats operated the vehicle. The astronauts drove it themselves. This was not a robotic rover taking commands one metre at a time from Earth."
+        },
+        {
+          "line": "Moving farther away also meant keeping track of the way back.",
+          "detail": "A directional gyro and wheel-distance measurements fed the navigation computer. A Sun-shadow device supplied a manual heading check. This system tracked the direction and distance back to Falcon; it was not GPS."
+        },
+        {
+          "line": "We set off toward Elbow Crater with a working way to turn—and a way home.",
+          "detail": "Scott and Irwin described the geology during the first traverse. At stops, they aimed the high-gain antenna toward Earth so scientists and controllers could follow the television pictures. The wheels and the radio link were helping the same investigation."
+        }
+      ],
+      "discovery": "Redundant functions and navigation can preserve useful exploration after a fault. Getting there and returning safely are parts of the same plan.",
+      "question": "Why is a working backup steering system useful only if the crew also knows how to get back?"
+    },
+    {
+      "id": "the-seatbelt-passenger",
+      "title": "The seatbelt passenger",
+      "event": "Sample 15016's reported collection during the first traverse's return",
+      "hardware": "Crew seatbelt, sample collection equipment and later rock-analysis tools",
+      "source": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "telemetry": [
+        {
+          "label": "Sample",
+          "value": "15016,0 · Seatbelt Rock",
+          "note": "NASA curator account; precise collection documentation was missing.",
+          "source": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0"
+        }
+      ],
+      "beats": [
+        {
+          "line": "A seatbelt stop brought an unexpected passenger: a Moon rock.",
+          "detail": "NASA's sample curators recount that Scott spotted a rock while the crew was hurrying back toward Falcon. He reported a stop to adjust his seatbelt and collected the rock. This is an attributed historical account—not invented rover dialogue."
+        },
+        {
+          "line": "No field photograph recorded the stop.",
+          "detail": "No collection photograph or field description documented the stop. Curators initially could not identify when or where the sample had been collected. Scott's later explanation connected the rock with the seatbelt stop."
+        },
+        {
+          "line": "The small holes in the rock held a much older story.",
+          "detail": "Sample 15016 became known as Seatbelt Rock. NASA classifies it as low-titanium olivine basalt. Numerous cavities, called vesicles, preserve evidence of gas bubbles in magma as the rock formed."
+        },
+        {
+          "line": "What could one extra rock help people learn about the Moon?",
+          "detail": "NASA's later sample studies report an age of 3.4 billion years. Its sample page now offers photographs, a three-dimensional model and X-ray CT views. These later research resources explain the sample's scientific value; they are not observations the rover made during the drive."
+        }
+      ],
+      "discovery": "A sample can preserve a geological history, but its collection context is evidence too. A memorable story must not fill gaps in that record with invented coordinates.",
+      "question": "Why should a rock collector record where a sample was found, not just bring it home?"
+    },
+    {
+      "id": "uphill-to-a-white-rock",
+      "title": "Uphill to a white rock",
+      "event": "Restored front steering and the second traverse on 1 August 1971",
+      "hardware": "Circuit breakers, steering systems, brakes, sample bags and camera antenna",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "beats": [
+        {
+          "line": "On August 1, my front steering worked again.",
+          "detail": "Before the second excursion, the astronauts recycled the circuit breakers. NASA's mission summary records that the front steering became completely operational. That documents the recovery; it does not establish an invented failure cause."
+        },
+        {
+          "line": "A slope changed the work from driving to holding still.",
+          "detail": "At Station 6a, Scott sampled a greenish boulder while Irwin held the rover steady. NASA describes a 15-degree slope at this particular stop. The vehicle's position mattered while the astronaut worked beside it."
+        },
+        {
+          "line": "At Spur Crater, a white crystalline rock caught the crew's attention.",
+          "detail": "Among their samples, Scott and Irwin collected the rock later dubbed the Genesis Rock. Their geology training, observations and collection work made the discovery possible. The rover delivered the team to the site; it did not identify the rock for them."
+        },
+        {
+          "line": "My cargo was becoming a set of questions for scientists on Earth.",
+          "detail": "The crew packed the samples and headed back toward Falcon, stopping for more geology along the way. Photographs, sample labels and the rocks themselves would let researchers examine the observations after the journey ended."
+        }
+      ],
+      "discovery": "Mobility extends the places a trained scientist can investigate. Vehicle handling, observations and sample context all contribute to the science.",
+      "question": "What does the rover make possible that a photograph of the same hillside cannot?"
+    },
+    {
+      "id": "a-wall-with-layers",
+      "title": "A wall with layers",
+      "event": "Third traverse to Hadley Rille on 2 August 1971",
+      "hardware": "Rover navigation, cameras, core-sampling equipment and cargo storage",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "Our last drive led toward a canyon called Hadley Rille.",
+          "detail": "Scott and Irwin visited stops near the rille during their third excursion. They collected samples and photographed the opposite wall. The rover was carrying people and tools between different geological settings—not racing toward a finish line."
+        },
+        {
+          "line": "The wall showed layers. A picture could preserve their arrangement.",
+          "detail": "NASA's mission summary records exposed layering in the west wall of Hadley Rille. The images supplied evidence about the terrain, while collected material supplied evidence that could be examined in laboratories."
+        },
+        {
+          "line": "The return trip also carried a core sample from the experiment site.",
+          "detail": "The astronauts retrieved the remaining sections of the deep-core sample on their way back. Driving, walking, drilling and sampling were different jobs working toward the same scientific record."
+        },
+        {
+          "line": "There was one job left for me, and it did not need moving wheels.",
+          "detail": "Back near Falcon, the crew unloaded the vehicle. The rover had helped extend exploration beyond walking-only missions. Now Scott selected a parking place for a ground-controlled television view of the coming ascent."
+        }
+      ],
+      "discovery": "Pictures describe where rocks sit; samples reveal properties that pictures cannot. Transportation connects these observations across a landscape.",
+      "question": "Why collect both photographs and samples when investigating a layered canyon wall?"
+    },
+    {
+      "id": "parked-to-watch",
+      "title": "Parked to watch",
+      "event": "Final parking and television coverage of Falcon's ascent on 2 August 1971",
+      "hardware": "Ground-controlled television assembly, communications relay and high-gain antenna",
+      "source": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "beats": [
+        {
+          "line": "My last assignment was to stay parked and help Earth watch.",
+          "detail": "Scott chose elevated terrain for a better view and left the rover away from Falcon. The television camera and communications equipment could provide ground-controlled coverage of the ascent. Parking was part of the mission, not an accidental abandonment."
+        },
+        {
+          "line": "The antenna connected a quiet vehicle with people far away.",
+          "detail": "The high-gain antenna and lunar communications relay carried the television link. Earlier, the camera had helped people on Earth follow scientific work at the stops. Now the crew prepared to leave the surface."
+        },
+        {
+          "line": "Falcon's ascent stage left on August 2. My wheels did not go with it.",
+          "detail": "The rover, camera and relay equipment remained on the Moon. These were different pieces of hardware from Falcon's ascent stage and the command module that returned the crew to Earth."
+        },
+        {
+          "line": "My driving ended. That is not an exact time of battery death.",
+          "detail": "NASA documents the three excursions and final parking task. The cited records do not supply a uniquely verified final rover radio timestamp, present battery condition, or spoken goodbye from the machine. Those values remain unknown."
+        }
+      ],
+      "discovery": "Equipment left behind can finish a deliberate task. Ending crew use, losing a radio link and proving electrical failure are not the same event.",
+      "question": "Why should a mission's last recorded activity not automatically be labelled the moment every component died?"
+    },
+    {
+      "id": "the-wheels-stayed-the-clues-travelled",
+      "title": "The wheels stayed. The clues travelled.",
+      "event": "The rover's scientific record and later study of the returned samples",
+      "hardware": "Archived photographs, sample collections, laboratory analysis and mission records",
+      "source": "https://www.nasa.gov/history/50-years-ago-first-apollo-astronauts-to-drive-on-the-moon-took-final-cruise/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Lunar sample 15016,0 · NASA Astromaterials 3D",
+          "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "beats": [
+        {
+          "line": "The crew's journeys covered about twenty-eight kilometres—not one straight road.",
+          "detail": "NSSDCA gives 27.8 kilometres and three hours, two minutes of driving. NASA's mission summary gives about 27.9 kilometres and three hours. We retain their attribution instead of manufacturing a falsely exact combined total."
+        },
+        {
+          "line": "A landing-site coordinate is not automatically my parking coordinate.",
+          "detail": "NSSDCA publishes an LRO-derived position for Falcon in a stated reference frame. That identifies the lunar module's landing location. This edition does not relabel it as the rover's exact final wheel position."
+        },
+        {
+          "line": "On Earth, researchers can still look inside Seatbelt Rock.",
+          "detail": "NASA's Astromaterials 3D collection provides a model and X-ray CT imagery of sample 15016. The hardware stayed on the Moon; the physical samples and documented observations became material for further investigation."
+        },
+        {
+          "line": "I did not need to come home to change what people could learn.",
+          "detail": "The lunar rovers helped crews reach more varied geology on Apollo 15, 16 and 17. The scientific legacy is in the evidence: photographs, sample context, laboratory results and a record of the engineering that made those journeys possible."
+        }
+      ],
+      "discovery": "An exploration vehicle's lasting value is not just its distance travelled. It is the evidence people could collect because the vehicle worked.",
+      "question": "If you could keep one rover record for a future scientist, what would you choose—and why?"
+    }
+  ],
+  "moments": [
+    {
+      "beatId": "apollo-15-rover.a-car-in-a-cupboard.b01",
+      "chapterId": "a-car-in-a-cupboard",
+      "chapterTitle": "A car in a cupboard",
+      "chapterSequence": 1,
+      "beatSequence": 1,
+      "displaySerial": 1,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Before I could explore the Moon, I had to fit beside a lander.",
+      "detailText": "I am Apollo 15's Lunar Roving Vehicle. Boeing developed the rover with Delco as a major subcontractor. My three-part aluminum chassis could fold into the descent stage's Quad 1 equipment bay. A larger exploration range began with a smaller package.",
+      "narrationText": "Before I could explore the Moon, I had to fit beside a lander. I am Apollo 15's Lunar Roving Vehicle. Boeing developed the rover with Delco as a major subcontractor. My three-part aluminum chassis could fold into the descent stage's Quad 1 equipment bay. A larger exploration range began with a smaller package.",
+      "textRevision": 1,
+      "textFingerprint": "1850ca4f",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-car-in-a-cupboard.b01",
+      "legacyAnchor": "a-car-in-a-cupboard-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.a-car-in-a-cupboard.b01.en.r1.1850ca4f.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-car-in-a-cupboard.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "1850ca4f",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-car-in-a-cupboard.b02",
+      "chapterId": "a-car-in-a-cupboard",
+      "chapterTitle": "A car in a cupboard",
+      "chapterSequence": 1,
+      "beatSequence": 2,
+      "displaySerial": 2,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "My wheels were not filled with air. They were woven from metal.",
+      "detailText": "Steel-strand mesh formed the tyres, with titanium chevrons supplying traction. Each wheel had its own electric drive motor. This was hardware designed for the Moon's low-gravity vacuum, not an ordinary road car carried into space.",
+      "narrationText": "My wheels were not filled with air. They were woven from metal. Steel-strand mesh formed the tyres, with titanium chevrons supplying traction. Each wheel had its own electric drive motor. This was hardware designed for the Moon's low-gravity vacuum, not an ordinary road car carried into space.",
+      "textRevision": 1,
+      "textFingerprint": "28d89546",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-car-in-a-cupboard.b02",
+      "legacyAnchor": "a-car-in-a-cupboard-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.a-car-in-a-cupboard.b02.en.r1.28d89546.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-car-in-a-cupboard.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "28d89546",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-car-in-a-cupboard.b03",
+      "chapterId": "a-car-in-a-cupboard",
+      "chapterTitle": "A car in a cupboard",
+      "chapterSequence": 1,
+      "beatSequence": 3,
+      "displaySerial": 3,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Two batteries had to travel with us. Recharging was not the plan.",
+      "detailText": "Two non-rechargeable 36-volt silver-zinc batteries powered the drive and steering systems. Passive thermal control helped manage battery temperatures. Energy and heat mattered together; the rover did not carry a solar charging array.",
+      "narrationText": "Two batteries had to travel with us. Recharging was not the plan. Two non-rechargeable 36-volt silver-zinc batteries powered the drive and steering systems. Passive thermal control helped manage battery temperatures. Energy and heat mattered together; the rover did not carry a solar charging array.",
+      "textRevision": 1,
+      "textFingerprint": "cd8ae73e",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-car-in-a-cupboard.b03",
+      "legacyAnchor": "a-car-in-a-cupboard-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.a-car-in-a-cupboard.b03.en.r1.cd8ae73e.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-car-in-a-cupboard.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "cd8ae73e",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-car-in-a-cupboard.b04",
+      "chapterId": "a-car-in-a-cupboard",
+      "chapterTitle": "A car in a cupboard",
+      "chapterSequence": 1,
+      "beatSequence": 4,
+      "displaySerial": 4,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "I was built to carry explorers—and bring their samples back to the lander.",
+      "detailText": "Seats, life-support equipment, cameras, tools and sample storage were part of the vehicle's job. The crew would do the geology. I would extend their reach. First, the folded machine needed a ride all the way to the Moon.",
+      "narrationText": "I was built to carry explorers—and bring their samples back to the lander. Seats, life-support equipment, cameras, tools and sample storage were part of the vehicle's job. The crew would do the geology. I would extend their reach. First, the folded machine needed a ride all the way to the Moon.",
+      "textRevision": 1,
+      "textFingerprint": "3f5d5bcc",
+      "sourceUrl": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-car-in-a-cupboard.b04",
+      "legacyAnchor": "a-car-in-a-cupboard-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.a-car-in-a-cupboard.b04.en.r1.3f5d5bcc.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-car-in-a-cupboard.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "3f5d5bcc",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-unfold.b01",
+      "chapterId": "the-wheels-unfold",
+      "chapterTitle": "The wheels unfold",
+      "chapterSequence": 2,
+      "beatSequence": 1,
+      "displaySerial": 5,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On July 26, 1971, I left Earth as folded equipment aboard Apollo 15.",
+      "detailText": "David Scott, James Irwin and Alfred Worden travelled with the mission. On July 30, Scott and Irwin landed Falcon at Hadley-Apennine. Worden remained in lunar orbit. The rover had not driven a metre yet.",
+      "narrationText": "On July 26, 1971, I left Earth as folded equipment aboard Apollo 15. David Scott, James Irwin and Alfred Worden travelled with the mission. On July 30, Scott and Irwin landed Falcon at Hadley-Apennine. Worden remained in lunar orbit. The rover had not driven a metre yet.",
+      "textRevision": 1,
+      "textFingerprint": "be05d849",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-unfold.b01",
+      "legacyAnchor": "the-wheels-unfold-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-unfold.b01.en.r1.be05d849.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-unfold.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "be05d849",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-unfold.b02",
+      "chapterId": "the-wheels-unfold",
+      "chapterTitle": "The wheels unfold",
+      "chapterSequence": 2,
+      "beatSequence": 2,
+      "displaySerial": 6,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On July 31, Scott and Irwin opened my place in the lander.",
+      "detailText": "Reels, pulleys, ropes and cloth tapes controlled deployment. The chassis and wheels unfolded and locked as the vehicle was lowered. NSSDCA warns that its early deployment artwork does not exactly reproduce the final flight sequence.",
+      "narrationText": "On July 31, Scott and Irwin opened my place in the lander. Reels, pulleys, ropes and cloth tapes controlled deployment. The chassis and wheels unfolded and locked as the vehicle was lowered. NSSDCA warns that its early deployment artwork does not exactly reproduce the final flight sequence.",
+      "textRevision": 1,
+      "textFingerprint": "8fa0e16b",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-unfold.b02",
+      "legacyAnchor": "the-wheels-unfold-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-unfold.b02.en.r1.8fa0e16b.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-unfold.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "8fa0e16b",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-unfold.b03",
+      "chapterId": "the-wheels-unfold",
+      "chapterTitle": "The wheels unfold",
+      "chapterSequence": 2,
+      "beatSequence": 3,
+      "displaySerial": 7,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Seats rose. Footrests rose. A packed machine became a vehicle.",
+      "detailText": "The astronauts removed deployment hardware, raised the seats and footrests, and switched on the electronics. I was being prepared to carry people, not to choose my own route. Scott would operate the hand controller.",
+      "narrationText": "Seats rose. Footrests rose. A packed machine became a vehicle. The astronauts removed deployment hardware, raised the seats and footrests, and switched on the electronics. I was being prepared to carry people, not to choose my own route. Scott would operate the hand controller.",
+      "textRevision": 1,
+      "textFingerprint": "774112c7",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-unfold.b03",
+      "legacyAnchor": "the-wheels-unfold-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-unfold.b03.en.r1.774112c7.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-unfold.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "774112c7",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-unfold.b04",
+      "chapterId": "the-wheels-unfold",
+      "chapterTitle": "The wheels unfold",
+      "chapterSequence": 2,
+      "beatSequence": 4,
+      "displaySerial": 8,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The first test drive should have been a beginning. A steering fault made it a puzzle.",
+      "detailText": "Scott became the first person to drive on the Moon. But during checkout, the crew found that the front steering was not working. The rover had another steering system. Could the first excursion still go ahead?",
+      "narrationText": "The first test drive should have been a beginning. A steering fault made it a puzzle. Scott became the first person to drive on the Moon. But during checkout, the crew found that the front steering was not working. The rover had another steering system. Could the first excursion still go ahead?",
+      "textRevision": 1,
+      "textFingerprint": "20730b14",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-unfold.b04",
+      "legacyAnchor": "the-wheels-unfold-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-unfold.b04.en.r1.20730b14.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-unfold.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "20730b14",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.another-way-to-steer.b01",
+      "chapterId": "another-way-to-steer",
+      "chapterTitle": "Another way to steer",
+      "chapterSequence": 3,
+      "beatSequence": 1,
+      "displaySerial": 9,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "My front wheels would not steer. My rear wheels still could.",
+      "detailText": "The vehicle had separate front and rear steering systems. After troubleshooting, the crew and Mission Control chose to make the first excursion with rear-wheel steering. One failed function did not remove every way to manoeuvre.",
+      "narrationText": "My front wheels would not steer. My rear wheels still could. The vehicle had separate front and rear steering systems. After troubleshooting, the crew and Mission Control chose to make the first excursion with rear-wheel steering. One failed function did not remove every way to manoeuvre.",
+      "textRevision": 1,
+      "textFingerprint": "8d2dff8f",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.another-way-to-steer.b01",
+      "legacyAnchor": "another-way-to-steer-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.another-way-to-steer.b01.en.r1.8d2dff8f.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.another-way-to-steer.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "8d2dff8f",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.another-way-to-steer.b02",
+      "chapterId": "another-way-to-steer",
+      "chapterTitle": "Another way to steer",
+      "chapterSequence": 3,
+      "beatSequence": 2,
+      "displaySerial": 10,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Scott's hand controller still commanded the drive, turns and brakes.",
+      "detailText": "A T-shaped controller between the seats operated the vehicle. The astronauts drove it themselves. This was not a robotic rover taking commands one metre at a time from Earth.",
+      "narrationText": "Scott's hand controller still commanded the drive, turns and brakes. A T-shaped controller between the seats operated the vehicle. The astronauts drove it themselves. This was not a robotic rover taking commands one metre at a time from Earth.",
+      "textRevision": 1,
+      "textFingerprint": "890f519b",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.another-way-to-steer.b02",
+      "legacyAnchor": "another-way-to-steer-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.another-way-to-steer.b02.en.r1.890f519b.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.another-way-to-steer.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "890f519b",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.another-way-to-steer.b03",
+      "chapterId": "another-way-to-steer",
+      "chapterTitle": "Another way to steer",
+      "chapterSequence": 3,
+      "beatSequence": 3,
+      "displaySerial": 11,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Moving farther away also meant keeping track of the way back.",
+      "detailText": "A directional gyro and wheel-distance measurements fed the navigation computer. A Sun-shadow device supplied a manual heading check. This system tracked the direction and distance back to Falcon; it was not GPS.",
+      "narrationText": "Moving farther away also meant keeping track of the way back. A directional gyro and wheel-distance measurements fed the navigation computer. A Sun-shadow device supplied a manual heading check. This system tracked the direction and distance back to Falcon; it was not GPS.",
+      "textRevision": 1,
+      "textFingerprint": "16713e5c",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.another-way-to-steer.b03",
+      "legacyAnchor": "another-way-to-steer-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.another-way-to-steer.b03.en.r1.16713e5c.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.another-way-to-steer.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "16713e5c",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.another-way-to-steer.b04",
+      "chapterId": "another-way-to-steer",
+      "chapterTitle": "Another way to steer",
+      "chapterSequence": 3,
+      "beatSequence": 4,
+      "displaySerial": 12,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "We set off toward Elbow Crater with a working way to turn—and a way home.",
+      "detailText": "Scott and Irwin described the geology during the first traverse. At stops, they aimed the high-gain antenna toward Earth so scientists and controllers could follow the television pictures. The wheels and the radio link were helping the same investigation.",
+      "narrationText": "We set off toward Elbow Crater with a working way to turn—and a way home. Scott and Irwin described the geology during the first traverse. At stops, they aimed the high-gain antenna toward Earth so scientists and controllers could follow the television pictures. The wheels and the radio link were helping the same investigation.",
+      "textRevision": 1,
+      "textFingerprint": "88b22f80",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.another-way-to-steer.b04",
+      "legacyAnchor": "another-way-to-steer-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.another-way-to-steer.b04.en.r1.88b22f80.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.another-way-to-steer.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "88b22f80",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-seatbelt-passenger.b01",
+      "chapterId": "the-seatbelt-passenger",
+      "chapterTitle": "The seatbelt passenger",
+      "chapterSequence": 4,
+      "beatSequence": 1,
+      "displaySerial": 13,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A seatbelt stop brought an unexpected passenger: a Moon rock.",
+      "detailText": "NASA's sample curators recount that Scott spotted a rock while the crew was hurrying back toward Falcon. He reported a stop to adjust his seatbelt and collected the rock. This is an attributed historical account—not invented rover dialogue.",
+      "narrationText": "A seatbelt stop brought an unexpected passenger: a Moon rock. NASA's sample curators recount that Scott spotted a rock while the crew was hurrying back toward Falcon. He reported a stop to adjust his seatbelt and collected the rock. This is an attributed historical account—not invented rover dialogue.",
+      "textRevision": 1,
+      "textFingerprint": "ddfdb587",
+      "sourceUrl": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-seatbelt-passenger.b01",
+      "legacyAnchor": "the-seatbelt-passenger-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.the-seatbelt-passenger.b01.en.r1.ddfdb587.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-seatbelt-passenger.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "ddfdb587",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-seatbelt-passenger.b02",
+      "chapterId": "the-seatbelt-passenger",
+      "chapterTitle": "The seatbelt passenger",
+      "chapterSequence": 4,
+      "beatSequence": 2,
+      "displaySerial": 14,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "No field photograph recorded the stop.",
+      "detailText": "No collection photograph or field description documented the stop. Curators initially could not identify when or where the sample had been collected. Scott's later explanation connected the rock with the seatbelt stop.",
+      "narrationText": "No field photograph recorded the stop. No collection photograph or field description documented the stop. Curators initially could not identify when or where the sample had been collected. Scott's later explanation connected the rock with the seatbelt stop.",
+      "textRevision": 1,
+      "textFingerprint": "59f3d6db",
+      "sourceUrl": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-seatbelt-passenger.b02",
+      "legacyAnchor": "the-seatbelt-passenger-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.the-seatbelt-passenger.b02.en.r1.59f3d6db.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-seatbelt-passenger.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "59f3d6db",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-seatbelt-passenger.b03",
+      "chapterId": "the-seatbelt-passenger",
+      "chapterTitle": "The seatbelt passenger",
+      "chapterSequence": 4,
+      "beatSequence": 3,
+      "displaySerial": 15,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The small holes in the rock held a much older story.",
+      "detailText": "Sample 15016 became known as Seatbelt Rock. NASA classifies it as low-titanium olivine basalt. Numerous cavities, called vesicles, preserve evidence of gas bubbles in magma as the rock formed.",
+      "narrationText": "The small holes in the rock held a much older story. Sample 15016 became known as Seatbelt Rock. NASA classifies it as low-titanium olivine basalt. Numerous cavities, called vesicles, preserve evidence of gas bubbles in magma as the rock formed.",
+      "textRevision": 1,
+      "textFingerprint": "4c9baab6",
+      "sourceUrl": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-seatbelt-passenger.b03",
+      "legacyAnchor": "the-seatbelt-passenger-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.the-seatbelt-passenger.b03.en.r1.4c9baab6.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-seatbelt-passenger.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "4c9baab6",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-seatbelt-passenger.b04",
+      "chapterId": "the-seatbelt-passenger",
+      "chapterTitle": "The seatbelt passenger",
+      "chapterSequence": 4,
+      "beatSequence": 4,
+      "displaySerial": 16,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "What could one extra rock help people learn about the Moon?",
+      "detailText": "NASA's later sample studies report an age of 3.4 billion years. Its sample page now offers photographs, a three-dimensional model and X-ray CT views. These later research resources explain the sample's scientific value; they are not observations the rover made during the drive.",
+      "narrationText": "What could one extra rock help people learn about the Moon? NASA's later sample studies report an age of 3.4 billion years. Its sample page now offers photographs, a three-dimensional model and X-ray CT views. These later research resources explain the sample's scientific value; they are not observations the rover made during the drive.",
+      "textRevision": 1,
+      "textFingerprint": "9930be04",
+      "sourceUrl": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-seatbelt-passenger.b04",
+      "legacyAnchor": "the-seatbelt-passenger-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.the-seatbelt-passenger.b04.en.r1.9930be04.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-seatbelt-passenger.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "9930be04",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.uphill-to-a-white-rock.b01",
+      "chapterId": "uphill-to-a-white-rock",
+      "chapterTitle": "Uphill to a white rock",
+      "chapterSequence": 5,
+      "beatSequence": 1,
+      "displaySerial": 17,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On August 1, my front steering worked again.",
+      "detailText": "Before the second excursion, the astronauts recycled the circuit breakers. NASA's mission summary records that the front steering became completely operational. That documents the recovery; it does not establish an invented failure cause.",
+      "narrationText": "On August 1, my front steering worked again. Before the second excursion, the astronauts recycled the circuit breakers. NASA's mission summary records that the front steering became completely operational. That documents the recovery; it does not establish an invented failure cause.",
+      "textRevision": 1,
+      "textFingerprint": "4b8049a0",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.uphill-to-a-white-rock.b01",
+      "legacyAnchor": "uphill-to-a-white-rock-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.uphill-to-a-white-rock.b01.en.r1.4b8049a0.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.uphill-to-a-white-rock.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "4b8049a0",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.uphill-to-a-white-rock.b02",
+      "chapterId": "uphill-to-a-white-rock",
+      "chapterTitle": "Uphill to a white rock",
+      "chapterSequence": 5,
+      "beatSequence": 2,
+      "displaySerial": 18,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A slope changed the work from driving to holding still.",
+      "detailText": "At Station 6a, Scott sampled a greenish boulder while Irwin held the rover steady. NASA describes a 15-degree slope at this particular stop. The vehicle's position mattered while the astronaut worked beside it.",
+      "narrationText": "A slope changed the work from driving to holding still. At Station 6a, Scott sampled a greenish boulder while Irwin held the rover steady. NASA describes a 15-degree slope at this particular stop. The vehicle's position mattered while the astronaut worked beside it.",
+      "textRevision": 1,
+      "textFingerprint": "fecf6068",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.uphill-to-a-white-rock.b02",
+      "legacyAnchor": "uphill-to-a-white-rock-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.uphill-to-a-white-rock.b02.en.r1.fecf6068.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.uphill-to-a-white-rock.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "fecf6068",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.uphill-to-a-white-rock.b03",
+      "chapterId": "uphill-to-a-white-rock",
+      "chapterTitle": "Uphill to a white rock",
+      "chapterSequence": 5,
+      "beatSequence": 3,
+      "displaySerial": 19,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "At Spur Crater, a white crystalline rock caught the crew's attention.",
+      "detailText": "Among their samples, Scott and Irwin collected the rock later dubbed the Genesis Rock. Their geology training, observations and collection work made the discovery possible. The rover delivered the team to the site; it did not identify the rock for them.",
+      "narrationText": "At Spur Crater, a white crystalline rock caught the crew's attention. Among their samples, Scott and Irwin collected the rock later dubbed the Genesis Rock. Their geology training, observations and collection work made the discovery possible. The rover delivered the team to the site; it did not identify the rock for them.",
+      "textRevision": 1,
+      "textFingerprint": "3699cea6",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.uphill-to-a-white-rock.b03",
+      "legacyAnchor": "uphill-to-a-white-rock-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.uphill-to-a-white-rock.b03.en.r1.3699cea6.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.uphill-to-a-white-rock.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "3699cea6",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.uphill-to-a-white-rock.b04",
+      "chapterId": "uphill-to-a-white-rock",
+      "chapterTitle": "Uphill to a white rock",
+      "chapterSequence": 5,
+      "beatSequence": 4,
+      "displaySerial": 20,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "My cargo was becoming a set of questions for scientists on Earth.",
+      "detailText": "The crew packed the samples and headed back toward Falcon, stopping for more geology along the way. Photographs, sample labels and the rocks themselves would let researchers examine the observations after the journey ended.",
+      "narrationText": "My cargo was becoming a set of questions for scientists on Earth. The crew packed the samples and headed back toward Falcon, stopping for more geology along the way. Photographs, sample labels and the rocks themselves would let researchers examine the observations after the journey ended.",
+      "textRevision": 1,
+      "textFingerprint": "027b158b",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "relatedSources": [
+        {
+          "label": "Apollo by the Numbers · Apollo 15 summary · NASA SP-4029",
+          "url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.uphill-to-a-white-rock.b04",
+      "legacyAnchor": "uphill-to-a-white-rock-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.uphill-to-a-white-rock.b04.en.r1.027b158b.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.uphill-to-a-white-rock.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "027b158b",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-wall-with-layers.b01",
+      "chapterId": "a-wall-with-layers",
+      "chapterTitle": "A wall with layers",
+      "chapterSequence": 6,
+      "beatSequence": 1,
+      "displaySerial": 21,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Our last drive led toward a canyon called Hadley Rille.",
+      "detailText": "Scott and Irwin visited stops near the rille during their third excursion. They collected samples and photographed the opposite wall. The rover was carrying people and tools between different geological settings—not racing toward a finish line.",
+      "narrationText": "Our last drive led toward a canyon called Hadley Rille. Scott and Irwin visited stops near the rille during their third excursion. They collected samples and photographed the opposite wall. The rover was carrying people and tools between different geological settings—not racing toward a finish line.",
+      "textRevision": 1,
+      "textFingerprint": "3dc6dbdf",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-wall-with-layers.b01",
+      "legacyAnchor": "a-wall-with-layers-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.a-wall-with-layers.b01.en.r1.3dc6dbdf.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-wall-with-layers.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "3dc6dbdf",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-wall-with-layers.b02",
+      "chapterId": "a-wall-with-layers",
+      "chapterTitle": "A wall with layers",
+      "chapterSequence": 6,
+      "beatSequence": 2,
+      "displaySerial": 22,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The wall showed layers. A picture could preserve their arrangement.",
+      "detailText": "NASA's mission summary records exposed layering in the west wall of Hadley Rille. The images supplied evidence about the terrain, while collected material supplied evidence that could be examined in laboratories.",
+      "narrationText": "The wall showed layers. A picture could preserve their arrangement. NASA's mission summary records exposed layering in the west wall of Hadley Rille. The images supplied evidence about the terrain, while collected material supplied evidence that could be examined in laboratories.",
+      "textRevision": 1,
+      "textFingerprint": "3ddaa42a",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-wall-with-layers.b02",
+      "legacyAnchor": "a-wall-with-layers-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.a-wall-with-layers.b02.en.r1.3ddaa42a.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-wall-with-layers.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "3ddaa42a",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-wall-with-layers.b03",
+      "chapterId": "a-wall-with-layers",
+      "chapterTitle": "A wall with layers",
+      "chapterSequence": 6,
+      "beatSequence": 3,
+      "displaySerial": 23,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The return trip also carried a core sample from the experiment site.",
+      "detailText": "The astronauts retrieved the remaining sections of the deep-core sample on their way back. Driving, walking, drilling and sampling were different jobs working toward the same scientific record.",
+      "narrationText": "The return trip also carried a core sample from the experiment site. The astronauts retrieved the remaining sections of the deep-core sample on their way back. Driving, walking, drilling and sampling were different jobs working toward the same scientific record.",
+      "textRevision": 1,
+      "textFingerprint": "13e0e594",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-wall-with-layers.b03",
+      "legacyAnchor": "a-wall-with-layers-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.a-wall-with-layers.b03.en.r1.13e0e594.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-wall-with-layers.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "13e0e594",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.a-wall-with-layers.b04",
+      "chapterId": "a-wall-with-layers",
+      "chapterTitle": "A wall with layers",
+      "chapterSequence": 6,
+      "beatSequence": 4,
+      "displaySerial": 24,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "There was one job left for me, and it did not need moving wheels.",
+      "detailText": "Back near Falcon, the crew unloaded the vehicle. The rover had helped extend exploration beyond walking-only missions. Now Scott selected a parking place for a ground-controlled television view of the coming ascent.",
+      "narrationText": "There was one job left for me, and it did not need moving wheels. Back near Falcon, the crew unloaded the vehicle. The rover had helped extend exploration beyond walking-only missions. Now Scott selected a parking place for a ground-controlled television view of the coming ascent.",
+      "textRevision": 1,
+      "textFingerprint": "76d67357",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.a-wall-with-layers.b04",
+      "legacyAnchor": "a-wall-with-layers-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.a-wall-with-layers.b04.en.r1.76d67357.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.a-wall-with-layers.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "76d67357",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.parked-to-watch.b01",
+      "chapterId": "parked-to-watch",
+      "chapterTitle": "Parked to watch",
+      "chapterSequence": 7,
+      "beatSequence": 1,
+      "displaySerial": 25,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "My last assignment was to stay parked and help Earth watch.",
+      "detailText": "Scott chose elevated terrain for a better view and left the rover away from Falcon. The television camera and communications equipment could provide ground-controlled coverage of the ascent. Parking was part of the mission, not an accidental abandonment.",
+      "narrationText": "My last assignment was to stay parked and help Earth watch. Scott chose elevated terrain for a better view and left the rover away from Falcon. The television camera and communications equipment could provide ground-controlled coverage of the ascent. Parking was part of the mission, not an accidental abandonment.",
+      "textRevision": 1,
+      "textFingerprint": "5fe510d5",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.parked-to-watch.b01",
+      "legacyAnchor": "parked-to-watch-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.parked-to-watch.b01.en.r1.5fe510d5.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.parked-to-watch.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "5fe510d5",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.parked-to-watch.b02",
+      "chapterId": "parked-to-watch",
+      "chapterTitle": "Parked to watch",
+      "chapterSequence": 7,
+      "beatSequence": 2,
+      "displaySerial": 26,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The antenna connected a quiet vehicle with people far away.",
+      "detailText": "The high-gain antenna and lunar communications relay carried the television link. Earlier, the camera had helped people on Earth follow scientific work at the stops. Now the crew prepared to leave the surface.",
+      "narrationText": "The antenna connected a quiet vehicle with people far away. The high-gain antenna and lunar communications relay carried the television link. Earlier, the camera had helped people on Earth follow scientific work at the stops. Now the crew prepared to leave the surface.",
+      "textRevision": 1,
+      "textFingerprint": "0f7f3449",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.parked-to-watch.b02",
+      "legacyAnchor": "parked-to-watch-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.parked-to-watch.b02.en.r1.0f7f3449.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.parked-to-watch.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "0f7f3449",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.parked-to-watch.b03",
+      "chapterId": "parked-to-watch",
+      "chapterTitle": "Parked to watch",
+      "chapterSequence": 7,
+      "beatSequence": 3,
+      "displaySerial": 27,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "Falcon's ascent stage left on August 2. My wheels did not go with it.",
+      "detailText": "The rover, camera and relay equipment remained on the Moon. These were different pieces of hardware from Falcon's ascent stage and the command module that returned the crew to Earth.",
+      "narrationText": "Falcon's ascent stage left on August 2. My wheels did not go with it. The rover, camera and relay equipment remained on the Moon. These were different pieces of hardware from Falcon's ascent stage and the command module that returned the crew to Earth.",
+      "textRevision": 1,
+      "textFingerprint": "582411e8",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.parked-to-watch.b03",
+      "legacyAnchor": "parked-to-watch-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.parked-to-watch.b03.en.r1.582411e8.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.parked-to-watch.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "582411e8",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.parked-to-watch.b04",
+      "chapterId": "parked-to-watch",
+      "chapterTitle": "Parked to watch",
+      "chapterSequence": 7,
+      "beatSequence": 4,
+      "displaySerial": 28,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "My driving ended. That is not an exact time of battery death.",
+      "detailText": "NASA documents the three excursions and final parking task. The cited records do not supply a uniquely verified final rover radio timestamp, present battery condition, or spoken goodbye from the machine. Those values remain unknown.",
+      "narrationText": "My driving ended. That is not an exact time of battery death. NASA documents the three excursions and final parking task. The cited records do not supply a uniquely verified final rover radio timestamp, present battery condition, or spoken goodbye from the machine. Those values remain unknown.",
+      "textRevision": 1,
+      "textFingerprint": "d6c60d79",
+      "sourceUrl": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_15a_Summary.htm",
+      "relatedSources": [
+        {
+          "label": "50 Years Ago: Apollo 15 on the Moon at Hadley-Apennine · NASA",
+          "url": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.parked-to-watch.b04",
+      "legacyAnchor": "parked-to-watch-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.parked-to-watch.b04.en.r1.d6c60d79.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.parked-to-watch.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "d6c60d79",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b01",
+      "chapterId": "the-wheels-stayed-the-clues-travelled",
+      "chapterTitle": "The wheels stayed. The clues travelled.",
+      "chapterSequence": 8,
+      "beatSequence": 1,
+      "displaySerial": 29,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "The crew's journeys covered about twenty-eight kilometres—not one straight road.",
+      "detailText": "NSSDCA gives 27.8 kilometres and three hours, two minutes of driving. NASA's mission summary gives about 27.9 kilometres and three hours. We retain their attribution instead of manufacturing a falsely exact combined total.",
+      "narrationText": "The crew's journeys covered about twenty-eight kilometres—not one straight road. NSSDCA gives 27.8 kilometres and three hours, two minutes of driving. NASA's mission summary gives about 27.9 kilometres and three hours. We retain their attribution instead of manufacturing a falsely exact combined total.",
+      "textRevision": 1,
+      "textFingerprint": "576d971e",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-first-apollo-astronauts-to-drive-on-the-moon-took-final-cruise/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Lunar sample 15016,0 · NASA Astromaterials 3D",
+          "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-stayed-the-clues-travelled.b01",
+      "legacyAnchor": "the-wheels-stayed-the-clues-travelled-beat-0",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b01.en.r1.576d971e.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b01",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "576d971e",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b02",
+      "chapterId": "the-wheels-stayed-the-clues-travelled",
+      "chapterTitle": "The wheels stayed. The clues travelled.",
+      "chapterSequence": 8,
+      "beatSequence": 2,
+      "displaySerial": 30,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "A landing-site coordinate is not automatically my parking coordinate.",
+      "detailText": "NSSDCA publishes an LRO-derived position for Falcon in a stated reference frame. That identifies the lunar module's landing location. This edition does not relabel it as the rover's exact final wheel position.",
+      "narrationText": "A landing-site coordinate is not automatically my parking coordinate. NSSDCA publishes an LRO-derived position for Falcon in a stated reference frame. That identifies the lunar module's landing location. This edition does not relabel it as the rover's exact final wheel position.",
+      "textRevision": 1,
+      "textFingerprint": "b7966ef2",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-first-apollo-astronauts-to-drive-on-the-moon-took-final-cruise/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Lunar sample 15016,0 · NASA Astromaterials 3D",
+          "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "upper-right",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-stayed-the-clues-travelled.b02",
+      "legacyAnchor": "the-wheels-stayed-the-clues-travelled-beat-1",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b02.en.r1.b7966ef2.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b02",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "b7966ef2",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b03",
+      "chapterId": "the-wheels-stayed-the-clues-travelled",
+      "chapterTitle": "The wheels stayed. The clues travelled.",
+      "chapterSequence": 8,
+      "beatSequence": 3,
+      "displaySerial": 31,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "On Earth, researchers can still look inside Seatbelt Rock.",
+      "detailText": "NASA's Astromaterials 3D collection provides a model and X-ray CT imagery of sample 15016. The hardware stayed on the Moon; the physical samples and documented observations became material for further investigation.",
+      "narrationText": "On Earth, researchers can still look inside Seatbelt Rock. NASA's Astromaterials 3D collection provides a model and X-ray CT imagery of sample 15016. The hardware stayed on the Moon; the physical samples and documented observations became material for further investigation.",
+      "textRevision": 1,
+      "textFingerprint": "4be14418",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-first-apollo-astronauts-to-drive-on-the-moon-took-final-cruise/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Lunar sample 15016,0 · NASA Astromaterials 3D",
+          "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "lower-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-stayed-the-clues-travelled.b03",
+      "legacyAnchor": "the-wheels-stayed-the-clues-travelled-beat-2",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b03.en.r1.4be14418.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b03",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "4be14418",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    },
+    {
+      "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b04",
+      "chapterId": "the-wheels-stayed-the-clues-travelled",
+      "chapterTitle": "The wheels stayed. The clues travelled.",
+      "chapterSequence": 8,
+      "beatSequence": 4,
+      "displaySerial": 32,
+      "voiceRole": "imagined-machine-thought",
+      "bubbleText": "I did not need to come home to change what people could learn.",
+      "detailText": "The lunar rovers helped crews reach more varied geology on Apollo 15, 16 and 17. The scientific legacy is in the evidence: photographs, sample context, laboratory results and a record of the engineering that made those journeys possible.",
+      "narrationText": "I did not need to come home to change what people could learn. The lunar rovers helped crews reach more varied geology on Apollo 15, 16 and 17. The scientific legacy is in the evidence: photographs, sample context, laboratory results and a record of the engineering that made those journeys possible.",
+      "textRevision": 1,
+      "textFingerprint": "e70b319c",
+      "sourceUrl": "https://www.nasa.gov/history/50-years-ago-first-apollo-astronauts-to-drive-on-the-moon-took-final-cruise/",
+      "relatedSources": [
+        {
+          "label": "The Apollo Lunar Roving Vehicle · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html"
+        },
+        {
+          "label": "Lunar sample 15016,0 · NASA Astromaterials 3D",
+          "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0"
+        },
+        {
+          "label": "Apollo 15 Lunar Module / ALSEP · NSSDCA",
+          "url": "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1971-063C"
+        }
+      ],
+      "bubblePlacement": "upper-left",
+      "url": "/heroes/apollo-15-rover/story#apollo-15-rover.the-wheels-stayed-the-clues-travelled.b04",
+      "legacyAnchor": "the-wheels-stayed-the-clues-travelled-beat-3",
+      "suggestedAudioFilename": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b04.en.r1.e70b319c.mp3",
+      "audio": {
+        "beatId": "apollo-15-rover.the-wheels-stayed-the-clues-travelled.b04",
+        "language": "en",
+        "textRevision": 1,
+        "textFingerprint": "e70b319c",
+        "status": "missing",
+        "src": null,
+        "durationMs": null
+      }
+    }
+  ],
+  "photographs": {
+    "cover": {
+      "name": "AS15-88-11901",
+      "title": "Apollo 15 rover at its final parking place",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_33_eva3_rover_final_parking_place_as15-88-11901hr.jpg",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "credit": "NASA",
+      "alt": "NASA's Apollo 15 photograph shows the rover at its final parked position, with seats, mesh wheels and communications equipment.",
+      "ai": false
+    },
+    "deployment": {
+      "name": "Apollo-15-EVA1-deployment-TV",
+      "title": "The crew deploys the folded rover",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_13_rover_deploy_eva1_1.jpg",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "credit": "NASA · still from television downlink",
+      "alt": "A television still shows the astronauts deploying the Lunar Roving Vehicle during the first moonwalk.",
+      "ai": false
+    },
+    "slope": {
+      "name": "AS15-086-11659",
+      "title": "Holding the rover steady at Station 6a",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_24_eva2_irwin_keeping_rover_from_sliding_down_hill_as15-086-11659.jpg",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "credit": "NASA",
+      "alt": "James Irwin holds the rover steady behind the boulder being sampled at Station 6a.",
+      "ai": false
+    },
+    "genesis": {
+      "name": "AS15-86-11671",
+      "title": "The Genesis Rock before collection",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_26_eva2_station_7_genesis_rock_as15-86-11671hr.jpg",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "credit": "NASA",
+      "alt": "NASA's caption identifies the white crystalline rock at Station 7 before the crew collected it.",
+      "ai": false
+    },
+    "route": {
+      "name": "Apollo-15-traverses-LROC-overlay",
+      "title": "Three traverses over an orbital image",
+      "src": "https://www.nasa.gov/wp-content/uploads/2021/07/apollo_15_moon_landing_14_lunar_traverses_on_lroc_image.png",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "credit": "NASA · traverse overlay on LROC imagery",
+      "alt": "An annotated orbital image shows the three Apollo 15 traverse routes; it is a map overlay, not a single surface photograph.",
+      "ai": false
+    }
+  },
+  "resources": [
+    {
+      "kind": "interactive",
+      "title": "Look inside Seatbelt Rock",
+      "url": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "source": "https://ares.jsc.nasa.gov/astromaterials3d/sample-details.htm?sample=15016-0",
+      "description": "NASA Astromaterials 3D: sample 15016's exterior model and X-ray CT imagery. This is a rock sample, not a rover mesh."
+    },
+    {
+      "kind": "video",
+      "title": "Scott's hammer-and-feather demonstration",
+      "url": "https://www.youtube.com/watch?v=oYEgdZ3iEKA",
+      "embedId": "oYEgdZ3iEKA",
+      "source": "https://www.nasa.gov/history/50-years-ago-apollo-15-on-the-moon-at-hadley-apennine/",
+      "description": "Original lunar television footage linked by NASA. A physics demonstration after the third excursion, not the rover speaking or a simulated experiment."
+    },
+    {
+      "kind": "document",
+      "title": "Rover hardware and deployment",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "source": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+      "description": "NASA's hardware descriptions and diagrams. The early deployment drawing is explicitly not the exact final flight sequence."
+    }
+  ],
+  "researchNotes": [
+    "A human-driven lunar vehicle, not a robotic Mars rover.",
+    "The parent LM's COSPAR and landing coordinates must not be relabelled as an independently catalogued rover or exact parking fix.",
+    "Apollo 17's famous taped-map fender repair is NOT an Apollo 15 incident.",
+    "NASA totals differ slightly: 27.8 km / 3 h 2 min versus about 27.9 km / 3 h. Preserve attribution.",
+    "Current battery condition, exact final radio time and recorded machine farewell are unknown."
+  ],
+  "unknowns": {
+    "exactRoverParkingCoordinates": null,
+    "currentElectronicHealth": null,
+    "exactFinalRadioTime": null,
+    "recordedMachineFarewell": null
+  },
+  "narration": {
+    "producedClips": 0,
+    "originalMachineSpeech": null,
+    "note": "Reader preview is synthetic. Historical sound is available in the NASA-linked video; it is not the machine's voice."
+  }
+}
