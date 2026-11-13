@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { machineEntryUrl } from "@/lib/machine-links";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GlobeApi } from "./globe";
 import type { Landing, WorldApi, WorldPhase, Quality as WorldQuality } from "./world";
@@ -12,7 +11,6 @@ import { migrateLegacy, site as siteSave, stars, totals, useSave, writeSave, typ
 import { Compass, DescentHud, HoldButton, Icon, IconButton, Joystick, Radio, Stars, type CompassHandle, type HudHandle, type RadioHandle } from "./ui";
 import { Credits, Journal, SettingsSheet } from "./overlays";
 import { ArrowRight } from "@/app/components/icons";
-import { assetUrl } from "@thelastsignal/data";
 
 export type GameSite = {
   slug: string;
@@ -587,7 +585,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
                 onClick={() => pick(s.slug)}
                 onMouseEnter={() => sfx("hover")}
                 className={`absolute top-0 left-0 z-10 -mt-9 ml-3 rounded-full px-2.5 py-1 text-xs font-semibold whitespace-nowrap ring-1 backdrop-blur transition-opacity ${
-                  sel === s.slug && screen === "brief" ? "bg-white text-black ring-white" : "bg-black/55 ring-white/10 hover:bg-violet"
+                  sel === s.slug && screen === "brief" ? "bg-white text-black ring-white" : "bg-black/55 ring-white/10 hover:bg-brand"
                 }`}
                 style={{ opacity: 0 }}
               >
@@ -614,12 +612,12 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
       {screen === "title" && (
         <div className="absolute inset-0 z-20 flex items-center bg-[linear-gradient(90deg,rgba(4,3,12,0.92)_0%,rgba(4,3,12,0.55)_50%,rgba(4,3,12,0.1)_100%)]">
           <div className="tls-fade-in max-w-xl px-6 sm:px-14">
-            <Image src={assetUrl("images/icon-touchdown.webp")} alt="" width={96} height={96} priority className="mb-5 h-20 w-20 rounded-[22%] shadow-[0_10px_40px_rgba(91,46,255,0.5)] ring-1 ring-white/15 sm:h-24 sm:w-24" title="Illustration, AI-generated" />
+            <Image src="/images/icon-touchdown.webp" alt="" width={96} height={96} priority className="mb-5 h-20 w-20 rounded-[22%] shadow-[0_10px_40px_rgba(18,56,255,0.5)] ring-1 ring-white/15 sm:h-24 sm:w-24" title="Illustration, AI-generated" />
             <p className="font-mono text-xs tracking-[0.24em] text-white/60 uppercase">RoverVilla · a game</p>
             <h2 className="display mt-4 text-6xl leading-none sm:text-8xl">Touchdown</h2>
             <p className="mt-5 text-lg leading-relaxed text-white/80 sm:text-xl">A pilgrimage to the machines we left on Mars and the Moon. Fly each landing yourself, then drive to where they rest.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <button type="button" onClick={begin} className="inline-flex items-center gap-2 rounded-full bg-violet px-7 py-4 text-base font-semibold shadow-[0_0_40px_rgba(91,46,255,0.5)] hover:bg-violet-deep">
+              <button type="button" onClick={begin} className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-4 text-base font-semibold shadow-[0_0_40px_rgba(18,56,255,0.5)] hover:bg-brand-deep">
                 {t.found ? `Continue · ${t.found}/${sites.length}` : "Begin"} <ArrowRight />
               </button>
               {save.prologue && (
@@ -711,7 +709,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
                       setScreen("orbit");
                     }}
                     aria-pressed={body === b}
-                    className={`rounded-full px-4 py-1.5 text-sm font-semibold ${body === b ? "bg-violet" : "hover:bg-white/10"}`}
+                    className={`rounded-full px-4 py-1.5 text-sm font-semibold ${body === b ? "bg-brand" : "hover:bg-white/10"}`}
                   >
                     {b === "mars" ? "Mars" : "Moon"}
                   </button>
@@ -720,7 +718,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
             )}
             {screen === "orbit" && nextSite && (
               <div>
-                <button type="button" onClick={() => pick(nextSite.slug)} className="mt-3 inline-flex items-center gap-2 rounded-full bg-violet px-4 py-2 text-sm font-semibold shadow-[0_0_30px_rgba(91,46,255,0.45)] hover:bg-violet-deep">
+                <button type="button" onClick={() => pick(nextSite.slug)} className="mt-3 inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold shadow-[0_0_30px_rgba(18,56,255,0.45)] hover:bg-brand-deep">
                   {t.found ? "Next signal" : "Start with"}: {nextSite.name}
                   {nextSite.body !== body && <span className="font-mono text-[10px] text-white/70">({nextSite.body === "mars" ? "Mars" : "Moon"})</span>}
                   <ArrowRight />
@@ -768,9 +766,9 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
               const x = siteSave(save, s.slug);
               return (
                 <li key={s.slug}>
-                  <button type="button" onClick={() => pick(s.slug)} onMouseEnter={() => sfx("hover")} className="flex items-center gap-2 rounded-full bg-black/45 px-4 py-2 text-sm font-semibold whitespace-nowrap ring-1 ring-white/10 backdrop-blur hover:bg-violet">
+                  <button type="button" onClick={() => pick(s.slug)} onMouseEnter={() => sfx("hover")} className="flex items-center gap-2 rounded-full bg-black/45 px-4 py-2 text-sm font-semibold whitespace-nowrap ring-1 ring-white/10 backdrop-blur hover:bg-brand">
                     {s.name}
-                    {x.found ? <Stars have={stars(x)} size="sm" /> : <span className="h-1.5 w-1.5 rounded-full bg-violet-bright" />}
+                    {x.found ? <Stars have={stars(x)} size="sm" /> : <span className="h-1.5 w-1.5 rounded-full bg-brand-bright" />}
                   </button>
                 </li>
               );
@@ -828,7 +826,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
                   : "Land in the blue ring, then drive the rover to it."}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
-              <button type="button" onClick={descend} className="inline-flex items-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold shadow-[0_0_30px_rgba(91,46,255,0.45)] hover:bg-violet-deep">
+              <button type="button" onClick={descend} className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold shadow-[0_0_30px_rgba(18,56,255,0.45)] hover:bg-brand-deep">
                 Begin descent <ArrowRight />
               </button>
               <button
@@ -963,7 +961,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
                   {landing.offset <= ZONE ? "Right in the ring." : "Outside the ring: a longer drive."} The third star is for all three echoes.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  <button type="button" onClick={deploy} className="inline-flex items-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold hover:bg-violet-deep">
+                  <button type="button" onClick={deploy} className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold hover:bg-brand-deep">
                     Deploy the rover <ArrowRight />
                   </button>
                   <button type="button" onClick={() => retry()} className="rounded-full bg-white/10 px-5 py-3.5 text-sm font-semibold hover:bg-white/20">
@@ -977,7 +975,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
                 <h2 className="display mt-1 text-3xl">That one didn&apos;t make it.</h2>
                 <p className="mt-2 text-[15px] text-white/75">{landing.reason}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  <button type="button" onClick={() => retry()} className="rounded-full bg-violet px-6 py-3.5 text-sm font-semibold hover:bg-violet-deep">
+                  <button type="button" onClick={() => retry()} className="rounded-full bg-brand px-6 py-3.5 text-sm font-semibold hover:bg-brand-deep">
                     Try again
                   </button>
                   {settings.pilot && (save.crashes[site.slug] ?? 0) >= 2 && (
@@ -1029,11 +1027,11 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
             <p className="mt-3 font-mono text-[11px] text-white/55">{ss.echoes.length < 3 ? `${ss.echoes.length} of 3 echoes picked up. Look around to find the rest.` : "All three echoes picked up."}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {nextSite ? (
-                <button type="button" onClick={() => toOrbit(nextSite.slug)} className="inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold hover:bg-violet-deep">
+                <button type="button" onClick={() => toOrbit(nextSite.slug)} className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold hover:bg-brand-deep">
                   Next: {nextSite.name} <ArrowRight />
                 </button>
               ) : (
-                <button type="button" onClick={() => toOrbit(null)} className="inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold hover:bg-violet-deep">
+                <button type="button" onClick={() => toOrbit(null)} className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold hover:bg-brand-deep">
                   Back to orbit <ArrowRight />
                 </button>
               )}
@@ -1048,7 +1046,7 @@ export default function TouchdownGame({ sites }: { sites: GameSite[] }) {
               <button type="button" onClick={postcard} className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-3 text-sm font-semibold hover:bg-white/20">
                 {Icon.camera} Postcard
               </button>
-              <Link href={machineEntryUrl(site.slug)} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
+              <Link href={`/heroes/${site.slug}`} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
                 Its page
               </Link>
             </div>
@@ -1134,7 +1132,7 @@ function Stat({ k, v, good }: { k: string; v: string; good?: boolean }) {
 
 function MenuButton({ children, onClick, primary = false }: { children: React.ReactNode; onClick: () => void; primary?: boolean }) {
   return (
-    <button type="button" onClick={onClick} className={`block w-full rounded-full px-6 py-3.5 text-sm font-semibold ${primary ? "bg-violet hover:bg-violet-deep" : "bg-white/10 hover:bg-white/20"}`}>
+    <button type="button" onClick={onClick} className={`block w-full rounded-full px-6 py-3.5 text-sm font-semibold ${primary ? "bg-brand hover:bg-brand-deep" : "bg-white/10 hover:bg-white/20"}`}>
       {children}
     </button>
   );

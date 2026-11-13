@@ -140,10 +140,6 @@
 .club-game-page > div > div:has(h1) > p { color: var(--club-muted); }
 .club-note { border: 1px dashed #cfbadb; border-radius: 20px; background: #f5edf8; padding: 24px; color: var(--club-muted); font-size: 14px; line-height: 1.8; }
 .club-note strong { color: var(--club-ink); }
-.club-mission-intro { padding: 25px 0 32px; }
-.club-mission-intro h1 { max-width: 18ch; margin-top: 16px; font-size: clamp(36px,4.5vw,58px); line-height: 1.1; }
-.club-mission-intro > p:not(.club-kicker) { max-width: 65ch; margin-top: 20px; color: var(--club-muted); font-size: 16px; line-height: 1.9; }
-.club-mission-intro > span { display: block; margin-top: 14px; color: #7d648d; font-size: 11px; }
 .club-game-feature { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; padding: 32px; border: 1px solid #d5c0e0; border-radius: 28px; background: #eee5f6; box-shadow: var(--club-shadow); }
 .club-game-feature h2 { margin-top: 14px; max-width: 15ch; font-size: 42px; line-height: 1.09; }
 .club-game-feature p:not(.club-kicker) { margin-top: 18px; max-width: 45ch; color: var(--club-muted); font-size: 15px; line-height: 1.8; }

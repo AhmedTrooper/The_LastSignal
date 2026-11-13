@@ -1,35 +1,31 @@
-import type { Metadata } from "next";
-import SitePage from "@/app/components/site-page";
-import MPLSimulator from "@/app/components/profile/mpl-simulator";
 import { generateSEO } from "@/lib/seo";
+import GameShell from "@/app/components/games/shell";
+import PolarGame from "./game";
 
-export const metadata: Metadata = generateSEO({
-  title: "Mars Polar Lander 40-Meter Crash Forensics | RoverVilla",
-  description:
-    "Forensic reconstruction of Mars Polar Lander's premature engine cutoff 40 meters above Planum Australe. Sourced from the NASA Casani Board Report.",
+export const metadata = generateSEO({
+  title: "Trust the Signal: a Mars Polar Lander game | RoverVilla",
+  description: "Be the landing computer and decide when the lander has really touched down on Mars.",
   path: "/games/polar-lander-forensics",
 });
 
-export default function PolarLanderForensicsGamePage() {
-  return (
-    <SitePage
-      eyebrow="Mars Polar Lander / A missing signal"
-      title="When should a machine trust a signal?"
-      lede="Investigate a possible landing-system failure. Compare the signals, explore the timing, and remember: a proposed explanation is not the same as an observed final moment."
-      scene="games"
-    >
-      <div className="space-y-12">
-        <MPLSimulator standalone />
+const SCI = "https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/";
+const REPORT = "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/details/original/3338_mpl_report_1.pdf?emrc=6af03574bf278";
 
-        <details className="club-note mt-8"><summary className="cursor-pointer py-2 font-semibold">Look deeper: mission background</summary>
-          <h3 className="display text-xl font-bold text-ink">
-            Authentic NASA Review Board Context: Casani & Spear Report
-          </h3>
-          <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-            In March 2000, NASA released the official Casani Board Report detailing the probable cause of the Mars Polar Lander loss. Testing revealed that landing gear leg deployment springs created magnetic sensor transients that set the touchdown bit in the computer at 1,500 meters altitude. When software began monitoring for touchdown at 40 meters altitude, it read the pre-existing TRUE bit and cut the engines in mid-air. The reforms resulting from this failure mandated the deep-space telemetry beacons and end-to-end hardware-in-the-loop testing that made Spirit, Opportunity, Curiosity, and Perseverance successful.
-          </p>
-        </details>
-      </div>
-    </SitePage>
+export default function Page() {
+  return (
+    <GameShell
+      hero="mars-polar-lander"
+      title="Trust the Signal"
+      goal="Be the landing computer: shut the engines off only when the lander is really down."
+      story="Mars Polar Lander went silent as it began its descent and was never heard from again. With no data from the descent, the cause can't be proven, but the review board's most likely answer is a false touchdown signal."
+      facts={[
+        { value: "3 Dec 1999", label: "last contact, just before entering the atmosphere", source: SCI },
+        { value: "No data", label: "the lander sent nothing home during its descent", source: REPORT },
+        { value: "Leg jolt", label: "unfolding legs could trip the touchdown sensors for a moment", source: REPORT },
+        { value: "0", label: "signals from the surface, and none from the two Deep Space 2 probes", source: SCI },
+      ]}
+    >
+      <PolarGame />
+    </GameShell>
   );
 }

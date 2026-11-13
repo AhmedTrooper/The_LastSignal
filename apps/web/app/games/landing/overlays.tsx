@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { machineEntryUrl } from "@/lib/machine-links";
 import { useState, type ReactNode } from "react";
 import type { GameSite } from "./game";
 import { ORDER } from "./story";
@@ -96,10 +95,10 @@ export function Journal({ sites, save, onGo, onClose }: { sites: GameSite[]; sav
                 ))}
               </ol>
               <div className="mt-5 flex flex-wrap gap-2">
-                <button type="button" onClick={() => onGo(sel.slug)} className="inline-flex items-center gap-2 rounded-full bg-violet px-5 py-3 text-sm font-semibold hover:bg-violet-deep">
+                <button type="button" onClick={() => onGo(sel.slug)} className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold hover:bg-brand-deep">
                   {ss.found ? "Visit again" : "Go there"} <ArrowRight />
                 </button>
-                <Link href={machineEntryUrl(sel.slug)} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
+                <Link href={`/heroes/${sel.slug}`} className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold hover:bg-white/20">
                   Its page in the archive
                 </Link>
               </div>
@@ -117,7 +116,7 @@ export function Journal({ sites, save, onGo, onClose }: { sites: GameSite[]; sav
                   const x = siteSave(save, s.slug);
                   return (
                     <li key={s.slug}>
-                      <button type="button" onClick={() => setOpen(s.slug)} className="group block w-full overflow-hidden rounded-2xl bg-white/4 text-left ring-1 ring-white/10 hover:ring-violet-bright">
+                      <button type="button" onClick={() => setOpen(s.slug)} className="group block w-full overflow-hidden rounded-2xl bg-white/4 text-left ring-1 ring-white/10 hover:ring-brand-bright">
                         <div className="relative aspect-[4/3] bg-black">
                           <Image src={s.photo.src} alt="" fill sizes="200px" className={`object-cover transition-transform duration-500 group-hover:scale-105 ${x.found ? "" : "opacity-25 grayscale"}`} />
                           {x.light && <span className="absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-amber-300 shadow-[0_0_10px_#fcd34d]" title="You left a light here" />}
@@ -149,17 +148,17 @@ export function SettingsSheet({ settings, onChange, onClose }: { settings: Setti
       <div className="divide-y divide-white/10">
         <label className={row}>
           <span>Music</span>
-          <input type="range" min={0} max={1} step={0.05} value={settings.music} onChange={(e) => onChange({ music: Number(e.target.value) })} className="w-40 accent-violet-400" />
+          <input type="range" min={0} max={1} step={0.05} value={settings.music} onChange={(e) => onChange({ music: Number(e.target.value) })} className="w-40 accent-brand-bright" />
         </label>
         <label className={row}>
           <span>Sound effects</span>
-          <input type="range" min={0} max={1} step={0.05} value={settings.sfx} onChange={(e) => onChange({ sfx: Number(e.target.value) })} className="w-40 accent-violet-400" />
+          <input type="range" min={0} max={1} step={0.05} value={settings.sfx} onChange={(e) => onChange({ sfx: Number(e.target.value) })} className="w-40 accent-brand-bright" />
         </label>
         <div className={row}>
           <span>Graphics</span>
           <div className="flex rounded-full bg-white/10 p-1">
             {(["auto", "high", "medium", "low"] as Quality[]).map((q) => (
-              <button key={q} type="button" onClick={() => onChange({ quality: q })} aria-pressed={settings.quality === q} className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize ${settings.quality === q ? "bg-violet" : "hover:bg-white/10"}`}>
+              <button key={q} type="button" onClick={() => onChange({ quality: q })} aria-pressed={settings.quality === q} className={`rounded-full px-3 py-1.5 text-xs font-semibold capitalize ${settings.quality === q ? "bg-brand" : "hover:bg-white/10"}`}>
                 {q}
               </button>
             ))}
@@ -170,11 +169,11 @@ export function SettingsSheet({ settings, onChange, onClose }: { settings: Setti
             Expert pilot
             <span className="block text-xs text-white/55">Turns off the flight computer: no speed hold, no drift hold, no safety brake near the ground. Real gravity, all yours.</span>
           </span>
-          <input type="checkbox" checked={settings.pilot} onChange={(e) => onChange({ pilot: e.target.checked })} className="h-5 w-5 accent-violet-400" />
+          <input type="checkbox" checked={settings.pilot} onChange={(e) => onChange({ pilot: e.target.checked })} className="h-5 w-5 accent-brand-bright" />
         </label>
         <label className={row}>
           <span>Camera shake</span>
-          <input type="checkbox" checked={settings.shake} onChange={(e) => onChange({ shake: e.target.checked })} className="h-5 w-5 accent-violet-400" />
+          <input type="checkbox" checked={settings.shake} onChange={(e) => onChange({ shake: e.target.checked })} className="h-5 w-5 accent-brand-bright" />
         </label>
         <div className={row}>
           <span>
@@ -236,7 +235,7 @@ export function Credits({ sites, save, onClose }: { sites: GameSite[]; save: Sav
           <p>Maps: NASA 3D Resources (Mars), USGS/LRO (Moon). Models: NASA 3D Resources, and simplified models made for this site. Music and sound are generated live in your browser.</p>
         </div>
         <div className="mt-8 flex flex-wrap justify-center gap-2">
-          <button type="button" onClick={onClose} className="rounded-full bg-violet px-6 py-3 text-sm font-semibold hover:bg-violet-deep">
+          <button type="button" onClick={onClose} className="rounded-full bg-brand px-6 py-3 text-sm font-semibold hover:bg-brand-deep">
             Keep exploring
           </button>
           <Link href="/story" className="rounded-full bg-white/10 px-6 py-3 text-sm font-semibold hover:bg-white/20">

@@ -1,43 +1,28 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { generateSEO } from "@/lib/seo";
-import Header from "@/app/components/header";
-import InSightSimulator from "@/app/components/profile/insight-simulator";
-import { ArrowLeft } from "@/app/components/icons";
-import MissionIntro from "@/app/components/clubhouse/mission-intro";
+import GameShell from "@/app/components/games/shell";
+import InsightGame from "./game";
 
-export const metadata: Metadata = generateSEO({
-  title: "InSight: Marsquake Seismology & Core Explorer | RoverVilla",
-  description:
-    "An interactive simulator exploring Mars's deep interior. Sonify real marsquakes from 1,319 seismic detections, inspect the liquid core, and explore the HP3 Mole at Homestead Hollow.",
+export const metadata = generateSEO({
+  title: "Marsquake Hunter: an InSight game | RoverVilla",
+  description: "Read InSight-style seismograms and work out how far away each marsquake struck.",
   path: "/games/insight-seismology",
 });
 
-export default function InSightSeismologyGamePage() {
+export default function Page() {
   return (
-    <>
-      <Header />
-      <main id="club-main" className="club-game-page min-h-screen px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-6 flex items-center justify-between">
-            <Link
-              href="/games"
-              className="inline-flex items-center gap-2 font-mono text-xs text-white/70 transition hover:text-white"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" /> Back to Games
-            </Link>
-
-            <Link
-              href="/heroes/insight/story"
-              className="font-mono text-xs text-rose-300 transition hover:underline"
-            >
-              Meet InSight ↗
-            </Link>
-          </div>
-
-          <MissionIntro title="What’s moving beneath Mars?">A still-looking landscape can have a story underneath. Explore the signals and learn why scientists compare vibrations carefully.</MissionIntro><div className="club-game-shell"><InSightSimulator standalone /></div>
-        </div>
-      </main>
-    </>
+    <GameShell
+      hero="insight"
+      title="Marsquake Hunter"
+      goal="Mark where the P and S waves arrive and find out how far away each quake struck."
+      story="InSight set a seismometer on the ground and listened to Mars for four years. The quakes it heard showed what lies inside: a crust, a mantle and a core."
+      facts={[
+        { value: "1,319", label: "marsquakes detected by the end of the mission", source: "https://www.jpl.nasa.gov/news/nasa-retires-insight-mars-lander-mission-after-years-of-science/" },
+        { value: "6 Apr 2019", label: "the first likely marsquake, on InSight's 128th Martian day", source: "https://science.nasa.gov/photojournal/insights-sol-128-seismic-event/" },
+        { value: "Dec 2018", label: "the robotic arm set the seismometer on the surface", source: "https://science.nasa.gov/mission/insight/" },
+        { value: "15 Dec 2022", label: "InSight's last contact, its solar panels covered in dust", source: "https://science.nasa.gov/mission/insight/" },
+      ]}
+    >
+      <InsightGame />
+    </GameShell>
   );
 }

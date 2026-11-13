@@ -35,58 +35,53 @@ import { machineBookUrl } from "@/lib/machine-books";
 const HERO_GAMES: Record<string, { href: string; title: string; desc: string }> = {
   "ranger-7": {
     href: "/games/ranger-7-dive",
-    title: "Ranger 7: Terminal Descent Dive",
-    desc: "Experience the final 17 minutes and 4,308 television frames before lunar impact.",
-  },
-  "apollo-11-lander": {
-    href: "/games/apollo-11-landing",
-    title: "Eagle's landing challenge",
-    desc: "Try a simplified approach, then learn what the real descent engine and landing gear made possible.",
+    title: "Last Pictures",
+    desc: "Fall toward the Moon with Ranger 7 and keep taking pictures until the very end.",
   },
   spirit: {
     href: "/games/mer-twins",
-    title: "MER Twins: Mars Exploration Rover Simulator",
-    desc: "Navigate Gusev Crater, survive Martian dust storms, and climb Husband Hill.",
+    title: "Chasing Sunshine",
+    desc: "Keep a solar-powered Mars rover alive one sol at a time, through dust and winter.",
   },
   opportunity: {
     href: "/games/mer-twins",
-    title: "MER Twins: Mars Exploration Rover Simulator",
-    desc: "Traverse 45 kilometers across Meridiani Planum from Eagle to Endeavour Crater.",
+    title: "Chasing Sunshine",
+    desc: "Keep a solar-powered Mars rover alive one sol at a time, through dust and storms.",
   },
   ingenuity: {
     href: "/games/ingenuity-flight",
-    title: "Ingenuity: Martian Flight Simulator",
-    desc: "Pilot the first powered aircraft on Mars through thin 1% atmospheric density.",
+    title: "Thin Air",
+    desc: "Climb, hover, and land a helicopter in Mars's thin atmosphere.",
   },
   insight: {
     href: "/games/insight-seismology",
-    title: "InSight: Marsquake Seismology & Core Explorer",
-    desc: "Act as Mars Seismologist: triangulate quakes with P & S waves and manage power.",
+    title: "Marsquake Hunter",
+    desc: "Read seismograms and work out how far away each marsquake struck.",
   },
   "viking-1": {
     href: "/games/viking-biology",
-    title: "Viking Biology: The 1976 Life Detection Lab",
-    desc: "Run the Pyrolytic Release, Labeled Release, and Gas Exchange experiments on Chryse Planitia soil.",
+    title: "Is Anything Alive?",
+    desc: "Run Viking's soil tests and decide what the results mean.",
   },
   "viking-2": {
     href: "/games/viking-biology",
-    title: "Viking Biology: The 1976 Life Detection Lab",
-    desc: "Analyze Utopia Planitia soil samples and interpret the mysterious labeled release signal.",
+    title: "Is Anything Alive?",
+    desc: "Run Viking's soil tests and decide what the results mean.",
   },
   "mars-polar-lander": {
     href: "/games/polar-lander-forensics",
-    title: "Mars Polar Lander: 40-Meter Bug Forensics",
-    desc: "Investigate the premature retrorocket shutdown transient during touchdown.",
+    title: "Trust the Signal",
+    desc: "Be the landing computer and decide when the lander has really touched down.",
   },
   lcross: {
     href: "/games/lcross-impact",
-    title: "LCROSS: 7.2 GJ Kinetic Water Plume",
-    desc: "Simulate the Centaur impact into Cabeus Crater and detect water ice vapor.",
+    title: "Into the Plume",
+    desc: "Hit a dark crater, then fly through the plume to look for water.",
   },
   grail: {
     href: "/games/grail-gravity",
-    title: "GRAIL: Microwave Gravity Lab",
-    desc: "Track inter-satellite microwave ranging to map the Moon's gravitational anomalies.",
+    title: "Ebb & Flow",
+    desc: "Find hidden masses under the Moon from two spacecraft flying in tandem.",
   },
 };
 

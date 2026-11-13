@@ -1,43 +1,31 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import { generateSEO } from "@/lib/seo";
-import Header from "@/app/components/header";
-import IngenuitySimulator from "@/app/components/profile/ingenuity-simulator";
-import { ArrowLeft } from "@/app/components/icons";
-import MissionIntro from "@/app/components/clubhouse/mission-intro";
+import GameShell from "@/app/components/games/shell";
+import IngenuityGame from "./game";
 
-export const metadata: Metadata = generateSEO({
-  title: "Ingenuity: Mars Rotorcraft Aerodynamics & Flight Lab | RoverVilla",
-  description:
-    "An interactive simulator exploring the aerodynamics of powered flight in Mars's 1% atmosphere. Tweak atmospheric density and rotor RPM, inspect all 72 flights, and discover the 1903 Wright Flyer fabric swatch on Mars.",
+export const metadata = generateSEO({
+  title: "Thin Air: an Ingenuity helicopter game | RoverVilla",
+  description: "Fly a helicopter on Mars: climb, hover and land gently in very thin air.",
   path: "/games/ingenuity-flight",
 });
 
-export default function IngenuityFlightGamePage() {
+const SCI = "https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/";
+const FIRST = "https://www.nasa.gov/news-release/nasas-ingenuity-mars-helicopter-succeeds-in-historic-first-flight/";
+
+export default function Page() {
   return (
-    <>
-      <Header />
-      <main id="club-main" className="club-game-page min-h-screen px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-6 flex items-center justify-between">
-            <Link
-              href="/games"
-              className="inline-flex items-center gap-2 font-mono text-xs text-white/70 transition hover:text-white"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" /> Back to Games
-            </Link>
-
-            <Link
-              href="/heroes/ingenuity/story"
-              className="font-mono text-xs text-cyan-300 transition hover:underline"
-            >
-              Meet Ingenuity ↗
-            </Link>
-          </div>
-
-          <MissionIntro title="What if we could fly on Mars?">Explore spinning blades and thin air. Try a setting, notice what changes, and meet the real little helicopter behind the experiment.</MissionIntro><div className="club-game-shell"><IngenuitySimulator standalone /></div>
-        </div>
-      </main>
-    </>
+    <GameShell
+      hero="ingenuity"
+      title="Thin Air"
+      goal="Hold to spin the rotors. Climb, hover in the band, then land gently."
+      story="Ingenuity was a test: could anything fly in Mars's thin air? Its first hop proved it could. Planned for five flights, it flew 72."
+      facts={[
+        { value: "19 Apr 2021", label: "first powered, controlled flight on another planet: 3 m up, 39.1 seconds", source: FIRST },
+        { value: "1.8 kg", label: "the whole helicopter, about as heavy as a big bottle of water", source: SCI },
+        { value: "72", label: "flights in all, adding up to 128.8 minutes in the air", source: SCI },
+        { value: "18 Jan 2024", label: "its last flight, after which a damaged blade kept it grounded", source: "https://www.jpl.nasa.gov/news/nasa-performs-first-aircraft-accident-investigation-on-another-world/" },
+      ]}
+    >
+      <IngenuityGame />
+    </GameShell>
   );
 }

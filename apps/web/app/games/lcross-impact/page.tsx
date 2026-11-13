@@ -1,35 +1,31 @@
-import type { Metadata } from "next";
-import SitePage from "@/app/components/site-page";
-import LCROSSSimulator from "@/app/components/profile/lcross-simulator";
 import { generateSEO } from "@/lib/seo";
+import GameShell from "@/app/components/games/shell";
+import LcrossGame from "./game";
 
-export const metadata: Metadata = generateSEO({
-  title: "LCROSS 7.2 GJ Kinetic Impact & Water Ice | RoverVilla",
-  description:
-    "Simulate the 7.2 Gigajoule kinetic impact of the Centaur rocket into Cabeus crater and detect water ice absorption at 1.4 µm and 1.9 µm.",
+export const metadata = generateSEO({
+  title: "Into the Plume: an LCROSS game | RoverVilla",
+  description: "Crash a rocket stage into a dark crater on the Moon, then fly through the plume looking for water.",
   path: "/games/lcross-impact",
 });
 
-export default function LCROSSImpactGamePage() {
-  return (
-    <SitePage
-      eyebrow="LCROSS / Clues in the shadows"
-      title="What was hiding in that crater?"
-      lede="A planned impact lifted material into view. Explore the plume, then see why scientists study more than just a photograph."
-      scene="map"
-    >
-      <div className="space-y-12">
-        <LCROSSSimulator standalone />
+const NSSDCA = "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=2009-031B";
+const SCI = "https://science.nasa.gov/mission/lcross/";
 
-        <details className="club-note mt-8"><summary className="cursor-pointer py-2 font-semibold">Look deeper: mission background</summary>
-          <h3 className="display text-xl font-bold text-ink">
-            Authentic NASA Mission Context: LCROSS in Cabeus Crater
-          </h3>
-          <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-            On October 9, 2009, NASA sent the LCROSS Centaur upper stage hurtling into the permanently shadowed floor of Cabeus crater near the lunar south pole. The collision excavated a 20-meter crater and launched 350 tons of regolith into the sunlight. Trailing four minutes behind, the shepherding spacecraft flew through the plume, using near-infrared spectrometers to detect the distinctive absorption signatures of water ice at 1.4 µm and 1.9 µm. The mission proved that polar craters on the Moon harbor volatile reservoirs essential for future lunar exploration.
-          </p>
-        </details>
-      </div>
-    </SitePage>
+export default function Page() {
+  return (
+    <GameShell
+      hero="lcross"
+      title="Into the Plume"
+      goal="Hit the crater's shadowed floor, then fly under the sunlit plume to read it."
+      story="LCROSS steered its spent Centaur rocket stage into Cabeus crater, then flew through the plume it threw up, sending readings home until it hit the crater too."
+      facts={[
+        { value: "9 Oct 2009", label: "the Centaur struck Cabeus crater at about 2.5 km/s", source: NSSDCA },
+        { value: "≈ 4 min", label: "between the Centaur's impact and LCROSS's own", source: SCI },
+        { value: "5.6 ± 2.9%", label: "estimated water, by mass, in the soil at the impact site", source: "https://ntrs.nasa.gov/api/citations/20120009955/downloads/20120009955.pdf" },
+        { value: "13 Nov 2009", label: "NASA announced that the data showed water", source: SCI },
+      ]}
+    >
+      <LcrossGame />
+    </GameShell>
   );
 }

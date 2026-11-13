@@ -303,8 +303,6 @@ Implemented game routes include:
 | MER twins | `/games/mer-twins` | Dust optical depth, solar power, rover traverses, instruments, artifacts, and PDS identifiers. |
 | Ranger 7 dive | `/games/ranger-7-dive` | Camera frames and a one-way lunar approach. |
 
-Eagle's simplified landing lesson also exists at `/games/apollo-11-landing`, although the current `/games` listing intentionally filters that tile from its playable grid.
-
 ---
 
 ## 11. Interactive hardware and archive profiles

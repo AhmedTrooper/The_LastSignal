@@ -346,7 +346,7 @@ export function Compass({ ref, name }: { ref?: Ref<CompassHandle>; name: string 
       </div>
       <p className="mt-1.5 flex justify-between px-1 font-mono text-[10px] tracking-[0.12em] text-white/60 uppercase">
         <span>
-          <span className="text-violet-300">◆</span> {name} <span className="ml-2 text-cyan-300">●</span> echoes
+          <span className="text-blue-300">◆</span> {name} <span className="ml-2 text-cyan-300">●</span> echoes
         </span>
         <span ref={speed}>0 km/h</span>
       </p>

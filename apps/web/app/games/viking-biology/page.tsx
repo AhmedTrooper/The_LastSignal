@@ -1,35 +1,28 @@
-import type { Metadata } from "next";
-import SitePage from "@/app/components/site-page";
-import VikingSimulator from "@/app/components/profile/viking-simulator";
 import { generateSEO } from "@/lib/seo";
+import GameShell from "@/app/components/games/shell";
+import VikingGame from "./game";
 
-export const metadata: Metadata = generateSEO({
-  title: "Viking Mars Biology Lab | RoverVilla",
-  description:
-    "Simulate the 1976 Viking Labeled Release radioactive soil experiment and solve the 32-year perchlorate mystery with authentic NASA telemetry.",
+export const metadata = generateSEO({
+  title: "Is Anything Alive? A Viking soil lab game | RoverVilla",
+  description: "Run Viking's soil tests on Mars and decide what the results mean.",
   path: "/games/viking-biology",
 });
 
-export default function VikingBiologyGamePage() {
+export default function Page() {
   return (
-    <SitePage
-      eyebrow="Viking / A travelling laboratory"
-      title="A scoop of soil. A very big question."
-      lede="What can an experiment tell us about an unfamiliar world? Try the laboratory controls and think about more than one explanation for a result."
-      scene="games"
+    <GameShell
+      hero="viking-1"
+      title="Is Anything Alive?"
+      goal="Run Viking's soil tests, then decide: life, chemistry, or too soon to say?"
+      story="Viking 1 scooped Martian soil into a tiny biology lab in 1976. One test gave a surprising result, but the others didn't back it up. Most scientists think chemistry explains it; the debate never fully ended."
+      facts={[
+        { value: "20 Jul 1976", label: "Viking 1 lands and takes the first photo on the surface of Mars", source: "https://science.nasa.gov/mission/viking-1/" },
+        { value: "3 + 1", label: "three biology experiments, plus an instrument searching for organic molecules", source: "https://science.nasa.gov/mission/viking/spacecraft-and-science/" },
+        { value: "Inconclusive", label: "how the life-search results are described", source: "https://science.nasa.gov/mission/viking-1/" },
+        { value: "2008", label: "Phoenix finds perchlorate, a clue to Viking's puzzling results", source: "https://www.jpl.nasa.gov/news/missing-piece-inspires-new-look-at-mars-puzzle/" },
+      ]}
     >
-      <div className="space-y-12">
-        <VikingSimulator lander="viking-1" standalone />
-
-        <details className="club-note mt-8"><summary className="cursor-pointer py-2 font-semibold">Look deeper: mission background</summary>
-          <h3 className="display text-xl font-bold text-ink">
-            Authentic NASA Mission Context: Project Viking
-          </h3>
-          <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-            In July 1976, Viking 1 became the first spacecraft to operate successfully on the surface of Mars. Its biology package was an engineering marvel: three miniature laboratories crammed into a one-cubic-foot automated container. The Labeled Release experiment gave a startling positive signal, but the lack of organic carbon detected by the GCMS puzzled scientists for decades until the 2008 Phoenix lander discovered oxidizing perchlorate salts in Martian soil.
-          </p>
-        </details>
-      </div>
-    </SitePage>
+      <VikingGame />
+    </GameShell>
   );
 }

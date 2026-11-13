@@ -48,7 +48,7 @@ export default function LandingGamePage() {
   return (
     <>
       <Header />
-      <main id="club-main">
+      <main>
         <h1 className="sr-only">Touchdown: land on Mars and the Moon and find the machines we left there</h1>
         <TouchdownGame sites={sites} />
       </main>
