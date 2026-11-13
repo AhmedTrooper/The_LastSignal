@@ -3,12 +3,25 @@ import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { CLUB_LINKS, CLUB_MORE_LINKS, EXPLORER_TRAITS, isClubLinkActive } from "../lib/clubhouse";
 import { HEROES } from "../lib/heroes";
+import HeroesPage from "../app/heroes/page";
 import WorldIllustration, { type ClubScene } from "../app/components/clubhouse/world-illustration";
 
 test("our heroes sits directly before the story room in the main navigation", () => {
   assert.deepEqual(CLUB_LINKS.map(link => link.href), ["/our-hero", "/story", "/where-they-rest"]);
-  assert.deepEqual(CLUB_MORE_LINKS.map(link => link.href), ["/gallery", "/timeline", "/tributes", "/about"]);
-  assert.equal(new Set([...CLUB_LINKS, ...CLUB_MORE_LINKS].map(link => link.href)).size, 7);
+  assert.deepEqual(CLUB_MORE_LINKS.map(link => link.href), ["/heroes", "/games", "/games/landing", "/gallery", "/timeline", "/tributes", "/about"]);
+  assert.equal(new Set([...CLUB_LINKS, ...CLUB_MORE_LINKS].map(link => link.href)).size, 10);
+});
+
+test("the More menu exposes an archive directory that opens every detailed profile", () => {
+  assert.ok(CLUB_MORE_LINKS.some(link => link.href === "/heroes"));
+  const page = HeroesPage();
+  assert.equal(page.props.eyebrow, "Explorer archive");
+  const markup = renderToStaticMarkup(<>{page.props.children}</>);
+  assert.equal((markup.match(/Open my profile/g) ?? []).length, HEROES.length);
+  for (const hero of HEROES) {
+    assert.ok(markup.includes(`href="/heroes/${hero.slug}"`), hero.slug);
+    assert.ok(!markup.includes(`href="/heroes/${hero.slug}/story"`), hero.slug);
+  }
 });
 
 test("immersive readers belong to Stories rather than the explorer directory", () => {

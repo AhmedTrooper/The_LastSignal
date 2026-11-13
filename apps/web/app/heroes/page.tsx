@@ -4,14 +4,14 @@ import SitePage from "@/app/components/site-page";
 import ExplorerDirectory from "@/app/components/clubhouse/explorer-directory";
 
 export const metadata = generateSEO({
-  title: "Heroes: the machines we left behind | The Last Signal",
-  description: "Every rover, lander and probe in the archive, from Ranger 7 to Ingenuity.",
+  title: "Explorer archive | RoverVilla",
+  description: "Browse the machines' detailed profiles, hardware, mission records, and archive media, from Ranger 7 to Ingenuity.",
   path: "/heroes",
 });
 
 export default function HeroesPage() {
   return (
-    <SitePage eyebrow="Meet the explorers" title="Big adventures. Little machines." lede="Some rolled. Some landed. One learned to fly. Pick a space explorer and discover the real story behind its extraordinary journey." scene="explorers">
+    <SitePage eyebrow="Explorer archive" title="Meet the machines up close." lede="Pick an explorer to open its detailed profile, look around its hardware, and browse its mission records and archive media." scene="explorers">
       <ExplorerDirectory heroes={HEROES} />
     </SitePage>
   );

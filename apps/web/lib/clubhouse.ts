@@ -5,6 +5,9 @@ export const CLUB_LINKS = [
   { href: "/where-they-rest", label: "Space map", short: "Map", icon: "map", description: "Find our explorers on the Moon and Mars." },
 ] as const;
 export const CLUB_MORE_LINKS = [
+  { href: "/heroes", label: "Explorer archive" },
+  { href: "/games", label: "Mission playground" },
+  { href: "/games/landing", label: "Play Touchdown" },
   { href: "/gallery", label: "Photo album" },
   { href: "/timeline", label: "Time machine" },
   { href: "/tributes", label: "Messages to the explorers" },
