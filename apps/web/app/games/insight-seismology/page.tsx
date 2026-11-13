@@ -7,7 +7,7 @@ import { ArrowLeft } from "@/app/components/icons";
 import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
-  title: "InSight: Marsquake Seismology & Core Explorer | The Last Signal",
+  title: "InSight: Marsquake Seismology & Core Explorer | RoverVilla",
   description:
     "An interactive simulator exploring Mars's deep interior. Sonify real marsquakes from 1,319 seismic detections, inspect the liquid core, and explore the HP3 Mole at Homestead Hollow.",
   path: "/games/insight-seismology",

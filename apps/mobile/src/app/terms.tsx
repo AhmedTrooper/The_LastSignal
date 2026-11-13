@@ -17,12 +17,12 @@ const TERMS_SECTIONS = [
   {
     title: "1. Acceptance of Terms",
     content:
-      "By downloading, accessing, or using The Last Signal mobile application (com.nasa.lastsignal) or web platform, you agree to be bound by these Terms of Service and our Privacy Policy.",
+      "By downloading, accessing, or using RoverVilla mobile application (com.nasa.lastsignal) or web platform, you agree to be bound by these Terms of Service and our Privacy Policy.",
   },
   {
     title: "2. Nature of the Service",
     content:
-      "The Last Signal is an independent, non-commercial educational memorial and archive dedicated to humanity's robotic explorers left behind on Mars, the Moon, and beyond.",
+      "RoverVilla is an independent, non-commercial educational memorial and archive dedicated to humanity's robotic explorers left behind on Mars, the Moon, and beyond.",
   },
   {
     title: "3. Community Standards & Tributes",
@@ -32,7 +32,7 @@ const TERMS_SECTIONS = [
   {
     title: "4. Non-Affiliation Disclaimer",
     content:
-      "The Last Signal is an independent memorial project created by space enthusiasts. It is not sponsored, endorsed, or affiliated with NASA, JPL-Caltech, ESA, JAXA, or any government space agency.",
+      "RoverVilla is an independent memorial project created by space enthusiasts. It is not sponsored, endorsed, or affiliated with NASA, JPL-Caltech, ESA, JAXA, or any government space agency.",
   },
   {
     title: "5. Imagery & Intellectual Property",
@@ -47,7 +47,7 @@ const TERMS_SECTIONS = [
   {
     title: "7. Limitation of Liability",
     content:
-      "The service is provided 'AS IS' and 'AS AVAILABLE' without warranties of any kind. The Last Signal Team shall not be liable for any indirect or incidental damages arising from use of the application.",
+      "The service is provided 'AS IS' and 'AS AVAILABLE' without warranties of any kind. RoverVilla Team shall not be liable for any indirect or incidental damages arising from use of the application.",
   },
 ];
 

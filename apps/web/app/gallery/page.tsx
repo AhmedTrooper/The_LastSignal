@@ -7,7 +7,7 @@ import SitePage from "@/app/components/site-page";
 import Gallery from "@/app/components/profile/gallery";
 
 export const metadata = generateSEO({
-  title: "Gallery | The Last Signal",
+  title: "Gallery | RoverVilla",
   description: "Photos of the machines we left on Mars and the Moon.",
   path: "/gallery",
 });

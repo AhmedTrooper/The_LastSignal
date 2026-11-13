@@ -79,7 +79,7 @@ export default function HomeScreen() {
             contentFit="contain"
           />
           <View>
-            <ThemedText style={styles.brandTitle}>The Last Signal</ThemedText>
+            <ThemedText style={styles.brandTitle}>RoverVilla</ThemedText>
             <ThemedText style={styles.brandTagline} type="small">Deep Space Archive</ThemedText>
           </View>
         </View>

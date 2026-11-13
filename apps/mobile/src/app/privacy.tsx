@@ -17,7 +17,7 @@ const SECTIONS = [
   {
     title: "1. Overview",
     content:
-      "The Last Signal is an independent educational, historical, and memorial application dedicated to the robotic explorers left behind on Mars and the Moon. This Privacy Policy informs users of our mobile application (package identifier com.nasa.lastsignal) regarding the collection, use, and protection of information.",
+      "RoverVilla is an independent educational, historical, and memorial application dedicated to the robotic explorers left behind on Mars and the Moon. This Privacy Policy informs users of our mobile application (package identifier com.nasa.lastsignal) regarding the collection, use, and protection of information.",
   },
   {
     title: "2. Information We Collect",
@@ -37,7 +37,7 @@ const SECTIONS = [
   {
     title: "5. Children's Privacy (COPPA)",
     content:
-      "The Last Signal is built for educational and historical exploration. We do not knowingly collect personally identifiable information from children under the age of 13. If you believe a child has provided personal information, please contact us for immediate removal.",
+      "RoverVilla is built for educational and historical exploration. We do not knowingly collect personally identifiable information from children under the age of 13. If you believe a child has provided personal information, please contact us for immediate removal.",
   },
   {
     title: "6. Account Deletion & Retention",

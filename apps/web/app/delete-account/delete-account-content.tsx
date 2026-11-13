@@ -37,14 +37,14 @@ export default function DeleteAccountContent() {
       <div className="rounded-2xl border border-line bg-mist p-6 text-sm text-ink-soft">
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <p>
-            <strong>Application:</strong> The Last Signal
+            <strong>Application:</strong> RoverVilla
           </p>
           <p>
             <strong>Android Package:</strong>{" "}
             <code className="font-mono text-violet">com.nasa.lastsignal</code>
           </p>
           <p>
-            <strong>Developer:</strong> The Last Signal Team
+            <strong>Developer:</strong> RoverVilla Team
           </p>
           <p>
             <strong>Policy Compliance:</strong> Google Play Data Safety &amp; GDPR Right to Erasure
@@ -68,7 +68,7 @@ export default function DeleteAccountContent() {
               <h3 className="font-bold text-ink text-sm">In-App Deletion Path</h3>
             </div>
             <p className="text-xs leading-relaxed text-ink-soft">
-              Open <strong>The Last Signal</strong> app &rarr; Tap <strong>About</strong> &rarr; Navigate to <strong>Legal &amp; Account Data</strong> &rarr; Tap <strong>Delete Account &amp; Data</strong> to initiate permanent erasure.
+              Open <strong>RoverVilla</strong> app &rarr; Tap <strong>About</strong> &rarr; Navigate to <strong>Legal &amp; Account Data</strong> &rarr; Tap <strong>Delete Account &amp; Data</strong> to initiate permanent erasure.
             </p>
           </div>
 
@@ -132,7 +132,7 @@ export default function DeleteAccountContent() {
               </div>
               <h3 className="mt-3 text-base font-bold text-ink">Sign in to Verify Ownership</h3>
               <p className="mt-1 max-w-md text-xs text-ink-soft">
-                To prevent unauthorized deletion, please sign in with the Google account used in The Last Signal.
+                To prevent unauthorized deletion, please sign in with the Google account used in RoverVilla.
               </p>
               <button
                 type="button"
@@ -272,7 +272,7 @@ export default function DeleteAccountContent() {
             <li>
               Send an email to{" "}
               <a
-                href="mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal&body=Please%20permanently%20delete%20my%20account%20and%20all%20associated%20data%20for%20The%20Last%20Signal%20(com.nasa.lastsignal).%0A%0AMy%20Google%20Email:%20%0AApproximate%20date%20of%20last%20tribute%20(if%20any):%20"
+                href="mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal&body=Please%20permanently%20delete%20my%20account%20and%20all%20associated%20data%20for%20RoverVilla%20(com.nasa.lastsignal).%0A%0AMy%20Google%20Email:%20%0AApproximate%20date%20of%20last%20tribute%20(if%20any):%20"
                 className="font-mono text-violet underline hover:text-violet-deep"
               >
                 privacy@thelastsignal.mtas.fi
@@ -285,7 +285,7 @@ export default function DeleteAccountContent() {
           </ol>
           <div className="pt-2">
             <a
-              href="mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal&body=Please%20permanently%20delete%20my%20account%20and%20all%20associated%20data%20for%20The%20Last%20Signal%20(com.nasa.lastsignal).%0A%0AMy%20Google%20Email:%20%0AApproximate%20date%20of%20last%20tribute%20(if%20any):%20"
+              href="mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal&body=Please%20permanently%20delete%20my%20account%20and%20all%20associated%20data%20for%20RoverVilla%20(com.nasa.lastsignal).%0A%0AMy%20Google%20Email:%20%0AApproximate%20date%20of%20last%20tribute%20(if%20any):%20"
               className="inline-flex items-center gap-2 rounded-full border border-violet bg-violet/5 px-5 py-2.5 text-xs font-semibold text-violet hover:bg-violet hover:text-white transition-colors"
             >
               ✉ Draft Deletion Request Email
@@ -356,7 +356,7 @@ export default function DeleteAccountContent() {
         <ol className="list-inside list-decimal space-y-2 text-xs sm:text-sm text-ink-soft">
           <li>Open your device&rsquo;s <strong>Settings</strong> app.</li>
           <li>Tap <strong>Apps</strong> (or <strong>Apps &amp; Notifications</strong>).</li>
-          <li>Select <strong>The Last Signal</strong> from the list.</li>
+          <li>Select <strong>RoverVilla</strong> from the list.</li>
           <li>Tap <strong>Storage &amp; cache</strong>.</li>
           <li>Tap <strong>Clear Storage</strong> (or <strong>Clear Data</strong>), then confirm.</li>
           <li>Alternatively, simply uninstall the application.</li>

@@ -4,7 +4,7 @@ import LCROSSSimulator from "@/app/components/profile/lcross-simulator";
 import { generateSEO } from "@/lib/seo";
 
 export const metadata: Metadata = generateSEO({
-  title: "LCROSS 7.2 GJ Kinetic Impact & Water Ice | The Last Signal",
+  title: "LCROSS 7.2 GJ Kinetic Impact & Water Ice | RoverVilla",
   description:
     "Simulate the 7.2 Gigajoule kinetic impact of the Centaur rocket into Cabeus crater and detect water ice absorption at 1.4 µm and 1.9 µm.",
   path: "/games/lcross-impact",

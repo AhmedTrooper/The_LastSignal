@@ -7,7 +7,7 @@ import { assetUrl } from "@thelastsignal/data";
 import { Play } from "@/app/components/icons";
 
 export const metadata = generateSEO({
-  title: "Games | The Last Signal",
+  title: "Games | RoverVilla",
   description: "Free browser games about the machines we left on Mars and the Moon.",
   path: "/games",
 });

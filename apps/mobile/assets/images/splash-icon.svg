@@ -37,7 +37,7 @@
   <!-- Distant Celestial Orbit Arc -->
   <ellipse cx="256" cy="344" rx="214" ry="144" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.4" />
 
-  <!-- The Last Signal Radiating Broadcast Waves (Expanding Upward) -->
+  <!-- Radiating Broadcast Waves (Expanding Upward) -->
   <g fill="none" stroke-linecap="round" filter="url(#splashFilter)">
     <!-- Outer Wave -->
     <path d="M 120 140 A 176 176 0 0 1 392 140" stroke="url(#splashWaveGrad)" stroke-width="4.5" opacity="0.45" />

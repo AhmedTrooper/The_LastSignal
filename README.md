@@ -1,4 +1,4 @@
-# RoverVilla — The Last Signal
+# RoverVilla
 
 > **A digital memorial for the machines we left behind on Mars and the Moon.**
 > 

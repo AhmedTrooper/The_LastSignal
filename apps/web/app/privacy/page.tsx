@@ -3,9 +3,9 @@ import { generateSEO } from "@/lib/seo";
 import SitePage from "@/app/components/site-page";
 
 export const metadata = generateSEO({
-  title: "Privacy Policy | The Last Signal",
+  title: "Privacy Policy | RoverVilla",
   description:
-    "Privacy policy and data protection disclosures for The Last Signal mobile application (com.nasa.lastsignal) and web platform.",
+    "Privacy policy and data protection disclosures for RoverVilla mobile application (com.nasa.lastsignal) and web platform.",
   path: "/privacy",
 });
 
@@ -13,21 +13,21 @@ export default function PrivacyPolicyPage() {
   return (
     <SitePage
       eyebrow="Legal & Data Protection"
-      title="Privacy Policy for The Last Signal"
+      title="Privacy Policy for RoverVilla"
       scene="about"
     >
       <div className="mx-auto max-w-4xl space-y-10 text-ink" data-reveal>
         {/* Header Metadata */}
         <div className="rounded-2xl border border-line bg-mist p-6 text-sm text-ink-soft">
           <p>
-            <strong>Application:</strong> The Last Signal (Mobile &amp; Web)
+            <strong>Application:</strong> RoverVilla (Mobile &amp; Web)
           </p>
           <p>
             <strong>Android Package Name:</strong>{" "}
             <code className="font-mono text-violet">com.nasa.lastsignal</code>
           </p>
           <p>
-            <strong>Developer:</strong> The Last Signal Team
+            <strong>Developer:</strong> RoverVilla Team
           </p>
           <p>
             <strong>Effective Date:</strong> October 21, 2026
@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-4">
           <h2 className="display text-2xl">1. Overview</h2>
           <p className="leading-relaxed text-ink-soft">
-            <strong>The Last Signal</strong> (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) is an
+            <strong>RoverVilla</strong> (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) is an
             independent educational, historical, and memorial application dedicated to the robotic
             explorers left behind on Mars and the Moon. This Privacy Policy informs users of our mobile
             application (available on Google Play under package identifier{" "}
@@ -180,7 +180,7 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-4">
           <h2 className="display text-2xl">5. Children&rsquo;s Privacy (COPPA)</h2>
           <p className="leading-relaxed text-ink-soft">
-            The Last Signal is built for educational and historical exploration of space missions. We do
+            RoverVilla is built for educational and historical exploration of space missions. We do
             not knowingly collect personally identifiable information from children under the age of 13.
             If a parent or guardian becomes aware that their child has provided personal information
             without consent, please contact us immediately, and we will promptly remove such information
@@ -207,7 +207,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-inside list-disc space-y-2 text-sm text-ink-soft">
               <li>
-                <strong>In-App Deletion Path (Android):</strong> Open <em>The Last Signal</em> mobile app &rarr; go to <em>About</em> &rarr; scroll to <em>Legal &amp; Account Data</em> &rarr; tap <em>Delete Account &amp; Data</em>.
+                <strong>In-App Deletion Path (Android):</strong> Open <em>RoverVilla</em> mobile app &rarr; go to <em>About</em> &rarr; scroll to <em>Legal &amp; Account Data</em> &rarr; tap <em>Delete Account &amp; Data</em>.
               </li>
               <li>
                 <strong>Web-Based Deletion URL (No App Required):</strong> Access our public account deletion portal below, allowing deletion without opening or reinstalling the mobile app:
@@ -290,7 +290,7 @@ export default function PrivacyPolicyPage() {
             contact us at:
           </p>
           <div className="rounded-xl border border-line bg-mist p-5 font-mono text-sm space-y-1">
-            <p><strong>The Last Signal Team</strong></p>
+            <p><strong>RoverVilla Team</strong></p>
             <p>Website: <a href="https://thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">https://thelastsignal.mtas.fi</a></p>
             <p>Email: <a href="mailto:privacy@thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">privacy@thelastsignal.mtas.fi</a></p>
             <p>

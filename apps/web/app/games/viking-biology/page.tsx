@@ -4,7 +4,7 @@ import VikingSimulator from "@/app/components/profile/viking-simulator";
 import { generateSEO } from "@/lib/seo";
 
 export const metadata: Metadata = generateSEO({
-  title: "Viking Mars Biology Lab | The Last Signal",
+  title: "Viking Mars Biology Lab | RoverVilla",
   description:
     "Simulate the 1976 Viking Labeled Release radioactive soil experiment and solve the 32-year perchlorate mystery with authentic NASA telemetry.",
   path: "/games/viking-biology",

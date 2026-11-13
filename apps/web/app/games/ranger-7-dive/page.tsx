@@ -7,7 +7,7 @@ import { ArrowLeft } from "@/app/components/icons";
 import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
-  title: "Ranger 7: 17-Minute Lunar Impact Dive | The Last Signal",
+  title: "Ranger 7: 17-Minute Lunar Impact Dive | RoverVilla",
   description:
     "An interactive flight replay of humanity's first kamikaze dive into the Moon on July 31, 1964. Scrub from 2,110 km down to the final split-second impact at 2.62 km/s.",
   path: "/games/ranger-7-dive",

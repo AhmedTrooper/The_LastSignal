@@ -5,7 +5,7 @@ import Footer from "@/app/components/footer";
 import RestView from "@/app/components/rest/rest-view";
 
 export const metadata = generateSEO({
-  title: "Where They Rest: landing sites on Mars and the Moon | The Last Signal",
+  title: "Where They Rest: landing sites on Mars and the Moon | RoverVilla",
   description: "Resting among the stars. Find where every rover, lander and probe came to rest on Mars and the Moon.",
   path: "/where-they-rest",
   ogImage: assetUrl("images/mars-globe.jpg"),

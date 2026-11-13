@@ -84,8 +84,8 @@ export function StoryBookReader() {
     try {
       haptic.light();
       await Share.share({
-        title: "The Last Signal — Living Story Book",
-        message: `Reading Page ${currentPage} of 58 (${currentSpread.spreadTitle}) in The Last Signal Story Book!`,
+        title: "RoverVilla — Living Story Book",
+        message: `Reading Page ${currentPage} of 58 (${currentSpread.spreadTitle}) in RoverVilla Story Book!`,
       });
     } catch {
       // ignore

@@ -3,28 +3,28 @@ import SitePage from "@/app/components/site-page";
 import Link from "next/link";
 
 export const metadata = generateSEO({
-  title: "Terms of Service | The Last Signal",
+  title: "Terms of Service | RoverVilla",
   description:
-    "Terms of service, community standards, and operational disclosures for The Last Signal mobile application (com.nasa.lastsignal) and web platform.",
+    "Terms of service, community standards, and operational disclosures for RoverVilla mobile application (com.nasa.lastsignal) and web platform.",
   path: "/terms",
 });
 
 export default function TermsOfServicePage() {
   return (
-    <SitePage eyebrow="Legal & Usage" title="Terms of Service for The Last Signal" scene="about">
+    <SitePage eyebrow="Legal & Usage" title="Terms of Service for RoverVilla" scene="about">
       <div className="mx-auto max-w-4xl space-y-10 text-ink" data-reveal>
         {/* Header Metadata */}
         <div className="rounded-2xl border border-line bg-mist p-6 text-sm text-ink-soft">
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <p>
-              <strong>Application:</strong> The Last Signal (Mobile &amp; Web)
+              <strong>Application:</strong> RoverVilla (Mobile &amp; Web)
             </p>
             <p>
               <strong>Android Package Name:</strong>{" "}
               <code className="font-mono text-violet">com.nasa.lastsignal</code>
             </p>
             <p>
-              <strong>Developer:</strong> The Last Signal Team
+              <strong>Developer:</strong> RoverVilla Team
             </p>
             <p>
               <strong>Effective Date:</strong> October 21, 2026
@@ -36,7 +36,7 @@ export default function TermsOfServicePage() {
         <section className="space-y-4">
           <h2 className="display text-2xl">1. Acceptance of Terms</h2>
           <p className="leading-relaxed text-ink-soft">
-            By downloading, accessing, or using <strong>The Last Signal</strong> mobile application or
+            By downloading, accessing, or using <strong>RoverVilla</strong> mobile application or
             associated web services at{" "}
             <a href="https://thelastsignal.mtas.fi" className="text-violet underline hover:text-violet-deep">
               https://thelastsignal.mtas.fi
@@ -57,7 +57,7 @@ export default function TermsOfServicePage() {
         <section className="space-y-4">
           <h2 className="display text-2xl">2. Nature of the Service</h2>
           <p className="leading-relaxed text-ink-soft">
-            The Last Signal is an independent, non-commercial educational spaceflight memorial and archive dedicated
+            RoverVilla is an independent, non-commercial educational spaceflight memorial and archive dedicated
             to the robotic explorers left behind on Mars, the Moon, and beyond. It provides historical telemetry,
             interactive simulations, archival landing sites, and a worldwide tribute transmission wall.
           </p>
@@ -90,7 +90,7 @@ export default function TermsOfServicePage() {
         <section className="space-y-4">
           <h2 className="display text-2xl">4. Non-Affiliation with Space Agencies</h2>
           <div className="rounded-xl border border-line bg-mist p-5 text-sm leading-relaxed text-ink-soft">
-            <strong>Important Disclaimer:</strong> The Last Signal is an independent memorial project created by
+            <strong>Important Disclaimer:</strong> RoverVilla is an independent memorial project created by
             enthusiasts. It is <strong>not</strong> sponsored, endorsed, or affiliated with NASA (National
             Aeronautics and Space Administration), JPL (Jet Propulsion Laboratory), ESA (European Space Agency),
             JAXA, or any other government or space agency. All trademarks and project names belong to their
@@ -129,7 +129,7 @@ export default function TermsOfServicePage() {
           <p className="leading-relaxed text-ink-soft">
             The Service is provided on an &ldquo;AS IS&rdquo; and &ldquo;AS AVAILABLE&rdquo; basis without
             warranties of any kind, whether express or implied. To the maximum extent permitted by applicable law,
-            The Last Signal Team shall not be liable for any indirect, incidental, special, or consequential damages
+            RoverVilla Team shall not be liable for any indirect, incidental, special, or consequential damages
             arising from your use or inability to use the Service.
           </p>
         </section>
@@ -142,7 +142,7 @@ export default function TermsOfServicePage() {
           </p>
           <div className="rounded-xl border border-line bg-mist p-5 font-mono text-sm space-y-1">
             <p>
-              <strong>The Last Signal Team</strong>
+              <strong>RoverVilla Team</strong>
             </p>
             <p>
               Email:{" "}

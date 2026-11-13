@@ -1,8 +1,8 @@
-# The Last Signal — Setup and Contributor Guide
+# RoverVilla — Setup and Contributor Guide
 
 [← Repository README](../README.md) · [Project description and report](ROVERVILLA_PROJECT_REPORT.md)
 
-This guide covers local setup, development, contribution, and releases for the RoverVilla / The Last Signal monorepo. Run commands from the repository root unless stated otherwise.
+This guide covers local setup, development, contribution, and releases for the RoverVilla monorepo. Run commands from the repository root unless stated otherwise.
 
 ## Prerequisites
 

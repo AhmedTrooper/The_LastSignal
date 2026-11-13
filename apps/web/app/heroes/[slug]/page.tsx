@@ -98,7 +98,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const hero = getHero((await params).slug);
   if (!hero) return {};
   return generateSEO({
-    title: `${hero.name} (${lifespan(hero)}) | The Last Signal`,
+    title: `${hero.name} (${lifespan(hero)}) | RoverVilla`,
     description: hero.summary,
     path: `/heroes/${hero.slug}`,
     ogImage: img(portrait(hero)),

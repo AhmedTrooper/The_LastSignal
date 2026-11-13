@@ -28,7 +28,7 @@ const RULES = [
   {
     icon: "planet-outline" as const,
     title: "Independent Memorial",
-    text: "The Last Signal is an independent educational space tribute built for humanity, carrying no commercial or agency advertising.",
+    text: "RoverVilla is an independent educational space tribute built for humanity, carrying no commercial or agency advertising.",
   },
   {
     icon: "sparkles-outline" as const,
@@ -69,7 +69,7 @@ export default function AboutScreen() {
         <View style={styles.eyebrowRow}>
           <View style={styles.beaconDot} />
           <ThemedText style={styles.eyebrow} type="small">
-            THE LAST SIGNAL MANIFESTO
+            ROVERVILLA MANIFESTO
           </ThemedText>
         </View>
 

@@ -85,7 +85,7 @@ export default function LoginScreen() {
         </ThemedText>
 
         <ThemedText style={styles.title} type="title">
-          {user ? "Your Explorer Profile" : "Join The Last Signal"}
+          {user ? "Your Explorer Profile" : "Join RoverVilla"}
         </ThemedText>
 
         <ThemedText style={styles.subtitle} type="small">

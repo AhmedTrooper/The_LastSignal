@@ -5,7 +5,7 @@ import Footer from "@/app/components/footer";
 import TributesView from "@/app/components/tributes-view";
 
 export const metadata = generateSEO({
-  title: "Tributes | The Last Signal",
+  title: "Tributes | RoverVilla",
   description: "Leave a message for the machines that went where we couldn’t.",
   path: "/tributes",
 });

@@ -6,7 +6,7 @@ import { Waveform } from "@/app/components/waveform";
 import { ArrowRight } from "@/app/components/icons";
 
 export const metadata = generateSEO({
-  title: "About | The Last Signal",
+  title: "About | RoverVilla",
   description: "They had names, birthdays and last words, just like us. Why we built a memorial for the machines we left behind.",
   path: "/about",
 });

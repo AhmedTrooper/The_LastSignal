@@ -126,7 +126,7 @@ export default function HeroDetailScreen() {
     haptic.selection();
     try {
       await Share.share({
-        title: `${hero.name} · The Last Signal`,
+        title: `${hero.name} · RoverVilla`,
         message: `${hero.name} (${catNo(hero.no)}) — ${hero.designation}.\n"${hero.end.story}"\nResting at ${hero.restingPlace}.\nhttps://thelastsignal.space/heroes/${hero.slug}`,
       });
     } catch {

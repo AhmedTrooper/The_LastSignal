@@ -32,7 +32,6 @@ export function generateSEO({
   ogImage = assetUrl("images/hero-opportunity.jpg"),
   keywords = [],
 }: SEOConfig): Metadata {
-  title = title.replaceAll("The Last Signal", "RoverVilla");
   const url = `${BASE_URL}${path}`;
   const imageUrl = ogImage.startsWith("http") ? ogImage : `${BASE_URL}${ogImage}`;
   const allKeywords = [...new Set([...keywords, ...SITE_KEYWORDS])];

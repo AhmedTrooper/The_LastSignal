@@ -1,6 +1,6 @@
-# The Last Signal - Mobile App
+# RoverVilla - Mobile App
 
-Mobile application for **The Last Signal** — a digital memorial for the robots, landers, rovers, and orbiters left behind on Mars and the Moon. Built with [Expo](https://expo.dev), [React Native](https://reactnative.dev), and [Expo Router](https://docs.expo.dev/router/introduction).
+Mobile application for **RoverVilla** — a digital memorial for the robots, landers, rovers, and orbiters left behind on Mars and the Moon. Built with [Expo](https://expo.dev), [React Native](https://reactnative.dev), and [Expo Router](https://docs.expo.dev/router/introduction).
 
 ---
 

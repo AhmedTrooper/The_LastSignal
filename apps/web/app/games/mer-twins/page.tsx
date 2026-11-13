@@ -7,7 +7,7 @@ import { ArrowLeft } from "@/app/components/icons";
 import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
-  title: "Mars Exploration Rovers: Dust Storm & Power Survival | The Last Signal",
+  title: "Mars Exploration Rovers: Dust Storm & Power Survival | RoverVilla",
   description:
     "An interactive simulation of NASA's twin Mars Exploration Rovers, Spirit and Opportunity. Scrub atmospheric optical depth (tau), inspect the World Trade Center 9/11 aluminum cuffs, and analyze authentic Sol 5111 telemetry.",
   path: "/games/mer-twins",

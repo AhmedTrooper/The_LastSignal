@@ -4,7 +4,7 @@ import GRAILSimulator from "@/app/components/profile/grail-simulator";
 import { generateSEO } from "@/lib/seo";
 
 export const metadata: Metadata = generateSEO({
-  title: "GRAIL Microwave Gravity Lab | The Last Signal",
+  title: "GRAIL Microwave Gravity Lab | RoverVilla",
   description:
     "Measure the Moon's gravity field with 0.02 micrometer-per-second precision using tandem Ka-band ranging, and explore the Sally K. Ride Impact Site.",
   path: "/games/grail-gravity",

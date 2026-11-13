@@ -7,7 +7,7 @@ import { ArrowLeft } from "@/app/components/icons";
 import MissionIntro from "@/app/components/clubhouse/mission-intro";
 
 export const metadata: Metadata = generateSEO({
-  title: "Ingenuity: Mars Rotorcraft Aerodynamics & Flight Lab | The Last Signal",
+  title: "Ingenuity: Mars Rotorcraft Aerodynamics & Flight Lab | RoverVilla",
   description:
     "An interactive simulator exploring the aerodynamics of powered flight in Mars's 1% atmosphere. Tweak atmospheric density and rotor RPM, inspect all 72 flights, and discover the 1903 Wright Flyer fabric swatch on Mars.",
   path: "/games/ingenuity-flight",

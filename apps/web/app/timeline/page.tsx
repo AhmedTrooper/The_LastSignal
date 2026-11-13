@@ -5,7 +5,7 @@ import Footer from "@/app/components/footer";
 import TimelineView from "@/app/components/timeline/timeline-view";
 
 export const metadata = generateSEO({
-  title: "Timeline: every machine on one axis | The Last Signal",
+  title: "Timeline: every machine on one axis | RoverVilla",
   description: "From Ranger 7 in 1964 to today: every rover, lander and probe we left on Mars and the Moon, on one timeline.",
   path: "/timeline",
 });

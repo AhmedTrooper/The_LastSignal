@@ -7,7 +7,7 @@ import TouchdownGame, { type GameSite } from "./game";
 import { ECHO_DATES } from "./story";
 
 export const metadata = generateSEO({
-  title: "Touchdown: a landing game on Mars and the Moon | The Last Signal",
+  title: "Touchdown: a landing game on Mars and the Moon | RoverVilla",
   description: "Fly the landing yourself, then drive to the real resting places of fifteen machines on Mars and the Moon and hear how each one went quiet.",
   path: "/games/landing",
 });

@@ -42,7 +42,7 @@ export function AnimatedSplashOverlay() {
       </View>
 
       <View style={styles.textContainer}>
-        <Text style={styles.splashTitle}>THE LAST SIGNAL</Text>
+        <Text style={styles.splashTitle}>ROVERVILLA</Text>
         <Text style={styles.splashSub}>MARS &amp; LUNAR ROBOTIC MEMORIAL</Text>
       </View>
 

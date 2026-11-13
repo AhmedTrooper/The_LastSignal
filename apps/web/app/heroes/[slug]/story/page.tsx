@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const book = getMachineBook(hero.slug);
   const count = book?.chapters.length ?? (STORIES[hero.slug]?.scenes.length ?? storyChapters(hero).length);
   return generateSEO({
-    title: `${book?.name ?? hero.name}, a story in ${count} ${book || !STORIES[hero.slug] ? "chapters" : "scenes"} | The Last Signal`,
+    title: `${book?.name ?? hero.name}, a story in ${count} ${book || !STORIES[hero.slug] ? "chapters" : "scenes"} | RoverVilla`,
     description: (hero.slug.startsWith("viking-") || hero.slug === "grail" || hero.slug === "phoenix" || hero.slug === "mars-polar-lander" || hero.slug === "apollo-15-rover" || hero.slug === "pathfinder-sojourner") && book ? book.introduction : hero.summary,
     path: `/heroes/${hero.slug}/story`,
     ogImage: hero.slug === "apollo-15-rover" ? LRV_PHOTOS.cover.src : hero.slug === "pathfinder-sojourner" ? PATHFINDER_PHOTOS.cover.src : hero.slug === "mars-polar-lander" ? MPL_PHOTOS.cover.src : hero.slug === "phoenix" ? PHOENIX_PHOTOS.cover.src : hero.slug === "grail" ? GRAIL_PHOTOS.cover.src : hero.slug === "viking-2" ? VIKING_TWO_PHOTOS.cover.src : hero.slug === "viking-1" ? VIKING_PHOTOS.cover.src : img(portrait(hero)),

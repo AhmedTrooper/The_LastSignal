@@ -68,7 +68,7 @@ export default function DeleteAccountScreen() {
   const openMailRequest = () => {
     haptic.light();
     const mailto =
-      "mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal&body=Please%20permanently%20delete%20my%20account%20and%20all%20associated%20data%20for%20The%20Last%20Signal%20(com.nasa.lastsignal).%0A%0AGoogle%20Email:%20";
+      "mailto:privacy@thelastsignal.mtas.fi?subject=Account%20Deletion%20Request%20-%20com.nasa.lastsignal&body=Please%20permanently%20delete%20my%20account%20and%20all%20associated%20data%20for%20RoverVilla%20(com.nasa.lastsignal).%0A%0AGoogle%20Email:%20";
     Linking.openURL(mailto);
   };
 
@@ -226,7 +226,7 @@ export default function DeleteAccountScreen() {
           1. Open Android Settings → Apps.
         </ThemedText>
         <ThemedText style={styles.guideStep} type="small">
-          2. Select The Last Signal.
+          2. Select RoverVilla.
         </ThemedText>
         <ThemedText style={styles.guideStep} type="small">
           3. Tap Storage & cache → Clear Storage.

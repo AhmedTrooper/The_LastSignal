@@ -18,7 +18,7 @@ export function HeroList() {
       ListHeaderComponent={
         <View style={styles.header}>
           <ThemedText style={styles.title} type="title">
-            The Last Signal
+            RoverVilla
           </ThemedText>
           <ThemedText style={styles.subtitle} type="small">
             Their mission ended. Their story didn&apos;t.

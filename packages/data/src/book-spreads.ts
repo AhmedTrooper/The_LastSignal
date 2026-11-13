@@ -60,11 +60,11 @@ export const SPREADS: BookSpread[] = [
     id: "cover-toc",
     chapterNumber: null,
     machineName: "Master Edition",
-    spreadTitle: "The Last Signal",
+    spreadTitle: "RoverVilla",
     spreadSubtitle: "Monuments in the Dust",
     dateAndLocation: "The Story of NASA's Discarded Equipment on the Moon and Mars",
     leftPage: {
-      heading: "The Last Signal",
+      heading: "RoverVilla",
       subheading: "Monuments in the Dust",
       paragraphs: [
         "Since the dawn of interplanetary exploration in the 1960s, humanity has dispatched robotic emissaries across the inner solar system. These machines did not return. They descended through alien atmospheres, touched down on cratered plains, transmitted their revelations, and fell silent.",
@@ -1289,10 +1289,9 @@ export const SPREADS: BookSpread[] = [
       ],
       quote: {
         text: "They went where we could not go; they showed us who we might become.",
-        author: "The Last Signal Dossier",
+        author: "RoverVilla Dossier",
       },
       takeaway: "The story of NASA's discarded equipment is the opening chapter of humanity becoming an interplanetary civilization.",
     },
   },
 ];
-

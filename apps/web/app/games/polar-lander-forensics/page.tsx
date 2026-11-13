@@ -4,7 +4,7 @@ import MPLSimulator from "@/app/components/profile/mpl-simulator";
 import { generateSEO } from "@/lib/seo";
 
 export const metadata: Metadata = generateSEO({
-  title: "Mars Polar Lander 40-Meter Crash Forensics | The Last Signal",
+  title: "Mars Polar Lander 40-Meter Crash Forensics | RoverVilla",
   description:
     "Forensic reconstruction of Mars Polar Lander's premature engine cutoff 40 meters above Planum Australe. Sourced from the NASA Casani Board Report.",
   path: "/games/polar-lander-forensics",
